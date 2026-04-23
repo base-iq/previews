@@ -1,0 +1,66 @@
+/* ============================================
+   BaseLocal Newsletter — Daily Deals Experiment
+   Extends newsletter.css with deal-specific styles
+   ============================================ */
+
+@import url('newsletter.css');
+
+/* ---- DAILY DEALS ---- */
+.deals-intro {
+    font-size: 14px;
+    line-height: 20px;
+    color: #555;
+    margin-bottom: 16px;
+}
+
+.deal-item {
+    padding-bottom: 14px;
+    margin-bottom: 14px;
+    border-bottom: 1px solid #eee;
+}
+
+.deal-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.deal-headline {
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 20px;
+    color: #272C2D;
+    margin-bottom: 2px;
+}
+
+.deal-pricing {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.deal-original {
+    font-size: 13px;
+    color: #999;
+    text-decoration: line-through;
+}
+
+.deal-price {
+    font-size: 14px;
+    font-weight: 700;
+    color: #272C2D;
+}
+
+.deal-savings {
+    font-size: 12px;
+    font-weight: 700;
+    color: #2E7D32;
+}
+
+.deal-cta {
+    font-size: 14px;
+    font-weight: 700;
+    color: #B8593A;
+    text-decoration: underline;
+}

@@ -1,0 +1,443 @@
+/* ============================================
+   BaseLocal Newsletter — Shared Styles
+   Used by all newsletter format templates
+   ============================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    color: #272C2D;
+    background: #FEF5E8;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ---- NEWSLETTER CONTAINER ---- */
+.newsletter {
+    max-width: 670px;
+    margin: 0 auto;
+    padding: 24px 16px 48px;
+}
+
+/* ---- SECTION CARDS ---- */
+.section-card {
+    background: #FFFFFF;
+    border-radius: 5px;
+    padding: 30px;
+    margin-bottom: 8px;
+}
+
+@media (max-width: 600px) {
+    .section-card {
+        padding: 24px 20px;
+    }
+}
+
+/* ---- TOP LINKS ---- */
+.top-links {
+    text-align: center;
+    margin-bottom: 16px;
+    font-size: 16px;
+    line-height: 16px;
+}
+
+.top-links a {
+    color: #B8593A;
+    text-decoration: underline;
+    font-weight: 700;
+}
+
+.top-links .sep {
+    color: #999;
+    margin: 0 4px;
+}
+
+/* ---- HEADER BANNER ---- */
+.header-banner {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    display: block;
+    margin-bottom: 24px;
+}
+
+/* ---- INTRO ---- */
+.intro p {
+    margin: 0;
+    font-size: 16px;
+    line-height: 24px;
+    color: #272C2D;
+    padding-bottom: 16px;
+}
+
+.intro .byline {
+    font-style: italic;
+    color: #555;
+}
+
+/* ---- SPONSOR INTRO ---- */
+.sponsor-intro {
+    margin: 0;
+    font-size: 16px;
+    line-height: 24px;
+    color: #272C2D;
+    padding-bottom: 16px;
+}
+
+/* ---- SPONSOR MODULE (dedicated lead sponsor card) ---- */
+.sponsor-tagline {
+    font-style: italic;
+    font-size: 14px;
+    line-height: 24px;
+    color: #555;
+    margin: 0 0 16px 0;
+}
+
+.sponsor-tagline a {
+    color: #B8593A;
+    text-decoration: underline;
+    font-weight: 700;
+    font-style: normal;
+}
+
+.sponsor-intro a {
+    color: #B8593A;
+    text-decoration: underline;
+    font-weight: 700;
+}
+
+/* ---- SECTION HEADINGS (h2-level) ---- */
+.section-heading {
+    margin: 0 0 12px 0;
+    font-size: 24px;
+    font-weight: 700;
+    color: #272C2D;
+    line-height: 24px;
+}
+
+/* ---- SUB-HEADINGS (h3-level, within a card) ---- */
+.sub-heading {
+    margin: 12px 0 10px 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: #272C2D;
+    line-height: 22px;
+}
+
+/* ---- NEWS ITEMS ---- */
+.news-item {
+    margin: 0;
+    padding-bottom: 16px;
+    font-size: 16px;
+    line-height: 24px;
+    color: #272C2D;
+}
+
+.news-item strong {
+    font-weight: 700;
+}
+
+.news-item a {
+    color: #B8593A;
+    text-decoration: underline;
+    font-weight: 700;
+}
+
+.news-item p {
+    margin-bottom: 16px;
+}
+
+.news-item p:last-child {
+    margin-bottom: 0;
+}
+
+/* ---- AFFILIATE ITEM (blends into news) ---- */
+.news-item.affiliate a {
+    color: #B8593A;
+}
+
+/* ---- PAYWALL NOTE ---- */
+.paywall-note {
+    font-style: italic;
+    font-size: 14px;
+    color: #777;
+    margin-top: 8px;
+}
+
+/* ---- HIGHLIGHTS LIST ---- */
+.highlights-list {
+    list-style: disc;
+    list-style-position: outside;
+    padding-left: 10px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.highlights-list li {
+    font-size: 16px;
+    line-height: 24px;
+    color: #272C2D;
+    margin-bottom: 5px;
+}
+
+.highlights-list a {
+    color: #B8593A;
+    text-decoration: underline;
+    font-weight: 700;
+}
+
+.highlights-list li.affiliate a {
+    font-weight: 700;
+}
+
+/* ---- EVENTS ---- */
+.events-note {
+    font-size: 16px;
+    line-height: 24px;
+    color: #272C2D;
+    margin-bottom: 12px;
+}
+
+.events-note a {
+    color: #B8593A;
+    text-decoration: underline;
+    font-weight: 700;
+}
+
+.events-disclaimer {
+    font-style: italic;
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 20px;
+}
+
+/* h3-level subheadings */
+.events-subheading {
+    margin: 24px 0 10px 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: #272C2D;
+    line-height: 22px;
+}
+
+.event-item {
+    margin: 0;
+    padding-bottom: 16px;
+    font-size: 16px;
+    line-height: 24px;
+    color: #272C2D;
+}
+
+.event-item .event-emoji {
+    margin-right: 4px;
+}
+
+.event-item a {
+    color: #B8593A;
+    text-decoration: underline;
+    font-weight: 700;
+}
+
+.event-item .event-meta {
+    font-style: italic;
+    color: #555;
+}
+
+/* ---- QUICK EVENTS LIST ---- */
+.quick-events {
+    list-style: disc;
+    list-style-position: outside;
+    padding-left: 10px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.quick-events li {
+    font-size: 16px;
+    line-height: 24px;
+    color: #272C2D;
+    margin-bottom: 5px;
+}
+
+.quick-events a {
+    color: #B8593A;
+    text-decoration: underline;
+    font-weight: 700;
+}
+
+.browse-more {
+    margin-top: 16px;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.browse-more a {
+    color: #B8593A;
+    text-decoration: underline;
+    font-weight: 700;
+}
+
+/* ---- REPORT SECTION ---- */
+.weather-subheading {
+    margin: 0 0 10px 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: #272C2D;
+    line-height: 22px;
+}
+
+.weather-day {
+    margin-bottom: 20px;
+}
+
+.weather-day .day-label {
+    font-weight: 700;
+    color: #272C2D;
+}
+
+.weather-day .day-stats {
+    font-style: italic;
+    color: #555;
+}
+
+.weather-day p {
+    font-size: 16px;
+    line-height: 24px;
+    color: #272C2D;
+    margin-top: 6px;
+}
+
+.weather-divider {
+    border: none;
+    border-top: 1px solid #eee;
+    margin: 16px 0;
+}
+
+.report-ad-heading {
+    margin: 24px 0 10px 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: #272C2D;
+    line-height: 22px;
+}
+
+.house-heading {
+    margin: 24px 0 10px 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: #272C2D;
+    line-height: 22px;
+}
+
+.house-desc {
+    font-size: 16px;
+    line-height: 24px;
+    color: #272C2D;
+    margin-bottom: 12px;
+}
+
+.house-link a {
+    color: #B8593A;
+    text-decoration: underline;
+    font-weight: 700;
+}
+
+/* ---- WORTH A PEEK ---- */
+.peek-intro {
+    font-style: italic;
+    font-size: 16px;
+    line-height: 24px;
+    color: #272C2D;
+    margin-bottom: 14px;
+}
+
+.peek-list {
+    list-style: disc;
+    list-style-position: outside;
+    padding-left: 10px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.peek-list li {
+    font-size: 16px;
+    line-height: 24px;
+    color: #272C2D;
+    margin-bottom: 5px;
+}
+
+.peek-list a {
+    color: #B8593A;
+    text-decoration: underline;
+    font-weight: 700;
+}
+
+/* ---- SIGN OFF ---- */
+.signoff {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.signoff-avatar {
+    width: 229px;
+    height: auto;
+    border-radius: 5px;
+    flex-shrink: 0;
+}
+
+.signoff-text {
+    font-size: 16px;
+    line-height: 24px;
+    color: #272C2D;
+}
+
+.signoff-text a {
+    color: #B8593A;
+    text-decoration: underline;
+    font-weight: 700;
+}
+
+.subscribe-ps {
+    font-size: 16px;
+    line-height: 24px;
+    color: #272C2D;
+    padding-top: 12px;
+}
+
+.subscribe-ps a {
+    color: #B8593A;
+    text-decoration: underline;
+    font-weight: 700;
+}
+
+/* ---- FOOTER ---- */
+.newsletter-footer {
+    background: #272C2D;
+    border-radius: 5px;
+    padding: 28px 30px;
+    text-align: center;
+    color: #ccc;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.newsletter-footer .footer-logo {
+    height: 36px;
+    width: auto;
+    margin-bottom: 14px;
+}
+
+.newsletter-footer p {
+    margin-bottom: 8px;
+    font-style: italic;
+}
