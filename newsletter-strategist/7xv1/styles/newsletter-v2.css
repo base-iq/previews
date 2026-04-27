@@ -390,3 +390,87 @@
     text-transform: uppercase;
     color: #6B6258;
 }
+
+/* ---- RANKED CARD ----
+   Standalone content card for ranked-list formats (top-10-weekly).
+   See design-system.md § Newsletter Components > Ranked Card. */
+
+.ranked-card {
+    background: #FFFFFF;
+    border-radius: 5px;
+    padding: 30px;
+    margin-bottom: 8px;
+}
+
+.ranked-card .ranked-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 14px;
+}
+
+.ranked-card .rank {
+    flex-shrink: 0;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #FAF6F4;
+    border: 1px solid #EDE6E1;
+    color: #C2604A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bitter', Georgia, serif;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.5px;
+}
+
+.ranked-card .headline {
+    margin: 0;
+    font-family: 'Bitter', Georgia, serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #2C2421;
+    line-height: 26px;
+    flex: 1;
+    min-width: 0;
+    text-wrap: pretty;
+}
+
+.ranked-card p {
+    margin: 0;
+    font-family: 'Bitter', Georgia, serif;
+    font-size: 16px;
+    line-height: 24px;
+    color: #2C2421;
+}
+
+.ranked-card a {
+    color: #C2604A;
+    text-decoration: underline;
+    font-weight: 700;
+}
+
+@media (max-width: 600px) {
+    .ranked-card {
+        padding: 24px 20px;
+    }
+
+    .ranked-card .ranked-header {
+        gap: 12px;
+        margin-bottom: 12px;
+    }
+
+    .ranked-card .rank {
+        width: 48px;
+        height: 48px;
+        font-size: 20px;
+    }
+
+    .ranked-card .headline {
+        font-size: 18px;
+        line-height: 22px;
+    }
+}
