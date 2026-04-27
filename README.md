@@ -6,40 +6,44 @@ Static host for HTML artifacts across BaseIQ role projects — newsletter format
 
 ## URL Pattern
 
-Each artifact gets a stable URL:
+Each artifact gets a stable URL, organized by brand and artifact type:
 
 ```
-https://base-iq.github.io/previews/{project}/{artifact}/
+https://base-iq.github.io/previews/{brand}/{type}/{artifact}/
 ```
 
 Examples:
-- `https://base-iq.github.io/previews/newsletter-strategist/7xv1/`
-- `https://base-iq.github.io/previews/newsletter-strategist/top-10-weekly/`
+- `https://base-iq.github.io/previews/baselocal/newsletters/7xv1/`
+- `https://base-iq.github.io/previews/baselocal/newsletters/top-10-weekly/`
+- (future) `https://base-iq.github.io/previews/baselocal/bridge-pages/sleepguard/`
 
 ## Structure
 
 ```
 previews/
-├── .nojekyll                              # Tell GitHub Pages to serve files as-is (no Jekyll)
+├── .nojekyll                              # Tell GitHub Pages to serve files as-is
 ├── index.html                             # Auto-generated gallery
 ├── bin/
 │   ├── regen-gallery.js                   # Regenerates the top-level gallery
-│   └── regen-landing.js                   # Regenerates a single artifact's variant landing page
-└── {project}/
-    ├── styles/                            # Shared CSS for the project (no index.html → not in gallery)
-    └── {artifact}/
-        ├── index.html                     # Auto-generated landing page or source-provided
-        ├── {variant}.html
-        └── [assets]
+│   └── regen-landing.js                   # Regenerates one artifact's variant landing page
+└── {brand}/
+    └── {type}/                            # newsletters, bridge-pages, ad-creative, etc.
+        ├── styles/                        # Shared CSS for the type (no index.html → hidden from gallery)
+        └── {artifact}/
+            ├── index.html                 # Auto-generated landing page or source-provided
+            ├── {variant}.html
+            └── [assets]
 ```
+
+The walker is recursive — it doesn't care about depth. Any folder containing an `index.html` (that isn't a redirect stub) becomes a gallery entry, grouped by its parent path.
 
 ## Two Ways Artifacts Get Here
 
-**Direct (canonical for `newsletter-strategist`).** HTML, CSS, and assets live here as the source of truth. Edit in place, commit, push. GitHub Pages rebuilds in ~60 seconds. After adding a new artifact folder, run the regen scripts so it appears correctly in the gallery and variant landing pages:
+**Direct (canonical for newsletter content).** HTML, CSS, and assets live here as the source of truth. Edit in place, commit, push. GitHub Pages rebuilds in ~60 seconds. After adding a new artifact folder, run the regen scripts so it appears correctly in the gallery and variant landing pages:
 
 ```bash
-node bin/regen-landing.js {project}/{artifact}    # only if multiple variants — generates index.html
-node bin/regen-gallery.js                         # always — refreshes the top-level gallery
+node bin/regen-landing.js {path}/{artifact}     # only if multiple variants — generates index.html
+node bin/regen-gallery.js                       # always — refreshes the top-level gallery
 ```
 
 **Mirrored via `/share-preview`.** Some artifacts are drafted in a private location first. The user-level `/share-preview` skill copies a self-contained source folder here and runs the regen scripts. Used by role projects that can't keep their drafts in a public repo.

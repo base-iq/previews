@@ -3,9 +3,16 @@
 //
 // Usage: node bin/regen-gallery.js
 //
-// Walks previews/ two levels deep ({project}/{artifact}/), collects every
-// artifact, and writes a fresh index.html listing them grouped by project.
-// Last-updated dates come from git log on each artifact folder.
+// Recursively walks previews/ to find every "artifact" — defined as a folder
+// that has an index.html which is NOT a redirect stub. Folders without
+// index.html (supporting assets like a shared styles/) and folders whose
+// index.html carries the redirect-marker (alias URLs preserved for the team)
+// are excluded.
+//
+// Each artifact is grouped in the gallery by its parent path relative to
+// previews/ — e.g. an artifact at `previews/baselocal/newsletters/7xv1/`
+// is grouped under "baselocal/newsletters". Last-updated dates come from
+// git log on each artifact folder.
 
 const fs = require('fs');
 const path = require('path');
@@ -22,10 +29,6 @@ function listDirs(dir) {
     .sort();
 }
 
-// A folder is listed in the gallery only if it has an index.html that isn't
-// a redirect stub. Folders without index.html (supporting assets like a shared
-// styles/ folder) and folders whose index.html carries the redirect marker
-// (alias URLs preserved for the team) are both excluded.
 function hasIndex(artifactDir) {
   return fs.existsSync(path.join(artifactDir, 'index.html'));
 }
@@ -58,28 +61,49 @@ function escapeHtml(s) {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
-const projects = listDirs(ROOT);
-const sections = [];
-
-for (const project of projects) {
-  const projectDir = path.join(ROOT, project);
-  const artifacts = listDirs(projectDir).filter(a => isGalleryArtifact(path.join(projectDir, a)));
-  if (artifacts.length === 0) continue;
-
-  const items = artifacts.map(a => {
-    const rel = `${project}/${a}`;
-    const date = lastUpdated(rel);
-    return `    <a class="artifact" href="${rel}/"><span class="slug">${escapeHtml(a)}</span><span class="date">updated ${date}</span></a>`;
-  }).join('\n');
-
-  sections.push(`  <div class="project">
-    <h2>${escapeHtml(project)}</h2>
-${items}
-  </div>`);
+// Recursively find every artifact folder. Returns array of
+// { name, group, relPath } where:
+//   name    — the folder name
+//   group   — parent path relative to ROOT (e.g. "baselocal/newsletters")
+//   relPath — full path relative to ROOT (group + "/" + name)
+function findArtifacts(dir, prefix = '') {
+  const results = [];
+  for (const name of listDirs(dir)) {
+    const full = path.join(dir, name);
+    const rel = prefix ? `${prefix}/${name}` : name;
+    if (isGalleryArtifact(full)) {
+      results.push({ name, group: prefix || '(root)', relPath: rel });
+    } else if (!hasIndex(full)) {
+      // Asset folder (e.g. styles) or a navigation folder (e.g. baselocal). Recurse.
+      results.push(...findArtifacts(full, rel));
+    }
+    // else: redirect stub — skip
+  }
+  return results;
 }
 
+const artifacts = findArtifacts(ROOT);
+
+// Group by group path, preserving sort order
+const groups = new Map();
+for (const a of artifacts) {
+  if (!groups.has(a.group)) groups.set(a.group, []);
+  groups.get(a.group).push(a);
+}
+
+const sortedGroups = Array.from(groups.keys()).sort();
+const sections = sortedGroups.map(group => {
+  const items = groups.get(group).map(a =>
+    `    <a class="artifact" href="${a.relPath}/"><span class="slug">${escapeHtml(a.name)}</span><span class="date">updated ${lastUpdated(a.relPath)}</span></a>`
+  ).join('\n');
+  return `  <div class="project">
+    <h2>${escapeHtml(group)}</h2>
+${items}
+  </div>`;
+});
+
 const body = sections.length === 0
-  ? `  <div class="empty">No artifacts published yet. Use <code>/share-preview</code> from a role project to publish.</div>`
+  ? `  <div class="empty">No artifacts published yet.</div>`
   : sections.join('\n\n');
 
 const html = `<!DOCTYPE html>
@@ -112,7 +136,7 @@ const html = `<!DOCTYPE html>
   h1 { font-size: 32px; line-height: 1.2; font-weight: 700; color: var(--text); margin: 0 0 8px; }
   .sub { font-size: 15px; color: var(--muted); margin: 0 0 40px; }
   .project { margin-bottom: 32px; padding: 24px; background: var(--card); border: 1px solid var(--border); border-radius: 6px; }
-  .project h2 { font-size: 20px; font-weight: 700; color: var(--text); margin: 0 0 16px; }
+  .project h2 { font-size: 16px; font-weight: 700; color: var(--text); margin: 0 0 16px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: -0.2px; }
   .artifact { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 12px 0; border-top: 1px solid var(--border); color: var(--accent); text-decoration: none; font-weight: 700; }
   .artifact:first-of-type { border-top: none; padding-top: 4px; }
   .artifact:hover { text-decoration: underline; }
@@ -126,19 +150,15 @@ const html = `<!DOCTYPE html>
 <body>
 <div class="container">
   <h1>BaseIQ Previews</h1>
-  <p class="sub">Rendered HTML artifacts across all role projects. Click any artifact to open.</p>
+  <p class="sub">Rendered HTML artifacts across all BaseIQ brands. Click any artifact to open.</p>
 
 ${body}
 
-  <footer>Auto-generated by <code>/share-preview</code>. Source: <a href="https://github.com/base-iq/previews">base-iq/previews</a></footer>
+  <footer>Auto-generated. Source: <a href="https://github.com/base-iq/previews">base-iq/previews</a></footer>
 </div>
 </body>
 </html>
 `;
 
 fs.writeFileSync(path.join(ROOT, 'index.html'), html);
-const total = sections.length === 0 ? 0 : projects.reduce((n, p) => {
-  const projectDir = path.join(ROOT, p);
-  return n + listDirs(projectDir).filter(a => isGalleryArtifact(path.join(projectDir, a))).length;
-}, 0);
-console.log(`wrote: index.html (${sections.length} project${sections.length === 1 ? '' : 's'}, ${total} artifact${total === 1 ? '' : 's'})`);
+console.log(`wrote: index.html (${groups.size} group${groups.size === 1 ? '' : 's'}, ${artifacts.length} artifact${artifacts.length === 1 ? '' : 's'})`);
