@@ -13,12 +13,28 @@ const { execSync } = require('child_process');
 
 const ROOT = path.resolve(__dirname, '..');
 const IGNORE = new Set(['bin', '.git', '.github']);
+const REDIRECT_MARKER = '<!-- redirect-to:';
 
 function listDirs(dir) {
   return fs.readdirSync(dir, { withFileTypes: true })
     .filter(d => d.isDirectory() && !IGNORE.has(d.name))
     .map(d => d.name)
     .sort();
+}
+
+// An artifact folder is treated as a redirect alias (and excluded from the
+// gallery) when its index.html starts with the redirect marker. The URL still
+// works — bookmarks point at the canonical location — but it doesn't clutter
+// the gallery as if it were a separate artifact.
+function isRedirect(artifactDir) {
+  const indexPath = path.join(artifactDir, 'index.html');
+  if (!fs.existsSync(indexPath)) return false;
+  // Only need to look at the first ~200 bytes — marker is on line 2.
+  const fd = fs.openSync(indexPath, 'r');
+  const buf = Buffer.alloc(256);
+  fs.readSync(fd, buf, 0, 256, 0);
+  fs.closeSync(fd);
+  return buf.toString('utf8').includes(REDIRECT_MARKER);
 }
 
 function lastUpdated(relPath) {
@@ -40,7 +56,7 @@ const sections = [];
 
 for (const project of projects) {
   const projectDir = path.join(ROOT, project);
-  const artifacts = listDirs(projectDir);
+  const artifacts = listDirs(projectDir).filter(a => !isRedirect(path.join(projectDir, a)));
   if (artifacts.length === 0) continue;
 
   const items = artifacts.map(a => {
@@ -114,5 +130,8 @@ ${body}
 `;
 
 fs.writeFileSync(path.join(ROOT, 'index.html'), html);
-const total = sections.length === 0 ? 0 : projects.reduce((n, p) => n + listDirs(path.join(ROOT, p)).length, 0);
+const total = sections.length === 0 ? 0 : projects.reduce((n, p) => {
+  const projectDir = path.join(ROOT, p);
+  return n + listDirs(projectDir).filter(a => !isRedirect(path.join(projectDir, a))).length;
+}, 0);
 console.log(`wrote: index.html (${sections.length} project${sections.length === 1 ? '' : 's'}, ${total} artifact${total === 1 ? '' : 's'})`);
