@@ -1,22 +1,25 @@
 /* ============================================
    BaseLocal Newsletter — Daily Deals Experiment
-   Extends newsletter.css with deal-specific styles
+   Extends newsletter.css + newsletter-v2.css with
+   deal-specific styles. Tokens aligned to canonical:
+     text       #2C2421
+     accent     #C2604A
+     muted      #6B6258
+     sub-muted  #C9BEB7
+     hairline   #EDE6E1
    ============================================ */
 
-@import url('newsletter.css');
-
-/* ---- DAILY DEALS ---- */
 .deals-intro {
     font-size: 14px;
     line-height: 20px;
-    color: #555;
+    color: #6B6258;
     margin-bottom: 16px;
 }
 
 .deal-item {
     padding-bottom: 14px;
     margin-bottom: 14px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #EDE6E1;
 }
 
 .deal-item:last-child {
@@ -26,11 +29,12 @@
 }
 
 .deal-headline {
-    font-size: 15px;
+    font-family: 'Bitter', Georgia, serif;
+    font-size: 16px;
     font-weight: 700;
-    line-height: 20px;
-    color: #272C2D;
-    margin-bottom: 2px;
+    line-height: 22px;
+    color: #2C2421;
+    margin-bottom: 4px;
 }
 
 .deal-pricing {
@@ -42,25 +46,33 @@
 
 .deal-original {
     font-size: 13px;
-    color: #999;
+    color: #C9BEB7;
     text-decoration: line-through;
 }
 
 .deal-price {
     font-size: 14px;
     font-weight: 700;
-    color: #272C2D;
+    color: #2C2421;
 }
 
 .deal-savings {
-    font-size: 12px;
-    font-weight: 700;
-    color: #2E7D32;
+    font-family: 'Lato', Helvetica, Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #4A6B4E;
 }
 
 .deal-cta {
-    font-size: 14px;
-    font-weight: 700;
-    color: #B8593A;
-    text-decoration: underline;
+    font-family: 'Lato', Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #C2604A;
+    text-decoration: none;
+    border-bottom: 2px solid #C2604A;
+    padding-bottom: 2px;
 }

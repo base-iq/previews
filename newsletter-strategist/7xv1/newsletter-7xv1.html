@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Tuesday, Tacoma | BaseLocal</title>
-    <link rel="stylesheet" href="styles/newsletter.css">
+    <title>Happy Tuesday, Glendale | BaseLocal</title>
+    <link rel="stylesheet" href="styles/newsletter.css?v=3">
+    <link rel="stylesheet" href="styles/newsletter-v2.css?v=3">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap">
 </head>
 <body>
 
@@ -20,10 +22,18 @@
         <div class="top-links">
             <a href="#">Subscribe</a>
             <span class="sep">|</span>
-            <a href="#">Get featured</a>
+            <a href="#">Advertise</a>
+            <span class="sep">|</span>
+            <a href="#">Submit Event</a>
         </div>
 
-        <img src="glendale-cover.jpg" alt="BaseLocal Glendale cover photo" class="header-banner">
+        <div class="masthead">
+            <div class="masthead-meta">
+                <span class="masthead-date">Tuesday, April 26 &middot; Sunny, 78&deg;</span>
+                <span class="masthead-edition">Glendale Edition &middot; No. 184</span>
+            </div>
+            <img src="glendale-cover.jpg" alt="BaseLocal Glendale cover photo" class="masthead-banner">
+        </div>
 
         <div class="intro">
             <p><strong>Rise and shine, Glendale!</strong> In today's planning-your-week edition: La Purisima Bakery's cult-favorite cream horn, Assyrian New Year 6776, and surf & turf sunset dinner cruise + all our favorite events happening over the next seven days.</p>
@@ -36,8 +46,10 @@
     <!-- ============================================
          SECTION 2: IN THE NEWS
          ============================================ -->
-    <div class="section-card">
-        <div class="section-heading">&#x1F4F0; In the news</div>
+    <div class="section-card" id="news">
+        <span class="kicker"><span class="kicker-num">01</span> &mdash; Worth knowing</span>
+        <div class="section-heading">In the news</div>
+        <p class="section-dek">Three local stories from this week, plus a few worth your money.</p>
 
         <!-- Organic (3 items) -->
         <div class="news-item">
@@ -103,8 +115,10 @@
          3 organic local business features. Not ads.
          Appears every edition.
          ============================================ -->
-    <div class="section-card">
-        <div class="section-heading">&#x1F48E; Local business spotlight</div>
+    <div class="section-card" id="spotlight">
+        <span class="kicker"><span class="kicker-num">02</span> &mdash; On our radar</span>
+        <div class="section-heading">Local business spotlight</div>
+        <p class="section-dek">Three nearby spots we'd actually send a friend to.</p>
 
         <div class="news-item">
             <strong>Indoor energy outlet:</strong> PLAYzona is a Glendale indoor play space for kids (birth–7) with open play, music and art enrichment, and birthday parties. When the park's a no-go, it keeps wiggles in check and the day moving. Easy, imaginative play for them and a breather for you.
@@ -118,7 +132,11 @@
             <strong>Steak night, upgraded:</strong> Arrowhead Grill serves hand-cut USDA Prime steaks with polished service, fresh seafood, and a solid wine list alongside proper cocktails. Perfect for date night, celebrations, or when the week wants something special, minus downtown fuss.
         </div>
 
-        <p class="spotlight-disclaimer">These aren't ads or sponsored placements, just some cool nearby spots we think are worth a visit.</p>
+        <div class="advertise-cta">
+            <p class="advertise-prompt">Run a Glendale business?</p>
+            <p class="advertise-pitch">We feature local spots every day &mdash; tell us about yours.</p>
+            <a href="#" class="advertise-link">Advertise with BaseLocal &rarr;</a>
+        </div>
     </div>
 
     <!-- ============================================
@@ -126,7 +144,9 @@
          Fully monetized — ~5 affiliate items, no organic.
          ============================================ -->
     <div class="section-card">
-        <div class="section-heading">&#x1FAF6; We got your back</div>
+        <span class="kicker"><span class="kicker-num">03</span> &mdash; Our recommendations</span>
+        <div class="section-heading">We got your back</div>
+        <p class="section-dek">A handful of products and services we think are worth a look.</p>
 
         <div class="news-item affiliate">
             <strong>Makeup that actually works:</strong> My sister and I were talking the other day about how the makeup we used in our 20s… just doesn't work now that we're in our 30s and 40s. Laura Geller's entire makeup line addresses this shift, with formulas that smooth, brighten, and actually stay put. If you're in the same boat, *<a href="#">their curated kits are worth a look</a> &rarr;
@@ -153,8 +173,10 @@
          SECTION 6: EVENTS
          Heading varies by edition/theme.
          ============================================ -->
-    <div class="section-card">
-        <div class="section-heading">&#x1F4C6; Our favorite events this week</div>
+    <div class="section-card" id="events">
+        <span class="kicker"><span class="kicker-num">04</span> &mdash; This week's calendar</span>
+        <div class="section-heading">Our favorite events this week</div>
+        <p class="section-dek">Seven things on our list, plus the live music lineup.</p>
 
         <div class="event-item">
             <span class="event-emoji">&#x1F388;</span> <a href="#">Pop-In Playdate</a> @ Tacoma Nazarene Church | <span class="event-meta">Wednesday (2/25) at 10:00 AM</span> — Parenting may be a marathon, but this pop-in playdate hands you a caffeine station, snacks, and actual adult conversation while the tiny tornadoes wear themselves out.
@@ -205,7 +227,8 @@
          SECTION 7: LOCATION REPORT
          ============================================ -->
     <div class="section-card">
-        <div class="section-heading">&#x1F4FB; Tacoma report</div>
+        <span class="kicker"><span class="kicker-num">05</span> &mdash; The Glendale report</span>
+        <div class="section-heading">Glendale Report</div>
 
         <div class="weather-subheading">Weather forecast</div>
 

@@ -1,7 +1,12 @@
 /* ============================================
    BaseLocal Newsletter — Shared Styles
-   Used by all newsletter format templates
+   Same structure as the original production CSS;
+   only the design tokens (colors + fonts) have
+   been swapped to match the rest of the BaseLocal
+   design system (advertorial, bridge page, etc.).
    ============================================ */
+
+@import url("https://fonts.googleapis.com/css2?family=Bitter:wght@400;700&family=Lato:wght@400;700;900&display=swap");
 
 * {
     margin: 0;
@@ -10,12 +15,12 @@
 }
 
 body {
-    font-family: Helvetica, Arial, sans-serif;
+    font-family: 'Lato', Helvetica, Arial, sans-serif;
     font-size: 16px;
     font-weight: 400;
     line-height: 24px;
-    color: #272C2D;
-    background: #FEF5E8;
+    color: #444444;
+    background: #FAF6F4;
     -webkit-font-smoothing: antialiased;
 }
 
@@ -49,13 +54,13 @@ body {
 }
 
 .top-links a {
-    color: #B8593A;
+    color: #C2604A;
     text-decoration: underline;
     font-weight: 700;
 }
 
 .top-links .sep {
-    color: #999;
+    color: #999999;
     margin: 0 4px;
 }
 
@@ -74,13 +79,17 @@ body {
     margin: 0;
     font-size: 16px;
     line-height: 24px;
-    color: #272C2D;
+    color: #444444;
     padding-bottom: 16px;
+}
+
+.intro p strong {
+    color: #2C2421;
 }
 
 .intro .byline {
     font-style: italic;
-    color: #555;
+    color: #797979;
 }
 
 /* ---- SPONSOR INTRO ---- */
@@ -88,8 +97,12 @@ body {
     margin: 0;
     font-size: 16px;
     line-height: 24px;
-    color: #272C2D;
+    color: #444444;
     padding-bottom: 16px;
+}
+
+.sponsor-intro strong {
+    color: #2C2421;
 }
 
 /* ---- SPONSOR MODULE (dedicated lead sponsor card) ---- */
@@ -97,19 +110,19 @@ body {
     font-style: italic;
     font-size: 14px;
     line-height: 24px;
-    color: #555;
+    color: #797979;
     margin: 0 0 16px 0;
 }
 
 .sponsor-tagline a {
-    color: #B8593A;
+    color: #C2604A;
     text-decoration: underline;
     font-weight: 700;
     font-style: normal;
 }
 
 .sponsor-intro a {
-    color: #B8593A;
+    color: #C2604A;
     text-decoration: underline;
     font-weight: 700;
 }
@@ -117,19 +130,21 @@ body {
 /* ---- SECTION HEADINGS (h2-level) ---- */
 .section-heading {
     margin: 0 0 12px 0;
+    font-family: 'Bitter', Georgia, serif;
     font-size: 24px;
     font-weight: 700;
-    color: #272C2D;
-    line-height: 24px;
+    color: #2C2421;
+    line-height: 1.25;
 }
 
 /* ---- SUB-HEADINGS (h3-level, within a card) ---- */
 .sub-heading {
     margin: 12px 0 10px 0;
+    font-family: 'Lato', Helvetica, Arial, sans-serif;
     font-size: 20px;
     font-weight: 700;
-    color: #272C2D;
-    line-height: 22px;
+    color: #2C2421;
+    line-height: 1.3;
 }
 
 /* ---- NEWS ITEMS ---- */
@@ -138,15 +153,16 @@ body {
     padding-bottom: 16px;
     font-size: 16px;
     line-height: 24px;
-    color: #272C2D;
+    color: #444444;
 }
 
 .news-item strong {
     font-weight: 700;
+    color: #2C2421;
 }
 
 .news-item a {
-    color: #B8593A;
+    color: #C2604A;
     text-decoration: underline;
     font-weight: 700;
 }
@@ -159,16 +175,12 @@ body {
     margin-bottom: 0;
 }
 
-/* ---- AFFILIATE ITEM (blends into news) ---- */
-.news-item.affiliate a {
-    color: #B8593A;
-}
-
+/* AFFILIATE items render identical to organic — no special styling. */
 /* ---- PAYWALL NOTE ---- */
 .paywall-note {
     font-style: italic;
     font-size: 14px;
-    color: #777;
+    color: #797979;
     margin-top: 8px;
 }
 
@@ -184,30 +196,35 @@ body {
 .highlights-list li {
     font-size: 16px;
     line-height: 24px;
-    color: #272C2D;
+    color: #444444;
     margin-bottom: 5px;
 }
 
 .highlights-list a {
-    color: #B8593A;
+    color: #C2604A;
     text-decoration: underline;
     font-weight: 700;
 }
 
-.highlights-list li.affiliate a {
-    font-weight: 700;
+/* ---- LOCAL BUSINESS SPOTLIGHT DISCLAIMER ---- */
+.spotlight-disclaimer {
+    font-style: italic;
+    font-size: 14px;
+    color: #797979;
+    margin-top: 8px;
+    line-height: 1.6;
 }
 
 /* ---- EVENTS ---- */
 .events-note {
     font-size: 16px;
     line-height: 24px;
-    color: #272C2D;
+    color: #444444;
     margin-bottom: 12px;
 }
 
 .events-note a {
-    color: #B8593A;
+    color: #C2604A;
     text-decoration: underline;
     font-weight: 700;
 }
@@ -215,17 +232,18 @@ body {
 .events-disclaimer {
     font-style: italic;
     font-size: 14px;
-    color: #777;
+    color: #797979;
     margin-bottom: 20px;
 }
 
 /* h3-level subheadings */
 .events-subheading {
     margin: 24px 0 10px 0;
+    font-family: 'Lato', Helvetica, Arial, sans-serif;
     font-size: 20px;
     font-weight: 700;
-    color: #272C2D;
-    line-height: 22px;
+    color: #2C2421;
+    line-height: 1.3;
 }
 
 .event-item {
@@ -233,7 +251,11 @@ body {
     padding-bottom: 16px;
     font-size: 16px;
     line-height: 24px;
-    color: #272C2D;
+    color: #444444;
+}
+
+.event-item strong {
+    color: #2C2421;
 }
 
 .event-item .event-emoji {
@@ -241,14 +263,14 @@ body {
 }
 
 .event-item a {
-    color: #B8593A;
+    color: #C2604A;
     text-decoration: underline;
     font-weight: 700;
 }
 
 .event-item .event-meta {
     font-style: italic;
-    color: #555;
+    color: #797979;
 }
 
 /* ---- QUICK EVENTS LIST ---- */
@@ -263,12 +285,12 @@ body {
 .quick-events li {
     font-size: 16px;
     line-height: 24px;
-    color: #272C2D;
+    color: #444444;
     margin-bottom: 5px;
 }
 
 .quick-events a {
-    color: #B8593A;
+    color: #C2604A;
     text-decoration: underline;
     font-weight: 700;
 }
@@ -277,10 +299,11 @@ body {
     margin-top: 16px;
     font-size: 16px;
     line-height: 24px;
+    color: #444444;
 }
 
 .browse-more a {
-    color: #B8593A;
+    color: #C2604A;
     text-decoration: underline;
     font-weight: 700;
 }
@@ -288,10 +311,11 @@ body {
 /* ---- REPORT SECTION ---- */
 .weather-subheading {
     margin: 0 0 10px 0;
+    font-family: 'Lato', Helvetica, Arial, sans-serif;
     font-size: 20px;
     font-weight: 700;
-    color: #272C2D;
-    line-height: 22px;
+    color: #2C2421;
+    line-height: 1.3;
 }
 
 .weather-day {
@@ -300,52 +324,46 @@ body {
 
 .weather-day .day-label {
     font-weight: 700;
-    color: #272C2D;
+    color: #2C2421;
 }
 
 .weather-day .day-stats {
     font-style: italic;
-    color: #555;
+    color: #797979;
 }
 
 .weather-day p {
     font-size: 16px;
     line-height: 24px;
-    color: #272C2D;
+    color: #444444;
     margin-top: 6px;
 }
 
 .weather-divider {
     border: none;
-    border-top: 1px solid #eee;
+    border-top: 1px solid #E8E0DC;
     margin: 16px 0;
 }
 
-.report-ad-heading {
-    margin: 24px 0 10px 0;
-    font-size: 20px;
-    font-weight: 700;
-    color: #272C2D;
-    line-height: 22px;
-}
-
+.report-ad-heading,
 .house-heading {
     margin: 24px 0 10px 0;
+    font-family: 'Lato', Helvetica, Arial, sans-serif;
     font-size: 20px;
     font-weight: 700;
-    color: #272C2D;
-    line-height: 22px;
+    color: #2C2421;
+    line-height: 1.3;
 }
 
 .house-desc {
     font-size: 16px;
     line-height: 24px;
-    color: #272C2D;
+    color: #444444;
     margin-bottom: 12px;
 }
 
 .house-link a {
-    color: #B8593A;
+    color: #C2604A;
     text-decoration: underline;
     font-weight: 700;
 }
@@ -355,7 +373,7 @@ body {
     font-style: italic;
     font-size: 16px;
     line-height: 24px;
-    color: #272C2D;
+    color: #444444;
     margin-bottom: 14px;
 }
 
@@ -370,12 +388,12 @@ body {
 .peek-list li {
     font-size: 16px;
     line-height: 24px;
-    color: #272C2D;
+    color: #444444;
     margin-bottom: 5px;
 }
 
 .peek-list a {
-    color: #B8593A;
+    color: #C2604A;
     text-decoration: underline;
     font-weight: 700;
 }
@@ -398,11 +416,15 @@ body {
 .signoff-text {
     font-size: 16px;
     line-height: 24px;
-    color: #272C2D;
+    color: #444444;
+}
+
+.signoff-text strong {
+    color: #2C2421;
 }
 
 .signoff-text a {
-    color: #B8593A;
+    color: #C2604A;
     text-decoration: underline;
     font-weight: 700;
 }
@@ -410,23 +432,27 @@ body {
 .subscribe-ps {
     font-size: 16px;
     line-height: 24px;
-    color: #272C2D;
+    color: #444444;
     padding-top: 12px;
 }
 
+.subscribe-ps strong {
+    color: #2C2421;
+}
+
 .subscribe-ps a {
-    color: #B8593A;
+    color: #C2604A;
     text-decoration: underline;
     font-weight: 700;
 }
 
 /* ---- FOOTER ---- */
 .newsletter-footer {
-    background: #272C2D;
+    background: #2C2421;
     border-radius: 5px;
     padding: 28px 30px;
     text-align: center;
-    color: #ccc;
+    color: #B5A89C;
     font-size: 12px;
     line-height: 1.6;
 }
