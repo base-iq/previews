@@ -1,0 +1,78 @@
+/* ============================================
+   BaseLocal Newsletter — Daily Deals Experiment
+   Extends newsletter.css + newsletter-v2.css with
+   deal-specific styles. Tokens aligned to canonical:
+     text       #2C2421
+     accent     #C2604A
+     muted      #6B6258
+     sub-muted  #C9BEB7
+     hairline   #EDE6E1
+   ============================================ */
+
+.deals-intro {
+    font-size: 14px;
+    line-height: 20px;
+    color: #6B6258;
+    margin-bottom: 16px;
+}
+
+.deal-item {
+    padding-bottom: 14px;
+    margin-bottom: 14px;
+    border-bottom: 1px solid #EDE6E1;
+}
+
+.deal-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.deal-headline {
+    font-family: 'Bitter', Georgia, serif;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 22px;
+    color: #2C2421;
+    margin-bottom: 4px;
+}
+
+.deal-pricing {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.deal-original {
+    font-size: 13px;
+    color: #C9BEB7;
+    text-decoration: line-through;
+}
+
+.deal-price {
+    font-size: 14px;
+    font-weight: 700;
+    color: #2C2421;
+}
+
+.deal-savings {
+    font-family: 'Lato', Helvetica, Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #4A6B4E;
+}
+
+.deal-cta {
+    font-family: 'Lato', Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #C2604A;
+    text-decoration: none;
+    border-bottom: 2px solid #C2604A;
+    padding-bottom: 2px;
+}
