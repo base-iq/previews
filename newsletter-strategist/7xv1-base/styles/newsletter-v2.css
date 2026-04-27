@@ -184,6 +184,14 @@
     border-top: 1px solid #EDE6E1;
 }
 
+/* Sponsor module: keep paragraphs clean — no hairlines between items.
+   The kicker already labels this card as a sponsored unit. */
+.sponsor-module .news-item + .news-item {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+}
+
 /* When highlights-list follows news items, give it air */
 .section-card .news-item + .sub-heading {
     margin-top: 24px;
