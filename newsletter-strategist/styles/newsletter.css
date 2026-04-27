@@ -1,4 +1,19 @@
 /* ============================================
+   BaseLocal Newsletter — single canonical stylesheet
+   ============================================
+   Merged from three previously-separate files:
+     1. newsletter.css      (base)
+     2. newsletter-v2.css   (canonical redesign — kickers, masthead, advertise-cta, ranked-card, …)
+     3. newsletter-deals.css (deals variant overlay)
+
+   Cascade order: base → redesign overrides → deals overlay.
+   Override selectors (.section-card, .top-links) appear once with
+   the redesign values; the original v1 declarations were dropped.
+   ============================================ */
+
+/* ===== 1. BASE (formerly newsletter.css) ===== */
+
+/* ============================================
    BaseLocal Newsletter — Shared Styles
    Same structure as the original production CSS;
    only the design tokens (colors + fonts) have
@@ -466,4 +481,566 @@ body {
 .newsletter-footer p {
     margin-bottom: 8px;
     font-style: italic;
+}
+
+
+/* ===== 2. CANONICAL REDESIGN (formerly newsletter-v2.css) ===== */
+
+/* ============================================
+   BaseLocal Newsletter — v2 "Tightened" overrides
+   Layered ON TOP of newsletter.css. Adds:
+     – kicker labels above section headings
+     – date-stamped masthead block
+     – hairline dividers between news items
+     – tag-pill highlights
+     – editorial section deks (one-line subhead under heading)
+     – haiku-ish weather treatment
+     – editor sign-off (script signature)
+   ============================================ */
+
+/* ============================================
+   9. ADVERTISE WITH US — CTA inside Spotlight card
+   ============================================ */
+.advertise-cta {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid #EDE6E1;
+    text-align: center;
+}
+
+.advertise-prompt {
+    margin: 0 0 4px 0;
+    font-family: 'Bitter', Georgia, serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #2C2421;
+    line-height: 1.3;
+}
+
+.advertise-pitch {
+    margin: 0 0 12px 0;
+    font-family: 'Bitter', Georgia, serif;
+    font-style: italic;
+    font-size: 15px;
+    color: #6B6258;
+    line-height: 1.5;
+}
+
+.advertise-link {
+    display: inline-block;
+    font-family: 'Lato', Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #C2604A;
+    text-decoration: none;
+    padding: 8px 0;
+    border-bottom: 2px solid #C2604A;
+    transition: color 120ms ease, border-color 120ms ease;
+}
+
+.advertise-link:hover {
+    color: #2C2421;
+    border-color: #2C2421;
+}
+
+/* ============================================
+   TOP LINKS — masthead nav
+   Flush left, uppercase tracking, no underlines,
+   hairline below to anchor it as a real masthead nav.
+   ============================================ */
+.top-links {
+    text-align: left;
+    margin: 0 0 18px 0;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #EDE6E1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0;
+    font-size: 11px;
+    line-height: 1;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-family: 'Lato', Helvetica, Arial, sans-serif;
+}
+
+.top-links a {
+    color: #2C2421;
+    text-decoration: none;
+    font-weight: 700;
+    padding: 4px 0;
+    white-space: nowrap;
+    transition: color 120ms ease;
+}
+
+.top-links a:hover {
+    color: #C2604A;
+}
+
+.top-links .sep {
+    display: inline-block;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: #C9BEB7;
+    color: transparent;
+    margin: 0 14px;
+    font-size: 0;
+    line-height: 0;
+    vertical-align: middle;
+}
+.kicker {
+    display: block;
+    margin: 0 0 6px 0;
+    font-family: 'Lato', Helvetica, Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #6B6258;
+}
+
+/* The numeral inside a kicker — keeps the dash & word in the brand color
+   but lets the number itself feel a touch heavier/anchored. */
+.kicker .kicker-num {
+    color: #2C2421;
+    margin-right: 2px;
+}
+
+/* Optional one-line dek under a section heading */
+.section-dek {
+    margin: -4px 0 18px 0;
+    font-family: 'Bitter', Georgia, serif;
+    font-style: italic;
+    font-size: 15px;
+    line-height: 1.5;
+    color: #6B6258;
+}
+
+/* ============================================
+   2. MASTHEAD (replaces simple cover image)
+   ============================================ */
+.masthead {
+    margin-bottom: 24px;
+}
+
+.masthead-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #E8E0DC;
+    font-family: 'Bitter', Georgia, serif;
+    font-style: italic;
+    font-size: 14px;
+    color: #6B6258;
+}
+
+.masthead-date {
+    font-weight: 400;
+}
+
+.masthead-edition {
+    font-weight: 700;
+    font-style: normal;
+    font-family: 'Lato', Helvetica, Arial, sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #6B6258;
+}
+
+.masthead-banner {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    display: block;
+    margin-bottom: 0;
+}
+
+/* ============================================
+   3. HAIRLINE DIVIDERS BETWEEN NEWS ITEMS
+   Adds a subtle rule between each .news-item inside
+   a .section-card. The first item gets no top rule.
+   ============================================ */
+.section-card .news-item + .news-item {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid #EDE6E1;
+}
+
+/* Sponsor module: keep paragraphs clean — no hairlines between items.
+   The kicker already labels this card as a sponsored unit. */
+.sponsor-module .news-item + .news-item {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+}
+
+/* When highlights-list follows news items, give it air */
+.section-card .news-item + .sub-heading {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid #EDE6E1;
+}
+
+/* ============================================
+   4. TAG PILLS (replaces plain bullets in highlights)
+   ============================================ */
+.tag-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 8px 0;
+}
+
+.tag-list li {
+    margin-bottom: 14px;
+    font-size: 16px;
+    line-height: 24px;
+    color: #444444;
+}
+
+.tag-list li:last-child {
+    margin-bottom: 0;
+}
+
+.tag-list a {
+    color: #C2604A;
+    text-decoration: underline;
+    font-weight: 700;
+}
+
+.tag-pill {
+    display: inline-block;
+    margin-right: 8px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: #F4ECE7;
+    color: #6B4A3E;
+    font-family: 'Lato', Helvetica, Arial, sans-serif;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    vertical-align: 2px;
+}
+
+.tag-pill.free { background: #E6F0E8; color: #4A6B4E; }
+.tag-pill.outdoor { background: #E8EEEF; color: #3D5660; }
+.tag-pill.kids { background: #FBE9DA; color: #8C5530; }
+.tag-pill.music { background: #EDE5F0; color: #5B4365; }
+.tag-pill.food { background: #F4E1DA; color: #8C4530; }
+
+/* ============================================
+   5. WEATHER HAIKU
+   ============================================ */
+.weather-haiku {
+    margin: 0 0 16px 0;
+    padding: 12px 0 16px 0;
+    border-bottom: 1px solid #EDE6E1;
+    font-family: 'Bitter', Georgia, serif;
+    font-style: italic;
+    font-size: 22px;
+    line-height: 1.4;
+    color: #2C2421;
+    text-wrap: pretty;
+}
+
+.weather-haiku .temp {
+    font-style: normal;
+    font-weight: 700;
+    color: #C2604A;
+}
+
+/* ============================================
+   7. TODAY'S PICKS — hero strip below masthead
+   3 tiles, each anchor-links to its section.
+   ============================================ */
+.todays-picks {
+    margin: 0 0 24px 0;
+}
+
+.todays-picks-label {
+    margin: 0 0 12px 0;
+    font-family: 'Lato', Helvetica, Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #C2604A;
+}
+
+.picks-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+}
+
+.pick-tile {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    border-radius: 6px;
+    overflow: hidden;
+    background: #FAF6F4;
+    border: 1px solid #EDE6E1;
+    transition: transform 120ms ease, border-color 120ms ease;
+}
+
+.pick-tile:hover {
+    transform: translateY(-2px);
+    border-color: #C2604A;
+}
+
+.pick-thumb {
+    aspect-ratio: 4 / 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bitter', Georgia, serif;
+    font-size: 32px;
+    color: #FAF6F4;
+    line-height: 1;
+}
+
+.pick-thumb.news { background: #2C2421; }
+.pick-thumb.event { background: #C2604A; }
+.pick-thumb.place { background: #6B4A3E; }
+
+.pick-body {
+    padding: 10px 12px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.pick-eyebrow {
+    font-family: 'Lato', Helvetica, Arial, sans-serif;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #C2604A;
+}
+
+.pick-title {
+    font-family: 'Bitter', Georgia, serif;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.25;
+    color: #2C2421;
+    text-wrap: pretty;
+}
+
+.pick-meta {
+    margin-top: 4px;
+    font-family: 'Lato', Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    font-style: italic;
+    color: #6B6258;
+}
+
+@media (max-width: 540px) {
+    .picks-grid { grid-template-columns: 1fr; }
+    .pick-thumb { aspect-ratio: 16 / 7; }
+}
+.editor-signature {
+    margin: 18px 0 0 0;
+    font-family: 'Bitter', Georgia, serif;
+    font-style: italic;
+    font-size: 18px;
+    color: #2C2421;
+    line-height: 1.4;
+}
+
+.editor-signature .name {
+    display: block;
+    margin-top: 8px;
+    font-family: 'Caveat', 'Bitter', cursive;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 28px;
+    color: #C2604A;
+    letter-spacing: 0.5px;
+}
+
+.editor-signature .title {
+    display: block;
+    margin-top: 2px;
+    font-family: 'Lato', Helvetica, Arial, sans-serif;
+    font-style: normal;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #6B6258;
+}
+
+/* ---- RANKED CARD ----
+   Standalone content card for ranked-list formats (top-10-weekly).
+   See design-system.md § Newsletter Components > Ranked Card. */
+
+.ranked-card {
+    background: #FFFFFF;
+    border-radius: 5px;
+    padding: 30px;
+    margin-bottom: 8px;
+}
+
+.ranked-card .ranked-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 14px;
+}
+
+.ranked-card .rank {
+    flex-shrink: 0;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #FAF6F4;
+    border: 1px solid #EDE6E1;
+    color: #C2604A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bitter', Georgia, serif;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.5px;
+}
+
+.ranked-card .headline {
+    margin: 0;
+    font-family: 'Bitter', Georgia, serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #2C2421;
+    line-height: 26px;
+    flex: 1;
+    min-width: 0;
+    text-wrap: pretty;
+}
+
+.ranked-card p {
+    margin: 0;
+    font-family: 'Bitter', Georgia, serif;
+    font-size: 16px;
+    line-height: 24px;
+    color: #2C2421;
+}
+
+.ranked-card a {
+    color: #C2604A;
+    text-decoration: underline;
+    font-weight: 700;
+}
+
+@media (max-width: 600px) {
+    .ranked-card {
+        padding: 24px 20px;
+    }
+
+    .ranked-card .ranked-header {
+        gap: 12px;
+        margin-bottom: 12px;
+    }
+
+    .ranked-card .rank {
+        width: 48px;
+        height: 48px;
+        font-size: 20px;
+    }
+
+    .ranked-card .headline {
+        font-size: 18px;
+        line-height: 22px;
+    }
+}
+
+
+/* ===== 3. DEALS OVERLAY (formerly newsletter-deals.css) ===== */
+
+/* ============================================
+   BaseLocal Newsletter — Daily Deals Experiment
+   Extends newsletter.css + newsletter-v2.css with
+   deal-specific styles. Tokens aligned to canonical:
+     text       #2C2421
+     accent     #C2604A
+     muted      #6B6258
+     sub-muted  #C9BEB7
+     hairline   #EDE6E1
+   ============================================ */
+
+.deals-intro {
+    font-size: 14px;
+    line-height: 20px;
+    color: #6B6258;
+    margin-bottom: 16px;
+}
+
+.deal-item {
+    padding-bottom: 14px;
+    margin-bottom: 14px;
+    border-bottom: 1px solid #EDE6E1;
+}
+
+.deal-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.deal-headline {
+    font-family: 'Bitter', Georgia, serif;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 22px;
+    color: #2C2421;
+    margin-bottom: 4px;
+}
+
+.deal-pricing {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.deal-original {
+    font-size: 13px;
+    color: #C9BEB7;
+    text-decoration: line-through;
+}
+
+.deal-price {
+    font-size: 14px;
+    font-weight: 700;
+    color: #2C2421;
+}
+
+.deal-savings {
+    font-family: 'Lato', Helvetica, Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #4A6B4E;
+}
+
+.deal-cta {
+    font-family: 'Lato', Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #C2604A;
+    text-decoration: none;
+    border-bottom: 2px solid #C2604A;
+    padding-bottom: 2px;
 }
