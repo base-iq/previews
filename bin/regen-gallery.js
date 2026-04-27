@@ -22,19 +22,26 @@ function listDirs(dir) {
     .sort();
 }
 
-// An artifact folder is treated as a redirect alias (and excluded from the
-// gallery) when its index.html starts with the redirect marker. The URL still
-// works — bookmarks point at the canonical location — but it doesn't clutter
-// the gallery as if it were a separate artifact.
+// A folder is listed in the gallery only if it has an index.html that isn't
+// a redirect stub. Folders without index.html (supporting assets like a shared
+// styles/ folder) and folders whose index.html carries the redirect marker
+// (alias URLs preserved for the team) are both excluded.
+function hasIndex(artifactDir) {
+  return fs.existsSync(path.join(artifactDir, 'index.html'));
+}
+
 function isRedirect(artifactDir) {
   const indexPath = path.join(artifactDir, 'index.html');
   if (!fs.existsSync(indexPath)) return false;
-  // Only need to look at the first ~200 bytes — marker is on line 2.
   const fd = fs.openSync(indexPath, 'r');
   const buf = Buffer.alloc(256);
   fs.readSync(fd, buf, 0, 256, 0);
   fs.closeSync(fd);
   return buf.toString('utf8').includes(REDIRECT_MARKER);
+}
+
+function isGalleryArtifact(artifactDir) {
+  return hasIndex(artifactDir) && !isRedirect(artifactDir);
 }
 
 function lastUpdated(relPath) {
@@ -56,7 +63,7 @@ const sections = [];
 
 for (const project of projects) {
   const projectDir = path.join(ROOT, project);
-  const artifacts = listDirs(projectDir).filter(a => !isRedirect(path.join(projectDir, a)));
+  const artifacts = listDirs(projectDir).filter(a => isGalleryArtifact(path.join(projectDir, a)));
   if (artifacts.length === 0) continue;
 
   const items = artifacts.map(a => {
@@ -132,6 +139,6 @@ ${body}
 fs.writeFileSync(path.join(ROOT, 'index.html'), html);
 const total = sections.length === 0 ? 0 : projects.reduce((n, p) => {
   const projectDir = path.join(ROOT, p);
-  return n + listDirs(projectDir).filter(a => !isRedirect(path.join(projectDir, a))).length;
+  return n + listDirs(projectDir).filter(a => isGalleryArtifact(path.join(projectDir, a))).length;
 }, 0);
 console.log(`wrote: index.html (${sections.length} project${sections.length === 1 ? '' : 's'}, ${total} artifact${total === 1 ? '' : 's'})`);
