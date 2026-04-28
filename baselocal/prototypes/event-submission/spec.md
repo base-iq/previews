@@ -2,7 +2,7 @@
 
 **Brand:** BaseLocal
 **Feature slug:** `event-submission`
-**Prototype:** [http://localhost:8000/baselocal/prototypes/event-submission/](http://localhost:8000/baselocal/prototypes/event-submission/)
+**Prototype:** [https://base-iq.github.io/previews/baselocal/prototypes/event-submission/](https://base-iq.github.io/previews/baselocal/prototypes/event-submission/)
 
 ---
 
