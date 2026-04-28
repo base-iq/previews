@@ -1044,3 +1044,245 @@ body {
     border-bottom: 2px solid #C2604A;
     padding-bottom: 2px;
 }
+
+
+/* ===== 4. WELCOME — onboarding/transactional format ===== */
+
+/* ---- DELIVERABILITY CALLOUT ----
+   Paper-cream block with a 4px terracotta left border.
+   Hosts the move-to-primary + reply ask in the welcome email.
+   Reusable for any future high-priority reader-action callout. */
+.deliverability-callout {
+    background: #FAF6F4;
+    border-left: 4px solid #C2604A;
+    border-radius: 0 5px 5px 0;
+    padding: 22px 24px;
+}
+
+.deliverability-callout-heading {
+    margin: 0 0 8px 0;
+    font-family: 'Bitter', Georgia, serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #2C2421;
+    line-height: 1.3;
+}
+
+.deliverability-callout-intro {
+    margin: 0 0 14px 0;
+    font-family: 'Bitter', Georgia, serif;
+    font-size: 16px;
+    color: #2C2421;
+    line-height: 24px;
+}
+
+.deliverability-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 14px 0;
+}
+
+.deliverability-list li {
+    position: relative;
+    padding: 4px 0 4px 26px;
+    font-family: 'Bitter', Georgia, serif;
+    font-size: 16px;
+    color: #2C2421;
+    line-height: 24px;
+}
+
+.deliverability-list li + li {
+    margin-top: 4px;
+}
+
+.deliverability-list li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    top: 4px;
+    color: #C2604A;
+    font-weight: 700;
+    font-family: 'Lato', Helvetica, Arial, sans-serif;
+}
+
+.deliverability-callout-footnote {
+    margin: 0;
+    font-family: 'Bitter', Georgia, serif;
+    font-style: italic;
+    font-size: 14px;
+    color: #6B6258;
+    line-height: 1.5;
+}
+
+/* ---- WELCOME POLL ----
+   Static visual mock of the beehiiv-rendered preference poll
+   shown in the welcome email. In production beehiiv renders
+   the actual poll widget; this preview approximates it. */
+.welcome-poll-question {
+    margin: 0 0 4px 0;
+    font-family: 'Bitter', Georgia, serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #2C2421;
+    line-height: 1.3;
+}
+
+.welcome-poll-meta {
+    margin: 0 0 16px 0;
+    font-family: 'Bitter', Georgia, serif;
+    font-style: italic;
+    font-size: 15px;
+    color: #6B6258;
+    line-height: 1.5;
+}
+
+.welcome-poll-options {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.welcome-poll-options li + li {
+    margin-top: 8px;
+}
+
+.welcome-poll-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    background: #FFFFFF;
+    border: 1px solid #EDE6E1;
+    border-radius: 5px;
+    font-family: 'Bitter', Georgia, serif;
+    font-size: 16px;
+    color: #2C2421;
+    line-height: 1.3;
+    text-decoration: none;
+    transition: border-color 120ms ease, background-color 120ms ease;
+}
+
+.welcome-poll-option:hover {
+    border-color: #C2604A;
+    background: #FAF6F4;
+}
+
+.welcome-poll-option .icon {
+    flex-shrink: 0;
+    font-size: 18px;
+    line-height: 1;
+}
+
+/* ---- INTENT CTAs ----
+   Paired CTA pattern for capturing advertiser + event-organizer
+   intent in the welcome email. Two cards side-by-side at desktop,
+   stacked at ≤560px. */
+.intent-ctas-heading {
+    margin: 0 0 4px 0;
+    font-family: 'Bitter', Georgia, serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #2C2421;
+    line-height: 1.3;
+}
+
+.intent-ctas-dek {
+    margin: 0 0 18px 0;
+    font-family: 'Bitter', Georgia, serif;
+    font-style: italic;
+    font-size: 15px;
+    color: #6B6258;
+    line-height: 1.5;
+}
+
+.intent-ctas {
+    display: flex;
+    gap: 12px;
+    margin: 0;
+}
+
+.intent-cta {
+    flex: 1;
+    background: #FAF6F4;
+    border: 1px solid #EDE6E1;
+    border-radius: 5px;
+    padding: 22px 20px;
+    text-align: center;
+}
+
+.intent-cta-prompt {
+    margin: 0 0 6px 0;
+    font-family: 'Bitter', Georgia, serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #2C2421;
+    line-height: 1.3;
+}
+
+.intent-cta-pitch {
+    margin: 0 0 14px 0;
+    font-family: 'Bitter', Georgia, serif;
+    font-style: italic;
+    font-size: 14px;
+    color: #6B6258;
+    line-height: 1.5;
+}
+
+.intent-cta-link {
+    display: inline-block;
+    font-family: 'Lato', Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #C2604A;
+    text-decoration: none;
+    padding: 8px 0;
+    border-bottom: 2px solid #C2604A;
+    transition: color 120ms ease, border-color 120ms ease;
+}
+
+.intent-cta-link:hover {
+    color: #2C2421;
+    border-color: #2C2421;
+}
+
+@media (max-width: 560px) {
+    .intent-ctas {
+        flex-direction: column;
+    }
+}
+
+/* ---- PICKS GRID — TWO-UP VARIANT ----
+   Welcome uses a 2-column picks-grid for its value-now block
+   (latest issue + events calendar). Stacks at ≤540px like the
+   default 3-up variant. */
+.picks-grid.picks-grid--two {
+    grid-template-columns: 1fr 1fr;
+}
+
+@media (max-width: 540px) {
+    .picks-grid.picks-grid--two {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ---- WELCOME P.P.S. ----
+   Same look as .subscribe-ps, with tighter top padding so
+   P.S. and P.P.S. read as a stacked pair. */
+.subscribe-pps {
+    font-size: 16px;
+    line-height: 24px;
+    color: #444444;
+    padding-top: 8px;
+}
+
+.subscribe-pps strong {
+    color: #2C2421;
+}
+
+.subscribe-pps a {
+    color: #C2604A;
+    text-decoration: underline;
+    font-weight: 700;
+}
