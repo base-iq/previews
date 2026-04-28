@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payment · BaseLocal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@400;700&family=Lato:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .page-title {
+    text-align: center; margin: 8px auto 32px; max-width: 720px; padding: 0 24px;
+  }
+  .page-title h1 {
+    font-family: 'Bitter', serif; font-weight: 700;
+    font-size: 32px; color: var(--espresso);
+    letter-spacing: -0.4px; margin-bottom: 8px;
+  }
+  .page-title p { color: var(--gray); font-size: 16px; }
+
+  .checkout-layout {
+    max-width: 1000px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 380px;
+    gap: 60px;
+    padding: 0 24px 100px;
+    align-items: start;
+  }
+  @media (max-width: 880px) {
+    .checkout-layout { grid-template-columns: 1fr; gap: 24px; }
+  }
+
+  .order-summary-large {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 28px;
+  }
+  .order-summary-large .heading {
+    font-family: 'Bitter', serif; font-weight: 700;
+    font-size: 18px; color: var(--espresso);
+    margin-bottom: 18px;
+  }
+  .summary-block {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 18px;
+    margin-bottom: 16px;
+  }
+  .summary-block h4 {
+    font-family: 'Lato', sans-serif; font-weight: 700;
+    font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px;
+    color: var(--gray); margin-bottom: 10px;
+  }
+  .summary-block .event-name {
+    font-family: 'Bitter', serif; font-weight: 700;
+    font-size: 18px; color: var(--espresso); margin-bottom: 6px;
+  }
+  .summary-block .event-meta {
+    font-size: 14px; color: var(--charcoal); line-height: 1.6;
+  }
+  .order-line {
+    display: flex; justify-content: space-between;
+    padding: 6px 0;
+    font-size: 14px;
+  }
+  .order-line .label { color: var(--gray); }
+  .order-line .value { color: var(--espresso); font-weight: 700; }
+  .order-math {
+    font-size: 13px; font-style: italic; color: var(--gray);
+    padding: 12px 0 8px;
+    border-top: 1px solid var(--border);
+    margin-top: 8px;
+  }
+  .order-total {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding-top: 14px; margin-top: 4px;
+    border-top: 1px solid var(--border);
+  }
+  .order-total .label {
+    font-weight: 700; font-size: 14px;
+    text-transform: uppercase; letter-spacing: 0.5px;
+    color: var(--espresso);
+  }
+  .order-total .amount {
+    font-family: 'Bitter', serif; font-weight: 700; font-size: 28px;
+    color: var(--espresso);
+  }
+
+  .pay-form h2 {
+    font-family: 'Bitter', serif; font-weight: 700;
+    font-size: 22px; color: var(--espresso);
+    margin: 0 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .pay-form .stripe-note {
+    font-size: 12px; color: var(--gray);
+    text-align: right; margin-bottom: 14px;
+  }
+  .card-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  .secured-by {
+    display: flex; align-items: center; justify-content: center;
+    gap: 8px; margin-top: 24px; padding-top: 20px;
+    border-top: 1px solid var(--border);
+    font-size: 12px; color: var(--silver);
+  }
+  .secured-by .lock { font-size: 13px; }
+
+  .legal {
+    font-size: 12px; color: var(--silver);
+    line-height: 1.6; margin-top: 18px;
+  }
+  .legal a { color: var(--gray); }
+
+  .back-link {
+    display: inline-block; margin-bottom: 24px;
+    color: var(--gray); font-size: 14px; font-weight: 500;
+  }
+  .back-link:hover { color: var(--terracotta); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="index.html"><img src="../../assets/logos/baselocal-full-dark.svg" alt="BaseLocal"></a>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">Locations</a>
+      <a href="#">Advertise</a>
+      <a href="index.html" class="active">Submit Event</a>
+    </nav>
+  </div>
+</header>
+
+<div class="step-indicator-mobile-wrap">
+  <span class="step-indicator-mobile">Step 3 of 4 · Payment</span>
+</div>
+
+<div class="step-indicator">
+  <div class="connector complete" style="left: 12.5%; right: 62.5%;"></div>
+  <div class="connector complete" style="left: 37.5%; right: 37.5%;"></div>
+  <div class="connector" style="left: 62.5%; right: 12.5%;"></div>
+  <div class="step complete">
+    <div class="circle">✓</div>
+    <div class="label">Placement</div>
+  </div>
+  <div class="step complete">
+    <div class="circle">✓</div>
+    <div class="label">Details</div>
+  </div>
+  <div class="step current">
+    <div class="circle">3</div>
+    <div class="label">Payment</div>
+  </div>
+  <div class="step">
+    <div class="circle">4</div>
+    <div class="label">Done</div>
+  </div>
+</div>
+
+<div class="page-title">
+  <h1>Review and pay.</h1>
+  <p>Your event submission is held until payment clears, then sent to a BaseLocal editor for review.</p>
+</div>
+
+<div class="checkout-layout">
+  <main class="pay-form">
+    <a class="back-link" href="javascript:history.back()">← Back to event details</a>
+
+    <h2>Payment</h2>
+    <div class="stripe-note">Demo only · No real card processed</div>
+
+    <div class="field">
+      <label class="field-label" for="card-name">Name on card <span class="req">*</span></label>
+      <input type="text" id="card-name" placeholder="Jane Reyes">
+    </div>
+    <div class="field">
+      <label class="field-label" for="card-number">Card number <span class="req">*</span></label>
+      <input type="text" id="card-number" placeholder="4242 4242 4242 4242" inputmode="numeric" maxlength="19">
+    </div>
+    <div class="card-row">
+      <div class="field">
+        <label class="field-label" for="card-exp">Expiry <span class="req">*</span></label>
+        <input type="text" id="card-exp" placeholder="MM / YY" inputmode="numeric" maxlength="7">
+      </div>
+      <div class="field">
+        <label class="field-label" for="card-cvc">CVC <span class="req">*</span></label>
+        <input type="text" id="card-cvc" placeholder="123" inputmode="numeric" maxlength="4">
+      </div>
+    </div>
+    <div class="field">
+      <label class="field-label" for="card-zip">Billing ZIP <span class="req">*</span></label>
+      <input type="text" id="card-zip" placeholder="98403" inputmode="numeric" maxlength="10">
+    </div>
+
+    <p class="legal">By paying, you agree to BaseLocal's <a href="#">submission terms</a> and confirm the event is real and yours to promote. Submissions are reviewed before going live; rejected submissions are refunded in full.</p>
+
+    <button class="btn primary large" id="pay-btn" style="width: 100%; margin-top: 18px;">
+      Pay <span id="pay-amount">$0</span> →
+    </button>
+
+    <div class="secured-by">
+      <span class="lock">🔒</span>
+      <span>Secured by <strong style="color: var(--gray); font-weight: 700;">Stripe</strong> · Your card is never stored by BaseLocal</span>
+    </div>
+  </main>
+
+  <aside>
+    <div class="order-summary-large">
+      <div class="heading">Order summary</div>
+
+      <div class="summary-block">
+        <h4>Event</h4>
+        <div class="event-name" id="ev-name">Your event</div>
+        <div class="event-meta" id="ev-meta">Reviewed by an editor in your location before going live.</div>
+      </div>
+
+      <div class="summary-block">
+        <h4>Placement</h4>
+        <div class="order-line">
+          <span class="label">Tier</span>
+          <span class="value" id="ord-tier">Directory + Newsletter</span>
+        </div>
+        <div class="order-line">
+          <span class="label">Locations</span>
+          <span class="value" id="ord-locs">0</span>
+        </div>
+        <div class="order-line">
+          <span class="label">Days</span>
+          <span class="value" id="ord-days">0</span>
+        </div>
+        <div class="order-math" id="ord-math">0 days × 0 locations × $25</div>
+        <div class="order-total">
+          <span class="label">Total</span>
+          <span class="amount" id="ord-total">$0</span>
+        </div>
+      </div>
+
+      <p style="font-size: 13px; color: var(--gray); line-height: 1.6; margin: 0;">
+        Charged once on submission. Cancel up to 48 hours before any day's run for a full refund of that day. Inside the 48-hour window, the day is locked in.
+      </p>
+    </div>
+  </aside>
+</div>
+
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="../../assets/logos/baselocal-full-white.svg" alt="BaseLocal" class="footer-logo">
+        <p class="footer-tagline">Local news, events, and recommendations for 400+ locations.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <a href="#">Home</a>
+        <a href="#">Locations</a>
+        <a href="#">Advertise</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms of Use</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <div class="footer-contact">
+          <span class="footer-contact-label">Partnerships</span>
+          <a href="mailto:partner@baselocal.com">partner@baselocal.com</a>
+        </div>
+        <div class="footer-contact">
+          <span class="footer-contact-label">General</span>
+          <a href="mailto:hello@baselocal.com">hello@baselocal.com</a>
+        </div>
+      </div>
+    </div>
+    <p class="footer-bottom">© 2026 BaseLocal. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const tier = params.get('tier') === 'directory' ? 'directory' : 'newsletter';
+const TIER_LABEL = tier === 'newsletter' ? 'Directory + Newsletter' : 'Directory';
+const TIER_RATE = tier === 'newsletter' ? 25 : 10;
+const locations = parseInt(params.get('locations') || '0', 10);
+const days = parseInt(params.get('days') || '0', 10);
+const total = parseInt(params.get('total') || '0', 10);
+const eventName = params.get('event') || 'Your event';
+
+document.getElementById('ev-name').textContent = eventName;
+document.getElementById('ord-tier').textContent = TIER_LABEL;
+document.getElementById('ord-locs').textContent = locations;
+document.getElementById('ord-days').textContent = days;
+document.getElementById('ord-math').textContent =
+  days + (days === 1 ? ' day' : ' days') + ' × ' +
+  locations + (locations === 1 ? ' location' : ' locations') + ' × $' + TIER_RATE;
+document.getElementById('ord-total').textContent = '$' + total.toLocaleString();
+document.getElementById('pay-amount').textContent = '$' + total.toLocaleString();
+
+// Auto-format card number with spaces
+document.getElementById('card-number').addEventListener('input', (e) => {
+  let v = e.target.value.replace(/\s/g, '').replace(/[^0-9]/g, '');
+  let parts = v.match(/.{1,4}/g);
+  e.target.value = parts ? parts.join(' ') : '';
+});
+// Auto-format MM / YY
+document.getElementById('card-exp').addEventListener('input', (e) => {
+  let v = e.target.value.replace(/[^0-9]/g, '').slice(0, 4);
+  if (v.length >= 3) v = v.slice(0,2) + ' / ' + v.slice(2);
+  e.target.value = v;
+});
+
+document.getElementById('pay-btn').addEventListener('click', () => {
+  const btn = document.getElementById('pay-btn');
+  btn.disabled = true;
+  btn.innerHTML = 'Processing…';
+  setTimeout(() => {
+    window.location.href = 'confirmation.html?tier=' + tier
+      + '&locations=' + locations + '&days=' + days
+      + '&total=' + total + '&event=' + encodeURIComponent(eventName);
+  }, 900);
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Event details · BaseLocal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@400;700&family=Lato:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .page-title {
+    text-align: center; margin: 8px auto 32px; max-width: 720px;
+    padding: 0 24px;
+  }
+  .page-title h1 {
+    font-family: 'Bitter', serif; font-weight: 700;
+    font-size: 36px; line-height: 1.15; color: var(--espresso);
+    letter-spacing: -0.4px;
+    margin-bottom: 8px;
+    text-wrap: balance;
+  }
+  .page-title p { color: var(--gray); font-size: 16px; line-height: 1.5; }
+  @media (max-width: 600px) {
+    .page-title { margin-top: 0; margin-bottom: 24px; }
+    .page-title h1 { font-size: 26px; }
+    .page-title p { font-size: 15px; }
+  }
+
+  .layout {
+    max-width: 1080px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 360px;
+    gap: 60px;
+    padding: 0 24px 100px;
+    align-items: start;
+  }
+  @media (max-width: 920px) {
+    .layout { grid-template-columns: 1fr; gap: 24px; padding-bottom: 140px; }
+  }
+
+  .summary-wrap { position: sticky; top: 24px; }
+  @media (max-width: 920px) {
+    .summary-wrap {
+      position: fixed; top: auto; bottom: 0; left: 0; right: 0;
+      background: var(--white); border-top: 1px solid var(--border);
+      padding: 10px 16px; z-index: 50;
+      box-shadow: 0 -4px 14px rgba(0,0,0,0.06);
+      max-width: none;
+    }
+    .summary {
+      max-width: none; padding: 0; border: none; border-radius: 0;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .summary-header,
+    .summary .line,
+    .summary .math,
+    .summary .empty-state { display: none !important; }
+    .summary .total {
+      flex: 1;
+      display: flex; align-items: baseline; gap: 6px;
+      padding-top: 0; margin-top: 0; border-top: none;
+    }
+    .summary .total .label { font-size: 11px; }
+    .summary .total .amount { font-size: 22px; }
+    .summary .btn {
+      margin-top: 0; width: auto;
+      padding: 11px 18px; font-size: 14px;
+      flex-shrink: 0;
+    }
+  }
+
+  /* Tier upsell (directory tier only) */
+  .tier-upsell {
+    background: var(--white);
+    border-radius: 4px;
+    padding: 12px 14px;
+    margin-top: 12px;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--charcoal);
+  }
+  .tier-upsell strong { color: var(--terracotta); }
+
+  #tier-action.upsell-cta {
+    display: inline-block;
+    background: var(--terracotta);
+    color: var(--white);
+    padding: 9px 16px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 13px;
+    margin-top: 4px;
+    text-decoration: none;
+    transition: background-color 0.15s, box-shadow 0.15s;
+  }
+  #tier-action.upsell-cta:hover {
+    background: var(--terracotta-deep);
+    text-decoration: none;
+    box-shadow: 0 4px 14px rgba(194, 96, 74, 0.35);
+  }
+
+  /* Section intro paragraph (sits under section header) */
+  .section-intro {
+    margin-top: -16px;
+    margin-bottom: 22px;
+    color: var(--gray);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  .section-intro strong { color: var(--espresso); }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="index.html"><img src="../../assets/logos/baselocal-full-dark.svg" alt="BaseLocal"></a>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">Locations</a>
+      <a href="#">Advertise</a>
+      <a href="index.html" class="active">Submit Event</a>
+    </nav>
+  </div>
+</header>
+
+<div class="step-indicator-mobile-wrap">
+  <span class="step-indicator-mobile">Step 2 of 4 · Event details</span>
+</div>
+
+<div class="step-indicator">
+  <div class="connector complete" style="left: 12.5%; right: 62.5%;"></div>
+  <div class="connector" style="left: 37.5%; right: 37.5%;"></div>
+  <div class="connector" style="left: 62.5%; right: 12.5%;"></div>
+  <div class="step complete">
+    <div class="circle">✓</div>
+    <div class="label">Placement</div>
+  </div>
+  <div class="step current">
+    <div class="circle">2</div>
+    <div class="label">Details</div>
+  </div>
+  <div class="step">
+    <div class="circle">3</div>
+    <div class="label">Payment</div>
+  </div>
+  <div class="step">
+    <div class="circle">4</div>
+    <div class="label">Done</div>
+  </div>
+</div>
+
+<div class="page-title">
+  <h1>Tell us about the event.</h1>
+  <p>Edits to copy and timing are easy until your first featured day starts.</p>
+</div>
+
+<div class="layout">
+  <main>
+    <div class="alert info" id="tier-alert">
+      <span class="icon">ⓘ</span>
+      <div class="body">
+        <div class="title" id="tier-title"></div>
+        <div id="tier-desc"></div>
+        <div id="tier-upsell" class="tier-upsell"></div>
+        <div class="actions">
+          <a href="javascript:void(0)" id="tier-action"></a>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="form-section-header"><span class="step-num">01</span>About the event</h2>
+
+    <div class="field">
+      <label class="field-label" for="event-name">Event name <span class="req">*</span></label>
+      <input type="text" id="event-name" placeholder="e.g. Spring Pop-Up Market at The Annex" maxlength="80">
+    </div>
+
+    <div class="field">
+      <label class="field-label">Category <span class="req">*</span></label>
+      <div class="pill-grid" id="cat-grid"></div>
+    </div>
+
+    <div class="field">
+      <label class="field-label" for="event-desc">Description <span class="req">*</span></label>
+      <textarea id="event-desc" placeholder="Tell readers what the event is, who it's for, and why they'd come. Lead with the most important detail — the first sentence is what most readers see." maxlength="1000"></textarea>
+      <div class="char-counter" id="desc-counter">0 / 1000</div>
+    </div>
+
+    <div class="field">
+      <label class="field-label" for="event-url">Event website (optional)</label>
+      <input type="url" id="event-url" placeholder="https://">
+      <div class="helper">Where readers buy tickets or RSVP.</div>
+    </div>
+
+    <h2 class="form-section-header"><span class="step-num">02</span>When the event runs</h2>
+    <p class="section-intro">The dates and times <strong>the event itself</strong> takes place. Multi-day events are fine — set the end accordingly. Placement dates (when it's featured) come below; they don't have to match.</p>
+
+    <div class="field-row">
+      <div class="field">
+        <label class="field-label" for="event-start-date">Start date <span class="req">*</span></label>
+        <input type="date" id="event-start-date">
+      </div>
+      <div class="field">
+        <label class="field-label" for="event-start-time">Start time <span class="req">*</span></label>
+        <input type="time" id="event-start-time" value="19:00">
+      </div>
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label class="field-label" for="event-end-date">End date <span class="req">*</span></label>
+        <input type="date" id="event-end-date">
+      </div>
+      <div class="field">
+        <label class="field-label" for="event-end-time">End time <span class="req">*</span></label>
+        <input type="time" id="event-end-time" value="22:00">
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="field-label" for="event-venue">Venue <span class="req">*</span></label>
+      <input type="text" id="event-venue" placeholder="The Annex">
+    </div>
+
+    <h2 class="form-section-header"><span class="step-num">03</span>Featured placement</h2>
+    <p class="section-intro">Where and when your event is featured. <strong>The days you pick here are placement days — when your event shows up — not necessarily when the event itself runs.</strong> Pick whichever days make sense for promotion.</p>
+
+    <div class="field">
+      <label class="field-label">Locations <span class="req">*</span></label>
+      <div class="helper" style="margin-top:0; margin-bottom:10px;">Pick any number of locations. The price scales linearly per location, per day.</div>
+
+      <div class="loc-search-wrap">
+        <input type="text" class="loc-search" id="loc-search" placeholder="Search 400 locations or regions…" autocomplete="off">
+      </div>
+      <div class="loc-actions">
+        <button type="button" class="btn secondary" id="loc-clear">Clear all</button>
+      </div>
+      <div class="loc-chips" id="loc-chips"></div>
+      <div class="loc-list" id="loc-list">
+        <div class="loc-counter" id="loc-counter">0 selected</div>
+        <div id="loc-groups"></div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="field-label">Days to feature it <span class="req">*</span></label>
+      <div class="helper" style="margin-top:0; margin-bottom:10px;">3-day lead time required so an editor can review — today, tomorrow, and the day after are blocked. Each picked day × each location = one unit of cost.</div>
+
+      <div class="calendar" id="calendar">
+        <div class="cal-quick" id="cal-quick">
+          <button type="button" class="pill" data-quick="weekend">This weekend</button>
+          <button type="button" class="pill" data-quick="next7">Next 7 days</button>
+          <button type="button" class="pill" data-quick="next30">Next 30 days</button>
+          <button type="button" class="pill" data-quick="clear">Clear</button>
+        </div>
+        <div class="cal-month-header">
+          <button type="button" class="cal-nav" id="cal-prev" aria-label="Previous month">‹</button>
+          <div class="cal-month-title" id="cal-month-title">Month Year</div>
+          <button type="button" class="cal-nav" id="cal-next" aria-label="Next month">›</button>
+        </div>
+        <div class="cal-weekdays">
+          <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+        </div>
+        <div class="cal-grid" id="cal-grid"></div>
+        <div class="cal-footer">
+          <span class="count" id="cal-count">0 days selected</span>
+          <button type="button" class="clear" id="cal-clear">Clear days</button>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="form-section-header"><span class="step-num">04</span>About you</h2>
+    <p class="section-intro">Where the editor will reach out if there are questions.</p>
+
+    <div class="field-row">
+      <div class="field">
+        <label class="field-label" for="org-name">Full name <span class="req">*</span></label>
+        <input type="text" id="org-name" placeholder="Jane Reyes">
+      </div>
+      <div class="field">
+        <label class="field-label" for="org-title">Title <span class="req">*</span></label>
+        <input type="text" id="org-title" placeholder="Events Director">
+      </div>
+    </div>
+    <div class="field">
+      <label class="field-label" for="org-company">Company / organization <span class="req">*</span></label>
+      <input type="text" id="org-company" placeholder="The Annex">
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label class="field-label" for="org-email">Email <span class="req">*</span></label>
+        <input type="email" id="org-email" placeholder="jane@annextacoma.com">
+      </div>
+      <div class="field">
+        <label class="field-label" for="org-phone">Phone <span class="req">*</span></label>
+        <input type="tel" id="org-phone" placeholder="(253) 555-0102">
+      </div>
+    </div>
+  </main>
+
+  <aside class="summary-wrap">
+    <div class="summary">
+      <div class="summary-header">Order summary</div>
+      <div class="line">
+        <span class="label">Tier</span>
+        <span class="value" id="sum-tier">Directory + Newsletter</span>
+      </div>
+      <div class="line">
+        <span class="label">Locations</span>
+        <span class="value" id="sum-locations">0</span>
+      </div>
+      <div class="line">
+        <span class="label">Days</span>
+        <span class="value" id="sum-days">0</span>
+      </div>
+      <div class="math" id="sum-math" style="display:none;"></div>
+      <div class="total">
+        <span class="label">Total</span>
+        <span class="amount" id="sum-amount">$0</span>
+      </div>
+      <div id="sum-empty" class="empty-state">Pick locations and placement dates to see your total.</div>
+      <button type="button" class="btn primary" id="continue-btn" disabled>Continue to payment →</button>
+    </div>
+  </aside>
+</div>
+
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="../../assets/logos/baselocal-full-white.svg" alt="BaseLocal" class="footer-logo">
+        <p class="footer-tagline">Local news, events, and recommendations for 400+ locations.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <a href="#">Home</a>
+        <a href="#">Locations</a>
+        <a href="#">Advertise</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms of Use</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <div class="footer-contact">
+          <span class="footer-contact-label">Partnerships</span>
+          <a href="mailto:partner@baselocal.com">partner@baselocal.com</a>
+        </div>
+        <div class="footer-contact">
+          <span class="footer-contact-label">General</span>
+          <a href="mailto:hello@baselocal.com">hello@baselocal.com</a>
+        </div>
+      </div>
+    </div>
+    <p class="footer-bottom">© 2026 BaseLocal. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+// ===== Tier (mutable so we can switch in-place) =====
+const params = new URLSearchParams(window.location.search);
+let tier = params.get('tier') === 'directory' ? 'directory' : 'newsletter';
+let TIER_RATE, TIER_LABEL;
+
+function setTier(newTier) {
+  tier = newTier === 'directory' ? 'directory' : 'newsletter';
+  TIER_RATE = tier === 'newsletter' ? 25 : 10;
+  TIER_LABEL = tier === 'newsletter' ? 'Directory + Newsletter' : 'Directory';
+
+  const title = tier === 'newsletter'
+    ? 'Directory + Newsletter — $25 per location, per day'
+    : 'Directory — $10 per location, per day';
+  const desc = tier === 'newsletter'
+    ? 'Pinned at the top of the directory and embedded inside the daily newsletter.'
+    : 'Pinned at the top of the BaseLocal events directory in each location you choose.';
+
+  document.getElementById('tier-title').textContent = title;
+  document.getElementById('tier-desc').textContent = desc;
+
+  const upsell = document.getElementById('tier-upsell');
+  const action = document.getElementById('tier-action');
+
+  if (tier === 'directory') {
+    upsell.style.display = 'block';
+    upsell.innerHTML = '<strong>Want more exposure?</strong> Upgrade to Directory + Newsletter and your event also lives directly inside the daily newsletter our readers already open. Most submitters pick this — readers see your event without clicking through.';
+    action.textContent = 'Upgrade to Directory + Newsletter (+$15 / location / day) →';
+    action.classList.add('upsell-cta');
+  } else {
+    upsell.style.display = 'none';
+    action.textContent = 'Switch to Directory only';
+    action.classList.remove('upsell-cta');
+  }
+
+  document.getElementById('sum-tier').textContent = TIER_LABEL;
+
+  // Reflect in URL so a refresh keeps state (best-effort)
+  try {
+    const url = new URL(window.location.href);
+    url.searchParams.set('tier', tier);
+    window.history.replaceState({}, '', url.toString());
+  } catch (e) { /* not critical */ }
+
+  if (typeof updateSummary === 'function') updateSummary();
+}
+
+document.getElementById('tier-action').addEventListener('click', () => {
+  setTier(tier === 'newsletter' ? 'directory' : 'newsletter');
+});
+
+// ===== Categories =====
+const CATEGORIES = [
+  'Art & Culture','Career','Civic','Comedy','Dancing','Family','Festivals',
+  'Food & Drink','Fundraisers','Games & Entertainment','Groups & Meetups',
+  'Health & Wellness','Holidays','Markets','Music','Outdoor Recreation',
+  'Sales & Discounts','Sports','Theater','Workshops & Classes'
+];
+let selectedCategory = null;
+const catGrid = document.getElementById('cat-grid');
+CATEGORIES.forEach(c => {
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.className = 'pill';
+  b.textContent = c;
+  b.addEventListener('click', () => {
+    selectedCategory = (selectedCategory === c) ? null : c;
+    catGrid.querySelectorAll('.pill').forEach(p => {
+      p.classList.toggle('selected', p.textContent === selectedCategory);
+    });
+    updateContinueState();
+  });
+  catGrid.appendChild(b);
+});
+
+// ===== Locations: 400 across regions =====
+const LOCATIONS = {
+  "Pacific Northwest": ["Tacoma","Seattle","Spokane","Bellingham","Olympia","Everett","Vancouver, WA","Bend","Eugene","Salem","Portland","Boise","Coeur d'Alene","Yakima","Kennewick","Bremerton","Wenatchee","Walla Walla","Astoria","Hood River","Medford","Klamath Falls","Pendleton","Twin Falls","Lewiston","Pocatello","Idaho Falls","Bozeman","Missoula","Billings","Helena","Great Falls","Kalispell","Butte","Whitefish","Anchorage","Juneau","Fairbanks","Bellevue","Redmond, WA","Tumwater","Puyallup","Kirkland","Auburn","Issaquah"],
+  "California": ["Los Angeles","San Francisco","San Diego","San Jose","Sacramento","Long Beach","Oakland","Berkeley","Pasadena","Santa Monica","Anaheim","Irvine","Santa Ana","Riverside","San Bernardino","Bakersfield","Fresno","Modesto","Stockton","Visalia","Salinas","Santa Cruz","Monterey","Carmel","Santa Barbara","San Luis Obispo","Ventura","Oxnard","Thousand Oaks","Burbank","Glendale, CA","Palm Springs","Palm Desert","Indio","Temecula","Murrieta","Chico","Redding","Eureka","Napa","Sonoma","Healdsburg","Petaluma","Mendocino","Lake Tahoe"],
+  "Mountain West": ["Denver","Boulder","Fort Collins","Colorado Springs","Pueblo","Grand Junction","Durango","Aspen","Vail","Steamboat Springs","Telluride","Salt Lake City","Provo","Park City","Ogden","St. George","Cedar City","Logan","Moab","Cheyenne","Casper","Laramie","Jackson","Cody","Sheridan","Reno","Carson City","Henderson","Las Vegas","Sparks","Albuquerque","Santa Fe","Taos","Las Cruces","Roswell","Farmington","Flagstaff","Sedona","Prescott"],
+  "Southwest": ["Phoenix","Tucson","Tempe","Mesa","Scottsdale","Chandler","Gilbert","Glendale, AZ","Peoria, AZ","Yuma","Lake Havasu","Bisbee","Houston","Dallas","Austin","Fort Worth","San Antonio","El Paso","Lubbock","Amarillo","Waco","Corpus Christi","Galveston","Tyler","Beaumont","Midland","Odessa","Wichita Falls","McAllen","Brownsville","Plano","Frisco","Arlington, TX","Round Rock","Marfa","Fredericksburg","San Marcos","Killeen","Abilene","Laredo"],
+  "Great Lakes": ["Chicago","Milwaukee","Madison","Green Bay","Eau Claire","La Crosse","Appleton","Wausau","Sheboygan","Racine","Kenosha","Minneapolis","St. Paul","Duluth","Rochester, MN","Mankato","St. Cloud","Bloomington, MN","Edina","Eden Prairie","Detroit","Ann Arbor","Grand Rapids","Lansing","Kalamazoo","Traverse City","Marquette","Holland","Saugatuck","Petoskey","Cleveland","Cincinnati","Columbus","Toledo","Akron","Dayton","Youngstown","Canton","Indianapolis","Fort Wayne","Bloomington, IN","South Bend","Evansville","Carmel, IN","Fishers","Lafayette","Terre Haute","Iowa City","Des Moines","Cedar Rapids"],
+  "Plains": ["Kansas City","Wichita","Topeka","Lawrence","Manhattan, KS","Overland Park","Olathe","Hutchinson","Salina","St. Louis","Springfield, MO","Columbia, MO","Branson","Joplin","Independence","Lincoln","Omaha","Grand Island","Kearney","Bellevue, NE","Sioux Falls","Rapid City","Aberdeen","Watertown","Pierre","Brookings","Fargo","Bismarck","Grand Forks","Minot","Williston","Tulsa","Oklahoma City","Norman","Edmond","Stillwater","Bentonville","Fayetteville","Little Rock","Hot Springs"],
+  "South": ["Atlanta","Athens, GA","Savannah","Augusta","Macon","Columbus, GA","Asheville","Charlotte","Raleigh","Durham","Greensboro","Wilmington, NC","Chapel Hill","Winston-Salem","Greenville, SC","Columbia, SC","Charleston","Myrtle Beach","Hilton Head","Beaufort","Nashville","Memphis","Knoxville","Chattanooga","Franklin","Murfreesboro","Birmingham","Huntsville","Mobile","Montgomery","Tuscaloosa","Auburn, AL","Jackson, MS","Oxford, MS","Tupelo","Biloxi","Gulfport","New Orleans","Baton Rouge","Lafayette, LA","Shreveport","Lake Charles","Louisville","Lexington","Bowling Green","Frankfort","Owensboro","Paducah","Florence, KY","Charleston, WV"],
+  "Florida": ["Miami","Orlando","Tampa","St. Petersburg","Jacksonville","Tallahassee","Gainesville","Pensacola","Fort Myers","Naples","Sarasota","Bradenton","Lakeland","Daytona Beach","Ocala","Key West","Marathon","Boca Raton","Fort Lauderdale","Hollywood, FL","West Palm Beach","Delray Beach","Stuart","Vero Beach","Cocoa Beach","Cape Canaveral","Melbourne","Clearwater","Punta Gorda","St. Augustine","Amelia Island","Destin","Panama City Beach","Tarpon Springs","Winter Park"],
+  "Mid-Atlantic": ["New York","Brooklyn","Queens","Manhattan","Albany","Buffalo","Rochester, NY","Syracuse","Ithaca","Saratoga Springs","Hudson","Beacon","Kingston, NY","Cooperstown","Long Branch","Asbury Park","Princeton","Hoboken","Jersey City","Newark","Trenton","Cape May","Atlantic City","Philadelphia","Pittsburgh","Lancaster","Harrisburg","Bethlehem","Allentown","State College","Erie","Reading","Scranton","York","Wilmington, DE","Rehoboth Beach","Lewes","Baltimore","Annapolis","Frederick","Columbia, MD","Bethesda","Rockville","Silver Spring","Washington, DC","Alexandria","Arlington, VA","Richmond","Charlottesville","Norfolk","Virginia Beach","Roanoke","Winchester","Williamsburg"],
+  "New England": ["Boston","Cambridge","Worcester","Springfield, MA","Lowell","Lawrence, MA","Salem, MA","Plymouth","Cape Cod","Provincetown","Nantucket","Martha's Vineyard","Northampton","Pittsfield","Lenox","Stockbridge","Portland, ME","Bangor","Bar Harbor","Kennebunkport","Camden","Augusta, ME","Burlington, VT","Stowe","Montpelier","Brattleboro","Manchester, NH","Concord, NH","Portsmouth","Hanover","Providence","Newport","Hartford","New Haven","Stamford"]
+};
+
+const selectedLocations = new Set();
+let locSearchQuery = '';
+
+const locGroupsEl = document.getElementById('loc-groups');
+const locChipsEl = document.getElementById('loc-chips');
+const locCounterEl = document.getElementById('loc-counter');
+const locSearchEl = document.getElementById('loc-search');
+const locClearBtn = document.getElementById('loc-clear');
+
+function renderLocations() {
+  const q = locSearchQuery.trim().toLowerCase();
+  locGroupsEl.innerHTML = '';
+
+  let any = false;
+  Object.entries(LOCATIONS).forEach(([region, items]) => {
+    const groupMatchesRegion = region.toLowerCase().includes(q);
+    const matched = items.filter(c => groupMatchesRegion || c.toLowerCase().includes(q));
+    if (matched.length === 0) return;
+    any = true;
+
+    const allSelected = matched.every(c => selectedLocations.has(c));
+
+    const header = document.createElement('div');
+    header.className = 'loc-group-header';
+    header.innerHTML = `<span>${region}</span><span class="select-all">${allSelected ? 'Clear ' + region : 'Select all in ' + region}</span>`;
+    header.querySelector('.select-all').addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (allSelected) {
+        matched.forEach(c => selectedLocations.delete(c));
+      } else {
+        matched.forEach(c => selectedLocations.add(c));
+      }
+      renderLocations(); renderChips(); updateSummary(); updateContinueState();
+    });
+    locGroupsEl.appendChild(header);
+
+    matched.forEach(loc => {
+      const row = document.createElement('div');
+      row.className = 'loc-row' + (selectedLocations.has(loc) ? ' selected' : '');
+      row.innerHTML = `<span class="check"></span><span>${loc}</span>`;
+      row.addEventListener('click', () => {
+        if (selectedLocations.has(loc)) selectedLocations.delete(loc);
+        else selectedLocations.add(loc);
+        renderLocations(); renderChips(); updateSummary(); updateContinueState();
+      });
+      locGroupsEl.appendChild(row);
+    });
+  });
+
+  if (!any) {
+    const empty = document.createElement('div');
+    empty.className = 'loc-empty';
+    empty.textContent = 'No locations match "' + locSearchQuery + '."';
+    locGroupsEl.appendChild(empty);
+  }
+
+  locCounterEl.textContent = selectedLocations.size + ' selected';
+}
+
+function renderChips() {
+  locChipsEl.innerHTML = '';
+  Array.from(selectedLocations).slice(0, 50).forEach(loc => {
+    const chip = document.createElement('span');
+    chip.className = 'chip';
+    chip.innerHTML = `${loc}<span class="x" title="Remove">×</span>`;
+    chip.querySelector('.x').addEventListener('click', () => {
+      selectedLocations.delete(loc);
+      renderLocations(); renderChips(); updateSummary(); updateContinueState();
+    });
+    locChipsEl.appendChild(chip);
+  });
+  if (selectedLocations.size > 50) {
+    const more = document.createElement('span');
+    more.className = 'chip';
+    more.style.background = 'var(--white)';
+    more.textContent = '+ ' + (selectedLocations.size - 50) + ' more';
+    locChipsEl.appendChild(more);
+  }
+}
+
+locSearchEl.addEventListener('input', (e) => {
+  locSearchQuery = e.target.value;
+  renderLocations();
+});
+locClearBtn.addEventListener('click', () => {
+  selectedLocations.clear();
+  renderLocations(); renderChips(); updateSummary(); updateContinueState();
+});
+
+renderLocations();
+
+// ===== Calendar with 3-day lead time =====
+const today = new Date(); today.setHours(0,0,0,0);
+const earliestDate = new Date(today);
+earliestDate.setDate(today.getDate() + 3);
+const earliestMonth = new Date(earliestDate.getFullYear(), earliestDate.getMonth(), 1);
+
+let viewMonth = new Date(earliestMonth);
+const selectedDates = new Set();
+
+const calGrid = document.getElementById('cal-grid');
+const calMonthTitle = document.getElementById('cal-month-title');
+const calCount = document.getElementById('cal-count');
+const calPrev = document.getElementById('cal-prev');
+const calNext = document.getElementById('cal-next');
+const calClear = document.getElementById('cal-clear');
+
+const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+function dateKey(d) {
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+
+function renderCalendar() {
+  calGrid.innerHTML = '';
+  calMonthTitle.textContent = MONTHS[viewMonth.getMonth()] + ' ' + viewMonth.getFullYear();
+
+  // Hide back chevron when at the earliest selectable month
+  const isAtEarliestMonth = viewMonth.getTime() <= earliestMonth.getTime();
+  calPrev.style.visibility = isAtEarliestMonth ? 'hidden' : 'visible';
+
+  const firstDay = new Date(viewMonth.getFullYear(), viewMonth.getMonth(), 1);
+  const lastDay = new Date(viewMonth.getFullYear(), viewMonth.getMonth()+1, 0);
+  const startWeekday = firstDay.getDay();
+
+  for (let i = 0; i < startWeekday; i++) {
+    const blank = document.createElement('button');
+    blank.type = 'button';
+    blank.className = 'cal-day out-of-month';
+    blank.disabled = true;
+    blank.textContent = '';
+    calGrid.appendChild(blank);
+  }
+
+  for (let d = 1; d <= lastDay.getDate(); d++) {
+    const date = new Date(viewMonth.getFullYear(), viewMonth.getMonth(), d);
+    const key = dateKey(date);
+    const cell = document.createElement('button');
+    cell.type = 'button';
+    cell.className = 'cal-day';
+    cell.textContent = d;
+
+    const isPast = date < earliestDate;
+    const isEarliest = date.getTime() === earliestDate.getTime();
+    const isSelected = selectedDates.has(key);
+
+    if (isPast) cell.classList.add('past');
+    if (isEarliest) cell.classList.add('today');
+    if (isSelected) cell.classList.add('selected');
+
+    if (!isPast) {
+      cell.addEventListener('click', () => {
+        if (selectedDates.has(key)) selectedDates.delete(key);
+        else selectedDates.add(key);
+        renderCalendar(); updateSummary(); updateContinueState();
+      });
+    } else {
+      cell.disabled = true;
+    }
+    calGrid.appendChild(cell);
+  }
+
+  calCount.textContent = selectedDates.size + ' days selected';
+}
+
+calPrev.addEventListener('click', () => {
+  viewMonth = new Date(viewMonth.getFullYear(), viewMonth.getMonth()-1, 1);
+  renderCalendar();
+});
+calNext.addEventListener('click', () => {
+  viewMonth = new Date(viewMonth.getFullYear(), viewMonth.getMonth()+1, 1);
+  renderCalendar();
+});
+calClear.addEventListener('click', () => {
+  selectedDates.clear(); renderCalendar(); updateSummary(); updateContinueState();
+});
+
+document.querySelectorAll('#cal-quick .pill').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const q = btn.dataset.quick;
+    if (q === 'weekend') {
+      const t = new Date(today);
+      const dow = t.getDay();
+      const sat = new Date(t); sat.setDate(t.getDate() + ((6 - dow + 7) % 7));
+      const sun = new Date(sat); sun.setDate(sat.getDate()+1);
+      if (sat >= earliestDate) selectedDates.add(dateKey(sat));
+      if (sun >= earliestDate) selectedDates.add(dateKey(sun));
+    } else if (q === 'next7') {
+      for (let i = 0; i < 7; i++) {
+        const t = new Date(earliestDate); t.setDate(earliestDate.getDate()+i);
+        selectedDates.add(dateKey(t));
+      }
+    } else if (q === 'next30') {
+      for (let i = 0; i < 30; i++) {
+        const t = new Date(earliestDate); t.setDate(earliestDate.getDate()+i);
+        selectedDates.add(dateKey(t));
+      }
+    } else if (q === 'clear') {
+      selectedDates.clear();
+    }
+    renderCalendar(); updateSummary(); updateContinueState();
+  });
+});
+
+renderCalendar();
+
+// ===== Description char counter =====
+const descEl = document.getElementById('event-desc');
+const descCounter = document.getElementById('desc-counter');
+descEl.addEventListener('input', () => {
+  const used = descEl.value.length;
+  descCounter.textContent = used + ' / 1000';
+  descCounter.classList.remove('near-limit', 'over-limit');
+  if (used >= 1000) descCounter.classList.add('over-limit');
+  else if (used >= 900) descCounter.classList.add('near-limit');
+  updateContinueState();
+});
+
+// ===== Live summary =====
+const sumLocations = document.getElementById('sum-locations');
+const sumDays = document.getElementById('sum-days');
+const sumMath = document.getElementById('sum-math');
+const sumAmount = document.getElementById('sum-amount');
+const sumEmpty = document.getElementById('sum-empty');
+const continueBtn = document.getElementById('continue-btn');
+
+function updateSummary() {
+  const L = selectedLocations.size;
+  const D = selectedDates.size;
+  sumLocations.textContent = L;
+  sumDays.textContent = D;
+  if (L && D) {
+    const total = L * D * TIER_RATE;
+    sumMath.style.display = 'block';
+    sumMath.textContent = D + (D === 1 ? ' day' : ' days') + ' × ' + L + (L === 1 ? ' location' : ' locations') + ' × $' + TIER_RATE;
+    sumAmount.textContent = '$' + total.toLocaleString();
+    sumEmpty.style.display = 'none';
+  } else {
+    sumMath.style.display = 'none';
+    sumAmount.textContent = '$0';
+    sumEmpty.style.display = 'block';
+  }
+}
+
+// ===== Continue button gating =====
+function updateContinueState() {
+  const ok = selectedLocations.size > 0
+    && selectedDates.size > 0
+    && selectedCategory
+    && document.getElementById('event-name').value.trim()
+    && document.getElementById('event-desc').value.trim()
+    && document.getElementById('event-start-date').value
+    && document.getElementById('event-start-time').value
+    && document.getElementById('event-end-date').value
+    && document.getElementById('event-end-time').value
+    && document.getElementById('event-venue').value.trim()
+    && document.getElementById('org-name').value.trim()
+    && document.getElementById('org-email').value.trim()
+    && document.getElementById('org-phone').value.trim()
+    && document.getElementById('org-company').value.trim()
+    && document.getElementById('org-title').value.trim();
+  continueBtn.disabled = !ok;
+}
+
+['event-name','event-start-date','event-start-time','event-end-date','event-end-time','event-venue','org-name','org-email','org-phone','org-company','org-title'].forEach(id => {
+  document.getElementById(id).addEventListener('input', updateContinueState);
+});
+
+continueBtn.addEventListener('click', () => {
+  if (continueBtn.disabled) return;
+  const eventName = document.getElementById('event-name').value.trim();
+  const total = selectedLocations.size * selectedDates.size * TIER_RATE;
+  const url = 'checkout.html?tier=' + tier
+    + '&locations=' + selectedLocations.size
+    + '&days=' + selectedDates.size
+    + '&total=' + total
+    + '&event=' + encodeURIComponent(eventName);
+  window.location.href = url;
+});
+
+// Initial tier setup — runs LAST so updateSummary's variables are all initialized
+setTier(tier);
+updateSummary();
+updateContinueState();
+</script>
+
+</body>
+</html>
