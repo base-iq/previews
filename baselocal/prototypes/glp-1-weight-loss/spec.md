@@ -20,20 +20,24 @@ Single-page scroll, two functional moments:
 2. **Read → decide** — user scrolls through the editorial body, the partner recommendations, and (if applicable) the FAQ.
 3. **Click out** — user clicks one of the partner CTAs and is sent to the partner's intake in a new tab. Each CTA carries a `?ref=baselocal` (or equivalent affiliate UTM — see § 6).
 
-There are seven primary outbound clicks on the page:
+There are nine primary outbound clicks on the page. Note: every **pick card** (rows 4–9) and the **Through-Medvi price-comparison card** (row 2) is fully clickable — the entire card is the link target. The visible "See X →" / "Try X →" / "Take the 5-minute intake →" label inside each card is a styled span (not its own link). Hovering anywhere on the card raises a shadow + lifts the card slightly + highlights the inner button.
 
-| # | Where | Destination | Label | Type |
+| # | Where | Destination | Label (visible) | Type |
 |---|---|---|---|---|
-| 1 | Inline CTA mid-article | `#medvi` (anchor) | Skip ahead — see if Medvi is a fit → | Internal anchor |
-| 2 | Featured pick (Medvi) | Medvi intake | See if Medvi is a fit → | Affiliate |
-| 3 | Pick — Mochi | Mochi intake | See Mochi → | Affiliate |
-| 4 | Pick — Remedy | Remedy intake | See Remedy → | Affiliate |
-| 5 | Pick — Hers | Hers intake | See Hers → | Affiliate |
-| 6 | Pick — Fridays | Fridays intake | See Fridays → | Affiliate |
-| 7 | Pick — Simple (fallback) | Simple sign-up | Try Simple → | Affiliate |
-| 8 | Bottom CTA primary | Medvi intake | See if Medvi is a fit → | Affiliate (duplicate of #2) |
-| 9 | Bottom CTA secondary | `#medvi` (anchor) | Compare all five | Internal anchor |
-| 10 | Bottom CTA alt link | Simple sign-up | Try Simple → | Affiliate (duplicate of #7) |
+| 1 | Chart-callout CTA (in "What GLP-1 is" section) | Medvi intake | Take the 5-minute intake → | Affiliate |
+| 2 | Through-Medvi price-comparison card (in "What it costs" section) — fully clickable card | Medvi intake | Take the 5-minute intake → | Affiliate (duplicate of #1) |
+| 3 | Inline CTA (in "It's not willpower" section, after first body paragraph) | Medvi intake | Take the 5-minute intake → | Affiliate (duplicate of #1) |
+| 4 | Featured pick (Medvi) — fully clickable card | Medvi intake | See if Medvi is a fit → | Affiliate (duplicate of #1) |
+| 5 | Pick — Mochi (fully clickable card) | Mochi intake | See Mochi → | Affiliate |
+| 6 | Pick — Remedy (fully clickable card) | Remedy intake | See Remedy → | Affiliate |
+| 7 | Pick — Hers (fully clickable card) | Hers intake | See Hers → | Affiliate |
+| 8 | Pick — Fridays (fully clickable card) | Fridays intake | See Fridays → | Affiliate |
+| 9 | Pick — Simple, fallback (fully clickable card) | Simple sign-up | Try Simple → | Affiliate |
+| 10 | Bottom CTA primary | Medvi intake | See if Medvi is a fit → | Affiliate (duplicate of #1) |
+| 11 | Bottom CTA secondary | `#medvi` (anchor) | Compare all five | Internal anchor |
+| 12 | Bottom CTA alt link | Simple sign-up | Try Simple → | Affiliate (duplicate of #9) |
+
+The Brand-name (Wegovy/Ozempic) card in the price-comparison block is intentionally **not** clickable — it has no destination and represents the comparison's "before" state.
 
 All affiliate links open in a new tab (`target="_blank"`, `rel="noopener noreferrer"`).
 
@@ -66,11 +70,23 @@ Every visible UI string. Numbers in brackets indicate which section in `index.ht
 - **H1:** `GLP-1 isn't a celebrity drug anymore. Here's what changed for women over 50.`
 - **Lede:** `We've spent a few months looking at where weight-loss medication is delivering for our readers. The short version: it's working, the price has dropped to something normal, and most women starting it are over 45.`
 
-### Article byline
-- **Left (author):** `By the BaseLocal team`
-- **Right (meta):** `Updated April 2026 · 5 min read`
+### Article meta
+- **Text:** `Updated April 2026 · 5 min read`
+- **Position:** Sits directly under the hero kicker, above the H1. Lato 13px, Silver `#999999`, no borders.
 
-> **Implementer note:** "Updated {Month Year}" should reflect the most recent edit. "5 min read" is approximate — recompute if the article changes substantially.
+> **Implementer note:** This prototype intentionally does not use the Article Byline component (`design-system.md` § 3.17). The editorial direction here doesn't need named authorship — the article speaks for the brand. Only the date and read-time survive as a small inline meta line. Other future editorial bridge pages may still want the full byline pattern.
+
+> **Implementer note (date):** "Updated {Month Year}" should reflect the most recent edit. "5 min read" is approximate — recompute if the article changes substantially.
+
+### Front-matter divider (article-divider)
+
+A short centered horizontal rule that separates the hero (kicker → meta → H1 → lede) from the article body (drop-cap paragraph onward). Sits between the two `<section>`s.
+
+- **Width:** 64px, centered (`margin: 40px auto`)
+- **Color:** Warm Border `#E8E0DC`
+- **Height:** 1px
+
+> **Note:** Not yet a design-system component — this prototype's inline pattern. If we keep this layout for editorial bridges, ratify alongside the Editorial Article set (`design-system.md` § 3.15–3.18) via `extend-design-system`.
 
 ### Body — opening (drop cap on first letter)
 - `A reader emailed us last fall with a very direct question: was the weight-loss medication everyone was talking about something she should bother looking into, or another thing she'd waste a year on. She was 58. She'd done Weight Watchers twice, Noom, the keto thing, and most recently a meal-kit subscription her daughter swore by. Nothing stuck.`
@@ -80,11 +96,22 @@ Every visible UI string. Numbers in brackets indicate which section in `index.ht
 - **H2:** `What GLP-1 is, in plain English`
 - **Body 1:** `GLP-1 stands for glucagon-like peptide-1 — a hormone the body already makes to help regulate appetite and blood sugar. The medication is a synthetic version, just stronger and longer-lasting.`
 - **Body 2:** `What it does, practically: tells the brain you're full sooner, and keeps that signal active longer. The result is that you eat less without thinking about eating less. Readers describe the constant background noise about food as just… quieting down.`
-- **Stat callout:** `Over **2 million Americans** are on a GLP-1 right now. The fastest-growing group: women aged 45 to 65.`
+- **Inline chart (replaces former stat callout):**
+  - **Title:** `Americans on a GLP-1 for weight loss`
+  - **Inflection annotation (at 2021 data point):** `WEGOVY APPROVED`
+  - **Endpoint annotation (at 2025 data point):** `~2M`
+  - **Axis labels:** `2019` (left) · `2025` (right)
+  - **Footnote:** `Fastest-growing group: women aged 45 to 65.`
+  - **Source line:** `Source: editorial estimate — illustrative until verified.`
+  - **CTA lead (italic Bitter):** `If you're considering it, here's where we'd start.`
+  - **CTA button:** `Take the 5-minute intake →` — links to Medvi affiliate URL, opens new tab. Sits in an inset white panel below the chart (extends to the figure's left/right/bottom edges, hairline above) so the action reads as a deliberate two-tone payoff rather than a tacked-on footer. The "5-minute" claim is a partner-verifiable signal that lowers commitment friction.
+  - **Data points (illustrative):** 2019: ~50K · 2020: ~100K · 2021: ~250K · 2022: ~600K · 2023: ~1M · 2024: ~1.5M · 2025: ~2M
+  - **SVG aria-label (for screen readers):** `Americans on a GLP-1 for weight loss grew from roughly 50,000 in 2019 to about 2 million in 2025, with a sharp inflection after the 2021 FDA approval of Wegovy.`
 
-### Section: What changes after 50
-- **H2:** `What changes after 50 — and why this finally works`
+### Section: Why this works post-menopause
+- **H2:** `It's not willpower. It's estrogen.`
 - **Body 1:** `Around perimenopause, the relationship between effort and results in weight management starts to break. A diet that worked at 35 stops working at 52. A workout routine that used to take five pounds off in a month now takes six.`
+- **Inline CTA (after Body 1):** `Ready to get started?` + link `Take the 5-minute intake →` — links to Medvi affiliate URL, opens new tab. Sits in the standard `.inline-cta` container (cream background, 4px radius, terracotta link). Placed here to capture readers who recognize themselves in the perimenopause description and are ready to act before the rest of the section's argument.
 - **Body 2:** `This isn't laziness or lack of willpower. Estrogen helps regulate insulin sensitivity and fat storage; when it drops, the body holds more weight at the abdomen and resists losing it. Diet-and-exercise advice meant for someone in their 30s isn't what most women need by 50.`
 - **Pull quote:** `GLP-1 doesn't burn calories or replace meals. It changes one signal — between your gut and your brain — that tends to start shouting at you somewhere around 50.`
 - **Body 3:** `By turning down the appetite signal directly, GLP-1 makes a calorie deficit work in your favor without requiring discipline you've never needed before. That's the part our readers tell us is different.`
@@ -93,15 +120,25 @@ Every visible UI string. Numbers in brackets indicate which section in `index.ht
 - **H2:** `What it costs in 2026`
 - **Body 1:** `Two prices to know.`
 - **Body 2:** `Brand-name versions (Wegovy and Ozempic) are still expensive without insurance — $1,000 to $1,400 per month. Insurance coverage for weight loss is improving but inconsistent.`
-- **Body 3:** `Compounded GLP-1 — same active ingredient (semaglutide or tirzepatide), made by licensed pharmacies — is what's changed the math. Through the telehealth services we cover, the all-in cost lands between $149 and $249 per month.`
-- **Stat callout:** `Brand-name (Wegovy/Ozempic) without insurance: **$1,000–$1,400/mo**. Compounded GLP-1 through telehealth: **$149–$249/mo**, all-in.`
+- **Body 3:** `Compounded GLP-1 — same active ingredient (semaglutide or tirzepatide), made by licensed pharmacies — **is what's changed the math**. Through the telehealth services we cover, the all-in cost lands between $149 and $249 per month.` (The phrase "is what's changed the math" is bolded inline.)
+- **Price comparison (replaces former stat callout):** Two side-by-side cards — muted Brand-name on the left (struck-through `$1,000–$1,400`, three friction points with red ✗ glyphs) and highlighted Through Medvi on the right (`$179`, three included items with terracotta ✓ glyphs, primary CTA inline). Stacks vertically at ≤600px.
+  - **Brand-name card tag:** `Brand-name`
+  - **Brand-name card name:** `Wegovy / Ozempic`
+  - **Brand-name card price:** `$1,000–$1,400` (struck through)
+  - **Brand-name card detail:** `per month, without insurance`
+  - **Brand-name card friction list:** `Insurance prior auth common` · `Pharmacy availability fluctuates` · `Brand-name list price`
+  - **Through-Medvi card tag:** `Through Medvi`
+  - **Through-Medvi card name:** `Compounded GLP-1`
+  - **Through-Medvi card price:** `$179`
+  - **Through-Medvi card detail:** `per month, all-in`
+  - **Through-Medvi card include list:** `Same active ingredient (semaglutide or tirzepatide)` · `Medication, doctor visit, shipping included` · `No insurance fight, no pharmacy hunt`
+  - **Through-Medvi CTA:** `Take the 5-minute intake →` — links to Medvi affiliate URL, opens new tab.
 
 ### Section: How to get it
 - **H2:** `How to get it without going through your PCP`
 - **Body 1:** `This is the part most readers don't know about. A handful of telehealth services have built end-to-end programs around GLP-1 — they handle the doctor consultation, the prescription, the pharmacy fulfillment, and ongoing monitoring.`
 - **Body 2:** `You fill out an intake (medical history, current medications, weight goals), a licensed prescriber reviews it, and if you're a candidate, the medication ships to your door. No referrals. No PCP appointments. No insurance paperwork.`
 - **Body 3:** `We spent the last few months looking at five of these services. Here's where we'd start.`
-- **Inline CTA:** `Already sure you want to start? Skip ahead — see if Medvi is a fit →`
 
 ### Featured pick — Medvi
 - **Section H2:** `Where we'd start: Medvi`
@@ -195,7 +232,7 @@ Every visible UI string. Numbers in brackets indicate which section in `index.ht
 - **Alt link:** `Want the non-medical alternative? Try Simple →`
 
 ### Disclosure
-- **Para 1:** `BaseLocal may earn a commission when you sign up through links on this page. Our editorial picks are independent — partners do not pay for placement, and commissions never determine which products we recommend.`
+- **Para 1:** `BaseLocal may earn a commission when you sign up through links on this page, which could influence how and where the offers appear.`
 - **Para 2:** `Compounded GLP-1 medications are made by state-licensed pharmacies and are not FDA-approved as new drugs. They use the same active ingredient — semaglutide or tirzepatide — as the approved branded versions. A licensed prescriber will determine whether the medication is appropriate for you based on your medical history.`
 - **Para 3:** `Individual results vary. Nothing on this page is medical advice. If you have questions about whether GLP-1 is right for you, talk to a licensed prescriber.`
 
@@ -238,13 +275,17 @@ Page-level events to instrument (production scope, not prototype):
 - **Pricing accuracy:** All prices in the prototype are representative ranges based on public data as of April 2026. Each partner needs to confirm their own price (and any current promotional offer) before launch — these are the most likely things to drift.
 - **Social proof numbers:** "60,000+ patients started with Medvi in 2025" is a placeholder. Replace with a partner-confirmed figure or remove the social proof line if no figure is approved.
 - **Featured-pick badge text:** "Best fit for most readers" was chosen for the Medvi badge. Alternatives: "Editor's pick" / "Where we'd start" / "Top pick." Confirm before launch.
-- **Author byline:** Currently "By the BaseLocal team." If we want a named author for editorial credibility ("By Corry Belitsky"), swap before launch.
+- **Author byline:** Intentionally removed. If editorial credibility benefits from a named author later (per § 4 Article meta note), the prototype can re-add the design-system Article Byline component (`design-system.md` § 3.17) above the H1.
 - **Updated date:** "Updated April 2026" is hardcoded. If the page goes live in a different month, update.
 - **Compliance review:** Any GLP-1 mention needs legal/compliance sign-off, especially the safety claims, side-effect numbers (5%), and the 2-million-Americans stat. The disclosure block has a draft compounding disclaimer — confirm wording is sufficient.
 - **Newsletter placement copy:** Out of scope here, but the placement that drives traffic should reference back to this page's hero framing for landing-page consistency. Likely lives with PlacementCopywriter.
 - **A/B test scope:** No variants in this prototype. Likely candidates if testing later: which partner is featured (Medvi vs. Mochi), pull-quote vs. no pull-quote, FAQ above vs. below the picks, drop-cap vs. no drop-cap.
-- **Logo color in header:** Currently terracotta. The brand guide allows dark on light backgrounds where terracotta might clash with nearby content. Confirm this is the right call given the kicker is also terracotta and might compete.
+- ~~**Logo color in header:** Currently terracotta…~~ **Resolved:** swapped to Espresso (dark) — matches BaseLocal's live website convention and avoids stacking with the terracotta kicker. Design system § Logos updated to make Espresso the documented default.
 - **Mobile-only sticky CTA:** Not implemented. Common pattern for bridge pages — pin "See if Medvi is a fit" to the bottom of the viewport on mobile after the user scrolls past the featured pick. Worth considering before launch if mobile conversion underperforms.
+- **Chart data:** All seven data points in the inline chart ("Americans on a GLP-1 for weight loss") are illustrative editorial estimates. Source-verify before launch (likely from KFF, GoodRx, IQVIA, or a published peer-reviewed dataset) and replace the source line with a real citation.
+- **Chart-callout component:** This component is a new pattern not yet in `brain/brands/baselocal/design-system.md`. If we keep this treatment after iteration, ratify it via `extend-design-system` before launch.
+- **Partner logos:** Each pick card and the "Through Medvi" price-comparison card displays the partner's logo above the (visually hidden) brand-name heading. Files at `previews/baselocal/assets/partners/{slug}.{ext}` — currently 5 PNG (Medvi, Mochi, Remedy, Hers, Fridays) and 1 JPG (Simple). Heights are tuned per partner (`.pick-logo--medvi`, `.pick-logo--mochi`, etc.) because logo aspect ratios vary 1.67:1 → 4.27:1 — without per-logo tuning, square marks read as visually small next to wordmarks. If a partner replaces their logo, re-tune the height. For launch, request transparent SVG / PNG from each partner so logos sit cleanly on the white card backgrounds (the JPG may show a white box if its background isn't pure white).
+- **Intake duration claim:** The chart-callout CTA says "Take the 5-minute intake." Confirm the actual Medvi intake duration before launch. If it's materially longer (>7 min), swap to `Start Medvi's intake →` to drop the time claim.
 
 ---
 

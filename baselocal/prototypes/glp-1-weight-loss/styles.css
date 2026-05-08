@@ -74,7 +74,22 @@ a { color: inherit; }
   letter-spacing: 1.6px;
   text-transform: uppercase;
   color: var(--primary);
-  margin: 0 0 24px;
+  margin: 0 0 6px;
+}
+.article-meta {
+  font-family: 'Lato', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--silver);
+  margin: 0 0 28px;
+  letter-spacing: 0.1px;
+}
+hr.article-divider {
+  border: none;
+  height: 1px;
+  background: var(--border);
+  width: 64px;
+  margin: 40px auto;
 }
 
 .hero h1 {
@@ -95,30 +110,6 @@ a { color: inherit; }
   color: var(--body);
   max-width: 580px;
   margin: 0 0 32px;
-}
-
-/* ===== Article byline ===== */
-.article-byline {
-  font-family: 'Lato', sans-serif;
-  font-size: 13px;
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  padding: 14px 0;
-  margin: 24px 0 36px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-.article-byline .who {
-  font-weight: 700;
-  color: var(--dark);
-  letter-spacing: 0.2px;
-}
-.article-byline .when {
-  font-weight: 400;
-  color: var(--silver);
 }
 
 /* ===== Body ===== */
@@ -144,6 +135,192 @@ a { color: inherit; }
   color: var(--primary);
   float: left;
   margin: 4px 6px -2px 0;
+}
+
+/* Chart callout — inline SVG chart in editorial body
+   (proposed component, not yet in design-system.md — ratify if kept) */
+.chart-callout {
+  background: var(--bg-warm);
+  border-left: 3px solid var(--primary);
+  border-radius: 0 4px 4px 0;
+  padding: 24px;
+  margin: 28px 0;
+}
+.chart-title {
+  font-family: 'Lato', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--dark);
+  margin: 0 0 14px;
+  letter-spacing: 0.2px;
+}
+.chart-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.chart-footnote {
+  font-family: 'Lato', sans-serif;
+  font-size: 14px;
+  color: var(--gray);
+  font-style: italic;
+  margin: 16px 0 0;
+}
+.chart-source {
+  font-family: 'Lato', sans-serif;
+  font-size: 11px;
+  color: var(--silver);
+  font-style: italic;
+  margin: 4px 0 0;
+}
+.chart-cta {
+  margin: 24px -24px -24px;
+  padding: 28px 24px;
+  background: var(--bg-page);
+  border-top: 1px solid var(--border);
+  border-radius: 0 0 4px 0;
+  text-align: center;
+}
+.chart-cta-lead {
+  font-family: 'Bitter', Georgia, serif;
+  font-weight: 400;
+  font-style: italic;
+  font-size: 17px;
+  line-height: 1.4;
+  color: var(--dark);
+  margin: 0 0 18px;
+}
+
+/* Price comparison — two-card pricing module
+   (proposed component, not yet in design-system.md — ratify if kept) */
+.price-comparison {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 28px 0;
+}
+.price-card {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 24px 22px;
+  background: var(--bg-page);
+  display: flex;
+  flex-direction: column;
+}
+.price-card-old {
+  background: #FAFAFA;
+}
+.price-card-new {
+  border: 2px solid var(--primary);
+  background: var(--bg-page);
+  box-shadow: 0 4px 14px rgba(194, 96, 74, 0.08);
+  position: relative;
+  cursor: pointer;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.price-card-new:hover {
+  box-shadow: 0 12px 28px rgba(194, 96, 74, 0.18);
+  transform: translateY(-2px);
+}
+.price-card-new:hover .btn-primary {
+  background: var(--primary-hover);
+  box-shadow: 0 4px 14px rgba(194, 96, 74, 0.35);
+}
+.price-card-link {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+}
+.price-card-link:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+.price-card-tag {
+  font-family: 'Lato', sans-serif;
+  font-weight: 900;
+  font-size: 11px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin: 0 0 8px;
+}
+.price-card-tag-featured {
+  color: var(--primary);
+}
+.price-card-logo {
+  display: block;
+  height: 26px;
+  width: auto;
+  max-width: 140px;
+  margin: 0 0 12px;
+  object-fit: contain;
+  object-position: left center;
+}
+.price-card-name {
+  font-family: 'Lato', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--dark);
+  margin: 0 0 16px;
+}
+.price-card-price {
+  font-family: 'Bitter', Georgia, serif;
+  font-weight: 700;
+  font-size: 38px;
+  line-height: 1;
+  margin: 0 0 4px;
+  letter-spacing: -0.5px;
+}
+.price-card-old .price-card-price {
+  color: var(--gray);
+}
+.price-card-old .price-card-price s {
+  text-decoration: line-through;
+}
+.price-card-new .price-card-price {
+  color: var(--primary);
+}
+.price-card-detail {
+  font-size: 13px;
+  color: var(--gray);
+  margin: 0 0 18px;
+  line-height: 1.5;
+}
+.price-card-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px;
+  flex: 1;
+}
+.price-card-features li {
+  font-size: 14px;
+  line-height: 1.5;
+  padding: 6px 0;
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+.price-card-features .x {
+  color: var(--error);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.price-card-features .check {
+  color: var(--primary);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.price-card-old li {
+  color: var(--gray);
+}
+.price-card-new li {
+  color: var(--body);
+}
+.price-card-new .btn {
+  width: 100%;
+  text-align: center;
+  margin-top: auto;
 }
 
 /* Stat callout */
@@ -206,10 +383,38 @@ a { color: inherit; }
   border-radius: 4px;
   padding: 24px 20px;
   margin: 0 0 20px;
+  position: relative;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
 }
 .pick.featured {
   border-width: 2px;
   border-color: var(--primary);
+}
+.pick:hover {
+  border-color: var(--primary);
+  box-shadow: 0 8px 24px rgba(194, 96, 74, 0.12);
+  transform: translateY(-2px);
+}
+.pick.featured:hover {
+  box-shadow: 0 12px 28px rgba(194, 96, 74, 0.18);
+}
+.pick:hover .btn-card {
+  background: var(--primary-hover);
+  box-shadow: 0 4px 14px rgba(194, 96, 74, 0.35);
+}
+/* Overlay link covers the whole card so any click opens the partner.
+   Sits below the visible content (z-index defaults), hits clicks in
+   the empty/visual areas. */
+.pick-link {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+}
+.pick-link:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
 }
 
 .pick-rank {
@@ -225,6 +430,34 @@ a { color: inherit; }
   color: var(--primary);
 }
 
+.pick-logo {
+  display: block;
+  width: auto;
+  max-width: 160px;
+  margin: 0 0 16px;
+  object-fit: contain;
+  object-position: left center;
+}
+/* Per-logo height modifiers — tuned to balance visual area
+   across logos with very different aspect ratios. */
+.pick-logo--medvi   { height: 26px; }
+.pick-logo--mochi   { height: 40px; }
+.pick-logo--remedy  { height: 30px; }
+.pick-logo--hers    { height: 36px; }
+.pick-logo--fridays { height: 30px; }
+.pick-logo--simple  { height: 36px; }
+
+/* Visually hidden, screen-reader accessible */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .pick-header {
   display: flex;
   justify-content: space-between;
@@ -232,13 +465,6 @@ a { color: inherit; }
   flex-wrap: wrap;
   gap: 12px;
   margin-bottom: 16px;
-}
-.pick-name {
-  font-family: 'Lato', sans-serif;
-  font-weight: 700;
-  font-size: 22px;
-  color: var(--dark);
-  margin: 0;
 }
 .pick-tagline {
   font-size: 14px;
@@ -491,6 +717,16 @@ a { color: inherit; }
 }
 .disclosure p:last-child { margin-bottom: 0; }
 
+/* ===== Mobile responsive — price comparison stacks ===== */
+@media (max-width: 600px) {
+  .price-comparison {
+    grid-template-columns: 1fr;
+  }
+  .price-card-price {
+    font-size: 32px;
+  }
+}
+
 /* ===== Tablet (≥ 600px) ===== */
 @media (min-width: 600px) {
   .article {
@@ -517,9 +753,6 @@ a { color: inherit; }
   }
   .pick {
     padding: 32px;
-  }
-  .article-byline {
-    margin: 40px 0 56px;
   }
   .safety {
     padding: 28px 28px 24px;
