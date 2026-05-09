@@ -138,7 +138,7 @@ hr.article-divider {
 }
 
 /* Chart callout — inline SVG chart in editorial body
-   (proposed component, not yet in design-system.md — ratify if kept) */
+   (design-system.md § 3.19) */
 .chart-callout {
   background: var(--bg-warm);
   border-left: 3px solid var(--primary);
@@ -192,7 +192,7 @@ hr.article-divider {
 }
 
 /* Price comparison — two-card pricing module
-   (proposed component, not yet in design-system.md — ratify if kept) */
+   (design-system.md § 3.20) */
 .price-comparison {
   display: grid;
   grid-template-columns: 1fr 1fr;
