@@ -1,8 +1,14 @@
 /* ----------------------------------------------------------------------------
-   baselocal · post-signup-inbox prototype
-   Provider detection (from email domain) + mailto: launch + state handoff
-   between Screen 1 (index.html) and Screen 2 (confirmed.html).
+   BaseLocal · post-signup-inbox prototype
+   Provider detection (from email domain) → renders provider-tailored numbered
+   steps for finding the welcome email and moving it to the inbox.
    Spec.md is the source of truth — keep this file in sync with it.
+
+   Note: this flow assumes BaseLocal sends via a Beehiiv sending-domain that
+   does NOT accept inbound mail. So the deliverability action is "find the
+   welcome and move it to your inbox" — a valid signal that needs no receiving
+   mailbox on our side. An earlier iteration used a `mailto:` "send us a hi"
+   action; that was dropped when the Beehiiv constraint was confirmed.
 ---------------------------------------------------------------------------- */
 
 (function () {
@@ -44,6 +50,44 @@
     return DOMAIN_MAP[domain] || 'other';
   }
 
+  // --- Provider-tailored steps -------------------------------------------
+
+  // Each step is a single concrete action. Three steps per provider. The
+  // sequence is consistent: (1) open the right place, (2) take the action,
+  // (3) fallback if it's not where expected. <strong> marks bold inline.
+  var STEPS = {
+    gmail: [
+      'Open Gmail and check your <strong>Promotions</strong> tab.',
+      'Find the welcome from BaseLocal and move it to <strong>Primary</strong> — drag on desktop, or long-press the email and tap <strong>Move to → Primary</strong> on mobile.',
+      'Not in Promotions? Look in <strong>Spam</strong> and mark it <strong>Not Spam</strong>.'
+    ],
+    apple: [
+      'Open Mail and check your inbox.',
+      'If the welcome isn\'t there, check the <strong>Junk</strong> folder.',
+      'Tap the welcome and choose <strong>Move to Inbox</strong>.'
+    ],
+    outlook: [
+      'Open Outlook and check <strong>Focused</strong>.',
+      'If the welcome isn\'t there, check the <strong>Other</strong> tab. Right-click on desktop, or long-press on mobile, then choose <strong>Move to Focused</strong>.',
+      'Still not there? Look in <strong>Junk</strong> and mark it <strong>Not Junk</strong>.'
+    ],
+    yahoo: [
+      'Open Yahoo Mail and check your inbox.',
+      'If the welcome isn\'t there, open the <strong>Spam</strong> folder.',
+      'Find the welcome and mark it <strong>Not Spam</strong>.'
+    ],
+    aol: [
+      'Open AOL Mail and check your inbox.',
+      'If the welcome isn\'t there, open the <strong>Spam</strong> folder.',
+      'Find the welcome and mark it <strong>Not Spam</strong>.'
+    ],
+    other: [
+      'Open your mail app and check your inbox.',
+      'If the welcome isn\'t there, check <strong>Spam</strong> or <strong>Junk</strong>.',
+      'Find the welcome and mark it as <strong>safe</strong> (sometimes called "Not Spam" or "Move to Inbox").'
+    ]
+  };
+
   // --- URL params ---------------------------------------------------------
 
   function getParam(name) {
@@ -61,117 +105,31 @@
     return fromUrl || DEMO_EMAIL;
   }
 
-  // --- Mailto: link -------------------------------------------------------
+  // --- Render -------------------------------------------------------------
 
-  // Recipient is a placeholder — surface as open question in spec.md. The
-  // address must match the production welcome-email "From:" so the reply /
-  // outbound signal trains the user's mail app on the correct sender.
-  var SENDER_EMAIL = 'tacoma@baselocal.com';
-  var MAILTO_SUBJECT = 'Hi from Tacoma';
-  var MAILTO_BODY = 'Hi! 👋'; // Hi! 👋
-
-  function buildMailto() {
-    return 'mailto:' + SENDER_EMAIL +
-      '?subject=' + encodeURIComponent(MAILTO_SUBJECT) +
-      '&body=' + encodeURIComponent(MAILTO_BODY);
-  }
-
-  // --- Wire-up: Screen 1 (index.html) -------------------------------------
-
-  function renderScreen1() {
+  function render() {
     var email = getEmail();
     var provider = detectProvider(email);
     var label = PROVIDER_LABELS[provider];
 
-    // Provider chip — single text run; provider name bolded inline.
+    // Email confirmation line at the bottom of the page
     var chipEmail = document.querySelector('[data-chip-email]');
-    var chipText = document.querySelector('[data-chip-text]');
     if (chipEmail) chipEmail.textContent = email;
+
+    // Provider chip — single text run; provider name bolded inline
+    var chipText = document.querySelector('[data-chip-text]');
     if (chipText) chipText.innerHTML = 'Tailored for <strong>' + label + '</strong>';
 
-    // Primary CTA — let the browser open the mailto: natively, then advance
-    // to Screen 2. The mailto: opens an external app (Mail.app, Gmail app,
-    // Outlook, etc.) so the current page is free to navigate.
-    var sendBtn = document.querySelector('[data-action="send"]');
-    if (sendBtn) {
-      sendBtn.setAttribute('href', buildMailto());
-      sendBtn.addEventListener('click', function () {
-        // Do NOT preventDefault — let the mailto: launch the user's mail app.
-        setTimeout(function () {
-          var params = new URLSearchParams({ email: email, contact: 'sent' });
-          window.location.href = 'confirmed.html?' + params.toString();
-        }, 400);
-      });
+    // Numbered steps — replace the static fallback with provider-tailored copy
+    var stepsList = document.querySelector('[data-steps]');
+    if (stepsList) {
+      stepsList.innerHTML = STEPS[provider]
+        .map(function (s) { return '<li>' + s + '</li>'; })
+        .join('');
     }
-
-    // Skip — navigate to confirmed.html without the sent chip
-    var skipBtn = document.querySelector('[data-action="skip"]');
-    if (skipBtn) {
-      skipBtn.addEventListener('click', function (e) {
-        e.preventDefault();
-        var params = new URLSearchParams({
-          email: email,
-          contact: 'skipped'
-        });
-        window.location.href = 'confirmed.html?' + params.toString();
-      });
-    }
-  }
-
-  // --- Wire-up: Screen 2 (confirmed.html) ---------------------------------
-
-  // Provider-specific tips — read out loud per copywriting rules.
-  // Each tip explains the fail-state + the one-tap recovery, in voice.
-  var TIPS = {
-    gmail: {
-      title: "Find the welcome — move it to Primary.",
-      body: "Open your inbox. Gmail probably filed our welcome under <strong>Promotions</strong> — move it to your <strong>Primary</strong> tab (drag on desktop, or long-press the email and tap <strong>Move to → Primary</strong> on mobile). If it's not in Promotions, check <strong>Spam</strong> and mark it <strong>Not Spam</strong>."
-    },
-    apple: {
-      title: "Find the welcome — move it to your inbox.",
-      body: "Open Mail and look for our welcome. If it's not in your inbox, check the <strong>Junk</strong> folder and tap <strong>Move to Inbox</strong> — Apple Mail learns from then on."
-    },
-    outlook: {
-      title: "Find the welcome — move it to Focused.",
-      body: "Open Outlook and look for our welcome. If it's not in <strong>Focused</strong>, check the <strong>Other</strong> tab and choose <strong>Move to Focused</strong> (right-click on desktop, long-press on mobile). Still not there? Look in <strong>Junk</strong> and mark it <strong>Not Junk</strong>."
-    },
-    yahoo: {
-      title: "Find the welcome — mark it Not Spam.",
-      body: "Open Yahoo Mail and look for our welcome. If it's not in your inbox, check the <strong>Spam</strong> folder and mark it <strong>Not Spam</strong> — Yahoo will trust us from then on."
-    },
-    aol: {
-      title: "Find the welcome — mark it Not Spam.",
-      body: "Open AOL Mail and look for our welcome. If it's not in your inbox, check the <strong>Spam</strong> folder and mark it <strong>Not Spam</strong> — AOL will trust us from then on."
-    },
-    other: {
-      title: "Find the welcome — and mark us as safe.",
-      body: "Open your mail app and look for our welcome. If it's not in your inbox, check <strong>Spam</strong> or <strong>Junk</strong> and mark it as safe — your mail app will trust us from then on."
-    }
-  };
-
-  function renderScreen2() {
-    var email = getParam('email') || DEMO_EMAIL;
-    var contact = getParam('contact'); // 'sent' | 'skipped' | ''
-    var provider = detectProvider(email);
-    var tip = TIPS[provider];
-
-    // Sent confirmation chip — only shown when contact=sent
-    var sentChip = document.querySelector('[data-sent-chip]');
-    if (sentChip && contact !== 'sent') {
-      sentChip.style.display = 'none';
-    }
-
-    // Tip block
-    var tipTitle = document.querySelector('[data-tip-title]');
-    var tipBody = document.querySelector('[data-tip-body]');
-    if (tipTitle) tipTitle.textContent = tip.title;
-    if (tipBody) tipBody.innerHTML = tip.body;
   }
 
   // --- Boot ---------------------------------------------------------------
 
-  document.addEventListener('DOMContentLoaded', function () {
-    if (document.body.dataset.screen === 'index') renderScreen1();
-    if (document.body.dataset.screen === 'confirmed') renderScreen2();
-  });
+  document.addEventListener('DOMContentLoaded', render);
 })();

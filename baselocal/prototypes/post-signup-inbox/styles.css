@@ -135,6 +135,57 @@ body {
   color: var(--dark);
 }
 
+/* --- Numbered steps (provider-tailored instructions) --------------------- */
+
+.steps {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  counter-reset: step;
+}
+.steps li {
+  counter-increment: step;
+  position: relative;
+  padding: 16px 0 16px 42px;
+  border-top: 1px solid var(--border);
+  font: 400 16px/1.55 'Lato', sans-serif;
+  color: var(--body);
+}
+.steps li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 16px;
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #fff;
+  font: 900 13px/26px 'Lato', sans-serif;
+  text-align: center;
+}
+.steps li strong {
+  color: var(--dark);
+  font-weight: 700;
+}
+
+/* Tail notes under the steps — reassurance + fallback timing, plus troubleshoot */
+.desk .ps {
+  margin: 24px 0 0;
+  padding: 18px 0 0;
+  border-top: 1px dashed var(--border);
+  font: 400 16px/1.6 'Lato', sans-serif;
+  color: var(--body);
+}
+.desk .ps + .ps {
+  margin-top: 14px;
+  padding-top: 0;
+  border-top: 0;
+}
+.desk .ps strong {
+  color: var(--dark);
+  font-weight: 700;
+}
+
 /* --- Primary CTA ---------------------------------------------------------- */
 
 .cta {
@@ -193,13 +244,18 @@ body {
   border-radius: 2px;
 }
 
-/* --- Below-callout note (small, calm) ------------------------------------ */
+/* --- Below-callout note: subscribed-as email reference -------------------- */
 
 .note {
-  font: 400 13px/1.6 'Lato', sans-serif;
-  color: var(--silver);
+  font: 400 15px/1.6 'Lato', sans-serif;
+  color: var(--gray);
   text-align: center;
-  margin: 24px 0 0;
+  margin: 28px 0 0;
+}
+.note strong {
+  color: var(--dark);
+  font-weight: 700;
+  font-size: 16px;
 }
 
 /* --- Confirmation screen -------------------------------------------------- */
