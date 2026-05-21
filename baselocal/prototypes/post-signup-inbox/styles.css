@@ -1,0 +1,323 @@
+/* ---------------------------------------------------------------------------
+   baselocal · post-signup-inbox prototype
+   See spec.md for the source of truth. Tokens follow brand/design-system.md.
+--------------------------------------------------------------------------- */
+
+:root {
+  --primary: #C2604A;
+  --primary-hover: #A84E3B;
+  --dark: #2C2421;
+  --body: #444444;
+  --gray: #797979;
+  --silver: #999999;
+  --warm: #FAF6F4;
+  --border: #E8E0DC;
+  --success: #2D7A2D;
+  --success-bg: #EEF7ED;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-entrance: 0.7s;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: 'Lato', Helvetica, Arial, sans-serif;
+  color: var(--body);
+  background: var(--warm);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* --- Page shell ------------------------------------------------------------ */
+
+.page {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 28px 20px 80px;
+}
+
+/* --- Masthead (page-specific chrome) -------------------------------------- */
+
+.masthead {
+  border-top: 3px double var(--dark);
+  border-bottom: 1px solid var(--dark);
+  padding: 16px 0 14px;
+  margin-bottom: 8px;
+  text-align: center;
+}
+.masthead .wordmark {
+  height: 26px;
+  width: auto;
+  margin-bottom: 8px;
+}
+.masthead .strap {
+  font: 900 11px/1.2 'Lato', sans-serif;
+  color: var(--gray);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+.masthead .strap .dot {
+  color: var(--primary);
+  margin: 0 8px;
+}
+
+.editionbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0 24px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 32px;
+  font: 700 11px/1 'Lato', sans-serif;
+  color: var(--gray);
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+.editionbar .right { color: var(--dark); }
+
+/* --- "From the desk" deliverability callout (Inline Alert · info pattern) - */
+
+.desk {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--primary);
+  border-radius: 0 4px 4px 0;
+  padding: 24px 24px 22px;
+  margin-bottom: 16px;
+}
+.desk .label {
+  font: 900 11px/1 'Lato', sans-serif;
+  color: var(--primary);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.desk h1 {
+  font: 700 26px/1.25 'Bitter', Georgia, serif;
+  color: var(--dark);
+  margin: 0 0 14px;
+  letter-spacing: -0.2px;
+}
+.desk p {
+  font: 400 16px/1.6 'Lato', sans-serif;
+  color: var(--body);
+  margin: 0 0 20px;
+}
+.desk p strong { color: var(--dark); font-weight: 700; }
+
+/* --- Detected provider chip (inside the desk callout) --------------------- */
+
+.detected {
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  gap: 8px;
+  background: var(--warm);
+  border: 1px solid var(--border);
+  color: var(--dark);
+  font: 700 12px/1 'Lato', sans-serif;
+  padding: 9px 14px;
+  border-radius: 999px;
+  margin-bottom: 24px;
+}
+.detected .dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--success);
+  display: inline-block;
+  flex-shrink: 0;
+}
+.detected strong {
+  font-weight: 700;
+  color: var(--dark);
+}
+
+/* --- Primary CTA ---------------------------------------------------------- */
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: var(--primary);
+  color: #fff;
+  font: 700 16px/1 'Lato', sans-serif;
+  border: 0;
+  border-radius: 6px;
+  padding: 16px 28px;
+  min-height: 48px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.2s, box-shadow 0.2s, transform 0.15s;
+}
+.cta:hover {
+  background: var(--primary-hover);
+  box-shadow: 0 4px 14px rgba(194, 96, 74, 0.35);
+}
+.cta:active {
+  transform: scale(0.97);
+  box-shadow: 0 2px 8px rgba(194, 96, 74, 0.25);
+}
+.cta:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
+.cta .arrow { display: inline-block; transition: transform 0.2s; }
+.cta:hover .arrow { transform: translateX(3px); }
+
+/* CTA on mobile fills the available width inside the callout */
+@media (max-width: 480px) {
+  .cta { width: 100%; }
+}
+
+.skip {
+  margin: 18px 0 0;
+  font: 500 14px/1.5 'Lato', sans-serif;
+  color: var(--gray);
+}
+.skip a {
+  color: var(--gray);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  min-height: 44px;
+  display: inline-block;
+  padding: 6px 0;
+}
+.skip a:hover { color: var(--primary); }
+.skip a:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* --- Below-callout note (small, calm) ------------------------------------ */
+
+.note {
+  font: 400 13px/1.6 'Lato', sans-serif;
+  color: var(--silver);
+  text-align: center;
+  margin: 24px 0 0;
+}
+
+/* --- Confirmation screen -------------------------------------------------- */
+
+.confirmation {
+  text-align: center;
+  padding: 12px 0 24px;
+}
+.confirmation .saved {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--success-bg);
+  color: var(--success);
+  font: 700 12px/1 'Lato', sans-serif;
+  padding: 8px 14px;
+  border-radius: 999px;
+  margin-bottom: 24px;
+  letter-spacing: 0.3px;
+}
+.confirmation .saved::before {
+  content: "✓";
+  font-weight: 900;
+}
+.confirmation h1 {
+  font: 700 32px/1.25 'Bitter', Georgia, serif;
+  color: var(--dark);
+  margin: 0 0 14px;
+  letter-spacing: -0.2px;
+}
+.confirmation .lede {
+  font: 400 17px/1.65 'Lato', sans-serif;
+  color: var(--body);
+  margin: 0 auto;
+  max-width: 480px;
+}
+.confirmation .lede strong { color: var(--dark); font-weight: 700; }
+
+/* The tip block on screen 2 — uses the same "desk" pattern, lighter label */
+.tip {
+  background: var(--warm);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 22px 22px 20px;
+  margin: 36px auto 0;
+  text-align: left;
+}
+.tip .label {
+  font: 900 11px/1 'Lato', sans-serif;
+  color: var(--gray);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.tip h2 {
+  font: 700 20px/1.3 'Bitter', Georgia, serif;
+  color: var(--dark);
+  margin: 0 0 8px;
+}
+.tip p {
+  font: 400 15px/1.6 'Lato', sans-serif;
+  color: var(--body);
+  margin: 0;
+}
+.tip p strong { color: var(--dark); font-weight: 700; }
+
+.signoff {
+  font: 400 italic 15px/1.5 'Bitter', Georgia, serif;
+  color: var(--gray);
+  text-align: center;
+  margin: 48px 0 0;
+}
+.signoff .name {
+  display: block;
+  font-style: normal;
+  font-weight: 700;
+  color: var(--dark);
+  margin-top: 2px;
+}
+
+/* --- Entrance motion (single, calm) -------------------------------------- */
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(12px);
+  animation: fadeInUp var(--duration-entrance) var(--ease-out-expo) forwards;
+}
+.fade-in.delay-1 { animation-delay: 80ms; }
+.fade-in.delay-2 { animation-delay: 160ms; }
+.fade-in.delay-3 { animation-delay: 240ms; }
+
+@keyframes fadeInUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Breakpoints --------------------------------------------------------- */
+
+@media (min-width: 720px) {
+  .page { padding: 56px 24px 120px; }
+  .masthead .wordmark { height: 32px; }
+  .desk { padding: 28px 28px 26px; }
+  .desk h1 { font-size: 28px; }
+  .confirmation h1 { font-size: 36px; }
+}
+
+/* --- Reduced motion guard ------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .fade-in {
+    opacity: 1;
+    transform: none;
+  }
+}
