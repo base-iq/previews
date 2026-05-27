@@ -1,0 +1,692 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Join BaseLocal Club</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@400;700&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --terracotta: #C2604A;
+    --terracotta-hover: #A84E3B;
+    --espresso: #2C2421;
+    --charcoal: #444444;
+    --gray: #797979;
+    --silver: #999999;
+    --cream: #FAF6F4;
+    --border: #E8E0DC;
+    --white: #FFFFFF;
+    --green: #2D7A2D;
+    --green-bg: #EEF7ED;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--white); color: var(--charcoal); font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 17px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  a { color: var(--terracotta); }
+
+  /* ---------- nav ---------- */
+  .nav {
+    border-bottom: 1px solid var(--border);
+    padding: 18px 22px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: var(--white); position: sticky; top: 0; z-index: 10;
+  }
+  .nav img { height: 22px; }
+  .nav .nav-cta {
+    background: var(--espresso); color: var(--white);
+    font-family: 'Lato'; font-weight: 700; font-size: 14px;
+    padding: 10px 16px; text-decoration: none; border-radius: 2px;
+  }
+  .nav .nav-cta:hover { background: #000; }
+
+  /* ---------- shared ---------- */
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 22px; }
+  .narrow { max-width: 680px; margin: 0 auto; padding: 0 22px; }
+
+  .kicker {
+    font-family: 'Lato'; font-weight: 900; font-size: 12px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--terracotta);
+  }
+
+  .cta-primary {
+    display: inline-block; background: var(--terracotta); color: var(--white);
+    font-family: 'Lato'; font-weight: 700; font-size: 17px;
+    padding: 18px 32px; text-decoration: none; border: 0; cursor: pointer;
+    transition: background 150ms ease;
+  }
+  .cta-primary:hover, .cta-primary:focus { background: var(--terracotta-hover); }
+  .cta-primary:focus-visible { outline: 3px solid var(--espresso); outline-offset: 3px; }
+
+  /* ---------- hero ---------- */
+  .hero { padding: 64px 0 56px; }
+  .hero .kicker { margin-bottom: 22px; display: block; }
+  .hero h1 {
+    font-family: 'Bitter', Georgia, serif; font-weight: 700;
+    font-size: clamp(34px, 5.5vw, 60px); line-height: 1.08;
+    color: var(--espresso); margin: 0 0 22px; letter-spacing: -0.6px;
+  }
+  .hero h1 em { font-style: normal; color: var(--terracotta); }
+  .hero .lede {
+    font-family: 'Bitter'; font-size: clamp(18px, 2vw, 21px);
+    line-height: 1.55; color: var(--charcoal); max-width: 640px; margin: 0 0 32px;
+  }
+  .hero .hero-cta-row { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+  .hero .price-note { color: var(--gray); font-size: 15px; }
+
+  /* ---------- side-by-side newsletter mock ---------- */
+  .compare {
+    margin: 56px 0 0;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+    align-items: start;
+  }
+  .compare-col { min-width: 0; }
+  .mock-label {
+    font-family: 'Lato'; font-weight: 900; font-size: 11px; letter-spacing: 1.5px;
+    text-transform: uppercase; margin-bottom: 10px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .mock-label.dim { color: var(--gray); }
+  .mock-label.live { color: var(--terracotta); }
+  .mock-label .pill {
+    background: var(--border); color: var(--gray);
+    padding: 3px 8px; border-radius: 999px;
+    font-size: 9px; letter-spacing: 1px;
+  }
+  .mock-label.live .pill { background: var(--terracotta); color: var(--white); }
+
+  .nl {
+    background: var(--cream); border: 1px solid var(--border);
+    padding: 12px; max-height: 560px; overflow: hidden; position: relative;
+    font-size: 11px; line-height: 1.5;
+  }
+  .nl::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 80px;
+    background: linear-gradient(to bottom, rgba(250,246,244,0), var(--cream));
+    pointer-events: none;
+  }
+  .nl-card {
+    background: var(--white); border-radius: 4px;
+    padding: 14px; margin-bottom: 6px;
+  }
+  .nl-top {
+    text-align: center; font-size: 10px;
+    color: var(--terracotta); font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .nl-top .sep { color: var(--silver); margin: 0 4px; font-weight: 400; }
+  .nl-mast {
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-family: 'Lato'; font-size: 9px; letter-spacing: 0.6px;
+    text-transform: uppercase; color: var(--gray);
+    margin-bottom: 10px;
+  }
+  .nl-banner {
+    width: 100%; height: 60px; border-radius: 3px;
+    background: linear-gradient(135deg, #C2604A 0%, #8a3f2c 100%);
+    margin-bottom: 10px;
+  }
+  .nl-intro { color: var(--charcoal); margin: 0; }
+  .nl-intro strong { color: var(--espresso); }
+  .nl-affiliate {
+    margin-top: 8px; padding-top: 8px;
+    border-top: 1px solid var(--border);
+    color: var(--charcoal);
+  }
+  .nl-affiliate strong { color: var(--espresso); }
+  .nl-affiliate a, .nl-item a { color: var(--terracotta); font-weight: 700; }
+  .nl-kicker {
+    font-family: 'Lato'; font-weight: 900; font-size: 8.5px;
+    letter-spacing: 1.2px; text-transform: uppercase;
+    color: var(--gray); margin-bottom: 4px;
+  }
+  .nl-kicker .num { color: var(--terracotta); }
+  .nl-h {
+    font-family: 'Bitter', Georgia, serif; font-weight: 700;
+    font-size: 15px; color: var(--espresso); line-height: 1.2;
+    margin: 0 0 4px;
+  }
+  .nl-dek {
+    font-family: 'Bitter', Georgia, serif; font-style: italic;
+    color: var(--gray); font-size: 11px; margin: 0 0 10px;
+  }
+  .nl-item { color: var(--charcoal); padding: 6px 0; border-bottom: 1px solid var(--border); }
+  .nl-item:last-child { border-bottom: 0; }
+  .nl-item strong { color: var(--espresso); }
+  .nl-sub { font-weight: 700; color: var(--espresso); margin: 10px 0 6px; font-size: 12px; }
+  .nl-list { padding-left: 16px; margin: 0; }
+  .nl-list li { padding: 3px 0; color: var(--charcoal); }
+  .nl-list li a { color: var(--terracotta); }
+  .ad-flag {
+    display: inline-block; font-family: 'Lato'; font-weight: 900;
+    font-size: 8px; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--white); background: #8a6224;
+    padding: 2px 5px; border-radius: 2px; margin-right: 5px;
+    vertical-align: middle;
+  }
+  .strike {
+    text-decoration: line-through; color: var(--silver); opacity: 0.55;
+  }
+  .strike strong { color: var(--silver); }
+  .nl-removed {
+    background: repeating-linear-gradient(45deg, #FAF6F4, #FAF6F4 6px, #fff 6px, #fff 12px);
+    border: 1px dashed var(--border);
+    text-align: center; padding: 14px 12px; margin-bottom: 6px;
+    border-radius: 4px;
+  }
+  .nl-removed-label {
+    font-family: 'Lato'; font-weight: 900; font-size: 9px;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--gray);
+  }
+  .compare-note {
+    grid-column: 1 / -1; text-align: center;
+    font-size: 13px; color: var(--gray); margin-top: 20px;
+  }
+  .compare-note strong { color: var(--espresso); font-weight: 700; }
+
+  /* ---------- the honest part ---------- */
+  .honest {
+    background: var(--cream); padding: 88px 0; margin-top: 88px;
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  }
+  .honest .marker {
+    font-family: 'Bitter'; font-size: 64px; font-weight: 700;
+    color: var(--terracotta); line-height: 0.8; margin: 0 0 10px;
+  }
+  .honest .kicker { margin-bottom: 22px; display: block; color: var(--espresso); }
+  .honest h2 {
+    font-family: 'Bitter'; font-weight: 700; font-size: clamp(28px, 3.5vw, 40px);
+    line-height: 1.18; color: var(--espresso); margin: 0 0 28px;
+  }
+  .honest p { font-size: 18px; line-height: 1.7; margin: 0 0 18px; color: var(--charcoal); }
+  .honest p:last-child { margin-bottom: 0; }
+  .honest p strong { color: var(--espresso); }
+
+  /* ---------- three pillars ---------- */
+  .pillars { padding: 88px 0; }
+  .pillars h2 {
+    font-family: 'Bitter'; font-weight: 700; font-size: clamp(28px, 3.5vw, 36px);
+    color: var(--espresso); margin: 0 0 48px; text-align: center;
+  }
+  .pillars-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 64px;
+    align-items: start;
+  }
+  .pillars-col { display: flex; flex-direction: column; gap: 44px; }
+  .pillar {
+    display: grid; grid-template-columns: 56px 1fr; gap: 18px;
+    align-items: start;
+  }
+  .pillar .num {
+    font-family: 'Bitter'; font-weight: 700; font-size: 44px;
+    color: var(--terracotta); line-height: 1; margin-top: -4px;
+  }
+  .pillar h3 {
+    font-family: 'Bitter'; font-weight: 700; font-size: 22px;
+    color: var(--espresso); margin: 0 0 8px; line-height: 1.25;
+  }
+  .pillar p { font-size: 16px; color: var(--charcoal); margin: 0; line-height: 1.6; }
+
+  .emails-col { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+  .emails-kicker {
+    font-family: 'Lato'; font-weight: 900; font-size: 11px; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--terracotta); margin: 0 0 4px;
+  }
+  .emails-cap {
+    font-family: 'Bitter'; font-style: italic; color: var(--gray);
+    font-size: 14px; margin: 0;
+  }
+  .email-stack { position: relative; }
+  .email-stack .nl { max-height: 460px; }
+  .email-tag {
+    display: inline-block;
+    font-family: 'Lato'; font-weight: 900; font-size: 10px;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--white); background: var(--espresso);
+    padding: 4px 8px; margin-bottom: 8px;
+  }
+  .email-tag.events { background: var(--terracotta); }
+
+  /* event items — emoji + link + meta + desc */
+  .nl-event { padding: 6px 0; border-bottom: 1px solid var(--border); color: var(--charcoal); }
+  .nl-event:last-child { border-bottom: 0; }
+  .nl-event .emoji { margin-right: 4px; }
+  .nl-event a { color: var(--terracotta); font-weight: 700; }
+  .nl-event .meta { color: var(--gray); font-size: 10px; }
+
+  @media (max-width: 760px) {
+    .pillars-grid { grid-template-columns: 1fr; gap: 48px; }
+    .email-stack .nl { max-height: 520px; }
+  }
+
+  /* ---------- more is coming ---------- */
+  .future {
+    background: var(--espresso); color: var(--cream);
+    padding: 88px 0; margin-top: 88px;
+  }
+  .future .kicker { color: var(--terracotta); margin-bottom: 22px; display: block; }
+  .future h2 {
+    font-family: 'Bitter'; font-weight: 700; font-size: clamp(28px, 3.5vw, 38px);
+    color: var(--white); margin: 0 0 24px; line-height: 1.2;
+  }
+  .future p { font-size: 18px; line-height: 1.7; color: var(--cream); margin: 0 0 16px; opacity: 0.92; }
+
+  /* ---------- who it's for ---------- */
+  .for-you { padding: 88px 0; }
+  .for-you h2 {
+    font-family: 'Bitter'; font-weight: 700; font-size: clamp(26px, 3.2vw, 34px);
+    color: var(--espresso); margin: 0 0 36px;
+  }
+  .for-you .lines p {
+    font-family: 'Bitter'; font-size: clamp(20px, 2.4vw, 26px);
+    color: var(--espresso); line-height: 1.4; margin: 0 0 18px;
+    padding-left: 22px; border-left: 3px solid var(--terracotta);
+  }
+
+  /* ---------- pricing card ---------- */
+  .pricing {
+    padding: 88px 0; background: var(--cream);
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  }
+  .pricing .card {
+    max-width: 520px; margin: 0 auto;
+    background: var(--white); border: 1px solid var(--border);
+    padding: 40px 36px; text-align: center;
+  }
+  .pricing .price-line {
+    display: flex; align-items: baseline; justify-content: center; gap: 6px;
+    margin-bottom: 8px;
+  }
+  .pricing .price-line .dollar { font-family: 'Bitter'; font-size: 56px; font-weight: 700; color: var(--espresso); line-height: 1; }
+  .pricing .price-line .unit { font-family: 'Lato'; font-size: 17px; color: var(--gray); }
+  .pricing .cancel { font-family: 'Lato'; font-size: 14px; color: var(--gray); margin: 0 0 32px; }
+  .pricing ul { padding: 0; margin: 0 0 32px; list-style: none; text-align: left; }
+  .pricing li { padding: 12px 0 12px 28px; border-bottom: 1px solid var(--border); position: relative; font-size: 16px; color: var(--charcoal); }
+  .pricing li:last-child { border-bottom: 0; }
+  .pricing li::before {
+    content: ""; width: 14px; height: 14px;
+    background: var(--terracotta); position: absolute; left: 0; top: 18px;
+    clip-path: polygon(14% 50%, 0 65%, 35% 100%, 100% 25%, 85% 13%, 35% 70%);
+  }
+  .pricing .card .cta-primary { width: 100%; padding: 18px; }
+  .pricing .trust { margin: 18px 0 0; font-size: 13px; color: var(--gray); }
+
+  /* ---------- faq ---------- */
+  .faq { padding: 88px 0; }
+  .faq h2 {
+    font-family: 'Bitter'; font-weight: 700; font-size: clamp(28px, 3.2vw, 34px);
+    color: var(--espresso); margin: 0 0 40px; text-align: center;
+  }
+  .faq details {
+    border-bottom: 1px solid var(--border); padding: 22px 0;
+  }
+  .faq details:first-of-type { border-top: 1px solid var(--border); }
+  .faq summary {
+    font-family: 'Bitter'; font-weight: 700; font-size: 19px;
+    color: var(--espresso); cursor: pointer; list-style: none;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 20px;
+  }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after {
+    content: "+"; font-family: 'Bitter'; font-weight: 700; font-size: 26px;
+    color: var(--terracotta); transition: transform 200ms ease;
+    line-height: 1; flex-shrink: 0;
+  }
+  .faq details[open] summary::after { content: "−"; }
+  .faq details p { padding: 14px 0 0; margin: 0; color: var(--charcoal); font-size: 17px; }
+
+  /* ---------- final cta ---------- */
+  .final {
+    background: var(--terracotta); color: var(--white);
+    padding: 96px 0; text-align: center;
+  }
+  .final h2 {
+    font-family: 'Bitter'; font-weight: 700; font-size: clamp(30px, 4vw, 44px);
+    color: var(--white); margin: 0 0 18px; line-height: 1.15;
+  }
+  .final p { color: var(--white); font-size: 18px; opacity: 0.95; margin: 0 0 36px; }
+  .final .cta-primary {
+    background: var(--white); color: var(--terracotta); font-size: 18px; padding: 20px 40px;
+  }
+  .final .cta-primary:hover, .final .cta-primary:focus { background: var(--cream); }
+  .final .reply {
+    margin: 36px auto 0; max-width: 460px;
+    font-size: 15px; color: var(--white); opacity: 0.92;
+    padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.25);
+  }
+
+  /* ---------- footer ---------- */
+  footer { background: var(--espresso); color: var(--silver); padding: 32px 22px; text-align: center; font-size: 13px; }
+  footer img { height: 18px; margin-bottom: 10px; opacity: 0.7; }
+  footer p { margin: 0; }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 760px) {
+    .compare { grid-template-columns: 1fr; gap: 14px; }
+    .hero { padding: 40px 0 36px; }
+    .honest, .pillars, .future, .for-you, .pricing, .faq, .final { padding-top: 56px; padding-bottom: 56px; }
+    .honest, .future { margin-top: 56px; }
+    .pricing .card { padding: 32px 22px; }
+    .nav { padding: 14px 18px; }
+    .nav img { height: 20px; }
+    .nav .nav-cta { font-size: 13px; padding: 9px 14px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+<!-- nav -->
+<nav class="nav">
+  <img src="../../assets/logos/baselocal-full-dark.svg" alt="BaseLocal">
+  <a href="#join" class="nav-cta">Join the Club</a>
+</nav>
+
+<!-- hero -->
+<section class="hero">
+  <div class="wrap">
+    <span class="kicker">Introducing BaseLocal Club</span>
+    <h1>Your local newsletter. Without the ads. <em>On your schedule.</em></h1>
+    <p class="lede">A calmer, cleaner way to stay connected to your town. $7 a month.</p>
+    <div class="hero-cta-row">
+      <a href="#join" class="cta-primary">Join BaseLocal Club</a>
+      <span class="price-note">Cancel in one click. No phone calls.</span>
+    </div>
+
+    <div class="compare" aria-hidden="true">
+      <div class="compare-col">
+        <div class="mock-label dim"><span class="pill">Free</span> Your daily today</div>
+        <div class="nl">
+          <!-- Header + Intro -->
+          <div class="nl-card">
+            <div class="nl-top">
+              <a>Subscribe</a><span class="sep">|</span><a>Advertise</a><span class="sep">|</span><a>Submit Event</a>
+            </div>
+            <div class="nl-mast">
+              <span>Tue, May 27 · Sunny, 78°</span>
+              <span>Glendale · No. 184</span>
+            </div>
+            <div class="nl-banner"></div>
+            <p class="nl-intro"><strong>Rise and shine, Glendale!</strong> In today's planning-your-week edition: La Purisima's cult-favorite cream horn, Assyrian New Year 6776, and a surf & turf sunset dinner cruise.</p>
+            <p class="nl-affiliate"><span class="ad-flag">Ad</span><strong>Heads up for pet parents:</strong> An emergency vet visit could cost you $7,000+. You could get up to 90% cash back on your vet bill with <a>this pet insurance plan</a>.*</p>
+          </div>
+
+          <!-- In the News -->
+          <div class="nl-card">
+            <div class="nl-kicker"><span class="num">01</span> — Worth knowing</div>
+            <div class="nl-h">In the news</div>
+            <p class="nl-dek">Three local stories from this week, plus a few worth your money.</p>
+            <div class="nl-item"><strong>Building connection and independence:</strong> A recent story highlights Beyond Ride and Cote Bonneville — <a>read more</a>.</div>
+            <div class="nl-item"><strong>Stronger West Coast hub:</strong> Alaska Airlines adds nonstop Sea-Tac to Seoul Incheon flights — <a>see routes</a>.</div>
+            <div class="nl-item"><span class="ad-flag">Ad</span><strong>Gold just hit record highs. What about your savings?</strong> We compared the top five gold IRAs — <a>check it out</a>.</div>
+            <div class="nl-item"><span class="ad-flag">Ad</span><strong>Paying hundreds a month for car insurance?</strong> Free comparison tools make switching easy — <a>see how</a>.*</div>
+            <div class="nl-sub">Highlights this week:</div>
+            <ul class="nl-list">
+              <li>Browse 30+ booths at the <a>community sale</a></li>
+              <li>Ring in Assyrian New Year <a>6776</a></li>
+              <li><span class="ad-flag">Ad</span>Unlock clinical-level wellness data <a>from home</a>*</li>
+            </ul>
+          </div>
+
+          <!-- We Got Your Back -->
+          <div class="nl-card">
+            <div class="nl-kicker"><span class="num">03</span> — Our recommendations</div>
+            <div class="nl-h">We got your back</div>
+            <p class="nl-dek">A handful of products and services we think are worth a look.</p>
+            <div class="nl-item"><span class="ad-flag">Ad</span><strong>Makeup that actually works:</strong> Laura Geller's formulas smooth, brighten, and stay put — <a>worth a look</a>.*</div>
+            <div class="nl-item"><span class="ad-flag">Ad</span><strong>Your homeowners insurance has a blind spot:</strong> We looked into solutions — <a>here's what we found</a>.</div>
+            <div class="nl-item"><span class="ad-flag">Ad</span><strong>Why your last diet didn't work:</strong> More doctors are recommending GLP-1s — <a>see which programs stood out</a>.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="compare-col">
+        <div class="mock-label live"><span class="pill">Club</span> Same day, no ads</div>
+        <div class="nl">
+          <!-- Header + Intro (no affiliate) -->
+          <div class="nl-card">
+            <div class="nl-top">
+              <a>My settings</a><span class="sep">|</span><a>Submit Event</a><span class="sep">|</span><a>Reply</a>
+            </div>
+            <div class="nl-mast">
+              <span>Tue, May 27 · Sunny, 78°</span>
+              <span>Glendale Club · No. 184</span>
+            </div>
+            <div class="nl-banner"></div>
+            <p class="nl-intro"><strong>Rise and shine, Glendale!</strong> In today's planning-your-week edition: La Purisima's cult-favorite cream horn, Assyrian New Year 6776, and a surf & turf sunset dinner cruise.</p>
+          </div>
+
+          <!-- In the News (organic only) -->
+          <div class="nl-card">
+            <div class="nl-kicker"><span class="num">01</span> — Worth knowing</div>
+            <div class="nl-h">In the news</div>
+            <p class="nl-dek">Three local stories from this week.</p>
+            <div class="nl-item"><strong>Building connection and independence:</strong> A recent story highlights Beyond Ride and Cote Bonneville — <a>read more</a>.</div>
+            <div class="nl-item"><strong>Stronger West Coast hub:</strong> Alaska Airlines adds nonstop Sea-Tac to Seoul Incheon flights — <a>see routes</a>.</div>
+            <div class="nl-item"><strong>Rural Washington policing:</strong> Jay Ellis stars in The Rookie North, filming this month — <a>get the details</a>.</div>
+            <div class="nl-sub">Highlights this week:</div>
+            <ul class="nl-list">
+              <li>Browse 30+ booths at the <a>community sale</a></li>
+              <li>Ring in Assyrian New Year <a>6776</a></li>
+              <li>Learn CPR and First Aid <a>in Glendale</a></li>
+            </ul>
+          </div>
+
+          <!-- We Got Your Back — removed in Club -->
+          <div class="nl-removed">
+            <div class="nl-removed-label">"We got your back" — removed</div>
+          </div>
+          <div class="nl-removed">
+            <div class="nl-removed-label">Sponsor placements — removed</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- the honest part -->
+<section class="honest">
+  <div class="narrow">
+    <span class="kicker">How BaseLocal works</span>
+    <h2>Ads keep BaseLocal free for everyone.</h2>
+    <p>Every day, more than a million readers across 400+ towns open a BaseLocal newsletter. That's possible because advertisers pay for it — and we're proud of that. Ads are what lets us put local news and events in your inbox, free, every day.</p>
+    <p>But we hear you. Some readers want fewer emails. Some don't want ads. Some just want the highlights.</p>
+    <p><strong>That's why we built BaseLocal Club.</strong></p>
+  </div>
+</section>
+
+<!-- three pillars -->
+<section class="pillars">
+  <div class="wrap">
+    <h2>What you get.</h2>
+    <div class="pillars-grid">
+
+      <div class="pillars-col">
+        <div class="pillar">
+          <div class="num">1</div>
+          <div>
+            <h3>No ads. Not one.</h3>
+            <p>Every email is completely ad-free. No promotions, no sponsored sections, no "this is brought to you by." Just your local content.</p>
+          </div>
+        </div>
+        <div class="pillar">
+          <div class="num">2</div>
+          <div>
+            <h3>The week in two emails.</h3>
+            <p>Monday: the best events of the week, in one place. Thursday: the news that mattered, distilled into one read. Member-only.</p>
+          </div>
+        </div>
+        <div class="pillar">
+          <div class="num">3</div>
+          <div>
+            <h3>You choose what lands in your inbox.</h3>
+            <p>Daily emails? Keep them. Just the weekly roundups? Done. Only events, not news? Easy. Full control over frequency and content.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="emails-col" aria-hidden="true">
+        <p class="emails-kicker">Member-only roundups</p>
+        <p class="emails-cap">Two new emails a week, built for the Club.</p>
+
+        <!-- Monday — events -->
+        <div class="email-stack">
+          <span class="email-tag events">Monday · Events</span>
+          <div class="nl">
+            <div class="nl-card">
+              <div class="nl-top">
+                <a>My settings</a><span class="sep">|</span><a>Submit Event</a><span class="sep">|</span><a>Reply</a>
+              </div>
+              <div class="nl-mast">
+                <span>Mon, May 26 · Sunny, 72°</span>
+                <span>Glendale Club · Events</span>
+              </div>
+              <div class="nl-banner"></div>
+              <p class="nl-intro"><strong>Happy Monday, Glendale.</strong> The week ahead — eleven things worth getting out for, plus the full live music lineup.</p>
+            </div>
+
+            <div class="nl-card">
+              <div class="nl-kicker"><span class="num">01</span> — This week</div>
+              <div class="nl-h">The best events this week</div>
+              <p class="nl-dek">What we'd go to ourselves.</p>
+              <div class="nl-event"><span class="emoji">🎈</span><a>Pop-In Playdate</a> @ Tacoma Nazarene Church <span class="meta">· Wed 5/28, 10:00 AM</span> — Caffeine station, snacks, actual adult conversation while the tiny tornadoes wear themselves out.</div>
+              <div class="nl-event"><span class="emoji">✂️</span><a>Potluck & Craft Night</a> @ 350 Tacoma Community Hub <span class="meta">· Wed 5/28, 6:00 PM</span> — Bring a dish, stitch washable tissues from repurposed flannel.</div>
+              <div class="nl-event"><span class="emoji">🎻</span><a>Socks in the Frying Pan</a> @ Spanish Ballroom <span class="meta">· Wed 5/28, 7:30 PM</span> — Traditional Irish tunes, tight harmonies, toe-tapping pints.</div>
+              <div class="nl-event"><span class="emoji">🎆</span><a>APCC's New Year Celebration</a> @ Tacoma Dome <span class="meta">· Sat 5/31, 11:00 AM</span> — Two stages, 100 vendors, free Year of the Horse kickoff.</div>
+              <div class="nl-event"><span class="emoji">🎸</span><a>School of Rock Houseband Festival</a> @ Jazzbones <span class="meta">· Sat 5/31, 2:30 PM</span> — Young shredders from across the region.</div>
+              <div class="nl-event"><span class="emoji">🍲</span><a>Sukiyaki Fundraiser</a> @ Tacoma Buddhist Temple <span class="meta">· Sun 6/1, 11:00 AM</span> — Old-school sukiyaki, pans and all. 65th year.</div>
+              <div class="nl-sub">Live music &amp; entertainment:</div>
+              <ul class="nl-list">
+                <li>5/28 <a>Noon Convocation Recitals</a> @ Schneebeck Hall — 12:00 PM</li>
+                <li>5/30 <a>Fireball Friday</a> @ South Tacoma Eagles — 5:00 PM</li>
+                <li>5/30 <a>Song Circle</a> @ SSCA Studio — 7:00 PM</li>
+                <li>5/31 <a>Scandinavian Dancing</a> @ Normanna Hall — 7:30 PM</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Thursday — news -->
+        <div class="email-stack">
+          <span class="email-tag">Thursday · News</span>
+          <div class="nl">
+            <div class="nl-card">
+              <div class="nl-top">
+                <a>My settings</a><span class="sep">|</span><a>Submit a story</a><span class="sep">|</span><a>Reply</a>
+              </div>
+              <div class="nl-mast">
+                <span>Thu, May 29 · Partly cloudy, 75°</span>
+                <span>Glendale Club · News</span>
+              </div>
+              <div class="nl-banner"></div>
+              <p class="nl-intro"><strong>Thursday, Glendale.</strong> The week's news, distilled — twelve local stories worth knowing, in one read.</p>
+            </div>
+
+            <div class="nl-card">
+              <div class="nl-kicker"><span class="num">01</span> — The week</div>
+              <div class="nl-h">What mattered this week</div>
+              <p class="nl-dek">Twelve stories worth your time.</p>
+              <div class="nl-item"><strong>Transit plan vote:</strong> Council approved the East-West rapid bus line Tuesday — service starts late 2027 — <a>what's changing</a>.</div>
+              <div class="nl-item"><strong>Beyond Ride and Cote Bonneville:</strong> Accessible rides and welcoming spaces could bring more joy to Tacoma seniors — <a>read the full story</a>.</div>
+              <div class="nl-item"><strong>Sea-Tac to Seoul:</strong> Alaska Airlines now flies nonstop Sea-Tac to Seoul Incheon multiple times weekly — <a>see routes</a>.</div>
+              <div class="nl-item"><strong>Pierce County on screen:</strong> Jay Ellis will star in The Rookie North. Production begins this month — <a>get the details</a>.</div>
+              <div class="nl-item"><strong>School levy update:</strong> The April measure passed with 56% — funding restored for arts and after-school — <a>full breakdown</a>.</div>
+              <div class="nl-item"><strong>Waterfront redevelopment:</strong> The Foss site got a 12-month extension. Public comment opens June 3 — <a>how to weigh in</a>.</div>
+              <div class="nl-item"><strong>Local hospital expansion:</strong> MultiCare announced a 40-bed pediatric wing. Groundbreaking in fall — <a>read more</a>.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- more is coming -->
+<section class="future">
+  <div class="narrow">
+    <span class="kicker">And this is just the start</span>
+    <h2>BaseLocal Club is a community in the making.</h2>
+    <p>As it grows, members will be first to know — and first in line — for new perks, member-only experiences, and ways to connect with neighbors in your town.</p>
+    <p>We have a lot in the works.</p>
+  </div>
+</section>
+
+<!-- who it's for -->
+<section class="for-you">
+  <div class="narrow">
+    <h2>Built for readers who want it a little different.</h2>
+    <div class="lines">
+      <p>You love your local newsletter, but your inbox is full.</p>
+      <p>You'd rather pay than scroll past ads.</p>
+      <p>You want to stay connected — on your own terms.</p>
+    </div>
+  </div>
+</section>
+
+<!-- pricing -->
+<section class="pricing" id="join">
+  <div class="wrap">
+    <div class="card">
+      <div class="price-line">
+        <span class="dollar">$7</span>
+        <span class="unit">/month</span>
+      </div>
+      <p class="cancel">Cancel anytime.</p>
+      <ul>
+        <li>Every email, completely ad-free.</li>
+        <li>Two member-only roundups each week.</li>
+        <li>Full control over frequency and content.</li>
+        <li>First in line for what's coming next.</li>
+      </ul>
+      <a href="#" class="cta-primary">Join BaseLocal Club</a>
+      <p class="trust">No commitment. Cancel in one click.</p>
+    </div>
+  </div>
+</section>
+
+<!-- faq -->
+<section class="faq">
+  <div class="narrow">
+    <h2>A few things you'll probably ask.</h2>
+    <details>
+      <summary>What happens to my current newsletter?</summary>
+      <p>Nothing changes about the content you already read — same writing, same recommendations. Club just removes the ads and adds the two weekly roundups.</p>
+    </details>
+    <details>
+      <summary>Can I still get my daily?</summary>
+      <p>Yes. Keep the daily as-is, or switch to weekly only. You can change your mind any time.</p>
+    </details>
+    <details>
+      <summary>How do I cancel?</summary>
+      <p>One click in your account. No phone calls, no forms, no "are you sure?" loops.</p>
+    </details>
+    <details>
+      <summary>Is this auto-renewing?</summary>
+      <p>Yes, monthly. We'll email you a few days before each renewal. Cancel before your next charge and you won't be billed again.</p>
+    </details>
+  </div>
+</section>
+
+<!-- final cta -->
+<section class="final">
+  <div class="narrow">
+    <h2>Try BaseLocal Club. Cancel anytime.</h2>
+    <p>$7 a month. One click in or out.</p>
+    <a href="#" class="cta-primary">Join BaseLocal Club</a>
+    <p class="reply">Questions? Reply to any BaseLocal email and a real person will answer.</p>
+  </div>
+</section>
+
+<footer>
+  <img src="../../assets/logos/baselocal-full-white.svg" alt="BaseLocal">
+  <p>&copy; BaseLocal · A calmer way to know your town.</p>
+</footer>
+</body>
+</html>
