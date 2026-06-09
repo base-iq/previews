@@ -1505,6 +1505,94 @@
     }
 
     /* =============================================
+       STAT HERO (big number + sparkline)
+       ============================================= */
+    .stat-hero {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 24px 0;
+    }
+    .stat-hero-fig {
+      font-family: 'Bitter', Georgia, serif;
+      font-weight: 700;
+      font-size: 64px;
+      line-height: 0.9;
+      color: var(--primary);
+      letter-spacing: -1px;
+    }
+    .stat-hero-label {
+      font-family: 'Lato', sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--dark);
+      margin-top: 8px;
+      max-width: 240px;
+    }
+    .stat-hero-sub {
+      font-family: 'Lato', sans-serif;
+      font-size: 13px;
+      color: var(--secondary-text);
+      margin-top: 4px;
+    }
+    .stat-hero-spark { min-width: 0; }
+    .stat-hero-spark svg { display: block; width: 100%; height: auto; }
+    .stat-hero-src {
+      font-family: 'Lato', sans-serif;
+      font-size: 11px;
+      font-style: italic;
+      color: var(--light-text);
+      margin: 8px 0 0;
+    }
+    @media (min-width: 600px) {
+      .stat-hero { flex-direction: row; align-items: center; gap: 36px; }
+      .stat-hero-figure { flex: 0 0 auto; }
+      .stat-hero-spark { flex: 1 1 auto; }
+    }
+
+    /* =============================================
+       SOCIAL PROOF STRIP (byline + trust chips)
+       ============================================= */
+    .social-proof {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px 16px;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 0;
+    }
+    .social-proof-byline {
+      font-family: 'Lato', sans-serif;
+      font-size: 13px;
+      color: var(--light-text);
+    }
+    .social-proof-byline .author {
+      font-weight: 700;
+      color: var(--dark);
+      letter-spacing: 0.2px;
+    }
+    .trust-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .trust-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg-warm);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 5px 12px;
+      font-family: 'Lato', sans-serif;
+      font-weight: 700;
+      font-size: 12px;
+      color: var(--dark);
+      white-space: nowrap;
+    }
+    .trust-chip .ic { color: var(--primary); font-weight: 900; line-height: 1; }
+
+    /* =============================================
        INLINE / EARLY CTA
        ============================================= */
     .inline-cta {
@@ -2936,6 +3024,49 @@
             <a class="offer-link" href="#" onclick="event.preventDefault()" aria-label="See Aura"></a>
           </article>
         </div>
+      </div>
+      <!-- ============= 3.25 STAT HERO ============= -->
+      <div style="margin: 40px 0 0;">
+        <h3 style="font-family: 'Bitter', Georgia, serif; font-size: 22px; color: var(--dark); margin: 0 0 12px;">
+          3.25 Stat Hero
+        </h3>
+        <p style="font-size: 14px; color: var(--secondary-text); margin: 0 0 16px;">A big-number lockup paired with a compact sparkline, used directly under a headline to make a single statistic the hero. Lighter and shorter than a Chart Callout (3.19): the figure carries the point, the sparkline shows the shape. Framed by thin top/bottom hairlines, no fill box, so it doesn't compete with the headline above it. Source drops to fine print. Flex row on desktop (figure left, sparkline right), stacked on mobile.</p>
+
+        <div class="stat-hero">
+          <div class="stat-hero-figure">
+            <div class="stat-hero-fig">$7.7B</div>
+            <div class="stat-hero-label">lost to fraud by Americans 60+ in 2025</div>
+            <div class="stat-hero-sub">up from about $1.0B in 2020</div>
+          </div>
+          <div class="stat-hero-spark">
+            <svg viewBox="0 0 280 120" role="img" aria-label="Sparkline rising from about 1 billion in 2020 to 7.7 billion in 2025.">
+              <defs><linearGradient id="ds-spark" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#C2604A" stop-opacity="0.16"/><stop offset="100%" stop-color="#C2604A" stop-opacity="0"/></linearGradient></defs>
+              <path d="M20 90 L64 83 L108 69 L152 66 L196 51 L240 23 L240 105 L20 105 Z" fill="url(#ds-spark)"/>
+              <path d="M20 90 L64 83 L108 69 L152 66 L196 51 L240 23" fill="none" stroke="#C2604A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="240" cy="23" r="5" fill="#C2604A"/>
+              <text x="20" y="119" text-anchor="start" font-family="Lato" font-size="11" fill="#999999">2020</text>
+              <text x="240" y="119" text-anchor="end" font-family="Lato" font-size="11" fill="#999999">2025</text>
+            </svg>
+          </div>
+        </div>
+        <p class="stat-hero-src">Source: FBI IC3 Elder Fraud reports, 2020 to 2025. Illustrative until verified.</p>
+      </div>
+
+      <!-- ============= 3.26 SOCIAL PROOF STRIP ============= -->
+      <div style="margin: 40px 0 0;">
+        <h3 style="font-family: 'Bitter', Georgia, serif; font-size: 22px; color: var(--dark); margin: 0 0 12px;">
+          3.26 Social Proof Strip
+        </h3>
+        <p style="font-size: 14px; color: var(--secondary-text); margin: 0 0 16px;">A trust row that sits under the hero: a byline on the left (the Article Byline pattern, 3.17 — author bold, date muted) and one or more <strong>trust chips</strong> on the right (reader reach, edition count, independence). Thin hairlines top and bottom. Chips wrap below the byline on narrow screens. Keep chips factual and few; this is a quiet credibility signal, not a banner.</p>
+
+        <div class="social-proof">
+          <p class="social-proof-byline"><span class="author">By BaseLocal Staff</span> · Updated June 2026</p>
+          <div class="trust-chips">
+            <span class="trust-chip"><span class="ic">●</span> Read in 410+ cities</span>
+            <span class="trust-chip"><span class="ic">●</span> 1M+ readers</span>
+          </div>
+        </div>
+        <p style="font-size: 11px; color: var(--light-text); font-style: italic; margin: 8px 0 0;">Reader-count figure is a placeholder — swap in the real subscriber number before launch.</p>
       </div>
     </section>
 
