@@ -1266,6 +1266,141 @@
     }
 
     /* =============================================
+       FEATURE COMPARISON TABLE
+       ============================================= */
+    /* Horizontal-scroll wrapper — frozen first column on mobile */
+    .fc-scroll {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--bg-page);
+    }
+    .fc-scroll:focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+    .fc-hint {
+      display: none;
+      font-family: 'Lato', sans-serif;
+      font-size: 13px;
+      font-style: italic;
+      color: var(--secondary-text);
+      margin: 0 0 8px;
+    }
+    .fc-table {
+      border-collapse: collapse;
+      width: 100%;
+      min-width: 560px;
+      font-family: 'Lato', sans-serif;
+    }
+    .fc-table th,
+    .fc-table td {
+      padding: 14px 16px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+      font-size: 15px;
+      line-height: 1.45;
+      vertical-align: middle;
+      color: var(--body);
+    }
+    .fc-table tbody tr:last-child th,
+    .fc-table tbody tr:last-child td { border-bottom: none; }
+
+    /* Column headers (product names) */
+    .fc-table thead th {
+      font-family: 'Bitter', Georgia, serif;
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--dark);
+      border-bottom: 2px solid var(--dark);
+      vertical-align: bottom;
+      background: var(--bg-page);
+    }
+    .fc-table thead .fc-corner {
+      text-align: left;
+      font-family: 'Lato', sans-serif;
+      font-weight: 800;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--secondary-text);
+      vertical-align: bottom;
+    }
+
+    /* Row-label column — frozen left during horizontal scroll */
+    .fc-table th[scope="row"] {
+      position: sticky;
+      left: 0;
+      z-index: 2;
+      text-align: left;
+      width: 36%;
+      min-width: 150px;
+      font-weight: 700;
+      color: var(--dark);
+      background: var(--bg-page);
+    }
+    .fc-table thead .fc-corner {
+      position: sticky;
+      left: 0;
+      z-index: 3;
+      background: var(--bg-page);
+    }
+
+    /* Featured (recommended) column — terracotta accent, cream tint down the column */
+    .fc-table .fc-featured { background: var(--bg-warm); }
+    .fc-table thead th.fc-featured {
+      background: var(--bg-warm);
+      box-shadow: inset 0 3px 0 var(--primary);
+      border-bottom-color: var(--primary);
+    }
+    .fc-pick-badge {
+      display: inline-block;
+      font-family: 'Lato', sans-serif;
+      font-weight: 900;
+      font-size: 10px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: #FFFFFF;
+      background: var(--primary);
+      padding: 3px 9px;
+      border-radius: 999px;
+      margin-bottom: 8px;
+    }
+
+    /* Yes / No glyphs — green ✓ for "included", muted ✗ for "not offered".
+       Terracotta is deliberately NOT used here so it stays reserved for the
+       featured-column highlight and CTAs (keeps the recommendation legible). */
+    .fc-yes { color: var(--success); font-weight: 700; font-size: 18px; line-height: 1; }
+    .fc-no  { color: var(--light-text); font-weight: 700; font-size: 16px; line-height: 1; }
+    .fc-note { display: block; font-size: 12px; color: var(--secondary-text); margin-top: 2px; }
+
+    /* Footer CTA row */
+    .fc-table tfoot th,
+    .fc-table tfoot td {
+      border-bottom: none;
+      border-top: 2px solid var(--border);
+      padding: 18px 14px;
+      background: var(--bg-page);
+    }
+    .fc-table tfoot .fc-featured { background: var(--bg-warm); }
+    .fc-table tfoot .btn { width: 100%; }
+    .fc-source {
+      font-family: 'Lato', sans-serif;
+      font-size: 11px;
+      font-style: italic;
+      color: var(--light-text);
+      margin: 8px 0 0;
+    }
+
+    @media (max-width: 600px) {
+      .fc-hint { display: block; }
+      .fc-table th,
+      .fc-table td { padding: 12px 12px; font-size: 14px; }
+      .fc-table thead th { font-size: 16px; }
+    }
+
+    /* =============================================
        INLINE / EARLY CTA
        ============================================= */
     .inline-cta {
@@ -2563,6 +2698,89 @@
           <p class="article-meta" style="font-family: 'Lato', sans-serif; font-size: 13px; font-weight: 400; color: var(--light-text); margin: 0 0 28px; letter-spacing: 0.1px;">Updated April 2026 · 5 min read</p>
           <h1 style="font-family: 'Bitter', Georgia, serif; font-weight: 700; font-size: 35px; line-height: 1.2; color: var(--dark); letter-spacing: -0.5px; margin: 0;">GLP-1 isn't a celebrity drug anymore. Here's what changed for women over 50.</h1>
         </div>
+      </div>
+
+      <!-- ============= 3.23 FEATURE COMPARISON TABLE ============= -->
+      <div style="margin: 40px 0 0;">
+        <h3 style="font-family: 'Bitter', Georgia, serif; font-size: 22px; color: var(--dark); margin: 0 0 12px;">
+          3.23 Feature Comparison Table
+        </h3>
+        <p style="font-size: 14px; color: var(--secondary-text); margin: 0 0 12px;">An N-column (3-up) product feature matrix for bridge / comparison pages — services as columns, features as rows, one column highlighted as the Base Local pick (terracotta top-accent + cream tint). Cells hold a green ✓ ("included"), a muted ✗ ("not offered"), or short text ("420+", "Up to $5M"). The row-label column freezes on the left during horizontal scroll on mobile; an optional footer row carries a per-service CTA. Sits between the Comparison Box / VS Box (3.5, two-column text) and Price Comparison (3.20, two-card pricing) — use it when 3+ options need a side-by-side feature read.</p>
+
+        <p style="font-size: 14px; color: var(--secondary-text); margin: 0 0 12px;"><strong style="color: var(--dark);">Color note:</strong> the ✓/✗ glyphs use Green (success) and Silver (muted) — <em>not</em> terracotta. Terracotta is held back for the featured-column accent and the CTA, so the recommendation stays the loudest thing in the component.</p>
+
+        <p class="fc-hint">Swipe the table sideways to compare →</p>
+        <div class="fc-scroll" tabindex="0" role="region" aria-label="Feature comparison: Incogni, DeleteMe, Aura">
+          <table class="fc-table">
+            <thead>
+              <tr>
+                <th class="fc-corner" scope="col">Compare</th>
+                <th class="fc-featured" scope="col"><span class="fc-pick-badge">Base Local pick</span><br>Incogni</th>
+                <th scope="col">DeleteMe</th>
+                <th scope="col">Aura</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">What it is</th>
+                <td class="fc-featured">Automated removal</td>
+                <td>Done-for-you removal</td>
+                <td>All-in-one privacy suite</td>
+              </tr>
+              <tr>
+                <th scope="row">How removals happen</th>
+                <td class="fc-featured">Automated</td>
+                <td>Real privacy experts</td>
+                <td>Automated</td>
+              </tr>
+              <tr>
+                <th scope="row">Broker sites covered</th>
+                <td class="fc-featured">420+</td>
+                <td>Broadest (750+)</td>
+                <td>In the bundle</td>
+              </tr>
+              <tr>
+                <th scope="row">Ongoing monitoring &amp; re-removal</th>
+                <td class="fc-featured"><span class="fc-yes" role="img" aria-label="Yes">✓</span></td>
+                <td><span class="fc-yes" role="img" aria-label="Yes">✓</span></td>
+                <td><span class="fc-yes" role="img" aria-label="Yes">✓</span></td>
+              </tr>
+              <tr>
+                <th scope="row">Quarterly privacy report</th>
+                <td class="fc-featured"><span class="fc-no" role="img" aria-label="Not offered">✗</span></td>
+                <td><span class="fc-yes" role="img" aria-label="Yes">✓</span></td>
+                <td><span class="fc-no" role="img" aria-label="Not offered">✗</span></td>
+              </tr>
+              <tr>
+                <th scope="row">Identity theft insurance</th>
+                <td class="fc-featured">Up to $1M</td>
+                <td><span class="fc-no" role="img" aria-label="Not offered">✗</span></td>
+                <td>Up to $5M</td>
+              </tr>
+              <tr>
+                <th scope="row">VPN, antivirus, passwords</th>
+                <td class="fc-featured"><span class="fc-no" role="img" aria-label="Not offered">✗</span></td>
+                <td><span class="fc-no" role="img" aria-label="Not offered">✗</span></td>
+                <td><span class="fc-yes" role="img" aria-label="Yes">✓</span></td>
+              </tr>
+              <tr>
+                <th scope="row">Starts at</th>
+                <td class="fc-featured">$7.99/mo<span class="fc-note">billed yearly</span></td>
+                <td>$10.75/mo<span class="fc-note">$129/yr</span></td>
+                <td>$9/mo<span class="fc-note">intro pricing</span></td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <th class="fc-corner" scope="row"></th>
+                <td class="fc-featured"><a href="#" class="btn btn-primary btn-sm" onclick="event.preventDefault()">Visit Incogni →</a></td>
+                <td><a href="#" class="btn btn-secondary btn-sm" onclick="event.preventDefault()">Visit DeleteMe →</a></td>
+                <td><a href="#" class="btn btn-secondary btn-sm" onclick="event.preventDefault()">Visit Aura →</a></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <p class="fc-source">Illustrative data — verify each figure against the live offer before launch.</p>
       </div>
     </section>
 
