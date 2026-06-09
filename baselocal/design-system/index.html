@@ -1401,6 +1401,110 @@
     }
 
     /* =============================================
+       OFFER CARD (circled-pick variant)
+       ============================================= */
+    .offer-card {
+      position: relative;
+      background: var(--bg-page);
+      border: 1px solid var(--border);
+      border-radius: 8px;            /* radius-lg */
+      padding: 24px 20px;
+      margin: 0 0 20px;
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    }
+    .offer-card:last-child { margin-bottom: 0; }
+    .offer-card.is-clickable { cursor: pointer; }
+    .offer-card.is-clickable:hover {
+      border-color: var(--primary);
+      box-shadow: 0 8px 24px rgba(194, 96, 74, 0.12);
+      transform: translateY(-2px);
+    }
+    /* Featured / "circled pick" */
+    .offer-card.featured {
+      border: 2px solid var(--primary);
+      box-shadow: 0 8px 30px rgba(194, 96, 74, 0.12);
+      margin-top: 16px;              /* clears the half-off badge */
+    }
+    .offer-card.featured.is-clickable:hover {
+      box-shadow: 0 12px 34px rgba(194, 96, 74, 0.20);
+    }
+    .offer-pick-badge {
+      position: absolute;
+      top: -13px;
+      left: 20px;
+      background: var(--primary);
+      color: #FFFFFF;
+      font-family: 'Lato', sans-serif;
+      font-weight: 900;
+      font-size: 11px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 999px;          /* pill */
+      transform: rotate(-3deg);      /* hand-marked tilt */
+      box-shadow: 0 4px 10px rgba(194, 96, 74, 0.30);
+    }
+    .offer-name {
+      font-family: 'Bitter', Georgia, serif;
+      font-weight: 700;
+      font-size: 22px;
+      color: var(--dark);
+      margin: 0;
+    }
+    .offer-tagline {
+      font-family: 'Lato', sans-serif;
+      font-weight: 500;
+      font-size: 15px;
+      color: var(--secondary-text);
+      margin: 4px 0 16px;
+    }
+    .offer-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0 0 16px;
+    }
+    .offer-chip {
+      background: var(--bg-warm);
+      border: 1px solid var(--border);
+      border-radius: 999px;          /* pill */
+      padding: 6px 12px;
+      font-family: 'Lato', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--dark);
+    }
+    .offer-chip.on {
+      background: var(--success-bg);
+      border-color: var(--success-bg);
+      color: var(--success);
+    }
+    .offer-price {
+      font-family: 'Lato', sans-serif;
+      font-size: 14px;
+      color: var(--secondary-text);
+      margin: 0 0 16px;
+    }
+    .offer-price strong {
+      font-family: 'Bitter', Georgia, serif;
+      font-weight: 700;
+      font-size: 19px;
+      color: var(--dark);
+    }
+    .offer-cta { display: flex; width: 100%; }  /* full-width; keeps .btn's flex centering */
+    .offer-link {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      border-radius: inherit;
+    }
+    .offer-link:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+    .offer-card.is-clickable:hover .btn-primary {
+      background: var(--primary-hover);
+      box-shadow: 0 4px 14px rgba(194, 96, 74, 0.35);
+    }
+
+    /* =============================================
        INLINE / EARLY CTA
        ============================================= */
     .inline-cta {
@@ -2781,6 +2885,57 @@
           </table>
         </div>
         <p class="fc-source">Illustrative data — verify each figure against the live offer before launch.</p>
+      </div>
+
+      <!-- ============= 3.24 OFFER CARD ============= -->
+      <div style="margin: 40px 0 0;">
+        <h3 style="font-family: 'Bitter', Georgia, serif; font-size: 22px; color: var(--dark); margin: 0 0 12px;">
+          3.24 Offer Card
+        </h3>
+        <p style="font-size: 14px; color: var(--secondary-text); margin: 0 0 12px;">A compact, tagline-led product card for comparison / bridge pages — meant to sit <em>below</em> a Feature Comparison Table (3.23) as the act-on-it layer, after the table has done the at-a-glance work. Lighter than the editorial Pick Cards (3.8 / 3.9): a name, a one-line tagline, a row of feature <strong>chips</strong> instead of a checkmark list, a price line, and one full-width CTA. Cards stack vertically. The featured / recommended card is "circled" — a 2px terracotta border, a soft terracotta glow, and a hand-marked badge tilted off the top edge, like a friend drew a ring around it.</p>
+        <p style="font-size: 14px; color: var(--secondary-text); margin: 0 0 16px;"><strong style="color: var(--dark);">Buttons:</strong> the featured card uses a solid Primary button; the others use the outline Secondary button — so the recommended card's CTA is visibly the loudest. Chips marked <code class="tok">.on</code> use the success-green affirmative palette (a feature this option is strong on); plain chips are neutral cream. The whole card is optionally clickable (overlay link + lift-on-hover); when it is, the visible CTA renders as a <code class="tok">&lt;span class="btn"&gt;</code> and the card carries the link.</p>
+
+        <div style="max-width: 560px;">
+          <article class="offer-card featured is-clickable">
+            <span class="offer-pick-badge">Base Local pick</span>
+            <h4 class="offer-name">Incogni</h4>
+            <p class="offer-tagline">Hands-off removal at the lowest price</p>
+            <div class="offer-chips">
+              <span class="offer-chip on">Fully automated</span>
+              <span class="offer-chip on">400+ broker sites</span>
+              <span class="offer-chip on">Family plan</span>
+            </div>
+            <p class="offer-price">Starts at <strong>$7.99/mo</strong> · billed yearly</p>
+            <span class="btn btn-primary btn-md offer-cta">Get started with Incogni →</span>
+            <a class="offer-link" href="#" onclick="event.preventDefault()" aria-label="Get started with Incogni"></a>
+          </article>
+
+          <article class="offer-card is-clickable">
+            <h4 class="offer-name">DeleteMe</h4>
+            <p class="offer-tagline">Real people do the removals by hand</p>
+            <div class="offer-chips">
+              <span class="offer-chip">Human experts</span>
+              <span class="offer-chip">Widest coverage</span>
+              <span class="offer-chip">Quarterly report</span>
+            </div>
+            <p class="offer-price">Starts at <strong>$10.75/mo</strong> · $129/yr</p>
+            <span class="btn btn-secondary btn-md offer-cta">See DeleteMe →</span>
+            <a class="offer-link" href="#" onclick="event.preventDefault()" aria-label="See DeleteMe"></a>
+          </article>
+
+          <article class="offer-card is-clickable">
+            <h4 class="offer-name">Aura</h4>
+            <p class="offer-tagline">Data removal inside a full identity-safety kit</p>
+            <div class="offer-chips">
+              <span class="offer-chip">VPN + antivirus</span>
+              <span class="offer-chip">$5M insurance</span>
+              <span class="offer-chip">Whole household</span>
+            </div>
+            <p class="offer-price">Starts at <strong>$9/mo</strong> · intro pricing</p>
+            <span class="btn btn-secondary btn-md offer-cta">See Aura →</span>
+            <a class="offer-link" href="#" onclick="event.preventDefault()" aria-label="See Aura"></a>
+          </article>
+        </div>
       </div>
     </section>
 
