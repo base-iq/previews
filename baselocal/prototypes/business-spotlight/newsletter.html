@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Newsletter placement · BaseLocal Glendale</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,700;1,400&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  /* Email-safe newsletter tokens (per design-system.md § Newsletter Components) */
+  :root {
+    --paper: #FAF6F4;
+    --ink: #2C2421;
+    --accent: #C2604A;
+    --muted: #6B6258;
+    --sub-muted: #C9BEB7;
+    --hairline: #EDE6E1;
+    --footer-text: #B5A89C;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--paper);
+    font-family: 'Lato', Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    padding: 0 0 48px;
+  }
+
+  .proto-note {
+    background: var(--ink); color: #fff;
+    font-size: 13px; font-weight: 700;
+    letter-spacing: 0.5px; text-transform: uppercase;
+    padding: 10px 20px; text-align: center;
+  }
+  .proto-note a { color: #E8B7A8; }
+
+  .email { max-width: 670px; margin: 0 auto; padding: 24px 16px 0; }
+
+  .section-card {
+    background: #FFFFFF;
+    border-radius: 5px;
+    padding: 24px 20px;
+    margin-bottom: 8px;
+  }
+  @media (min-width: 600px) { .section-card { padding: 30px; } }
+
+  .top-links {
+    display: flex; justify-content: flex-start; align-items: center;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    border-bottom: 1px solid var(--hairline);
+    padding-bottom: 12px;
+    margin-bottom: 18px;
+  }
+  .top-links a { color: var(--ink); text-decoration: none; }
+  .top-links .sep {
+    width: 3px; height: 3px; border-radius: 50%;
+    background: var(--sub-muted);
+    margin: 0 14px;
+    font-size: 0;
+  }
+
+  .masthead-meta {
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid var(--hairline);
+    padding-bottom: 10px;
+    margin-bottom: 14px;
+    gap: 8px;
+  }
+  .masthead-date { font-family: 'Bitter', Georgia, serif; font-style: italic; font-size: 14px; color: var(--muted); }
+  .masthead-edition {
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--muted); white-space: nowrap;
+  }
+  .intro {
+    font-family: 'Bitter', Georgia, serif;
+    font-size: 16px; line-height: 24px; color: var(--ink);
+  }
+  .intro strong { font-weight: 700; }
+
+  .kicker {
+    display: block;
+    font-size: 11px; font-weight: 900;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .kicker-num { color: var(--ink); }
+  .section-heading {
+    font-family: 'Bitter', Georgia, serif;
+    font-size: 24px; font-weight: 700;
+    color: var(--ink); line-height: 24px;
+    margin: 0 0 12px;
+  }
+  .section-dek {
+    font-family: 'Bitter', Georgia, serif;
+    font-style: italic; font-size: 15px;
+    color: var(--muted);
+    margin: -4px 0 18px;
+  }
+
+  .news-item {
+    font-family: 'Bitter', Georgia, serif;
+    font-size: 16px; line-height: 24px;
+    color: var(--ink);
+  }
+  .news-item + .news-item {
+    border-top: 1px solid var(--hairline);
+    padding-top: 16px; margin-top: 16px;
+  }
+  .news-item a { color: var(--accent); text-decoration: underline; font-weight: 700; }
+  .news-item strong { font-weight: 700; }
+
+  .collapsed-hint {
+    text-align: center;
+    font-family: 'Bitter', Georgia, serif;
+    font-style: italic; font-size: 14px;
+    color: var(--sub-muted);
+    padding: 14px 0;
+  }
+
+  /* Pinned Spotlight (per design-system.md § Newsletter Components) */
+  .spotlight-pinned {
+    background: var(--paper);
+    border: 1px solid var(--hairline);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 5px 5px 0;
+    padding: 20px 22px;
+    margin: 0 0 18px;
+  }
+  .spotlight-pinned-tag {
+    font-family: 'Lato', sans-serif;
+    font-weight: 900; font-size: 10px;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 6px;
+  }
+  .spotlight-pinned-body {
+    font-family: 'Bitter', Georgia, serif;
+    font-size: 16px; line-height: 24px;
+    color: var(--ink);
+    margin: 0;
+  }
+  .spotlight-pinned-body a { color: var(--accent); font-weight: 700; text-decoration: underline; }
+
+  .advertise-cta {
+    border-top: 1px solid var(--hairline);
+    padding-top: 20px;
+    margin-top: 18px;
+    text-align: center;
+  }
+  .advertise-prompt {
+    font-family: 'Bitter', Georgia, serif;
+    font-size: 18px; font-weight: 700; color: var(--ink);
+    margin: 0 0 4px;
+  }
+  .advertise-pitch {
+    font-family: 'Bitter', Georgia, serif;
+    font-style: italic; font-size: 15px; color: var(--muted);
+    margin: 0 0 14px;
+  }
+  .advertise-link {
+    display: inline-block;
+    font-size: 12px; font-weight: 900;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--accent);
+    text-decoration: none;
+    padding: 8px 0 2px;
+    border-bottom: 2px solid var(--accent);
+  }
+
+  .signoff {
+    font-family: 'Bitter', Georgia, serif;
+    font-size: 16px; line-height: 24px; color: var(--ink);
+  }
+
+  .nl-footer {
+    background: var(--ink);
+    border-radius: 5px;
+    padding: 28px 30px;
+    text-align: center;
+    color: var(--footer-text);
+    font-size: 12px; font-style: italic; line-height: 1.6;
+  }
+  .nl-footer img { height: 36px; margin-bottom: 14px; }
+  .nl-footer a { color: var(--footer-text); }
+</style>
+</head>
+<body>
+
+<div class="proto-note">Prototype — the $25 tier's pinned spot inside the daily email · <a href="index.html">back to the pitch</a></div>
+
+<div class="email">
+
+  <div class="section-card">
+    <div class="top-links">
+      <a href="#">Subscribe</a>
+      <span class="sep">|</span>
+      <a href="#">Submit an Event</a>
+      <span class="sep">|</span>
+      <a href="choose.html">Advertise</a>
+    </div>
+    <div class="masthead-meta">
+      <span class="masthead-date">Monday, June 15 · Sunny, 84°</span>
+      <span class="masthead-edition">Glendale · No. 312</span>
+    </div>
+    <p class="intro"><strong>Morning, Glendale.</strong> A bus-lane vote worth watching, the best events this week, and a coffee counter on Brand Blvd that sells out of gata by ten…</p>
+  </div>
+
+  <div class="section-card">
+    <span class="kicker"><span class="kicker-num">01</span> — Worth knowing</span>
+    <h2 class="section-heading">In the news</h2>
+    <div class="news-item">
+      <strong>The Brand Blvd bus-lane pilot</strong> goes to council Tuesday night. <a href="#">Where each member stands</a>.
+    </div>
+    <div class="news-item">
+      <strong>The Alex Theatre</strong> posted its fall season — single tickets open Friday morning. <a href="#">The lineup</a>.
+    </div>
+    <p class="collapsed-hint">⋯ highlights, events, and the rest of the edition ⋯</p>
+  </div>
+
+  <div class="section-card">
+    <span class="kicker"><span class="kicker-num">03</span> — On our radar</span>
+    <h2 class="section-heading">Local business spotlight</h2>
+    <p class="section-dek">Nearby spots we'd actually send a friend to.</p>
+
+    <div class="spotlight-pinned">
+      <p class="spotlight-pinned-tag">Pinned spot *</p>
+      <p class="spotlight-pinned-body"><strong>Sand-brewed, the old way:</strong> <a href="#">Little Ararat Coffee</a> pulls Armenian coffee from hot sand the way it's been done for centuries, and the walnut gata is gone most mornings by ten. Order at the counter, take the window seat, and watch Brand Boulevard wake up. Worth setting an alarm for.</p>
+    </div>
+
+    <div class="news-item">
+      <strong>The staff-picks wall hasn't missed:</strong> <a href="#">Brand Books</a> stocks used and new side by side, and the hand-written shelf notes read like recommendations from a friend who knows your taste. Their author events list for June just went up.
+    </div>
+    <div class="news-item">
+      <strong>Weekend birria, worth planning around:</strong> <a href="#">La Cocina de Memo</a> only runs the birria Saturday and Sunday, and regulars start lining up before the doors open. Go early, get the consommé, thank us later.
+    </div>
+    <div class="news-item">
+      <strong>Sunday yoga, pay what you can:</strong> <a href="#">Verdugo Yoga Collective</a> holds donation-based community classes every Sunday morning — mats provided, beginners welcome, zero pressure.
+    </div>
+
+    <div class="advertise-cta">
+      <p class="advertise-prompt">Run a business around Glendale?</p>
+      <p class="advertise-pitch">We feature local spots every day — tell us about yours.</p>
+      <a class="advertise-link" href="index.html">Advertise with BaseLocal →</a>
+    </div>
+  </div>
+
+  <div class="section-card">
+    <p class="signoff">That's the morning. Reply if we missed something — we read every email.</p>
+  </div>
+
+  <div class="nl-footer">
+    <img src="../../assets/logos/baselocal-full-white.svg" alt="BaseLocal">
+    <p>BaseLocal · Glendale Edition<br>You're getting this because you signed up at baselocal.com.<br><a href="#">Unsubscribe</a> · <a href="#">Update preferences</a><br><br>* Content marked with an asterisk is paid advertising, reviewed by our editor before it runs.</p>
+  </div>
+
+</div>
+
+</body>
+</html>

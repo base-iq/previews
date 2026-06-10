@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glendale business directory · BaseLocal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,700;1,400&family=Lato:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  body { background: var(--cream); }
+  .site-header { background: var(--white); }
+
+  .search-hero {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 36px 0 24px;
+  }
+  .wrap { max-width: 640px; margin: 0 auto; padding: 0 20px; }
+  .search-hero .kicker {
+    font-size: 13px; font-weight: 900; letter-spacing: 1.4px;
+    text-transform: uppercase; color: var(--terracotta);
+    margin-bottom: 8px;
+  }
+  .search-hero h1 {
+    font-family: 'Bitter', Georgia, serif; font-weight: 700;
+    font-size: 28px; line-height: 1.2; color: var(--espresso);
+    margin-bottom: 6px;
+  }
+  .search-hero .dek {
+    font-family: 'Bitter', Georgia, serif; font-style: italic;
+    font-size: 15px; color: var(--gray);
+    margin-bottom: 18px;
+  }
+  .cat-pills {
+    display: flex; gap: 8px; flex-wrap: wrap;
+    margin-top: 16px;
+  }
+  .cat-pills .pill { font-size: 13px; padding: 7px 14px; min-height: 34px; }
+
+  main.dir-main { padding: 28px 0 56px; }
+
+  .dir-empty {
+    text-align: center;
+    padding: 36px 20px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin-bottom: 12px;
+  }
+  .dir-empty .headline {
+    font-family: 'Bitter', Georgia, serif; font-weight: 700;
+    font-size: 19px; color: var(--espresso); margin-bottom: 6px;
+  }
+  .dir-empty p { font-size: 15px; color: var(--gray); margin: 0; }
+
+  .dir-fineprint {
+    font-size: 12px; color: var(--silver); line-height: 1.6;
+    text-align: center;
+    padding: 24px 0 0;
+  }
+
+  @media (min-width: 768px) {
+    .search-hero { padding: 48px 0 28px; }
+    .search-hero h1 { font-size: 35px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="#"><img src="../../assets/logos/baselocal-full-dark.svg" alt="BaseLocal"></a>
+    <nav>
+      <a href="#" class="nav-extra">Home</a>
+      <a href="#" class="active">Locations</a>
+      <a href="choose.html">Advertise</a>
+      <a href="#" class="nav-extra">Subscribe</a>
+    </nav>
+  </div>
+</header>
+
+<div class="search-hero">
+  <div class="wrap">
+    <div class="kicker">Glendale directory</div>
+    <h1>What are you looking for?</h1>
+    <p class="dek">Every listing checked by our Glendale editor. Paid pins are marked — every time.</p>
+    <div class="dir-search">
+      <input type="text" id="dir-q" placeholder="Try &quot;plumber&quot; or &quot;coffee&quot;" aria-label="Search the Glendale directory" autocomplete="off">
+      <button type="button" id="dir-go">Search</button>
+    </div>
+    <div class="cat-pills" id="cat-pills"></div>
+  </div>
+</div>
+
+<main class="dir-main">
+  <div class="wrap">
+
+    <div class="pinned-zone">
+      <p class="pinned-zone-label">Pinned in Glendale today</p>
+      <div id="pinned-cards"></div>
+      <p class="pinned-zone-note">* Paid placement, city-wide. Reviewed by our editor like every listing.</p>
+    </div>
+
+    <div class="slot-cta" id="top-slot-cta">
+      <p>Both pinned spots are taken today. Want the next open day? $10 puts your business up top — $25 adds the morning email. <a href="index.html">Advertise →</a></p>
+    </div>
+
+    <p class="dir-result-meta" id="result-meta">All · 18 places</p>
+
+    <div id="listing-cards"></div>
+
+    <p class="dir-fineprint">Listings are curated — our Glendale editor adds the spots worth knowing about, paid or not. Spot something missing? <a href="mailto:hello@baselocal.com">Tell us.</a></p>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="../../assets/logos/baselocal-full-white.svg" alt="BaseLocal" class="footer-logo">
+        <p class="footer-tagline">Local news, events, and recommendations for 400+ locations.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <a href="#">Home</a>
+        <a href="#">Locations</a>
+        <a href="choose.html">Advertise</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms of Use</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <div class="footer-contact">
+          <span class="footer-contact-label">Partnerships</span>
+          <a href="mailto:partner@baselocal.com">partner@baselocal.com</a>
+        </div>
+        <div class="footer-contact">
+          <span class="footer-contact-label">General</span>
+          <a href="mailto:hello@baselocal.com">hello@baselocal.com</a>
+        </div>
+      </div>
+    </div>
+    <p class="footer-bottom">© 2026 BaseLocal. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+// ===== Mock data — Glendale, CA =====
+const PINNED = [
+  {
+    name: 'Little Ararat Coffee', cat: 'Eat & drink',
+    note: "Armenian coffee pulled from hot sand, the way it's been done for centuries — and the walnut gata is gone most mornings by ten. Order at the counter, take the window seat, and watch Brand Boulevard wake up.",
+    meta: '411 N Brand Blvd · <a href="#">littleararat.com</a>'
+  },
+  {
+    name: 'Adams Hill Plumbing', cat: 'Services',
+    note: "Family-run since 2002, and the quote they give you is the invoice you get. Water heaters, drains, the unglamorous stuff done right — usually same week, sometimes same day.",
+    meta: 'Serves all of Glendale · <a href="#">adamshillplumbing.com</a>'
+  }
+];
+
+const LISTINGS = [
+  { name: 'La Cocina de Memo', cat: 'Eat & drink', note: 'Weekend-only birria, worth planning around.', meta: '227 S Glendale Ave · <a href="#">Menu</a>' },
+  { name: 'Penny Mill Coffee', cat: 'Eat & drink', note: 'Single-origin pour-overs and zero laptop-shaming.', meta: '140 S Maryland Ave · <a href="#">Menu</a>' },
+  { name: 'Gata House Bakery', cat: 'Eat & drink', note: 'The walnut gata is the move; cash gets a discount.', meta: '1530 E Colorado St · <a href="#">Hours</a>' },
+  { name: 'Verdugo Tap Room', cat: 'Eat & drink', note: 'Twelve rotating taps, no TVs, dogs welcome on the patio.', meta: '810 Verdugo Rd · <a href="#">Tap list</a>' },
+  { name: "Marlowe's Diner", cat: 'Eat & drink', note: 'Open since 1961; order whatever the counter regulars are having.', meta: '901 W Glenoaks Blvd · <a href="#">Hours</a>' },
+  { name: 'Brand Books', cat: 'Shop', note: "Used and new; the staff-picks wall hasn't missed yet.", meta: '235 N Brand Blvd · <a href="#">Events</a>' },
+  { name: "Kessler's Hardware", cat: 'Shop', note: "Keys cut while you wait, advice you didn't pay for.", meta: '3409 Ocean View Blvd · <a href="#">Hours</a>' },
+  { name: 'Adams Hill Records', cat: 'Shop', note: 'Crates organized by mood, not genre. Trust the system.', meta: '1112 E Palmer Ave · <a href="#">New arrivals</a>' },
+  { name: 'Glen Oaks Tailoring', cat: 'Services', note: 'Same-week hemming and honest opinions about that jacket.', meta: '418 W Kenneth Rd · <a href="#">Book</a>' },
+  { name: 'Glenoaks Rooter & Drain', cat: 'Services', note: 'The plumber who answers nights and weekends.', meta: 'Serves Glendale & Montrose · <a href="#">Call</a>' },
+  { name: 'Pacific Shine Auto Detail', cat: 'Services', note: 'They come to your driveway; the interior work is the standout.', meta: 'Mobile, all of Glendale · <a href="#">Book</a>' },
+  { name: 'Verdugo Yoga Collective', cat: 'Wellness', note: 'Donation-based Sunday classes, mats provided.', meta: '1207 N Pacific Ave · <a href="#">Schedule</a>' },
+  { name: 'Stone Canyon Massage', cat: 'Wellness', note: 'Book the 90 minutes; the hour always feels short.', meta: '600 N Brand Blvd, Suite 210 · <a href="#">Book</a>' },
+  { name: "Rosaline's Salon", cat: 'Beauty', note: 'Color correction is the specialty; consultations are free.', meta: '129 S Maryland Ave · <a href="#">Book</a>' },
+  { name: 'Brand Boxing Club', cat: 'Fitness', note: 'First class free, and beginners spar with coaches only.', meta: '740 S Central Ave · <a href="#">Class times</a>' },
+  { name: 'Verdugo Nursery', cat: 'Home & garden', note: "They'll tell you which plants survive a north-facing porch.", meta: '2200 Cañada Blvd · <a href="#">Hours</a>' },
+  { name: 'The Good Dog Supply', cat: 'Kids & pets', note: "Raw-food freezer in back; they remember your dog's name.", meta: '600 W Broadway · <a href="#">Shop</a>' },
+  { name: 'Little Sprouts Toys', cat: 'Kids & pets', note: 'Wooden toys, weekend story hour, free gift wrap year-round.', meta: '315 N Glendale Ave · <a href="#">Events</a>' }
+];
+
+const CATEGORIES = ['All', 'Eat & drink', 'Shop', 'Services', 'Wellness', 'Beauty', 'Fitness', 'Home & garden', 'Kids & pets'];
+
+let activeCat = 'All';
+let query = '';
+
+// ===== Render category pills =====
+const pillsEl = document.getElementById('cat-pills');
+CATEGORIES.forEach(c => {
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.className = 'pill' + (c === activeCat ? ' selected' : '');
+  b.textContent = c;
+  b.addEventListener('click', () => {
+    activeCat = c;
+    pillsEl.querySelectorAll('.pill').forEach(p => p.classList.toggle('selected', p.textContent === activeCat));
+    render();
+  });
+  pillsEl.appendChild(b);
+});
+
+// ===== Render pinned zone (always city-wide, never filtered) =====
+function cardHTML(item, pinned) {
+  return `<div class="dir-card${pinned ? ' is-pinned' : ''}">
+    ${pinned ? '<span class="pinned-stamp">Pinned *</span>' : ''}
+    <div class="dir-card-line1"><h3 class="dir-card-name">${item.name}</h3><span class="dir-card-cat">${item.cat}</span></div>
+    <p class="dir-card-note">${item.note}</p>
+    <p class="dir-card-meta">${item.meta}</p>
+  </div>`;
+}
+
+document.getElementById('pinned-cards').innerHTML = PINNED.map(p => cardHTML(p, true)).join('');
+
+// ===== Render filtered listings =====
+const listEl = document.getElementById('listing-cards');
+const metaEl = document.getElementById('result-meta');
+
+const MIDLIST_CTA = `<div class="slot-cta">
+  <p>Run a Glendale business? Two pinned spots a day — $10 here, $25 adds the newsletter. <a href="index.html">Advertise →</a></p>
+</div>`;
+
+function render() {
+  const q = query.trim().toLowerCase();
+  const matches = LISTINGS.filter(item => {
+    const inCat = activeCat === 'All' || item.cat === activeCat;
+    const inQuery = !q || item.name.toLowerCase().includes(q) || item.note.toLowerCase().includes(q) || item.cat.toLowerCase().includes(q);
+    return inCat && inQuery;
+  });
+
+  // Result meta line
+  if (q) {
+    metaEl.textContent = `"${query.trim()}" · ${matches.length} ${matches.length === 1 ? 'match' : 'matches'}`;
+  } else {
+    metaEl.textContent = `${activeCat} · ${matches.length} ${matches.length === 1 ? 'place' : 'places'}`;
+  }
+
+  if (matches.length === 0) {
+    listEl.innerHTML = `<div class="dir-empty">
+      <div class="headline">No spots match "${query.trim()}."</div>
+      <p>Try another word, or <a href="javascript:void(0)" id="empty-reset">browse everything</a>.</p>
+    </div>`;
+    document.getElementById('empty-reset').addEventListener('click', () => {
+      query = '';
+      document.getElementById('dir-q').value = '';
+      activeCat = 'All';
+      pillsEl.querySelectorAll('.pill').forEach(p => p.classList.toggle('selected', p.textContent === 'All'));
+      render();
+    });
+    return;
+  }
+
+  const parts = [];
+  matches.forEach((item, i) => {
+    parts.push(cardHTML(item, false));
+    if (i === 3 && matches.length > 5) parts.push(MIDLIST_CTA);
+  });
+  listEl.innerHTML = parts.join('');
+}
+
+const qEl = document.getElementById('dir-q');
+qEl.addEventListener('input', () => {
+  query = qEl.value;
+  if (query.trim() && activeCat !== 'All') {
+    activeCat = 'All';
+    pillsEl.querySelectorAll('.pill').forEach(p => p.classList.toggle('selected', p.textContent === 'All'));
+  }
+  render();
+});
+qEl.addEventListener('keydown', (e) => { if (e.key === 'Enter') render(); });
+document.getElementById('dir-go').addEventListener('click', render);
+
+render();
+</script>
+
+</body>
+</html>

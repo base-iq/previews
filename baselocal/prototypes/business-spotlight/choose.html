@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Advertise with BaseLocal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@400;700&family=Lato:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .fork {
+    max-width: 880px; margin: 0 auto;
+    padding: 56px 24px 80px;
+    text-align: center;
+  }
+  .fork .kicker {
+    font-size: 13px; font-weight: 900; letter-spacing: 1.4px;
+    text-transform: uppercase; color: var(--terracotta);
+    margin-bottom: 16px;
+  }
+  .fork h1 {
+    font-family: 'Bitter', Georgia, serif; font-weight: 700;
+    font-size: 32px; line-height: 1.15; color: var(--espresso);
+    letter-spacing: -0.4px; margin-bottom: 12px;
+  }
+  .fork .lede {
+    font-size: 16px; color: var(--gray);
+    max-width: 520px; margin: 0 auto 40px;
+  }
+
+  .fork-cards {
+    display: grid; grid-template-columns: 1fr; gap: 20px;
+    text-align: left;
+  }
+  .fork-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 32px 28px;
+    display: block;
+    text-decoration: none;
+    color: var(--charcoal);
+    transition: transform 0.15s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    position: relative;
+  }
+  .fork-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--terracotta);
+    box-shadow: 0 8px 24px rgba(194, 96, 74, 0.12);
+    text-decoration: none;
+  }
+  .fork-card .tag {
+    font-size: 12px; font-weight: 900; letter-spacing: 1.4px;
+    text-transform: uppercase; color: var(--terracotta);
+    margin-bottom: 12px;
+  }
+  .fork-card h2 {
+    font-family: 'Bitter', Georgia, serif; font-weight: 700;
+    font-size: 24px; color: var(--espresso);
+    margin: 0 0 8px;
+  }
+  .fork-card p {
+    font-size: 15px; line-height: 1.6; color: var(--charcoal);
+    margin: 0 0 18px;
+  }
+  .fork-card .arrow-link {
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 14px; font-weight: 700;
+    color: var(--terracotta);
+  }
+  .fork-card .arrow-link .arr { font-size: 18px; transition: transform 0.15s ease; }
+  .fork-card:hover .arrow-link .arr { transform: translateX(4px); }
+
+  .fork-help {
+    margin-top: 32px;
+    font-size: 14px; color: var(--gray);
+  }
+
+  @media (min-width: 700px) {
+    .fork { padding: 80px 24px 100px; }
+    .fork h1 { font-size: 40px; }
+    .fork-cards { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="#"><img src="../../assets/logos/baselocal-full-dark.svg" alt="BaseLocal"></a>
+    <nav>
+      <a href="#" class="nav-extra">Home</a>
+      <a href="#">Locations</a>
+      <a href="choose.html" class="active">Advertise</a>
+      <a href="../event-submission/" class="nav-extra">Submit Event</a>
+    </nav>
+  </div>
+</header>
+
+<section class="fork">
+  <div class="kicker">Advertise with BaseLocal</div>
+  <h1>What are you promoting?</h1>
+  <p class="lede">Two flows, one idea: flat per-day pricing, reviewed by a local editor before it runs.</p>
+
+  <div class="fork-cards">
+    <a class="fork-card" href="../event-submission/">
+      <div class="tag">An event</div>
+      <h2>Get your event on the calendar.</h2>
+      <p>Concerts, markets, fundraisers, classes — anything with a date. Pinned in the events directory, with an option to run inside the daily newsletter.</p>
+      <div class="arrow-link"><span>Promote an event</span><span class="arr">→</span></div>
+    </a>
+    <a class="fork-card" href="index.html">
+      <div class="tag">A local business</div>
+      <h2>Get your business recommended.</h2>
+      <p>A storefront, restaurant, or service locals should know about. Pinned at the top of your city's business directory, with an option to be featured in the daily newsletter.</p>
+      <div class="arrow-link"><span>Feature your business</span><span class="arr">→</span></div>
+    </a>
+  </div>
+
+  <p class="fork-help">Looking for a custom advertising package? We build tailored campaigns for advertisers with $1,500+/month budgets — reach out at <a href="mailto:partner@baselocal.com">partner@baselocal.com</a>.</p>
+</section>
+
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="../../assets/logos/baselocal-full-white.svg" alt="BaseLocal" class="footer-logo">
+        <p class="footer-tagline">Local news, events, and recommendations for 400+ locations.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <a href="#">Home</a>
+        <a href="#">Locations</a>
+        <a href="choose.html">Advertise</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms of Use</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <div class="footer-contact">
+          <span class="footer-contact-label">Partnerships</span>
+          <a href="mailto:partner@baselocal.com">partner@baselocal.com</a>
+        </div>
+        <div class="footer-contact">
+          <span class="footer-contact-label">General</span>
+          <a href="mailto:hello@baselocal.com">hello@baselocal.com</a>
+        </div>
+      </div>
+    </div>
+    <p class="footer-bottom">© 2026 BaseLocal. All rights reserved.</p>
+  </div>
+</footer>
+
+</body>
+</html>
