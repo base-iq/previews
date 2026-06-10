@@ -1593,6 +1593,38 @@
     .trust-chip .ic { color: var(--primary); font-weight: 900; line-height: 1; }
 
     /* =============================================
+       ACTION CALLOUT (two-step: see it / fix it)
+       ============================================= */
+    .action-callout {
+      container-type: inline-size;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 28px 0;
+    }
+    .action-callout-bar { height: 4px; background: var(--primary); }
+    .action-callout-row { display: flex; flex-wrap: wrap; background: var(--bg-page); }
+    .action-step { flex: 1 1 0; min-width: 240px; padding: 20px 22px; }
+    .action-step.see { border-right: 1px solid var(--border); }
+    .action-label {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-family: 'Lato', sans-serif; font-weight: 900; font-size: 10px;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--primary);
+      margin-bottom: 8px;
+    }
+    .action-label svg { display: block; }
+    .action-step p { margin: 0; }
+    .action-step .see-text { font-size: 16px; line-height: 1.55; color: var(--body); }
+    .action-step .fix-text { font-size: 15px; line-height: 1.55; color: var(--body); }
+    .action-step .see-link { color: var(--primary); font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
+    .action-step .fix-link { color: var(--primary); font-weight: 700; text-decoration: none; white-space: nowrap; }
+    .action-step .fix-link:hover { text-decoration: underline; }
+    @container (max-width: 460px) {
+      .action-step { min-width: 100%; padding: 18px 20px; }
+      .action-step.see { border-right: none; border-bottom: 1px solid var(--border); }
+    }
+
+    /* =============================================
        INLINE / EARLY CTA
        ============================================= */
     .inline-cta {
@@ -3067,6 +3099,27 @@
           </div>
         </div>
         <p style="font-size: 11px; color: var(--light-text); font-style: italic; margin: 8px 0 0;">Reader-count figure is a placeholder — swap in the real subscriber number before launch.</p>
+      </div>
+      <!-- ============= 3.27 ACTION CALLOUT ============= -->
+      <div style="margin: 40px 0 0;">
+        <h3 style="font-family: 'Bitter', Georgia, serif; font-size: 22px; color: var(--dark); margin: 0 0 12px;">
+          3.27 Action Callout
+        </h3>
+        <p style="font-size: 14px; color: var(--secondary-text); margin: 0 0 16px;">A two-step prompt that pairs a problem with its fix: a "see it" step (a single sentence with a quiet inline link) and a "fix it" step (a short explainer ending in a bold link, no button). A terracotta accent bar runs across the top; the two steps sit as equal columns split by a centered divider, each with a small leading icon. On narrow screens (container ≤ 460px) the columns stack and the divider becomes a horizontal rule. The two link treatments differ on purpose: the "see it" link is a quiet underline, the "fix it" link is a bold action link.</p>
+
+        <div class="action-callout">
+          <div class="action-callout-bar"></div>
+          <div class="action-callout-row">
+            <div class="action-step see">
+              <span class="action-label"><svg width="14" height="14" viewBox="0 0 16 16"><circle cx="7" cy="7" r="5" fill="none" stroke="#C2604A" stroke-width="2"/><line x1="10.5" y1="10.5" x2="15" y2="15" stroke="#C2604A" stroke-width="2" stroke-linecap="round"/></svg>See it</span>
+              <p class="see-text">Look yourself up on <a class="see-link" href="#" onclick="event.preventDefault()">Whitepages</a> and your address, phone number, and relatives turn up in seconds.</p>
+            </div>
+            <div class="action-step">
+              <span class="action-label"><svg width="14" height="15" viewBox="0 0 14 16"><path d="M7 1 L12 3 V8 C12 11 9.5 13.6 7 15 C4.5 13.6 2 11 2 8 V3 Z" fill="none" stroke="#C2604A" stroke-width="1.6" stroke-linejoin="round"/><path d="M4.7 8 L6.2 9.6 L9.3 6.1" fill="none" stroke="#C2604A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Fix it</span>
+              <p class="fix-text">Incogni is a service that does the opting-out for you. It files removals across the data brokers and re-checks so your details don't return. Base Local readers get a discount. <a class="fix-link" href="#" onclick="event.preventDefault()">See the offer →</a></p>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
