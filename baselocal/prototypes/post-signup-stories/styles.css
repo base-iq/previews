@@ -1,0 +1,326 @@
+/* ----------------------------------------------------------------------------
+   BaseLocal · post-signup-stories prototype
+   Mobile-first. Every value traces to brain/brands/baselocal/design-system.md
+   (tokens, Ranked Card, Inline Alert · info, Disclosure Block) or to page
+   chrome precedent set by the post-signup-inbox prototype (masthead).
+---------------------------------------------------------------------------- */
+
+:root {
+  --primary: #C2604A;
+  --primary-hover: #A84E3B;
+  --dark: #2C2421;
+  --body: #444444;
+  --secondary-text: #797979;
+  --light-text: #999999;
+  --bg-warm: #FAF6F4;
+  --border: #E8E0DC;
+  --bg-page: #FFFFFF;
+  --hairline: #EDE6E1;          /* newsletter hairline — ranked-card border */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-entrance: 0.7s;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Lato', Helvetica, Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--body);
+  background: var(--bg-page);
+}
+
+.page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 24px 80px;
+}
+
+/* --- Masthead — page chrome (post-signup-inbox precedent) ----------------- */
+
+.masthead {
+  border-top: 3px double var(--dark);
+  border-bottom: 1px solid var(--dark);
+  padding: 24px 0 16px;
+  text-align: center;
+  margin-top: 8px;
+}
+
+.masthead img {
+  width: 170px;
+  height: auto;
+  display: block;
+  margin: 0 auto 10px;
+}
+
+.strap {
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--secondary-text);
+}
+
+/* --- Inbox nudge — Inline Alert · info variant ---------------------------- */
+
+.inbox-nudge {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: var(--bg-warm);
+  border-left: 3px solid var(--primary);
+  border-radius: 4px;
+  padding: 16px 20px;
+  margin: 24px 0 0;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--dark);
+}
+
+.nudge-icon {
+  color: var(--primary);
+  font-weight: 700;
+  line-height: 1.5;
+  flex-shrink: 0;
+}
+
+/* --- Lede ------------------------------------------------------------------ */
+
+.lede { margin: 40px 0 8px; }
+
+.lede h1 {
+  font-family: 'Bitter', Georgia, serif;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 1.2;
+  color: var(--dark);
+}
+
+.dek {
+  font-size: 17px;
+  color: var(--secondary-text);
+  margin-top: 10px;
+}
+
+/* --- Ranked list — Ranked Card pattern, web rendering ---------------------- */
+
+.ranked { list-style: none; margin-top: 24px; }
+
+/* Whole-card-clickable story rows (design-system whole-card pattern).
+   Negative side margins keep text aligned to the page column while giving
+   the hover card room to breathe. Hairlines render via ::before at the
+   original column width so they match the masthead rules. */
+.ranked-item {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 24px 16px;
+  margin: 0 -16px;
+  border-radius: 8px;
+  transition: box-shadow 0.2s, transform 0.15s, background-color 0.2s;
+}
+
+.ranked-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 16px;
+  right: 16px;
+  border-top: 1px solid var(--hairline);
+  transition: opacity 0.2s;
+}
+
+.ranked-item:first-child { padding-top: 8px; }
+.ranked-item:first-child::before { display: none; }
+
+.ranked-item:hover {
+  background: var(--bg-page);
+  box-shadow: 0 8px 24px rgba(194, 96, 74, 0.14);
+  transform: translateY(-2px);
+}
+
+/* Detach the lifted card from its hairlines */
+.ranked-item:hover::before,
+.ranked-item:hover + .ranked-item::before { opacity: 0; }
+.ranked-item:hover + .ad-row { border-top-color: transparent; }
+
+.ranked-item:hover .rank {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+.ranked-item:hover .read {
+  color: var(--primary-hover);
+  text-decoration: underline;
+}
+
+.story-link {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+}
+
+.story-link:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.rank {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--bg-warm);
+  border: 1px solid var(--hairline);
+  color: var(--primary);
+  transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+  font-family: 'Bitter', Georgia, serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1;
+  letter-spacing: -0.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.story { flex: 1; min-width: 0; }
+
+.story h2 {
+  font-family: 'Bitter', Georgia, serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1.3;
+  color: var(--dark);
+  text-wrap: pretty;
+}
+
+.story p {
+  font-family: 'Bitter', Georgia, serif;
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--dark);
+  margin-top: 8px;
+}
+
+.paid-mark {
+  color: var(--secondary-text);
+  font-weight: 400;
+  margin-left: 2px;
+}
+
+.read {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 10px 0;
+  color: var(--primary);
+  font-family: 'Lato', Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+/* --- Ad slots — placeholder chrome for Ezoic-injected markup --------------- */
+
+.ad-row {
+  padding: 24px 0 0;
+  border-top: 1px solid var(--hairline);
+  margin-top: 0;
+  transition: border-top-color 0.2s;
+}
+
+.ad-slot {
+  border: 1px dashed var(--border);
+  background: var(--bg-warm);
+  border-radius: 4px;
+  text-align: center;
+  padding: 36px 16px;
+  color: var(--light-text);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.ad-row .ad-slot { margin-bottom: 24px; }
+
+.ad-slot-bottom { margin-top: 32px; }
+
+/* --- Disclosure / subscribed / signoff -------------------------------------- */
+
+.disclosure {
+  font-size: 12px;
+  color: var(--light-text);
+  line-height: 1.6;
+  margin-top: 20px;
+}
+
+.subscribed-line {
+  text-align: center;
+  font-size: 15px;
+  color: var(--secondary-text);
+  margin-top: 40px;
+}
+
+.subscribed-line strong {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--dark);
+}
+
+.signoff {
+  font-family: 'Bitter', Georgia, serif;
+  font-style: italic;
+  font-size: 18px;
+  color: var(--dark);
+  text-align: center;
+  margin-top: 24px;
+}
+
+/* --- Motion — entrance stagger (ease-out-expo, 80ms gap) -------------------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  .inbox-nudge,
+  .lede,
+  .ranked > li {
+    animation: fadeInUp var(--duration-entrance) var(--ease-out-expo) both;
+  }
+  .lede { animation-delay: 80ms; }
+  .ranked > li:nth-child(1) { animation-delay: 160ms; }
+  .ranked > li:nth-child(2) { animation-delay: 240ms; }
+  .ranked > li:nth-child(3) { animation-delay: 320ms; }
+  .ranked > li:nth-child(4) { animation-delay: 400ms; }
+  .ranked > li:nth-child(5) { animation-delay: 480ms; }
+  .ranked > li:nth-child(6) { animation-delay: 560ms; }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ranked-item,
+  .ranked-item::before,
+  .rank,
+  .read,
+  .ad-row { transition-duration: 0.01ms; }
+  .ranked-item:hover { transform: none; }
+}
+
+/* --- ≥ 600px ----------------------------------------------------------------- */
+
+@media (min-width: 600px) {
+  .lede h1 { font-size: 35px; }
+  .rank {
+    width: 56px;
+    height: 56px;
+    font-size: 24px;
+  }
+  .ranked-item { gap: 20px; }
+}
