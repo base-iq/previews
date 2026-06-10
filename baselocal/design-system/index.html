@@ -877,6 +877,323 @@
       font-weight: 700;
     }
 
+    /* =============================================
+       PROPOSED (PENDING APPROVAL) MARKERS
+       ============================================= */
+    .proposed-flag {
+      display: inline-block;
+      background: var(--primary);
+      color: #FFFFFF;
+      font-family: 'Lato', sans-serif;
+      font-weight: 900;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 999px;
+      margin-left: 12px;
+      vertical-align: 4px;
+    }
+    .group.is-proposed {
+      border-left: 3px solid var(--primary);
+      padding-left: 24px;
+    }
+
+    /* =============================================
+       DIRECTORY SEARCH BAR (proposed)
+       ============================================= */
+    .dir-search {
+      display: flex;
+      border: 2px solid var(--dark);
+      border-radius: 6px;
+      overflow: hidden;
+      background: var(--bg-page);
+      max-width: 520px;
+    }
+    .dir-search input {
+      flex: 1;
+      min-width: 0;
+      border: none;
+      outline: none;
+      padding: 12px 16px;
+      min-height: 48px;
+      font-family: 'Lato', sans-serif;
+      font-size: 17px;
+      color: var(--body);
+      background: transparent;
+    }
+    .dir-search input::placeholder { color: var(--light-text); }
+    .dir-search button {
+      border: none;
+      background: var(--primary);
+      color: #FFFFFF;
+      font-family: 'Lato', sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      padding: 0 20px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .dir-search button:hover { background: var(--primary-hover); }
+    .dir-search:focus-within,
+    .dir-search.is-focus {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+      border-color: var(--primary);
+    }
+
+    /* =============================================
+       DIRECTORY LISTING CARD (proposed)
+       ============================================= */
+    .dir-card {
+      background: var(--bg-page);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 18px 20px;
+      position: relative;
+      box-shadow: 0 1px 2px rgba(44, 36, 33, 0.05);
+      margin-bottom: 12px;
+    }
+    .dir-card:last-child { margin-bottom: 0; }
+    .dir-card-line1 {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .dir-card-name {
+      font-family: 'Bitter', Georgia, serif;
+      font-weight: 700;
+      font-size: 19px;
+      color: var(--dark);
+      margin: 0;
+    }
+    .dir-card-cat {
+      font-family: 'Lato', sans-serif;
+      font-weight: 900;
+      font-size: 11px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--secondary-text);
+      white-space: nowrap;
+    }
+    .dir-card-note {
+      font-family: 'Lato', sans-serif;
+      font-size: 16px;
+      line-height: 1.55;
+      color: var(--body);
+      margin: 4px 0 0;
+    }
+    .dir-card-meta {
+      font-family: 'Lato', sans-serif;
+      font-size: 14px;
+      color: var(--secondary-text);
+      margin: 6px 0 0;
+    }
+    .dir-card-meta a {
+      color: var(--primary);
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .dir-card-meta a:hover { text-decoration: underline; }
+    .dir-card.is-clickable { cursor: pointer; transition: box-shadow 0.2s, transform 0.2s; }
+    .dir-card.is-clickable:hover,
+    .dir-card.demo-hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(194, 96, 74, 0.12);
+    }
+    .dir-card.is-pinned {
+      border: 2px solid var(--primary);
+      box-shadow: 0 2px 8px rgba(194, 96, 74, 0.12);
+    }
+    .dir-card.is-pinned .dir-card-cat { color: var(--primary); }
+    .pinned-stamp {
+      position: absolute;
+      top: -11px;
+      right: 14px;
+      background: var(--primary);
+      color: #FFFFFF;
+      font-family: 'Lato', sans-serif;
+      font-weight: 900;
+      font-size: 11px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 3px;
+      transform: rotate(2deg);
+      box-shadow: 0 2px 6px rgba(194, 96, 74, 0.30);
+    }
+    .pinned-zone { margin-bottom: 28px; }
+    .pinned-zone-label {
+      font-family: 'Lato', sans-serif;
+      font-weight: 900;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin: 0 0 14px;
+    }
+    .pinned-zone-note {
+      font-family: 'Lato', sans-serif;
+      font-size: 12px;
+      color: var(--light-text);
+      line-height: 1.6;
+      margin: 10px 0 0;
+    }
+    .dir-result-meta {
+      font-family: 'Lato', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--secondary-text);
+      margin: 0 0 14px;
+    }
+
+    /* =============================================
+       SLOT CTA (proposed)
+       ============================================= */
+    .slot-cta {
+      background: var(--bg-page);
+      border: 1.5px dashed var(--primary);
+      border-radius: 6px;
+      padding: 18px 20px;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+    .slot-cta p {
+      font-family: 'Lato', sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--body);
+      margin: 0;
+    }
+    .slot-cta a {
+      color: var(--primary);
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .slot-cta a:hover { text-decoration: underline; }
+    .slot-cta.is-open-slot { padding: 22px 20px; }
+    .slot-cta.is-open-slot .slot-prompt {
+      font-family: 'Bitter', Georgia, serif;
+      font-weight: 700;
+      font-size: 17px;
+      color: var(--dark);
+      margin: 0 0 4px;
+    }
+
+    /* =============================================
+       CALENDAR "FULL" DAY STATE (proposed)
+       ============================================= */
+    .cal-day.is-full {
+      color: var(--light-text);
+      text-decoration: line-through;
+      text-decoration-thickness: 1.5px;
+      cursor: not-allowed;
+      background: var(--bg-page);
+    }
+    .cal-day.is-full:hover { background: var(--bg-page); }
+    .cal-legend {
+      font-family: 'Lato', sans-serif;
+      font-size: 12px;
+      color: var(--light-text);
+      line-height: 1.6;
+      margin: 10px 0 0;
+    }
+
+    /* =============================================
+       NEWSLETTER PINNED SPOTLIGHT (proposed)
+       ============================================= */
+    .spotlight-pinned {
+      background: #FAF6F4;
+      border: 1px solid #EDE6E1;
+      border-left: 4px solid #C2604A;
+      border-radius: 0 5px 5px 0;
+      padding: 20px 22px;
+      margin: 0 0 18px;
+    }
+    .spotlight-pinned-tag {
+      font-family: 'Lato', sans-serif;
+      font-weight: 900;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #C2604A;
+      margin: 0 0 6px;
+    }
+    .spotlight-pinned-body {
+      font-family: 'Bitter', Georgia, serif;
+      font-size: 16px;
+      line-height: 24px;
+      color: var(--nl-ink, #2C2421);
+      margin: 0;
+    }
+    .spotlight-pinned-body strong { font-weight: 700; }
+    .spotlight-pinned-body a { color: #C2604A; font-weight: 700; text-decoration: underline; }
+
+    /* =============================================
+       SITE FOOTER (proposed — formalized from event-submission)
+       ============================================= */
+    .site-footer {
+      background: var(--dark);
+      color: #B5A89C;
+      padding: 60px 24px 28px;
+      font-family: 'Lato', sans-serif;
+      font-size: 14px;
+      line-height: 1.6;
+      border-radius: 8px;
+    }
+    .site-footer-inner { max-width: 1120px; margin: 0 auto; }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      gap: 60px;
+      padding-bottom: 36px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      margin-bottom: 22px;
+    }
+    .footer-brand .footer-logo { height: 28px; margin-bottom: 16px; display: block; }
+    .footer-tagline { color: #B5A89C; font-size: 14px; line-height: 1.55; max-width: 320px; margin: 0; }
+    .footer-col h4 {
+      font-family: 'Lato', sans-serif;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #FFFFFF;
+      margin: 0 0 14px;
+    }
+    .footer-col a {
+      display: block;
+      color: #B5A89C;
+      font-weight: 500;
+      text-decoration: none;
+      padding: 4px 0;
+      transition: color 0.15s;
+    }
+    .footer-col a:hover { color: var(--primary); }
+    .footer-contact { margin-bottom: 14px; }
+    .footer-contact-label {
+      display: block;
+      color: #8A7E73;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 2px;
+    }
+    .footer-col .footer-contact a { display: inline; padding: 0; }
+    .footer-bottom { font-size: 12px; color: #8A7E73; margin: 0; }
+    @media (max-width: 720px) {
+      .site-footer { padding: 48px 24px 22px; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 32px 28px; padding-bottom: 28px; }
+      .footer-brand { grid-column: 1 / -1; }
+    }
+    @media (max-width: 480px) {
+      .footer-top { grid-template-columns: 1fr; }
+    }
+
     /* helpers */
     .row-grid-2 {
       display: grid;
@@ -3510,6 +3827,65 @@
             <button class="cal-clear" type="button">Clear days</button>
           </div>
         </div>
+
+        <p class="caption" style="margin-top: 32px;">"Full" day state — sold out, distinct from past/disabled</p>
+        <div class="calendar">
+          <div class="cal-header">
+            <button class="cal-nav" aria-label="Previous month">‹</button>
+            <span class="cal-title">June 2026</span>
+            <button class="cal-nav" aria-label="Next month">›</button>
+          </div>
+          <div class="cal-weekdays">
+            <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+          </div>
+          <div class="cal-grid">
+            <!-- June 2026 starts on Monday -->
+            <button class="cal-day is-out" disabled>31</button>
+            <button class="cal-day" disabled>1</button>
+            <button class="cal-day" disabled>2</button>
+            <button class="cal-day" disabled>3</button>
+            <button class="cal-day" disabled>4</button>
+            <button class="cal-day" disabled>5</button>
+            <button class="cal-day" disabled>6</button>
+
+            <button class="cal-day" disabled>7</button>
+            <button class="cal-day" disabled>8</button>
+            <button class="cal-day" disabled>9</button>
+            <button class="cal-day is-today">10</button>
+            <button class="cal-day" disabled>11</button>
+            <button class="cal-day" disabled>12</button>
+            <button class="cal-day">13</button>
+
+            <button class="cal-day">14</button>
+            <button class="cal-day is-full" disabled aria-disabled="true" title="Both placements for this day are taken">15</button>
+            <button class="cal-day is-selected">16</button>
+            <button class="cal-day is-selected">17</button>
+            <button class="cal-day is-full" disabled aria-disabled="true" title="Both placements for this day are taken">18</button>
+            <button class="cal-day">19</button>
+            <button class="cal-day">20</button>
+
+            <button class="cal-day">21</button>
+            <button class="cal-day">22</button>
+            <button class="cal-day">23</button>
+            <button class="cal-day">24</button>
+            <button class="cal-day">25</button>
+            <button class="cal-day">26</button>
+            <button class="cal-day">27</button>
+
+            <button class="cal-day">28</button>
+            <button class="cal-day">29</button>
+            <button class="cal-day">30</button>
+            <button class="cal-day is-out">1</button>
+            <button class="cal-day is-out">2</button>
+            <button class="cal-day is-out">3</button>
+            <button class="cal-day is-out">4</button>
+          </div>
+          <div class="cal-footer">
+            <span class="cal-count">2 days selected</span>
+            <button class="cal-clear" type="button">Clear days</button>
+          </div>
+          <p class="cal-legend">Crossed-off days are full — two placements max per location, per day.</p>
+        </div>
       </div>
     </section>
 
@@ -3644,12 +4020,134 @@
       </div>
     </section>
 
+    <!-- ============= PROPOSED: DIRECTORY & SITE COMPONENTS ============= -->
+    <section class="group">
+      <h2><span class="num">05</span>Directory &amp; Site Components</h2>
+      <p class="group-desc">Directory-page and site-chrome components. Specs live in the Components section of <code class="tok">design-system.md</code>.</p>
+
+      <h3 style="font-family: 'Bitter', Georgia, serif; font-size: 22px; color: var(--dark); margin: 32px 0 12px;">5.1 Directory Search Bar</h3>
+      <p class="group-desc">Hero search for directory pages. 2px Espresso frame, attached primary button. Focus moves the frame to Terracotta with the standard 2px outline.</p>
+      <div class="demo">
+        <div class="demo-row">
+          <p class="caption">Default</p>
+          <div class="dir-search">
+            <input type="text" placeholder="Try &quot;plumber&quot; or &quot;coffee&quot;" aria-label="Search the directory">
+            <button type="button">Search</button>
+          </div>
+        </div>
+        <div class="demo-row">
+          <p class="caption">Focus</p>
+          <div class="dir-search is-focus">
+            <input type="text" value="taco" aria-label="Search the directory">
+            <button type="button">Search</button>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="font-family: 'Bitter', Georgia, serif; font-size: 22px; color: var(--dark); margin: 32px 0 12px;">5.2 Directory Listing Card</h3>
+      <p class="group-desc">Exactly three lines, no exceptions: name + category tag · one editor sentence · address + link. Pinned variant adds a 2px Terracotta border and the rotated stamp. Pins are per-city, not per-category — the Pinned Zone label (below) carries that context.</p>
+      <div class="demo">
+        <div class="demo-row">
+          <p class="caption">Regular</p>
+          <div class="dir-card">
+            <div class="dir-card-line1"><h4 class="dir-card-name">Brand Books</h4><span class="dir-card-cat">Shop</span></div>
+            <p class="dir-card-note">Used and new; the staff-picks wall hasn't missed yet.</p>
+            <p class="dir-card-meta">235 N Brand Blvd · <a href="#">Events</a></p>
+          </div>
+        </div>
+        <div class="demo-row">
+          <p class="caption">Regular · hover (clickable variant)</p>
+          <div class="dir-card demo-hover">
+            <div class="dir-card-line1"><h4 class="dir-card-name">Brand Books</h4><span class="dir-card-cat">Shop</span></div>
+            <p class="dir-card-note">Used and new; the staff-picks wall hasn't missed yet.</p>
+            <p class="dir-card-meta">235 N Brand Blvd · <a href="#">Events</a></p>
+          </div>
+        </div>
+        <div class="demo-row">
+          <p class="caption">Pinned (paid placement)</p>
+          <div class="dir-card is-pinned">
+            <span class="pinned-stamp">Pinned *</span>
+            <div class="dir-card-line1"><h4 class="dir-card-name">Little Ararat Coffee</h4><span class="dir-card-cat">Eat &amp; drink</span></div>
+            <p class="dir-card-note">Sand-brewed Armenian coffee; the gata sells out by ten.</p>
+            <p class="dir-card-meta">411 N Brand Blvd · <a href="#">littleararat.com</a></p>
+          </div>
+        </div>
+        <div class="demo-row">
+          <p class="caption">Pinned Zone — category filter active ("Eat &amp; drink"), city-wide pins stay on top</p>
+          <div class="pinned-zone">
+            <p class="pinned-zone-label">Pinned in Glendale today</p>
+            <div class="dir-card is-pinned">
+              <span class="pinned-stamp">Pinned *</span>
+              <div class="dir-card-line1"><h4 class="dir-card-name">Adams Hill Plumbing</h4><span class="dir-card-cat">Services</span></div>
+              <p class="dir-card-note">The quote they give is the invoice you get. Since 2002.</p>
+              <p class="dir-card-meta">Serves all of Glendale · <a href="#">adamshillplumbing.com</a></p>
+            </div>
+            <p class="pinned-zone-note">* Paid placement, city-wide. Reviewed by our editor like every listing.</p>
+          </div>
+          <p class="dir-result-meta">Eat &amp; drink · 14 places</p>
+          <div class="dir-card">
+            <div class="dir-card-line1"><h4 class="dir-card-name">La Cocina de Memo</h4><span class="dir-card-cat">Eat &amp; drink</span></div>
+            <p class="dir-card-note">Weekend-only birria, worth planning around.</p>
+            <p class="dir-card-meta">227 S Glendale Ave · <a href="#">Menu</a></p>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="font-family: 'Bitter', Georgia, serif; font-size: 22px; color: var(--dark); margin: 32px 0 12px;">5.3 Slot CTA</h3>
+      <p class="group-desc">Dashed-border advertise callout — reads as "this space is for sale." Two variants: inline (between listings) and open-slot (inside the Pinned Zone when fewer than two pins are sold).</p>
+      <div class="demo">
+        <div class="demo-row">
+          <p class="caption">Inline — between listings</p>
+          <div class="slot-cta">
+            <p>Run a Glendale business? Two pinned spots a day — $10 here, $25 adds the newsletter. <a href="#">Advertise →</a></p>
+          </div>
+        </div>
+        <div class="demo-row">
+          <p class="caption">Open slot — inside the Pinned Zone</p>
+          <div class="slot-cta is-open-slot">
+            <p class="slot-prompt">One pinned spot is open today.</p>
+            <p>Your business, top of this page, $10 a day. <a href="#">Claim the spot →</a></p>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="font-family: 'Bitter', Georgia, serif; font-size: 22px; color: var(--dark); margin: 32px 0 12px;">5.4 Site Footer</h3>
+      <p class="group-desc">Formalizes the dark footer already shipped in the event-submission prototype (it was used there but never written into the design system). Espresso panel, white-on-dark wordmark, tagline + two link columns, hairline-divided copyright row. Stacks 3 → 2 → 1 columns at 720px / 480px.</p>
+      <div class="demo demo-light">
+        <footer class="site-footer">
+          <div class="site-footer-inner">
+            <div class="footer-top">
+              <div class="footer-brand">
+                <img class="footer-logo" src="../assets/logos/baselocal-full-white.svg" alt="BaseLocal">
+                <p class="footer-tagline">Good stuff happening near you, recommended by people who actually checked.</p>
+              </div>
+              <div class="footer-col">
+                <h4>Explore</h4>
+                <a href="#">Directory</a>
+                <a href="#">Events</a>
+                <a href="#">Newsletter</a>
+              </div>
+              <div class="footer-col">
+                <h4>Work with us</h4>
+                <a href="#">Advertise</a>
+                <div class="footer-contact" style="margin-top: 14px;">
+                  <span class="footer-contact-label">Questions</span>
+                  <a href="#">hello@baselocal.com</a>
+                </div>
+              </div>
+            </div>
+            <p class="footer-bottom">© 2026 BaseLocal. All rights reserved.</p>
+          </div>
+        </footer>
+      </div>
+    </section>
+
     <!-- ============= 05 NEWSLETTER COMPONENTS ============= -->
     <section class="group">
-      <h2><span class="num">05</span>Newsletter Components</h2>
+      <h2><span class="num">06</span>Newsletter Components</h2>
       <p class="group-desc">Email-safe building blocks. Render in email clients and on web preview pages. Stylesheet at <code class="tok">previews/baselocal/newsletters/styles/newsletter.css</code>.</p>
 
-      <h3 style="font-family: 'Bitter', Georgia, serif; font-size: 22px; color: var(--dark); margin: 32px 0 12px;">5.1 Section Card</h3>
+      <h3 style="font-family: 'Bitter', Georgia, serif; font-size: 22px; color: var(--dark); margin: 32px 0 12px;">6.1 Section Card</h3>
       <div class="demo nl-stage">
         <div class="section-card">
           <p style="font-family: 'Bitter', Georgia, serif; font-size: 16px; line-height: 24px; color: var(--nl-ink); margin: 0;">
@@ -3658,7 +4156,7 @@
         </div>
       </div>
 
-      <h3 style="font-family: 'Bitter', Georgia, serif; font-size: 22px; color: var(--dark); margin: 32px 0 12px;">5.2 Top Nav</h3>
+      <h3 style="font-family: 'Bitter', Georgia, serif; font-size: 22px; color: var(--dark); margin: 32px 0 12px;">6.2 Top Nav</h3>
       <div class="demo nl-stage">
         <div class="section-card">
           <div class="top-links">
@@ -3672,7 +4170,7 @@
         </div>
       </div>
 
-      <h3 style="font-family: 'Bitter', Georgia, serif; font-size: 22px; color: var(--dark); margin: 32px 0 12px;">5.3 Masthead</h3>
+      <h3 style="font-family: 'Bitter', Georgia, serif; font-size: 22px; color: var(--dark); margin: 32px 0 12px;">6.3 Masthead</h3>
       <div class="demo nl-stage">
         <div class="section-card">
           <div class="masthead-meta">
@@ -3683,7 +4181,7 @@
         </div>
       </div>
 
-      <h3 style="font-family: 'Bitter', Georgia, serif; font-size: 22px; color: var(--dark); margin: 32px 0 12px;">5.4 Kicker</h3>
+      <h3 style="font-family: 'Bitter', Georgia, serif; font-size: 22px; color: var(--dark); margin: 32px 0 12px;">6.4 Kicker</h3>
       <div class="demo nl-stage">
         <div class="section-card">
           <span class="kicker"><span class="kicker-num">01</span> — This Week</span>
@@ -3691,7 +4189,7 @@
         </div>
       </div>
 
-      <h3 style="font-family: 'Bitter', Georgia, serif; font-size: 22px; color: var(--dark); margin: 32px 0 12px;">5.5 Section Heading + Dek</h3>
+      <h3 style="font-family: 'Bitter', Georgia, serif; font-size: 22px; color: var(--dark); margin: 32px 0 12px;">6.5 Section Heading + Dek</h3>
       <div class="demo nl-stage">
         <div class="section-card">
           <span class="kicker"><span class="kicker-num">02</span> — In the News</span>
@@ -3701,7 +4199,7 @@
         </div>
       </div>
 
-      <h3 style="font-family: 'Bitter', Georgia, serif; font-size: 22px; color: var(--dark); margin: 32px 0 12px;">5.6 News Items (with auto-divider)</h3>
+      <h3 style="font-family: 'Bitter', Georgia, serif; font-size: 22px; color: var(--dark); margin: 32px 0 12px;">6.6 News Items (with auto-divider)</h3>
       <div class="demo nl-stage">
         <div class="section-card">
           <span class="kicker"><span class="kicker-num">03</span> — In the News</span>
@@ -3718,7 +4216,7 @@
         </div>
       </div>
 
-      <h3 style="font-family: 'Bitter', Georgia, serif; font-size: 22px; color: var(--dark); margin: 32px 0 12px;">5.7 Tag Pills</h3>
+      <h3 style="font-family: 'Bitter', Georgia, serif; font-size: 22px; color: var(--dark); margin: 32px 0 12px;">6.7 Tag Pills</h3>
       <div class="demo nl-stage">
         <div class="section-card">
           <p style="font-family: 'Bitter', Georgia, serif; font-size: 16px; color: var(--nl-ink); margin: 0 0 12px;">Five category variants — used inline with highlights and quick lists.</p>
@@ -3732,7 +4230,7 @@
         </div>
       </div>
 
-      <h3 style="font-family: 'Bitter', Georgia, serif; font-size: 22px; color: var(--dark); margin: 32px 0 12px;">5.8 Advertise CTA</h3>
+      <h3 style="font-family: 'Bitter', Georgia, serif; font-size: 22px; color: var(--dark); margin: 32px 0 12px;">6.8 Advertise CTA</h3>
       <div class="demo nl-stage">
         <div class="section-card">
           <p style="font-family: 'Bitter', Georgia, serif; font-size: 16px; color: var(--nl-ink); margin: 0;">…end of Local Business Spotlight content.</p>
@@ -3744,7 +4242,7 @@
         </div>
       </div>
 
-      <h3 style="font-family: 'Bitter', Georgia, serif; font-size: 22px; color: var(--dark); margin: 32px 0 12px;">5.9 Events Section</h3>
+      <h3 style="font-family: 'Bitter', Georgia, serif; font-size: 22px; color: var(--dark); margin: 32px 0 12px;">6.9 Events Section</h3>
       <div class="demo nl-stage">
         <div class="section-card">
           <span class="kicker"><span class="kicker-num">04</span> — Events</span>
@@ -3764,7 +4262,7 @@
         </div>
       </div>
 
-      <h3 style="font-family: 'Bitter', Georgia, serif; font-size: 22px; color: var(--dark); margin: 32px 0 12px;">5.10 Highlights / Quick Lists</h3>
+      <h3 style="font-family: 'Bitter', Georgia, serif; font-size: 22px; color: var(--dark); margin: 32px 0 12px;">6.10 Highlights / Quick Lists</h3>
       <div class="demo nl-stage">
         <div class="section-card">
           <span class="kicker"><span class="kicker-num">05</span> — Quick Hits</span>
@@ -3778,7 +4276,7 @@
         </div>
       </div>
 
-      <h3 style="font-family: 'Bitter', Georgia, serif; font-size: 22px; color: var(--dark); margin: 32px 0 12px;">5.11 Editor Signature</h3>
+      <h3 style="font-family: 'Bitter', Georgia, serif; font-size: 22px; color: var(--dark); margin: 32px 0 12px;">6.11 Editor Signature</h3>
       <div class="demo nl-stage">
         <div class="section-card">
           <div class="editor-signature">
@@ -3789,7 +4287,7 @@
         </div>
       </div>
 
-      <h3 style="font-family: 'Bitter', Georgia, serif; font-size: 22px; color: var(--dark); margin: 32px 0 12px;">5.12 Ranked Card</h3>
+      <h3 style="font-family: 'Bitter', Georgia, serif; font-size: 22px; color: var(--dark); margin: 32px 0 12px;">6.12 Ranked Card</h3>
       <div class="demo nl-stage">
         <div class="ranked-card">
           <div class="ranked-header">
@@ -3814,7 +4312,35 @@
         </div>
       </div>
 
-      <h3 style="font-family: 'Bitter', Georgia, serif; font-size: 22px; color: var(--dark); margin: 32px 0 12px;">5.13 Newsletter Footer</h3>
+      <h3 style="font-family: 'Bitter', Georgia, serif; font-size: 22px; color: var(--dark); margin: 32px 0 12px;">6.13 Pinned Spotlight</h3>
+      <p class="group-desc">Paid business block at the top of the Local Business Spotlight section — above the organic features, before the closing Advertise CTA. Same editorial format as organic items (bold lead-in, business name linked inline, story paragraph); the paper fill, 4px terracotta left border, and <code class="tok">Pinned spot *</code> tag carry the paid disclosure. No pricing in email CTAs. Max two per edition.</p>
+      <div class="demo nl-stage">
+        <div class="section-card">
+          <span class="kicker"><span class="kicker-num">03</span> — On our radar</span>
+          <h2 class="section-heading">Local business spotlight</h2>
+          <p class="section-dek">Nearby spots we'd actually send a friend to.</p>
+          <div class="spotlight-pinned">
+            <p class="spotlight-pinned-tag">Pinned spot *</p>
+            <p class="spotlight-pinned-body"><strong>Sand-brewed, the old way:</strong> <a href="#">Little Ararat Coffee</a> pulls Armenian coffee from hot sand the way it's been done for centuries, and the walnut gata is gone most mornings by ten. Order at the counter, take the window seat, and watch Brand Boulevard wake up. Worth setting an alarm for.</p>
+          </div>
+          <div class="news-item">
+            <strong>The staff-picks wall hasn't missed:</strong> <a href="#">Brand Books</a> stocks used and new side by side, and the hand-written shelf notes read like recommendations from a friend who knows your taste. Their May author events list just went up.
+          </div>
+          <div class="news-item">
+            <strong>Weekend birria, worth planning around:</strong> <a href="#">La Cocina de Memo</a> only runs the birria Saturday and Sunday, and regulars start lining up before the doors open. Go early, get the consommé, thank us later.
+          </div>
+          <div class="news-item">
+            <strong>Sunday yoga, pay what you can:</strong> <a href="#">Verdugo Yoga Collective</a> holds donation-based community classes every Sunday morning — mats provided, beginners welcome, zero pressure.
+          </div>
+          <div class="advertise-cta">
+            <p class="advertise-prompt">Run a business around Glendale?</p>
+            <p class="advertise-pitch">We feature local spots every day — tell us about yours.</p>
+            <a class="advertise-link" href="#">Advertise with BaseLocal →</a>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="font-family: 'Bitter', Georgia, serif; font-size: 22px; color: var(--dark); margin: 32px 0 12px;">6.14 Newsletter Footer</h3>
       <div class="demo nl-stage">
         <div class="nl-footer">
           <img src="../assets/logos/baselocal-full-white.svg" alt="BaseLocal">
@@ -3825,7 +4351,7 @@
 
     <!-- ============= 06 LAYOUT ============= -->
     <section class="group">
-      <h2><span class="num">06</span>Layout</h2>
+      <h2><span class="num">07</span>Layout</h2>
       <p class="group-desc">Content widths, padding, and breakpoints. Reference table only.</p>
 
       <h3 style="font-family: 'Bitter', Georgia, serif; font-size: 22px; color: var(--dark); margin: 32px 0 12px;">Content widths</h3>
@@ -3867,7 +4393,7 @@
 
     <!-- ============= 07 ACCESSIBILITY ============= -->
     <section class="group">
-      <h2><span class="num">07</span>Accessibility</h2>
+      <h2><span class="num">08</span>Accessibility</h2>
       <p class="group-desc">Contrast targets and minimum sizes. Reference table only.</p>
 
       <div class="demo demo-light">
