@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BaseLocal — Newsletter Ad Kit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,700;1,400&family=Lato:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --terracotta: #C2604A;
+    --espresso: #2C2421;
+    --charcoal: #444444;
+    --gray: #797979;
+    --silver: #999999;
+    --cream: #FAF6F4;
+    --border: #E8E0DC;
+    --row-divider: #F5F2F0;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #DDD5CF; font-family: 'Lato', Helvetica, Arial, sans-serif; padding-bottom: 60px; }
+
+  .screen-bar {
+    background: var(--espresso);
+    color: #B5A89C;
+    font: 500 14px/1.5 'Lato', sans-serif;
+    padding: 12px 24px;
+    text-align: center;
+  }
+  .screen-bar strong { color: #FFFFFF; font-weight: 900; letter-spacing: 0.08em; text-transform: uppercase; }
+
+  .deck-page {
+    width: min(1200px, 96vw);
+    aspect-ratio: 16 / 9;
+    margin: 32px auto 0;
+    background: var(--cream);
+    box-shadow: 0 12px 40px rgba(44, 36, 33, 0.18);
+    container-type: inline-size;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-inner { position: absolute; inset: 0; padding: 3.2cqw 4.6cqw 2.8cqw; display: flex; flex-direction: column; }
+
+  .tick { position: absolute; width: 1.4cqw; height: 1.4cqw; border-color: var(--silver); border-style: solid; border-width: 0; opacity: 0.6; }
+  .tick.tl { top: 1.4cqw; left: 1.4cqw; border-top-width: 1px; border-left-width: 1px; }
+  .tick.tr { top: 1.4cqw; right: 1.4cqw; border-top-width: 1px; border-right-width: 1px; }
+  .tick.bl { bottom: 1.4cqw; left: 1.4cqw; border-bottom-width: 1px; border-left-width: 1px; }
+  .tick.br { bottom: 1.4cqw; right: 1.4cqw; border-bottom-width: 1px; border-right-width: 1px; }
+
+  .report-head { display: flex; justify-content: space-between; align-items: baseline; gap: 2cqw; border-bottom: 2px solid var(--espresso); padding-bottom: 0.9cqw; }
+  .fig-label { font: 900 1.0cqw 'Lato', sans-serif; letter-spacing: 0.16em; text-transform: uppercase; color: var(--espresso); }
+  .fig-label .fig-num { color: var(--terracotta); }
+  .head-right { font: 700 0.9cqw 'Lato', sans-serif; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray); white-space: nowrap; }
+
+  .report-foot { border-top: 1px solid var(--border); padding-top: 1cqw; margin-top: auto; display: flex; justify-content: space-between; align-items: baseline; gap: 2cqw; }
+  .caption { font: 400 italic 1.05cqw 'Bitter', Georgia, serif; color: var(--gray); }
+  .source { font: 400 italic 0.85cqw 'Lato', sans-serif; color: var(--silver); white-space: nowrap; }
+  .folio { font: 700 0.95cqw 'Lato', sans-serif; color: var(--silver); }
+
+  .logo-strip { border-top: 1px solid var(--border); margin-top: auto; padding-top: 1.2cqw; display: flex; align-items: center; gap: 2.6cqw; }
+  .strip-label { font: 900 0.85cqw 'Lato', sans-serif; letter-spacing: 0.14em; text-transform: uppercase; color: var(--silver); white-space: nowrap; }
+  .logos { display: flex; align-items: center; gap: 2.2cqw; flex: 1; justify-content: space-between; }
+  .logos img { height: 2.4cqw; width: auto; max-width: 8.5cqw; object-fit: contain; filter: grayscale(1); opacity: 0.55; }
+
+  .body-center { flex: 1; display: flex; flex-direction: column; justify-content: center; padding-top: 1.2cqw; }
+  .body-split { flex: 1; display: grid; grid-template-columns: 1.05fr 1fr; gap: 4.2cqw; align-items: center; padding-top: 1.2cqw; }
+  .lede-title { font: 700 2.5cqw/1.25 'Bitter', Georgia, serif; color: var(--espresso); margin-bottom: 1.5cqw; }
+  .lede-text { font: 400 1.2cqw/1.65 'Lato', sans-serif; color: var(--charcoal); }
+  .lede-text + .lede-text { margin-top: 1cqw; }
+  .lede-text strong { color: var(--espresso); }
+  .panel-title { font: 900 0.85cqw 'Lato', sans-serif; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gray); margin-bottom: 0.9cqw; }
+
+  /* cover */
+  .cover-body { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+  .cover-body img.wordmark { height: 3.4cqw; width: auto; align-self: flex-start; margin-bottom: 2.8cqw; }
+  .cover-title { font: 700 5.4cqw/1.08 'Bitter', Georgia, serif; color: var(--espresso); letter-spacing: -0.01em; max-width: 62cqw; }
+  .cover-standfirst { font: 400 1.7cqw/1.55 'Lato', sans-serif; color: var(--charcoal); margin-top: 2cqw; max-width: 52cqw; }
+
+  /* title block */
+  .title-block { border: 1px solid var(--espresso); background: #FFFFFF; max-width: 26cqw; }
+  .title-block.on-cover { position: absolute; right: 4.6cqw; bottom: 6.4cqw; width: 26cqw; }
+  .tb-row { display: flex; border-bottom: 1px solid var(--border); }
+  .tb-row:last-child { border-bottom: none; }
+  .tb-k { width: 9cqw; flex-shrink: 0; padding: 0.8cqw 1cqw; font: 900 0.8cqw 'Lato', sans-serif; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray); border-right: 1px solid var(--border); }
+  .tb-v { flex: 1; padding: 0.8cqw 1cqw; font: 700 0.95cqw 'Lato', sans-serif; color: var(--espresso); }
+
+  /* stat hero + grid */
+  .stat-hero .figure { font: 700 8.6cqw/0.95 'Bitter', Georgia, serif; letter-spacing: -0.02em; color: var(--terracotta); }
+  .stat-hero .label { font: 700 1.45cqw 'Lato', sans-serif; color: var(--espresso); margin-top: 1cqw; }
+  .stat-hero .sub { font: 400 1.05cqw/1.5 'Lato', sans-serif; color: var(--gray); margin-top: 0.5cqw; max-width: 30cqw; }
+  .figure-zone { display: flex; flex-direction: column; gap: 1.5cqw; }
+  .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); }
+  .stat-cell { background: #FFFFFF; padding: 1.15cqw 1.5cqw; }
+  .stat-cell .v { font: 700 2.1cqw/1.1 'Bitter', Georgia, serif; color: var(--espresso); }
+  .stat-cell .k { font: 700 0.85cqw 'Lato', sans-serif; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray); margin-top: 0.4cqw; }
+  .aud-strip { background: #FFFFFF; border: 1px solid var(--border); padding: 1.2cqw 1.5cqw; font: 400 1.05cqw/1.55 'Lato', sans-serif; color: var(--charcoal); }
+  .aud-strip strong { color: var(--espresso); }
+
+  /* edition map */
+  .edition-map { background: #FFFFFF; border: 1px solid var(--border); padding: 1.4cqw 1.7cqw 1.2cqw; }
+  .em-row { display: grid; grid-template-columns: 11cqw 1fr; gap: 1.3cqw; align-items: center; padding: 0.55cqw 0; }
+  .em-name { font: 700 0.98cqw 'Lato', sans-serif; color: var(--espresso); }
+  .em-bar { display: flex; gap: 0.25cqw; height: 1.15cqw; }
+  .em-seg { flex: 0 0 calc(16.666% - 0.21cqw); border-radius: 0.16cqw; background: #EDE6E1; }
+  .em-seg.is-bookable { background: var(--terracotta); }
+  .em-seg.is-house { background: #D8CEC8; }
+  .em-legend { display: flex; flex-wrap: wrap; gap: 1.6cqw; padding-top: 1cqw; margin-top: 0.6cqw; border-top: 1px solid var(--row-divider); font: 400 0.85cqw 'Lato', sans-serif; color: var(--gray); }
+  .em-legend .chip { display: inline-block; width: 0.9cqw; height: 0.9cqw; border-radius: 0.16cqw; vertical-align: -0.12cqw; margin-right: 0.45cqw; }
+  .em-legend .chip.organic { background: #EDE6E1; }
+  .em-legend .chip.bookable { background: var(--terracotta); }
+  .em-legend .chip.house { background: #D8CEC8; }
+
+  /* inventory cards */
+  .inv-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.4cqw; }
+  .inv-card { background: #FFFFFF; border: 1px solid var(--border); padding: 1.7cqw 1.8cqw; display: flex; flex-direction: column; }
+  .inv-card.is-combo { border: 2px solid var(--terracotta); }
+  .inv-eyebrow { font: 900 0.8cqw 'Lato', sans-serif; letter-spacing: 0.14em; text-transform: uppercase; color: var(--terracotta); margin-bottom: 0.6cqw; }
+  .inv-name { font: 700 1.7cqw/1.2 'Bitter', Georgia, serif; color: var(--espresso); margin-bottom: 0.7cqw; }
+  .inv-detail { font: 400 1.05cqw/1.55 'Lato', sans-serif; color: var(--gray); margin-bottom: 1.3cqw; }
+  .inv-est { margin-top: auto; border-top: 1px solid var(--row-divider); padding-top: 1cqw; }
+  .inv-est-clicks { font: 700 1.75cqw/1.1 'Bitter', Georgia, serif; color: var(--espresso); }
+  .inv-est-label { font: 700 0.8cqw 'Lato', sans-serif; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray); margin-top: 0.35cqw; }
+  .inv-est-ctr { font: 400 0.9cqw 'Lato', sans-serif; color: var(--gray); margin-top: 0.55cqw; }
+  .inv-shared { text-align: center; font: 400 italic 1.1cqw 'Bitter', Georgia, serif; color: var(--gray); margin-top: 1.6cqw; }
+  .inv-note { text-align: center; font: 400 italic 0.85cqw 'Lato', sans-serif; color: var(--silver); margin-top: 0.5cqw; }
+
+  /* spec / data rows */
+  .data-card { background: #FFFFFF; border: 1px solid var(--border); }
+  .spec-row { display: grid; grid-template-columns: 9.5cqw 1fr; gap: 1.6cqw; align-items: baseline; padding: 1.05cqw 1.7cqw; border-bottom: 1px solid var(--row-divider); }
+  .spec-row:last-child { border-bottom: none; }
+  .spec-k { font: 900 0.85cqw 'Lato', sans-serif; letter-spacing: 0.1em; text-transform: uppercase; color: var(--terracotta); }
+  .spec-v { font: 400 1.05cqw/1.5 'Lato', sans-serif; color: var(--charcoal); }
+  .spec-v strong { color: var(--espresso); font-weight: 700; }
+
+  /* booking steps */
+  .steps-col { display: flex; flex-direction: column; }
+  .step-card { background: #FFFFFF; border: 1px solid var(--border); padding: 1.4cqw 1.6cqw; }
+  .step-eyebrow { font: 900 0.8cqw 'Lato', sans-serif; letter-spacing: 0.14em; text-transform: uppercase; color: var(--terracotta); margin-bottom: 0.5cqw; }
+  .step-name { font: 700 1.35cqw/1.25 'Bitter', Georgia, serif; color: var(--espresso); margin-bottom: 0.5cqw; }
+  .step-detail { font: 400 1.0cqw/1.5 'Lato', sans-serif; color: var(--gray); }
+  .step-arrow { display: flex; justify-content: center; padding: 0.4cqw 0; font: 700 1.5cqw 'Lato', sans-serif; color: var(--terracotta); transform: rotate(90deg); width: 2cqw; margin: 0 auto; }
+
+  @media print {
+    body { background: #FFFFFF; padding: 0; }
+    .screen-bar { display: none; }
+    .deck-page {
+      width: 13.33in;
+      height: 7.5in;
+      aspect-ratio: auto;
+      margin: 0;
+      box-shadow: none;
+      page-break-after: always;
+      break-after: page;
+    }
+    .deck-page:last-child { page-break-after: auto; break-after: auto; }
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+  @page { size: 13.33in 7.5in; margin: 0; }
+</style>
+</head>
+<body>
+
+<div class="screen-bar"><strong>BaseLocal · Newsletter ad kit</strong> &nbsp;·&nbsp; 7 pages · Print to PDF with ⌘P / Ctrl+P (pages are pre-sized, no margins needed)</div>
+
+<!-- ================= 01 · COVER ================= -->
+<div class="deck-page">
+  <div class="page-inner">
+    <span class="tick tl" aria-hidden="true"></span><span class="tick tr" aria-hidden="true"></span><span class="tick bl" aria-hidden="true"></span><span class="tick br" aria-hidden="true"></span>
+    <div class="report-head">
+      <span class="fig-label"><span class="fig-num">Doc. 01</span> — Newsletter ad kit</span>
+      <span class="head-right">Direct placements · supplied creative</span>
+    </div>
+    <div class="cover-body">
+      <img class="wordmark" src="../../assets/logos/baselocal-full-dark.svg" alt="BaseLocal">
+      <h1 class="cover-title">The front of the morning email, sold direct.</h1>
+      <p class="cover-standfirst">Daily local newsletters across 403 U.S. cities. You bring the copy; we run it network-wide, at the top of the email.</p>
+    </div>
+    <div class="title-block on-cover">
+      <div class="tb-row"><span class="tb-k">Inventory</span><span class="tb-v">Lead Feature · Inline Feature 1 · The Combo</span></div>
+      <div class="tb-row"><span class="tb-k">Creative</span><span class="tb-v">Supplied by you</span></div>
+      <div class="tb-row"><span class="tb-k">Deals</span><span class="tb-v">Flat rate or CPC</span></div>
+      <div class="tb-row"><span class="tb-k">Rates</span><span class="tb-v">On request, per offer</span></div>
+    </div>
+    <div class="report-foot">
+      <span></span>
+      <span class="source">Updated June 2026 &nbsp;·&nbsp; 01</span>
+    </div>
+  </div>
+</div>
+
+<!-- ================= 02 · REACH & AUDIENCE ================= -->
+<div class="deck-page">
+  <div class="page-inner">
+    <span class="tick tl" aria-hidden="true"></span><span class="tick tr" aria-hidden="true"></span><span class="tick bl" aria-hidden="true"></span><span class="tick br" aria-hidden="true"></span>
+    <div class="report-head">
+      <span class="fig-label"><span class="fig-num">Fig. 02</span> — Reach &amp; audience</span>
+      <span class="head-right">BaseLocal network · 30-day window</span>
+    </div>
+    <div class="body-split">
+      <div class="stat-hero">
+        <div class="figure">49%</div>
+        <div class="label">Average open rate, network-wide</div>
+        <div class="sub">Measured across every edition in every city.</div>
+      </div>
+      <div class="figure-zone">
+        <div class="stat-grid">
+          <div class="stat-cell"><div class="v">944K</div><div class="k">Active subscribers</div></div>
+          <div class="stat-cell"><div class="v">30.4M</div><div class="k">Emails delivered / 30d</div></div>
+          <div class="stat-cell"><div class="v">403</div><div class="k">Cities &amp; areas</div></div>
+          <div class="stat-cell"><div class="v">8×</div><div class="k">Sends per week</div></div>
+        </div>
+        <div class="aud-strip"><strong>73% women, most 50+,</strong> in mid-size and large U.S. cities. They read at morning-coffee pace and act on what the email recommends.</div>
+      </div>
+    </div>
+    <div class="report-foot">
+      <span class="source">Source: BaseLocal network analytics, June 2026.</span>
+      <span class="folio">02</span>
+    </div>
+  </div>
+</div>
+
+<!-- ================= 03 · THE ENVIRONMENT ================= -->
+<div class="deck-page">
+  <div class="page-inner">
+    <span class="tick tl" aria-hidden="true"></span><span class="tick tr" aria-hidden="true"></span><span class="tick bl" aria-hidden="true"></span><span class="tick br" aria-hidden="true"></span>
+    <div class="report-head">
+      <span class="fig-label"><span class="fig-num">Fig. 03</span> — The environment</span>
+      <span class="head-right">One morning send, section by section</span>
+    </div>
+    <div class="body-split">
+      <div class="edition-map">
+        <div class="em-row"><span class="em-name">Lead feature</span><div class="em-bar"><span class="em-seg is-bookable"></span></div></div>
+        <div class="em-row"><span class="em-name">In the news</span><div class="em-bar"><span class="em-seg"></span><span class="em-seg"></span><span class="em-seg"></span><span class="em-seg is-house"></span><span class="em-seg is-house"></span></div></div>
+        <div class="em-row"><span class="em-name">Highlights</span><div class="em-bar"><span class="em-seg"></span><span class="em-seg"></span><span class="em-seg"></span><span class="em-seg is-house"></span><span class="em-seg is-house"></span></div></div>
+        <div class="em-row"><span class="em-name">Inline feature 1</span><div class="em-bar"><span class="em-seg is-bookable"></span></div></div>
+        <div class="em-row"><span class="em-name">Local spotlights</span><div class="em-bar"><span class="em-seg"></span><span class="em-seg"></span><span class="em-seg"></span></div></div>
+        <div class="em-row"><span class="em-name">We got your back</span><div class="em-bar"><span class="em-seg is-house"></span><span class="em-seg is-house"></span><span class="em-seg is-house"></span><span class="em-seg is-house"></span><span class="em-seg is-house"></span></div></div>
+        <div class="em-row"><span class="em-name">Events</span><div class="em-bar"><span class="em-seg"></span><span class="em-seg"></span><span class="em-seg"></span><span class="em-seg"></span><span class="em-seg"></span><span class="em-seg"></span></div></div>
+        <div class="em-row"><span class="em-name">Inline feature 2</span><div class="em-bar"><span class="em-seg is-house"></span></div></div>
+        <div class="em-row"><span class="em-name">City report</span><div class="em-bar"><span class="em-seg"></span><span class="em-seg"></span></div></div>
+        <div class="em-legend">
+          <span><span class="chip organic"></span>Editorial</span>
+          <span><span class="chip bookable"></span>Bookable direct</span>
+          <span><span class="chip house"></span>House-run recommendations</span>
+        </div>
+      </div>
+      <div>
+        <h2 class="lede-title">Your ad runs inside an email people actually read.</h2>
+        <p class="lede-text">Every edition is a curated local newsletter: events, news, local spots, written city by city, sent every morning. Most of it is editorial, and the recommendations around your placement are run by our house team.</p>
+        <p class="lede-text"><strong>One placement is sold direct each morning,</strong> with a choice of position: the Lead Feature, Inline Feature 1, or both as a combo. All of it sits in the front half of the email.</p>
+      </div>
+    </div>
+    <div class="report-foot">
+      <span class="source">Format: 7xv1 daily edition · placement map, June 2026.</span>
+      <span class="folio">03</span>
+    </div>
+  </div>
+</div>
+
+<!-- ================= 04 · THE INVENTORY ================= -->
+<div class="deck-page">
+  <div class="page-inner">
+    <span class="tick tl" aria-hidden="true"></span><span class="tick tr" aria-hidden="true"></span><span class="tick bl" aria-hidden="true"></span><span class="tick br" aria-hidden="true"></span>
+    <div class="report-head">
+      <span class="fig-label"><span class="fig-num">Fig. 04</span> — The inventory</span>
+      <span class="head-right">One direct placement per edition</span>
+    </div>
+    <div class="body-center">
+      <div class="inv-grid">
+        <div class="inv-card">
+          <div class="inv-eyebrow">Option 01</div>
+          <div class="inv-name">Lead Feature</div>
+          <div class="inv-detail">The edition's lead module, right after the masthead. The first thing every opener sees.</div>
+          <div class="inv-est">
+            <div class="inv-est-clicks">500–1,500</div>
+            <div class="inv-est-label">Est. unique clicks per send</div>
+            <div class="inv-est-ctr">0.05–0.15% CTR on ~1M delivered</div>
+          </div>
+        </div>
+        <div class="inv-card">
+          <div class="inv-eyebrow">Option 02</div>
+          <div class="inv-name">Inline Feature 1</div>
+          <div class="inv-detail">A dedicated module in the front half of the edition, between the morning's editorial sections.</div>
+          <div class="inv-est">
+            <div class="inv-est-clicks">200–500</div>
+            <div class="inv-est-label">Est. unique clicks per send</div>
+            <div class="inv-est-ctr">0.02–0.05% CTR on ~1M delivered</div>
+          </div>
+        </div>
+        <div class="inv-card is-combo">
+          <div class="inv-eyebrow">Options 01 + 02</div>
+          <div class="inv-name">The Combo</div>
+          <div class="inv-detail">Lead Feature and Inline Feature 1, same brand, same morning. Two touches before the events calendar, and the pairing tends to perform well.</div>
+          <div class="inv-est">
+            <div class="inv-est-clicks">700–2,000</div>
+            <div class="inv-est-label">Est. unique clicks per send</div>
+            <div class="inv-est-ctr">0.07–0.20% CTR on ~1M delivered</div>
+          </div>
+        </div>
+      </div>
+      <p class="inv-shared">Every placement runs network-wide, in every edition, as a flat-rate or CPC deal.</p>
+      <p class="inv-note">Click ranges reflect typical recent feature placements. Actuals vary with the offer and the copy.</p>
+    </div>
+    <div class="report-foot">
+      <span class="source">Placement inventory, June 2026.</span>
+      <span class="folio">04</span>
+    </div>
+  </div>
+</div>
+
+<!-- ================= 05 · CREATIVE & SPECS ================= -->
+<div class="deck-page">
+  <div class="page-inner">
+    <span class="tick tl" aria-hidden="true"></span><span class="tick tr" aria-hidden="true"></span><span class="tick bl" aria-hidden="true"></span><span class="tick br" aria-hidden="true"></span>
+    <div class="report-head">
+      <span class="fig-label"><span class="fig-num">Fig. 05</span> — Creative &amp; specs</span>
+      <span class="head-right">Your copy, run as supplied</span>
+    </div>
+    <div class="body-split">
+      <div>
+        <h2 class="lede-title">You write it. We run it.</h2>
+        <p class="lede-text">Bring the creative that already works for you. We place it in the slot as supplied, with the formatting and disclosure standards every item in the email carries.</p>
+        <p class="lede-text"><strong>One insertion runs network-wide:</strong> every city's edition, the same morning, your tracking links intact.</p>
+      </div>
+      <div class="data-card">
+        <div class="spec-row"><span class="spec-k">Format</span><span class="spec-v"><strong>Bold lead-in + body + linked CTA,</strong> text-native, matching the edition's type.</span></div>
+        <div class="spec-row"><span class="spec-k">Links</span><span class="spec-v">Your tracking URLs, run as supplied.</span></div>
+        <div class="spec-row"><span class="spec-k">Disclosure</span><span class="spec-v">Paid items carry the house asterisk.</span></div>
+        <div class="spec-row"><span class="spec-k">Reporting</span><span class="spec-v">Delivered, opens, and unique clicks per send.</span></div>
+      </div>
+    </div>
+    <div class="report-foot">
+      <span class="source">Detailed copy specs supplied at booking.</span>
+      <span class="folio">05</span>
+    </div>
+  </div>
+</div>
+
+<!-- ================= 06 · HOW BOOKING WORKS ================= -->
+<div class="deck-page">
+  <div class="page-inner">
+    <span class="tick tl" aria-hidden="true"></span><span class="tick tr" aria-hidden="true"></span><span class="tick bl" aria-hidden="true"></span><span class="tick br" aria-hidden="true"></span>
+    <div class="report-head">
+      <span class="fig-label"><span class="fig-num">Fig. 06</span> — How booking works</span>
+      <span class="head-right">Three steps, no marketplace</span>
+    </div>
+    <div class="body-split">
+      <div class="steps-col">
+        <div class="step-card">
+          <div class="step-eyebrow">Step 1</div>
+          <div class="step-name">Send the offer and the dates</div>
+          <div class="step-detail">Your copy, your landing page, the slot you want, the mornings you want it.</div>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step-card">
+          <div class="step-eyebrow">Step 2</div>
+          <div class="step-name">We schedule it network-wide</div>
+          <div class="step-detail">One insertion order covers every city. No per-market negotiation, no remnant inventory.</div>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step-card">
+          <div class="step-eyebrow">Step 3</div>
+          <div class="step-name">Read the results together</div>
+          <div class="step-detail">Send-level reporting after every run. CPC deals settle on tracked clicks.</div>
+        </div>
+      </div>
+      <div class="title-block" style="justify-self: end;">
+        <div class="tb-row"><span class="tb-k">Sold direct</span><span class="tb-v">No marketplace markup</span></div>
+        <div class="tb-row"><span class="tb-k">Exclusivity</span><span class="tb-v">One direct advertiser per edition</span></div>
+        <div class="tb-row"><span class="tb-k">Deals</span><span class="tb-v">Flat rate or CPC</span></div>
+        <div class="tb-row"><span class="tb-k">Rates</span><span class="tb-v">On request, per offer</span></div>
+      </div>
+    </div>
+    <div class="report-foot">
+      <span class="caption">Dates are first-come. One direct placement a morning means the calendar is the constraint.</span>
+      <span class="folio">06</span>
+    </div>
+  </div>
+</div>
+
+<!-- ================= 07 · BOOKING ================= -->
+<div class="deck-page">
+  <div class="page-inner">
+    <span class="tick tl" aria-hidden="true"></span><span class="tick tr" aria-hidden="true"></span><span class="tick bl" aria-hidden="true"></span><span class="tick br" aria-hidden="true"></span>
+    <div class="report-head">
+      <span class="fig-label"><span class="fig-num">Doc. 07</span> — Booking</span>
+      <span class="head-right">Rates on request</span>
+    </div>
+    <div class="body-split">
+      <div>
+        <h2 class="lede-title">Tell us the offer and the dates.</h2>
+        <p class="lede-text">Every deal is flat rate or CPC, priced to the offer and the run. Send what you're planning and we'll come back with numbers and available mornings.</p>
+        <p class="lede-text"><strong>One booking covers every city, the same morning.</strong></p>
+      </div>
+      <div class="title-block" style="justify-self: end;">
+        <div class="tb-row"><span class="tb-k">Inventory</span><span class="tb-v">Lead Feature · Inline Feature 1 · The Combo</span></div>
+        <div class="tb-row"><span class="tb-k">Creative</span><span class="tb-v">Supplied by you</span></div>
+        <div class="tb-row"><span class="tb-k">Deals</span><span class="tb-v">Flat rate or CPC</span></div>
+        <div class="tb-row"><span class="tb-k">Rates</span><span class="tb-v">On request, per offer</span></div>
+      </div>
+    </div>
+    <div class="report-foot">
+      <span></span>
+      <span class="folio">07</span>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
