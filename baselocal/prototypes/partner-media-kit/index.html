@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BaseLocal — Partner Media Kit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,700;1,400&family=Lato:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --terracotta: #C2604A;
+    --espresso: #2C2421;
+    --charcoal: #444444;
+    --gray: #797979;
+    --silver: #999999;
+    --cream: #FAF6F4;
+    --border: #E8E0DC;
+    --row-divider: #F5F2F0;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #DDD5CF; font-family: 'Lato', Helvetica, Arial, sans-serif; padding-bottom: 60px; }
+
+  /* ---------- screen chrome (hidden in print) ---------- */
+  .screen-bar {
+    background: var(--espresso);
+    color: #B5A89C;
+    font: 500 14px/1.5 'Lato', sans-serif;
+    padding: 12px 24px;
+    text-align: center;
+  }
+  .screen-bar strong { color: #FFFFFF; font-weight: 900; letter-spacing: 0.08em; text-transform: uppercase; }
+
+  /* ---------- deck page canvas ---------- */
+  .deck-page {
+    width: min(1200px, 96vw);
+    aspect-ratio: 16 / 9;
+    margin: 32px auto 0;
+    background: var(--cream);
+    box-shadow: 0 12px 40px rgba(44, 36, 33, 0.18);
+    container-type: inline-size;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-inner { position: absolute; inset: 0; padding: 3.2cqw 4.6cqw 2.8cqw; display: flex; flex-direction: column; }
+
+  .tick { position: absolute; width: 1.4cqw; height: 1.4cqw; border-color: var(--silver); border-style: solid; border-width: 0; opacity: 0.6; }
+  .tick.tl { top: 1.4cqw; left: 1.4cqw; border-top-width: 1px; border-left-width: 1px; }
+  .tick.tr { top: 1.4cqw; right: 1.4cqw; border-top-width: 1px; border-right-width: 1px; }
+  .tick.bl { bottom: 1.4cqw; left: 1.4cqw; border-bottom-width: 1px; border-left-width: 1px; }
+  .tick.br { bottom: 1.4cqw; right: 1.4cqw; border-bottom-width: 1px; border-right-width: 1px; }
+
+  .report-head { display: flex; justify-content: space-between; align-items: baseline; gap: 2cqw; border-bottom: 2px solid var(--espresso); padding-bottom: 0.9cqw; }
+  .fig-label { font: 900 1.0cqw 'Lato', sans-serif; letter-spacing: 0.16em; text-transform: uppercase; color: var(--espresso); }
+  .fig-label .fig-num { color: var(--terracotta); }
+  .head-right { font: 700 0.9cqw 'Lato', sans-serif; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray); white-space: nowrap; }
+
+  .report-foot { border-top: 1px solid var(--border); padding-top: 1cqw; margin-top: auto; display: flex; justify-content: space-between; align-items: baseline; gap: 2cqw; }
+  .caption { font: 400 italic 1.05cqw 'Bitter', Georgia, serif; color: var(--gray); }
+  .source { font: 400 italic 0.85cqw 'Lato', sans-serif; color: var(--silver); white-space: nowrap; }
+
+  .logo-strip { border-top: 1px solid var(--border); margin-top: auto; padding-top: 1.2cqw; display: flex; align-items: center; gap: 2.6cqw; }
+  .strip-label { font: 900 0.85cqw 'Lato', sans-serif; letter-spacing: 0.14em; text-transform: uppercase; color: var(--silver); white-space: nowrap; }
+  .logos { display: flex; align-items: center; gap: 2.2cqw; flex: 1; justify-content: space-between; }
+  .logos img { height: 2.4cqw; width: auto; max-width: 8.5cqw; object-fit: contain; filter: grayscale(1); opacity: 0.55; }
+  .folio { font: 700 0.95cqw 'Lato', sans-serif; color: var(--silver); }
+
+  /* ---------- shared body layouts ---------- */
+  .body-center { flex: 1; display: flex; flex-direction: column; justify-content: center; padding-top: 1.2cqw; }
+  .body-split { flex: 1; display: grid; grid-template-columns: 1.05fr 1fr; gap: 4.2cqw; align-items: center; padding-top: 1.2cqw; }
+  .lede-title { font: 700 2.5cqw/1.25 'Bitter', Georgia, serif; color: var(--espresso); margin-bottom: 1.5cqw; }
+  .lede-text { font: 400 1.2cqw/1.65 'Lato', sans-serif; color: var(--charcoal); }
+  .lede-text + .lede-text { margin-top: 1cqw; }
+  .lede-text strong { color: var(--espresso); }
+  .panel-title { font: 900 0.85cqw 'Lato', sans-serif; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gray); margin-bottom: 0.9cqw; }
+
+  /* ---------- cover ---------- */
+  .cover-body { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+  .cover-body img.wordmark { height: 3.4cqw; width: auto; align-self: flex-start; margin-bottom: 2.8cqw; }
+  .cover-title { font: 700 5.4cqw/1.08 'Bitter', Georgia, serif; color: var(--espresso); letter-spacing: -0.01em; max-width: 62cqw; }
+  .cover-sub { font: 700 1.2cqw 'Lato', sans-serif; letter-spacing: 0.16em; text-transform: uppercase; color: var(--terracotta); margin-top: 1.6cqw; }
+  .cover-standfirst { font: 400 1.7cqw/1.55 'Lato', sans-serif; color: var(--charcoal); margin-top: 2cqw; max-width: 52cqw; }
+  .title-block { position: absolute; right: 4.6cqw; bottom: 6.4cqw; width: 26cqw; border: 1px solid var(--espresso); background: #FFFFFF; }
+  .tb-row { display: flex; border-bottom: 1px solid var(--border); }
+  .tb-row:last-child { border-bottom: none; }
+  .tb-k { width: 9cqw; flex-shrink: 0; padding: 0.8cqw 1cqw; font: 900 0.8cqw 'Lato', sans-serif; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray); border-right: 1px solid var(--border); }
+  .tb-v { flex: 1; padding: 0.8cqw 1cqw; font: 700 0.95cqw 'Lato', sans-serif; color: var(--espresso); }
+
+  /* ---------- data tables (mornings, placements) ---------- */
+  .data-card { background: #FFFFFF; border: 1px solid var(--border); }
+  .data-card .panel-title { padding: 1.2cqw 1.7cqw 0.2cqw; margin-bottom: 0; }
+  .data-row { display: flex; align-items: baseline; gap: 1.4cqw; padding: 0.78cqw 1.7cqw; border-bottom: 1px solid var(--row-divider); }
+  .data-row:last-child { border-bottom: none; }
+  .data-k { width: 7cqw; flex-shrink: 0; font: 900 0.85cqw 'Lato', sans-serif; letter-spacing: 0.1em; text-transform: uppercase; color: var(--terracotta); }
+  .data-v { font: 700 1.15cqw 'Bitter', Georgia, serif; color: var(--espresso); }
+  .data-d { font: 400 0.95cqw 'Lato', sans-serif; color: var(--gray); }
+
+  .slot-row { display: grid; grid-template-columns: 13cqw 1fr 7.4cqw; gap: 1.6cqw; align-items: center; padding: 1.05cqw 1.7cqw; border-bottom: 1px solid var(--row-divider); }
+  .slot-row:last-child { border-bottom: none; }
+  .slot-name { font: 700 1.2cqw 'Bitter', Georgia, serif; color: var(--espresso); }
+  .slot-form { font: 400 0.95cqw/1.5 'Lato', sans-serif; color: var(--gray); }
+  .role-tag { font: 900 0.8cqw 'Lato', sans-serif; letter-spacing: 0.1em; text-transform: uppercase; text-align: center; padding: 0.35cqw 0; border-radius: 999px; }
+  .role-tag.is-pilot { background: var(--cream); color: var(--terracotta); border: 1px solid var(--terracotta); }
+  .role-tag.is-scale { background: var(--terracotta); color: #FFFFFF; }
+  .role-tag.is-weekly { background: var(--cream); color: var(--gray); border: 1px solid var(--border); }
+
+  /* ---------- stat hero + sparkline + grid ---------- */
+  .stat-hero .figure { font: 700 8.6cqw/0.95 'Bitter', Georgia, serif; letter-spacing: -0.02em; color: var(--terracotta); }
+  .stat-hero .label { font: 700 1.45cqw 'Lato', sans-serif; color: var(--espresso); margin-top: 1cqw; }
+  .stat-hero .sub { font: 400 1.05cqw/1.5 'Lato', sans-serif; color: var(--gray); margin-top: 0.5cqw; max-width: 30cqw; }
+  .figure-zone { display: flex; flex-direction: column; gap: 1.5cqw; }
+  .spark-wrap { background: #FFFFFF; border: 1px solid var(--border); padding: 1.5cqw 1.7cqw 1.1cqw; }
+  .spark-wrap svg { width: 100%; height: auto; display: block; }
+  .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); }
+  .stat-cell { background: #FFFFFF; padding: 1.15cqw 1.5cqw; }
+  .stat-cell .v { font: 700 2.1cqw/1.1 'Bitter', Georgia, serif; color: var(--espresso); }
+  .stat-cell .k { font: 700 0.85cqw 'Lato', sans-serif; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray); margin-top: 0.4cqw; }
+
+  /* ---------- trait cards (who reads) ---------- */
+  .trait-stack { display: flex; flex-direction: column; gap: 1.2cqw; }
+  .trait { background: #FFFFFF; border: 1px solid var(--border); padding: 1.4cqw 1.7cqw; }
+  .trait-name { font: 700 1.4cqw 'Bitter', Georgia, serif; color: var(--espresso); margin-bottom: 0.45cqw; }
+  .trait-detail { font: 400 1.0cqw/1.55 'Lato', sans-serif; color: var(--gray); }
+
+  /* ---------- never/instead box (why it works) ---------- */
+  .voice-box { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--border); background: #FFFFFF; }
+  .voice-col { padding: 1.5cqw 1.7cqw; }
+  .voice-col.never { background: #FAFAFA; border-right: 1px solid var(--border); }
+  .voice-col-label { font: 900 0.85cqw 'Lato', sans-serif; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 1cqw; }
+  .voice-col.never .voice-col-label { color: var(--gray); }
+  .voice-col.instead .voice-col-label { color: var(--terracotta); }
+  .voice-item { display: flex; gap: 0.7cqw; font: 400 italic 1.05cqw/1.5 'Bitter', Georgia, serif; color: var(--charcoal); padding: 0.45cqw 0; }
+  .voice-item .glyph { font-family: 'Lato', sans-serif; font-weight: 700; font-style: normal; flex-shrink: 0; }
+  .voice-col.never .glyph { color: var(--silver); }
+  .voice-col.instead .glyph { color: var(--terracotta); }
+
+  /* ---------- edition map ---------- */
+  .edition-map { background: #FFFFFF; border: 1px solid var(--border); padding: 1.4cqw 1.7cqw 1.2cqw; }
+  .em-row { display: grid; grid-template-columns: 11cqw 1fr; gap: 1.3cqw; align-items: center; padding: 0.55cqw 0; }
+  .em-name { font: 700 0.98cqw 'Lato', sans-serif; color: var(--espresso); }
+  .em-bar { display: flex; gap: 0.25cqw; height: 1.15cqw; }
+  .em-seg { flex: 0 0 calc(16.666% - 0.21cqw); border-radius: 0.16cqw; background: #EDE6E1; }
+  .em-seg.is-paid { background: var(--terracotta); }
+  .em-seg.is-paid.is-pilot-slot { background: var(--terracotta); outline: 1.5px solid var(--espresso); outline-offset: -1.5px; }
+  .em-legend { display: flex; gap: 2cqw; padding-top: 1cqw; margin-top: 0.6cqw; border-top: 1px solid var(--row-divider); font: 400 0.85cqw 'Lato', sans-serif; color: var(--gray); }
+  .em-legend .chip { display: inline-block; width: 0.9cqw; height: 0.9cqw; border-radius: 0.16cqw; vertical-align: -0.12cqw; margin-right: 0.45cqw; }
+  .em-legend .chip.organic { background: #EDE6E1; }
+  .em-legend .chip.paid { background: var(--terracotta); }
+
+  /* ---------- newsletter artifact quote (bridge case) ---------- */
+  .nl-quote {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--terracotta);
+    border-radius: 0 5px 5px 0;
+    padding: 1.6cqw 1.8cqw;
+    font: 400 1.15cqw/1.6 'Bitter', Georgia, serif;
+    color: var(--espresso);
+    margin-top: 1.5cqw;
+  }
+  .nl-quote .leadin { font-weight: 700; }
+  .nl-quote-tag { font: 900 0.78cqw 'Lato', sans-serif; letter-spacing: 0.12em; text-transform: uppercase; color: var(--terracotta); margin-bottom: 0.5cqw; }
+
+  /* ---------- ladder / flow cards ---------- */
+  .ladder { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; align-items: stretch; }
+  .ladder.is-vertical { grid-template-columns: 1fr; }
+  .variant-card { background: #FFFFFF; border: 1px solid var(--border); padding: 1.5cqw 1.6cqw; display: flex; flex-direction: column; }
+  .variant-eyebrow { font: 900 0.8cqw 'Lato', sans-serif; letter-spacing: 0.14em; text-transform: uppercase; color: var(--terracotta); margin-bottom: 0.6cqw; }
+  .variant-name { font: 700 1.3cqw/1.25 'Bitter', Georgia, serif; color: var(--espresso); margin-bottom: 0.7cqw; }
+  .variant-quote { font: 400 italic 1.0cqw/1.5 'Bitter', Georgia, serif; color: var(--gray); }
+  .ladder-arrow { display: flex; align-items: center; padding: 0 0.9cqw; font: 700 1.5cqw 'Lato', sans-serif; color: var(--terracotta); }
+  .ladder.is-vertical .ladder-arrow { justify-content: center; padding: 0.4cqw 0; transform: rotate(90deg); }
+  .ladder-bracket { text-align: center; margin-top: 1cqw; }
+  .bracket-line { height: 1cqw; border-left: 1px solid var(--silver); border-right: 1px solid var(--silver); border-bottom: 1px solid var(--silver); opacity: 0.6; margin: 0 6cqw 0.7cqw; }
+  .bracket-label { font: 400 italic 1.05cqw 'Bitter', Georgia, serif; color: var(--gray); }
+
+  /* ---------- pilot flow ---------- */
+  .flow-body { flex: 1; display: flex; flex-direction: column; justify-content: center; padding-top: 1.2cqw; }
+  .stages { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr; align-items: stretch; }
+  .stage { background: #FFFFFF; border: 1px solid var(--border); padding: 1.3cqw 1.4cqw; display: flex; flex-direction: column; }
+  .stage-eyebrow { font: 900 0.8cqw 'Lato', sans-serif; letter-spacing: 0.14em; text-transform: uppercase; color: var(--terracotta); margin-bottom: 0.55cqw; }
+  .stage-name { font: 700 1.25cqw/1.3 'Bitter', Georgia, serif; color: var(--espresso); margin-bottom: 0.55cqw; }
+  .stage-detail { font: 400 0.95cqw/1.5 'Lato', sans-serif; color: var(--gray); }
+  .stages .ladder-arrow { font-size: 1.4cqw; padding: 0 0.8cqw; }
+  .dots { display: flex; align-items: center; gap: 0.35cqw; margin-top: auto; padding-top: 0.9cqw; }
+  .dot { width: 0.8cqw; height: 0.8cqw; border-radius: 0.16cqw; background: #D8CEC8; }
+  .dot.on { background: var(--terracotta); }
+  .dot.off { opacity: 0.35; }
+  .dot-note { font: 700 0.85cqw 'Lato', sans-serif; color: var(--gray); margin-left: 0.3cqw; }
+  .fork-stem { width: 1px; height: 1.5cqw; background: var(--silver); opacity: 0.6; margin: 0 auto; }
+  .fork-bar { border-top: 1px solid var(--silver); opacity: 0.6; margin: 0 16.66%; }
+  .fork-stems { display: grid; grid-template-columns: 1fr 1fr 1fr; }
+  .outcomes { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.2cqw; }
+  .outcome { background: #FFFFFF; border: 1px solid var(--border); padding: 1.3cqw 1.5cqw; }
+  .outcome-eyebrow { font: 900 0.8cqw 'Lato', sans-serif; letter-spacing: 0.14em; text-transform: uppercase; color: var(--terracotta); margin-bottom: 0.55cqw; }
+  .outcome.is-kill .outcome-eyebrow { color: var(--gray); }
+  .outcome-name { font: 700 1.3cqw/1.3 'Bitter', Georgia, serif; color: var(--espresso); margin-bottom: 0.55cqw; }
+  .outcome-detail { font: 400 0.95cqw/1.55 'Lato', sans-serif; color: var(--gray); }
+  .outcome-loop { font: 700 0.85cqw 'Lato', sans-serif; color: var(--terracotta); margin-top: 0.6cqw; }
+
+  /* ---------- scoreboard ---------- */
+  .score { background: #FFFFFF; border: 1px solid var(--border); }
+  .score-title { font: 900 0.85cqw 'Lato', sans-serif; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gray); padding: 1.2cqw 1.7cqw 0.3cqw; }
+  .score-row { display: grid; grid-template-columns: 2.6cqw 1.55fr 1fr 0.7fr 8.2cqw; gap: 1.3cqw; align-items: center; padding: 1.0cqw 1.7cqw; border-bottom: 1px solid var(--row-divider); }
+  .score-row:last-of-type { border-bottom: none; }
+  .score-var { font: 900 1.0cqw 'Lato', sans-serif; color: var(--espresso); }
+  .score-angle { font: 400 italic 1.08cqw/1.4 'Bitter', Georgia, serif; color: var(--charcoal); }
+  .bar-wrap { display: flex; align-items: center; gap: 0.7cqw; min-width: 0; }
+  .track { display: block; flex: 1; height: 0.75cqw; background: var(--row-divider); border-radius: 0.16cqw; overflow: hidden; }
+  .fill { display: block; height: 100%; background: #D8CEC8; border-radius: 0.16cqw; }
+  .score-row.is-winner .fill { background: var(--terracotta); }
+  .mult { font: 700 1.0cqw 'Lato', sans-serif; color: var(--gray); white-space: nowrap; }
+  .score-row.is-winner .mult { color: var(--terracotta); }
+  .down { font: 400 0.85cqw/1.4 'Lato', sans-serif; color: var(--gray); }
+  .tag { font: 900 0.8cqw 'Lato', sans-serif; letter-spacing: 0.1em; text-transform: uppercase; text-align: center; padding: 0.35cqw 0; border-radius: 999px; }
+  .tag.is-adv { background: var(--terracotta); color: #FFFFFF; }
+  .tag.is-ret { background: var(--cream); color: var(--gray); border: 1px solid var(--border); }
+  .tag.is-kill { background: #FFFFFF; color: var(--silver); border: 1px solid var(--border); text-decoration: line-through; text-decoration-thickness: 1px; }
+  .score-note { font: 400 italic 0.85cqw/1.5 'Lato', sans-serif; color: var(--silver); padding: 0.8cqw 1.7cqw 1.1cqw; border-top: 1px solid var(--row-divider); }
+
+  /* ---------- closing ---------- */
+  .contact-line { font: 700 1.3cqw 'Lato', sans-serif; margin-top: 1.6cqw; }
+  .contact-line a { color: var(--terracotta); text-decoration: none; }
+  .contact-line a:hover { text-decoration: underline; }
+
+  /* ---------- print ---------- */
+  @media print {
+    body { background: #FFFFFF; padding: 0; }
+    .screen-bar { display: none; }
+    .deck-page {
+      width: 13.33in;
+      height: 7.5in;
+      aspect-ratio: auto;
+      margin: 0;
+      box-shadow: none;
+      page-break-after: always;
+      break-after: page;
+    }
+    .deck-page:last-child { page-break-after: auto; break-after: auto; }
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+  @page { size: 13.33in 7.5in; margin: 0; }
+</style>
+</head>
+<body>
+
+<div class="screen-bar"><strong>BaseLocal · Partner media kit</strong> &nbsp;·&nbsp; 15 pages · Print to PDF with ⌘P / Ctrl+P (pages are pre-sized, no margins needed)</div>
+
+<!-- ================= 01 · COVER ================= -->
+<div class="deck-page">
+  <div class="page-inner">
+    <span class="tick tl" aria-hidden="true"></span><span class="tick tr" aria-hidden="true"></span><span class="tick bl" aria-hidden="true"></span><span class="tick br" aria-hidden="true"></span>
+    <div class="report-head">
+      <span class="fig-label"><span class="fig-num">Doc. 01</span> — Partner media kit</span>
+      <span class="head-right">For distribution to partners</span>
+    </div>
+    <div class="cover-body">
+      <img class="wordmark" src="../../assets/logos/baselocal-full-dark.svg" alt="BaseLocal">
+      <h1 class="cover-title">How a million neighbors get their morning email.</h1>
+      <p class="cover-standfirst">We write, test, and scale performance campaigns inside a morning email a million readers trust.</p>
+    </div>
+    <div class="report-foot">
+      <span class="caption">Every figure in this document is measured, network-wide, and sourced.</span>
+      <span class="source">Updated June 2026 &nbsp;·&nbsp; 01</span>
+    </div>
+  </div>
+</div>
+
+<!-- ================= 02 · WHAT WE DO ================= -->
+<div class="deck-page">
+  <div class="page-inner">
+    <span class="tick tl" aria-hidden="true"></span><span class="tick tr" aria-hidden="true"></span><span class="tick bl" aria-hidden="true"></span><span class="tick br" aria-hidden="true"></span>
+    <div class="report-head">
+      <span class="fig-label"><span class="fig-num">Fig. 02</span> — What we do</span>
+      <span class="head-right">A daily local newsletter · 403 cities</span>
+    </div>
+    <div class="body-split">
+      <div>
+        <h2 class="lede-title">A curated morning email, written city by city.</h2>
+        <p class="lede-text">BaseLocal reads the city so the reader doesn't have to: events, news, local spots, things worth knowing. Each location gets its own edition, its own audience, its own morning routine.</p>
+        <p class="lede-text">Recommendations run inside that editorial voice, written by us and sized to whatever the story needs. <strong>The editions are local; the campaigns aren't.</strong> One placement runs network-wide, in every city's email, the same morning.</p>
+      </div>
+      <div class="data-card">
+        <div class="panel-title">Eight sends a week</div>
+        <div class="data-row"><span class="data-k">Mon</span><span class="data-v">Best events this week</span></div>
+        <div class="data-row"><span class="data-k">Tue</span><span class="data-v">Free events this week</span></div>
+        <div class="data-row"><span class="data-k">Wed</span><span class="data-v">Family friendly</span></div>
+        <div class="data-row"><span class="data-k">Thu</span><span class="data-v">Adults only</span></div>
+        <div class="data-row"><span class="data-k">Fri</span><span class="data-v">Weekend preview</span></div>
+        <div class="data-row"><span class="data-k">Sat</span><span class="data-v">Weekend events</span></div>
+        <div class="data-row"><span class="data-k">Sun</span><span class="data-v">Best-of recap</span></div>
+        <div class="data-row"><span class="data-k">+ Tue</span><span class="data-v">Top 10 weekly recap</span></div>
+      </div>
+    </div>
+    <div class="report-foot">
+      <span class="source">Formats: 7xv1 daily + Top 10 weekly.</span>
+      <span class="folio">02</span>
+    </div>
+  </div>
+</div>
+
+<!-- ================= 03 · WHO READS ================= -->
+<div class="deck-page">
+  <div class="page-inner">
+    <span class="tick tl" aria-hidden="true"></span><span class="tick tr" aria-hidden="true"></span><span class="tick bl" aria-hidden="true"></span><span class="tick br" aria-hidden="true"></span>
+    <div class="report-head">
+      <span class="fig-label"><span class="fig-num">Fig. 03</span> — Who reads</span>
+      <span class="head-right">Audience profile</span>
+    </div>
+    <div class="body-split">
+      <div class="stat-hero">
+        <div class="figure">73%</div>
+        <div class="label">of readers are women</div>
+        <div class="sub">Most are 50 and over, in mid-size and large U.S. cities: settled, established, and hard to reach anywhere else online.</div>
+      </div>
+      <div class="trait-stack">
+        <div class="trait">
+          <div class="trait-name">They have time and money</div>
+          <div class="trait-detail">Established households past the budget-stretched years. They buy what they decide to buy.</div>
+        </div>
+        <div class="trait">
+          <div class="trait-name">They read, not skim</div>
+          <div class="trait-detail">A morning-coffee habit, not an infinite scroll. The email gets minutes, not seconds.</div>
+        </div>
+        <div class="trait">
+          <div class="trait-name">They act on recommendations</div>
+          <div class="trait-detail">This generation still trusts a good recommender, and punishes a bad one. We've kept the first job.</div>
+        </div>
+      </div>
+    </div>
+    <div class="report-foot">
+      <span class="caption">The 50+ woman decides most household purchases. Most channels have no idea how to talk to her.</span>
+      <span class="source">Source: BaseLocal audience demographics, 2026.</span>
+    </div>
+  </div>
+</div>
+
+<!-- ================= 04 · REACH & ENGAGEMENT ================= -->
+<div class="deck-page">
+  <div class="page-inner">
+    <span class="tick tl" aria-hidden="true"></span><span class="tick tr" aria-hidden="true"></span><span class="tick bl" aria-hidden="true"></span><span class="tick br" aria-hidden="true"></span>
+    <div class="report-head">
+      <span class="fig-label"><span class="fig-num">Fig. 04</span> — Reach &amp; engagement</span>
+      <span class="head-right">BaseLocal network · 30-day window</span>
+    </div>
+    <div class="body-split">
+      <div class="stat-hero">
+        <div class="figure">49%</div>
+        <div class="label">Average open rate, network-wide</div>
+        <div class="sub">Measured across every edition in every city.</div>
+      </div>
+      <div class="figure-zone">
+        <div class="spark-wrap">
+          <div class="panel-title">Unique opens · trailing 30 days</div>
+          <svg viewBox="0 0 280 80" role="img" aria-label="Open rate holding steady near 50 percent across the trailing 30 days">
+            <defs>
+              <linearGradient id="sparkfill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#C2604A" stop-opacity="0.18"/>
+                <stop offset="100%" stop-color="#C2604A" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <line x1="0" y1="70" x2="280" y2="70" stroke="#E8E0DC" stroke-width="1"/>
+            <path d="M0,34 C30,30 50,38 80,32 C110,26 130,34 160,28 C190,24 210,30 240,24 C255,22 268,20 280,18 L280,70 L0,70 Z" fill="url(#sparkfill)"/>
+            <path d="M0,34 C30,30 50,38 80,32 C110,26 130,34 160,28 C190,24 210,30 240,24 C255,22 268,20 280,18" fill="none" stroke="#C2604A" stroke-width="2"/>
+            <circle cx="280" cy="18" r="3.5" fill="#C2604A"/>
+            <text x="2" y="78" font-family="Lato, sans-serif" font-size="8" fill="#999999">MAY 12</text>
+            <text x="248" y="78" font-family="Lato, sans-serif" font-size="8" fill="#999999">JUN 10</text>
+          </svg>
+        </div>
+        <div class="stat-grid">
+          <div class="stat-cell"><div class="v">944K</div><div class="k">Active subscribers</div></div>
+          <div class="stat-cell"><div class="v">30.4M</div><div class="k">Emails delivered / 30d</div></div>
+          <div class="stat-cell"><div class="v">403</div><div class="k">Cities &amp; areas</div></div>
+          <div class="stat-cell"><div class="v">8×</div><div class="k">Sends per week</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="report-foot">
+      <span class="source">Source: BaseLocal network analytics, June 2026.</span>
+      <span class="folio">04</span>
+    </div>
+  </div>
+</div>
+
+<!-- ================= 05 · WHY IT WORKS ================= -->
+<div class="deck-page">
+  <div class="page-inner">
+    <span class="tick tl" aria-hidden="true"></span><span class="tick tr" aria-hidden="true"></span><span class="tick bl" aria-hidden="true"></span><span class="tick br" aria-hidden="true"></span>
+    <div class="report-head">
+      <span class="fig-label"><span class="fig-num">Fig. 05</span> — Why it works</span>
+      <span class="head-right">The voice is the asset</span>
+    </div>
+    <div class="body-split">
+      <div>
+        <h2 class="lede-title">Readers trust the recommendations because we never spend that trust cheaply.</h2>
+        <p class="lede-text">Our writing guide bans hype outright: superlatives only when they're literally, defensibly true. Every paid item carries a disclosure asterisk. One over-hyped recommendation undoes months of credibility, so nothing gets over-hyped.</p>
+        <p class="lede-text"><strong>Restraint is the strategy.</strong> When we finally do recommend something, people listen, and click.</p>
+      </div>
+      <div class="voice-box">
+        <div class="voice-col never">
+          <div class="voice-col-label">What we never write</div>
+          <div class="voice-item"><span class="glyph">✗</span>"Jaw-dropping deal!"</div>
+          <div class="voice-item"><span class="glyph">✗</span>"This hidden gem will blow your mind"</div>
+          <div class="voice-item"><span class="glyph">✗</span>"You won't believe what's nearby"</div>
+          <div class="voice-item"><span class="glyph">✗</span>"A total game-changer"</div>
+        </div>
+        <div class="voice-col instead">
+          <div class="voice-col-label">What runs instead</div>
+          <div class="voice-item"><span class="glyph">✓</span>"The cheapest option on this list"</div>
+          <div class="voice-item"><span class="glyph">✓</span>"Ask me how I know 🙃"</div>
+          <div class="voice-item"><span class="glyph">✓</span>"$10k to a credit card — a true story"</div>
+          <div class="voice-item"><span class="glyph">✓</span>"One we like, and here's why"</div>
+        </div>
+      </div>
+    </div>
+    <div class="report-foot">
+      <span class="caption">The left column is banned in our style guide. Literally.</span>
+      <span class="source">Source: BaseLocal general writing guide, 2026.</span>
+    </div>
+  </div>
+</div>
+
+<!-- ================= 06 · THE EDITION, MAPPED ================= -->
+<div class="deck-page">
+  <div class="page-inner">
+    <span class="tick tl" aria-hidden="true"></span><span class="tick tr" aria-hidden="true"></span><span class="tick bl" aria-hidden="true"></span><span class="tick br" aria-hidden="true"></span>
+    <div class="report-head">
+      <span class="fig-label"><span class="fig-num">Fig. 06</span> — The edition, mapped</span>
+      <span class="head-right">One morning send, section by section</span>
+    </div>
+    <div class="body-split">
+      <div class="edition-map">
+        <div class="em-row"><span class="em-name">Lead feature</span><div class="em-bar"><span class="em-seg is-paid"></span></div></div>
+        <div class="em-row"><span class="em-name">In the news</span><div class="em-bar"><span class="em-seg"></span><span class="em-seg"></span><span class="em-seg"></span><span class="em-seg is-paid"></span><span class="em-seg is-paid"></span></div></div>
+        <div class="em-row"><span class="em-name">Highlights</span><div class="em-bar"><span class="em-seg"></span><span class="em-seg"></span><span class="em-seg"></span><span class="em-seg is-paid"></span><span class="em-seg is-paid"></span></div></div>
+        <div class="em-row"><span class="em-name">Inline feature 1</span><div class="em-bar"><span class="em-seg is-paid"></span></div></div>
+        <div class="em-row"><span class="em-name">Local spotlights</span><div class="em-bar"><span class="em-seg"></span><span class="em-seg"></span><span class="em-seg"></span></div></div>
+        <div class="em-row"><span class="em-name">We got your back</span><div class="em-bar"><span class="em-seg is-paid"></span><span class="em-seg is-paid"></span><span class="em-seg is-paid"></span><span class="em-seg is-paid"></span><span class="em-seg is-paid"></span></div></div>
+        <div class="em-row"><span class="em-name">Events</span><div class="em-bar"><span class="em-seg"></span><span class="em-seg"></span><span class="em-seg"></span><span class="em-seg"></span><span class="em-seg"></span><span class="em-seg"></span></div></div>
+        <div class="em-row"><span class="em-name">Inline feature 2</span><div class="em-bar"><span class="em-seg is-paid"></span></div></div>
+        <div class="em-row"><span class="em-name">City report</span><div class="em-bar"><span class="em-seg"></span><span class="em-seg"></span></div></div>
+        <div class="em-legend">
+          <span><span class="chip organic"></span>Editorial</span>
+          <span><span class="chip paid"></span>Recommendation slots</span>
+        </div>
+      </div>
+      <div>
+        <h2 class="lede-title">Editorial carries the email. Placements ride inside it.</h2>
+        <p class="lede-text">Recommendations sit inside the edition's voice, hairline-divided from the news and events around them: same type, same register, an asterisk for disclosure.</p>
+        <p class="lede-text"><strong>We Got Your Back</strong> is where every new partnership starts its pilot. The Lead Feature and the two Inline Features are the positions winners graduate into.</p>
+      </div>
+    </div>
+    <div class="report-foot">
+      <span class="source">Format: 7xv1, current placement map, June 2026.</span>
+      <span class="folio">06</span>
+    </div>
+  </div>
+</div>
+
+<!-- ================= 07 · WHERE PARTNERS RUN ================= -->
+<div class="deck-page">
+  <div class="page-inner">
+    <span class="tick tl" aria-hidden="true"></span><span class="tick tr" aria-hidden="true"></span><span class="tick bl" aria-hidden="true"></span><span class="tick br" aria-hidden="true"></span>
+    <div class="report-head">
+      <span class="fig-label"><span class="fig-num">Fig. 07</span> — Where partners run</span>
+      <span class="head-right">Slots &amp; roles</span>
+    </div>
+    <div class="body-center">
+      <div class="data-card">
+        <div class="slot-row">
+          <span class="slot-name">Lead feature</span>
+          <span class="slot-form">The edition's lead module, right after the masthead: one placement, the morning's marquee.</span>
+          <span class="role-tag is-scale">Scale</span>
+        </div>
+        <div class="slot-row">
+          <span class="slot-name">In the news</span>
+          <span class="slot-form">Two first-person editorial items after the day's three news stories.</span>
+          <span class="role-tag is-scale">Scale</span>
+        </div>
+        <div class="slot-row">
+          <span class="slot-name">Highlights</span>
+          <span class="slot-form">Two one-liners with a linked phrase, after the organic bullets.</span>
+          <span class="role-tag is-scale">Scale</span>
+        </div>
+        <div class="slot-row">
+          <span class="slot-name">Inline features</span>
+          <span class="slot-form">Two dedicated modules mid-edition: one in the front half, one in the back.</span>
+          <span class="role-tag is-scale">Scale</span>
+        </div>
+        <div class="slot-row">
+          <span class="slot-name">We got your back</span>
+          <span class="slot-form">The dedicated recommendations section, five items daily. Where every pilot starts.</span>
+          <span class="role-tag is-pilot">Pilot</span>
+        </div>
+        <div class="slot-row">
+          <span class="slot-name">Top 10 weekly</span>
+          <span class="slot-form">Ranked positions in Tuesday's most-clicked recap, the week's single best-opened send.</span>
+          <span class="role-tag is-scale">Scale</span>
+        </div>
+      </div>
+    </div>
+    <div class="report-foot">
+      <span class="caption">Pilots start small on purpose. Winning angles earn the louder slots.</span>
+      <span class="source">Placement inventory, June 2026.</span>
+    </div>
+  </div>
+</div>
+
+<!-- ================= 08 · CAMPAIGN ANATOMY ================= -->
+<div class="deck-page">
+  <div class="page-inner">
+    <span class="tick tl" aria-hidden="true"></span><span class="tick tr" aria-hidden="true"></span><span class="tick bl" aria-hidden="true"></span><span class="tick br" aria-hidden="true"></span>
+    <div class="report-head">
+      <span class="fig-label"><span class="fig-num">Fig. 08</span> — Campaign anatomy · Spot Pet Insurance</span>
+      <span class="head-right">We Got Your Back · three sends, one week</span>
+    </div>
+    <div class="body-center">
+      <div class="ladder">
+        <div class="variant-card">
+          <div class="variant-eyebrow">Send 1 · The stakes</div>
+          <div class="variant-name">Heads up for pet parents</div>
+          <div class="variant-quote">"An emergency vet visit could cost you $7,000+ (ask me how I know 🙃)…"</div>
+        </div>
+        <div class="ladder-arrow">→</div>
+        <div class="variant-card">
+          <div class="variant-eyebrow">Send 2 · The story</div>
+          <div class="variant-name">Nothing prepares you for a pet emergency</div>
+          <div class="variant-quote">"…$10k to a credit card for life-saving surgery on my cat, Miss Stache."</div>
+        </div>
+        <div class="ladder-arrow">→</div>
+        <div class="variant-card">
+          <div class="variant-eyebrow">Send 3 · The why</div>
+          <div class="variant-name">Pet parenting is more expensive than ever</div>
+          <div class="variant-quote">"Vet care inflation is more than double the national average…"</div>
+        </div>
+      </div>
+      <div class="ladder-bracket">
+        <div class="bracket-line"></div>
+        <div class="bracket-label">One story, three angles, readable in any order. All copy written in-house, by us.</div>
+      </div>
+    </div>
+    <div class="report-foot">
+      <span class="caption">Each send adds fuel to the same story, in whatever order the week deals it.</span>
+      <span class="source">Campaign: Spot Pet Insurance, 2026. Copy verbatim.</span>
+    </div>
+  </div>
+</div>
+
+<!-- ================= 09 · HOW A PILOT WORKS ================= -->
+<div class="deck-page">
+  <div class="page-inner">
+    <span class="tick tl" aria-hidden="true"></span><span class="tick tr" aria-hidden="true"></span><span class="tick bl" aria-hidden="true"></span><span class="tick br" aria-hidden="true"></span>
+    <div class="report-head">
+      <span class="fig-label"><span class="fig-num">Fig. 09</span> — How a pilot works</span>
+      <span class="head-right">Every partnership starts here</span>
+    </div>
+    <div class="flow-body">
+      <div class="stages">
+        <div class="stage">
+          <div class="stage-eyebrow">Stage 01 · Launch</div>
+          <div class="stage-name">3–5 variations enter the pilot slot</div>
+          <div class="stage-detail">Different angles, not rewordings: each variation is a distinct story.</div>
+          <div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+        </div>
+        <div class="ladder-arrow">→</div>
+        <div class="stage">
+          <div class="stage-eyebrow">Stage 02 · Narrow</div>
+          <div class="stage-name">1–2 winners emerge</div>
+          <div class="stage-detail">Clicks and downstream signal decide, not opinion.</div>
+          <div class="dots"><span class="dot on"></span><span class="dot on"></span><span class="dot off"></span><span class="dot off"></span><span class="dot off"></span></div>
+        </div>
+        <div class="ladder-arrow">→</div>
+        <div class="stage">
+          <div class="stage-eyebrow">Stage 03 · Confirm</div>
+          <div class="stage-name">Each winner runs 2–3 more times</div>
+          <div class="stage-detail">One good morning isn't a pattern. Repetition proves it.</div>
+          <div class="dots"><span class="dot on"></span><span class="dot on"></span><span class="dot-note">× 2–3</span></div>
+        </div>
+        <div class="ladder-arrow">→</div>
+        <div class="stage">
+          <div class="stage-eyebrow">Stage 04 · Check downstream</div>
+          <div class="stage-name">Both sides read the results</div>
+          <div class="stage-detail">Your funnel, our engagement — reviewed together.</div>
+        </div>
+      </div>
+
+      <div class="fork-stem"></div>
+      <div class="fork-bar"></div>
+      <div class="fork-stems"><span class="fork-stem"></span><span class="fork-stem"></span><span class="fork-stem"></span></div>
+
+      <div class="outcomes">
+        <div class="outcome">
+          <div class="outcome-eyebrow">Option A · Iterate</div>
+          <div class="outcome-name">Test more variations</div>
+          <div class="outcome-detail">New angles enter the pilot slot and the cycle runs again.</div>
+          <div class="outcome-loop">↺ Returns to Stage 01</div>
+        </div>
+        <div class="outcome">
+          <div class="outcome-eyebrow">Option B · Scale</div>
+          <div class="outcome-name">Winners graduate to higher-volume slots</div>
+          <div class="outcome-detail">Same copy discipline, bigger reach. The proven angles move up the edition.</div>
+        </div>
+        <div class="outcome is-kill">
+          <div class="outcome-eyebrow">Option C · Kill</div>
+          <div class="outcome-name">We stop</div>
+          <div class="outcome-detail">If either side isn't seeing long-term potential, we say so and end it. No limping pilots.</div>
+        </div>
+      </div>
+    </div>
+    <div class="report-foot">
+      <span class="caption">The pilot risks one slot for one week. The decision is made on evidence, together.</span>
+      <span class="folio">09</span>
+    </div>
+  </div>
+</div>
+
+<!-- ================= 10 · THE SPOT PILOT, SCORED ================= -->
+<div class="deck-page">
+  <div class="page-inner">
+    <span class="tick tl" aria-hidden="true"></span><span class="tick tr" aria-hidden="true"></span><span class="tick bl" aria-hidden="true"></span><span class="tick br" aria-hidden="true"></span>
+    <div class="report-head">
+      <span class="fig-label"><span class="fig-num">Fig. 10</span> — The Spot pilot, scored</span>
+      <span class="head-right">Five angles · one slot · real numbers</span>
+    </div>
+    <div class="body-center">
+      <div class="score">
+        <div class="score-title">Indexed to the pilot's median click-through</div>
+        <div class="score-row is-winner">
+          <span class="score-var">V1</span>
+          <span class="score-angle">"Nothing prepares you for a pet emergency: I learned that the hard way…"</span>
+          <span class="bar-wrap"><span class="track"><span class="fill" style="width: 100%;"></span></span><span class="mult">1.4×</span></span>
+          <span class="down">Strong · best conversion volume in the pilot</span>
+          <span class="tag is-adv">Advanced</span>
+        </div>
+        <div class="score-row is-winner">
+          <span class="score-var">V2</span>
+          <span class="score-angle">"One pet emergency can easily cost $7,000+, but pet insurance…"</span>
+          <span class="bar-wrap"><span class="track"><span class="fill" style="width: 98%;"></span></span><span class="mult">1.4×</span></span>
+          <span class="down">Strong · conversions track clicks</span>
+          <span class="tag is-adv">Advanced</span>
+        </div>
+        <div class="score-row">
+          <span class="score-var">V3</span>
+          <span class="score-angle">"Heads up for pet parents: an emergency vet visit could cost you $7,000+…"</span>
+          <span class="bar-wrap"><span class="track"><span class="fill" style="width: 71%;"></span></span><span class="mult">1.0×</span></span>
+          <span class="down">Healthy</span>
+          <span class="tag is-ret">Retired</span>
+        </div>
+        <div class="score-row">
+          <span class="score-var">V4</span>
+          <span class="score-angle">"An emergency vet visit could cost you $7,000+ (ask me how I know)…"</span>
+          <span class="bar-wrap"><span class="track"><span class="fill" style="width: 55%;"></span></span><span class="mult">0.8×</span></span>
+          <span class="down">Healthy</span>
+          <span class="tag is-ret">Retired</span>
+        </div>
+        <div class="score-row">
+          <span class="score-var">V5</span>
+          <span class="score-angle">"Protect your pet from disaster with this pet insurance plan…"</span>
+          <span class="bar-wrap"><span class="track"><span class="fill" style="width: 11%;"></span></span><span class="mult">0.15×</span></span>
+          <span class="down">Zero tracked conversions</span>
+          <span class="tag is-kill">Killed</span>
+        </div>
+        <div class="score-note">The winning angle re-ran 20 more mornings, Feb–Mar, and click-through held. Rates indexed to the pilot median; absolutes shared in partner conversations. Source: Spot pilot, We Got Your Back placements, Dec 2025 – May 2026.</div>
+      </div>
+    </div>
+    <div class="report-foot">
+      <span class="caption">The 9× spread between the best and weakest angle is why we never run one version of anything.</span>
+      <span class="folio">10</span>
+    </div>
+  </div>
+</div>
+
+<!-- ================= 11 · CASE STUDY: PRIVACY & DATA BROKERS ================= -->
+<div class="deck-page">
+  <div class="page-inner">
+    <span class="tick tl" aria-hidden="true"></span><span class="tick tr" aria-hidden="true"></span><span class="tick bl" aria-hidden="true"></span><span class="tick br" aria-hidden="true"></span>
+    <div class="report-head">
+      <span class="fig-label"><span class="fig-num">Fig. 11</span> — Case study · Privacy &amp; data brokers</span>
+      <span class="head-right">When the story needs more room</span>
+    </div>
+    <div class="body-split">
+      <div>
+        <h2 class="lede-title">Some offers need more than a few sentences.</h2>
+        <p class="lede-text">For those, the placement drives to a BaseLocal bridge page: an editorial explainer in our voice that does the persuading before the reader ever sees a partner's site. The reader arrives curious; they leave pre-sold.</p>
+        <div class="nl-quote">
+          <div class="nl-quote-tag">As it ran — We Got Your Back</div>
+          <span class="leadin">Strangers can buy your personal data for $0.50:</span> Data brokers sell your name, home address, phone number… These three are our favorites →
+        </div>
+      </div>
+      <div class="ladder is-vertical">
+        <div class="variant-card">
+          <div class="variant-eyebrow">Step 1 · The placement</div>
+          <div class="variant-name">The curiosity hook</div>
+          <div class="variant-quote">A short item in the edition: the alarming mechanism, not a product pitch.</div>
+        </div>
+        <div class="ladder-arrow">→</div>
+        <div class="variant-card">
+          <div class="variant-eyebrow">Step 2 · The bridge page</div>
+          <div class="variant-name">The explainer, in our voice</div>
+          <div class="variant-quote">How data brokers work, what removal services do, and the three we'd pick, with reasons.</div>
+        </div>
+        <div class="ladder-arrow">→</div>
+        <div class="variant-card">
+          <div class="variant-eyebrow">Step 3 · The partner</div>
+          <div class="variant-name">The reader arrives pre-sold</div>
+          <div class="variant-quote">Your page closes a visitor who already understands the problem and trusts the pick.</div>
+        </div>
+      </div>
+    </div>
+    <div class="logo-strip">
+      <span class="strip-label">Active &amp; recent partners</span>
+      <div class="logos">
+        <img src="../../assets/partner-logos-media-kit/incogni.png" alt="Incogni">
+        <img src="../../assets/partner-logos-media-kit/aarp.png" alt="AARP">
+        <img src="../../assets/partner-logos-media-kit/t-mobile.png" alt="T-Mobile">
+        <img src="../../assets/partner-logos-media-kit/progressive.png" alt="Progressive">
+        <img src="../../assets/partner-logos-media-kit/fridays.png" alt="Fridays">
+      </div>
+      <span class="folio">11</span>
+    </div>
+  </div>
+</div>
+
+<!-- ================= 12 · CASE STUDY: HOME WARRANTY ================= -->
+<div class="deck-page">
+  <div class="page-inner">
+    <span class="tick tl" aria-hidden="true"></span><span class="tick tr" aria-hidden="true"></span><span class="tick bl" aria-hidden="true"></span><span class="tick br" aria-hidden="true"></span>
+    <div class="report-head">
+      <span class="fig-label"><span class="fig-num">Fig. 12</span> — Case study · Home warranty</span>
+      <span class="head-right">Tuned for the close, not the click</span>
+    </div>
+    <div class="body-split">
+      <div>
+        <h2 class="lede-title">Some placements read like advice.</h2>
+        <p class="lede-text">For a skeptical audience and a considered purchase, we write the placement as a tip from a knowledgeable friend: education first, offer second. Fewer readers click, but the ones who do arrive primed and convert.</p>
+        <div class="nl-quote">
+          <div class="nl-quote-tag">As it ran — We Got Your Back</div>
+          <span class="leadin">Insurance covers disasters, not a $12k HVAC bill:</span> A tree crashes through your roof, insurance writes the check. Your AC dies in the middle of summer, insurance says "that's maintenance."… See how they work (and which ones are worth it) →
+        </div>
+      </div>
+      <div class="ladder is-vertical">
+        <div class="variant-card">
+          <div class="variant-eyebrow">The angle</div>
+          <div class="variant-name">A factual contrast, not a pitch</div>
+          <div class="variant-quote">Two scenarios the reader already knows: the one insurance pays for, and the one it never will.</div>
+        </div>
+        <div class="ladder-arrow">→</div>
+        <div class="variant-card">
+          <div class="variant-eyebrow">The register</div>
+          <div class="variant-name">"In case you didn't know…"</div>
+          <div class="variant-quote">The copy explains how home warranties work before it links anywhere. Advice that happens to have a next step.</div>
+        </div>
+        <div class="ladder-arrow">→</div>
+        <div class="variant-card">
+          <div class="variant-eyebrow">The trade</div>
+          <div class="variant-name">Fewer clicks, better clicks</div>
+          <div class="variant-quote">Readers who click already know what they're shopping for. Conversion quality over raw volume, by design.</div>
+        </div>
+      </div>
+    </div>
+    <div class="logo-strip">
+      <span class="strip-label">Active &amp; recent partners</span>
+      <div class="logos">
+        <img src="../../assets/partner-logos-media-kit/american-home-shield.png" alt="American Home Shield">
+        <img src="../../assets/partner-logos-media-kit/lemonade.png" alt="Lemonade">
+        <img src="../../assets/partner-logos-media-kit/american-hartford-gold.png" alt="American Hartford Gold">
+        <img src="../../assets/partner-logos-media-kit/spot.png" alt="Spot">
+        <img src="../../assets/partner-logos-media-kit/simple.jpg" alt="Simple">
+      </div>
+      <span class="folio">12</span>
+    </div>
+  </div>
+</div>
+
+<!-- ================= 13 · CASE STUDY: TRIBETOKES (RETAIL) ================= -->
+<div class="deck-page">
+  <div class="page-inner">
+    <span class="tick tl" aria-hidden="true"></span><span class="tick tr" aria-hidden="true"></span><span class="tick bl" aria-hidden="true"></span><span class="tick br" aria-hidden="true"></span>
+    <div class="report-head">
+      <span class="fig-label"><span class="fig-num">Fig. 13</span> — Case study · TribeTokes</span>
+      <span class="head-right">Retail · two campaigns, one great offer</span>
+    </div>
+    <div class="body-split">
+      <div>
+        <h2 class="lede-title">Retail works when the offer is real.</h2>
+        <p class="lede-text">A free bottle of gummies with any purchase is generous enough to lead with, so the copy never has to stretch. We positioned it against melatonin, the default our readers know, and backed it with a verified review from a woman sleeping through menopause.</p>
+        <div class="nl-quote">
+          <div class="nl-quote-tag">As it ran — We Got Your Back</div>
+          <span class="leadin">Sleep gummies are free this week:</span> Not the groggy melatonin kind, though. TribeTokes built theirs around CBN and CBD… This women-owned brand has 4.82 stars from 6,000+ verified reviews…
+        </div>
+      </div>
+      <div class="ladder is-vertical">
+        <div class="variant-card">
+          <div class="variant-eyebrow">The offer</div>
+          <div class="variant-name">Genuinely worth recommending</div>
+          <div class="variant-quote">A free bottle with any purchase. When the deal is this good, honest copy is the whole job.</div>
+        </div>
+        <div class="ladder-arrow">→</div>
+        <div class="variant-card">
+          <div class="variant-eyebrow">The match</div>
+          <div class="variant-name">Proof picked for this audience</div>
+          <div class="variant-quote">A women-owned brand and a menopause-sleep review, in front of a readership that's 73% women, most 50+.</div>
+        </div>
+        <div class="ladder-arrow">→</div>
+        <div class="variant-card">
+          <div class="variant-eyebrow">The outcome</div>
+          <div class="variant-name">A hit, twice</div>
+          <div class="variant-quote">1,200+ unique clicks in a single morning, strong enough that a second campaign followed.</div>
+        </div>
+      </div>
+    </div>
+    <div class="logo-strip">
+      <span class="strip-label">Active &amp; recent partners</span>
+      <div class="logos">
+        <img src="../../assets/partner-logos-media-kit/sephora.png" alt="Sephora">
+        <img src="../../assets/partner-logos-media-kit/cvs.png" alt="CVS">
+        <img src="../../assets/partner-logos-media-kit/laura-geller.png" alt="Laura Geller">
+        <img src="../../assets/partner-logos-media-kit/keranique.png" alt="Keranique">
+        <img src="../../assets/partner-logos-media-kit/timberland.png" alt="Timberland">
+      </div>
+      <span class="folio">13</span>
+    </div>
+  </div>
+</div>
+
+<!-- ================= 14 · CASE STUDY: SNORESTOP ================= -->
+<div class="deck-page">
+  <div class="page-inner">
+    <span class="tick tl" aria-hidden="true"></span><span class="tick tr" aria-hidden="true"></span><span class="tick bl" aria-hidden="true"></span><span class="tick br" aria-hidden="true"></span>
+    <div class="report-head">
+      <span class="fig-label"><span class="fig-num">Fig. 14</span> — Case study · SnoreStop</span>
+      <span class="head-right">Health · six weeks, 33 runs</span>
+    </div>
+    <div class="body-split">
+      <div>
+        <h2 class="lede-title">The best offers solve a problem the reader went to bed with.</h2>
+        <p class="lede-text">Our readers don't need snoring explained — plenty of them sleep next to it. The copy skips the setup, names everything they've already tried, and offers the simplest fix they've ever heard of.</p>
+        <div class="nl-quote">
+          <div class="nl-quote-tag">As it ran — We Got Your Back</div>
+          <span class="leadin">Two sprays before bed, no more snoring?</span> It really is that simple. No mouthpiece to wrestle with, no CPAP mask, no nose strips that peel off at 2am…
+        </div>
+      </div>
+      <div class="ladder is-vertical">
+        <div class="variant-card">
+          <div class="variant-eyebrow">The problem</div>
+          <div class="variant-name">Nightly, unsolved, familiar</div>
+          <div class="variant-quote">Everyone knows this one. The copy spends zero words proving it exists.</div>
+        </div>
+        <div class="ladder-arrow">→</div>
+        <div class="variant-card">
+          <div class="variant-eyebrow">The angle</div>
+          <div class="variant-name">Simpler than everything they've tried</div>
+          <div class="variant-quote">Mouthpiece, CPAP, nose strips: tried them all. Thirty years on the market does the safety work.</div>
+        </div>
+        <div class="ladder-arrow">→</div>
+        <div class="variant-card">
+          <div class="variant-eyebrow">The run</div>
+          <div class="variant-name">Thirty-three mornings, no fatigue</div>
+          <div class="variant-quote">17,000+ unique clicks across six weeks, still running at our last count.</div>
+        </div>
+      </div>
+    </div>
+    <div class="logo-strip">
+      <span class="strip-label">Active &amp; recent partners</span>
+      <div class="logos">
+        <img src="../../assets/partner-logos-media-kit/snorestop.png" alt="SnoreStop">
+        <img src="../../assets/partner-logos-media-kit/hers.png" alt="Hers">
+        <img src="../../assets/partner-logos-media-kit/humehealth.webp" alt="Hume Health">
+        <img src="../../assets/partner-logos-media-kit/medvi.png" alt="MedVi">
+        <img src="../../assets/partner-logos-media-kit/remedy.png" alt="Remedy">
+      </div>
+      <span class="folio">14</span>
+    </div>
+  </div>
+</div>
+
+<!-- ================= 15 · WORKING WITH US ================= -->
+<div class="deck-page">
+  <div class="page-inner">
+    <span class="tick tl" aria-hidden="true"></span><span class="tick tr" aria-hidden="true"></span><span class="tick bl" aria-hidden="true"></span><span class="tick br" aria-hidden="true"></span>
+    <div class="report-head">
+      <span class="fig-label"><span class="fig-num">Doc. 15</span> — Working with us</span>
+      <span class="head-right">Structured per partnership</span>
+    </div>
+    <div class="body-split">
+      <div>
+        <h2 class="lede-title">Start with a pilot. Decide with evidence.</h2>
+        <p class="lede-text">Most newsletter advertising is built on one-off sends. We're built the other way: the pilot exists to find offers worth running for the long haul.</p>
+        <p class="lede-text">Deal structures are flexible: flat sponsorships, performance, hybrids. We'd rather fit the structure to the offer than quote a rate card, and the pilot tells both sides whether to scale.</p>
+        <p class="lede-text"><strong>We write the copy, run the variations, and share what we measure.</strong> You bring an offer worth recommending.</p>
+      </div>
+      <div class="title-block" style="position: static; width: auto; max-width: 26cqw; justify-self: end;">
+        <div class="tb-row"><span class="tb-k">The goal</span><span class="tb-v">Partners, not one-off advertisers</span></div>
+        <div class="tb-row"><span class="tb-k">First step</span><span class="tb-v">A pilot: one slot, one week</span></div>
+        <div class="tb-row"><span class="tb-k">Creative</span><span class="tb-v">Written by BaseLocal, approved by you</span></div>
+        <div class="tb-row"><span class="tb-k">Structures</span><span class="tb-v">Flat, performance, or hybrid</span></div>
+        <div class="tb-row"><span class="tb-k">Reporting</span><span class="tb-v">Shared numbers, both directions</span></div>
+      </div>
+    </div>
+    <div class="report-foot">
+      <span class="caption">If the pilot works, your offer becomes something we genuinely recommend.</span>
+      <span class="folio">15</span>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
