@@ -3012,6 +3012,121 @@
       margin: 0 auto 14px;
     }
 
+    /* =============================================
+       ANNOTATION COMPONENTS (proposed)
+       ============================================= */
+    .view-toggle {
+      display: inline-flex;
+      background: var(--bg-page);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 4px;
+      box-shadow: 0 4px 14px rgba(44, 36, 33, 0.12);
+    }
+    .view-toggle button {
+      font-family: 'Lato', sans-serif;
+      font-weight: 900;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: 0;
+      background: transparent;
+      color: var(--secondary-text);
+      padding: 12px 18px;
+      min-height: 44px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background-color 0.2s, color 0.2s;
+    }
+    .view-toggle button:hover { color: var(--dark); background: var(--bg-warm); }
+    .view-toggle button[aria-pressed="true"] { background: var(--dark); color: #FFFFFF; }
+    .view-toggle button.demo-focus,
+    .view-toggle button:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+
+    .placement-module {
+      position: relative;
+      background: var(--bg-page);
+      border-radius: 5px;
+      padding: 22px 20px;
+      transition: opacity 0.35s ease, filter 0.35s ease;
+    }
+    .placement-module.is-flat-rate { box-shadow: inset 0 0 0 2px var(--primary); }
+    .placement-module.is-performance { box-shadow: inset 0 0 0 2px #D8CEC8; }
+    .placement-module.is-muted { opacity: 0.35; filter: grayscale(1); }
+
+    .placement-tag {
+      position: absolute;
+      top: 0;
+      right: 16px;
+      transform: translateY(-50%);
+      font-family: 'Lato', sans-serif;
+      font-weight: 900;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 5px 10px;
+      border-radius: 3px;
+      white-space: nowrap;
+    }
+    .placement-tag.is-flat-rate { background: var(--primary); color: #FFFFFF; }
+    .placement-tag.is-performance { background: #D8CEC8; color: var(--dark); }
+
+    .annot-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 18px;
+      font-family: 'Lato', sans-serif;
+      font-weight: 700;
+      font-size: 12px;
+      color: var(--secondary-text);
+    }
+    .annot-legend span { display: inline-flex; align-items: center; gap: 6px; }
+    .annot-legend .swatch { width: 12px; height: 12px; border-radius: 2px; background: #EDE6E1; }
+    .annot-legend .swatch.is-flat-rate { background: var(--primary); }
+    .annot-legend .swatch.is-performance { background: #D8CEC8; }
+
+    .placement-detail {
+      background: var(--bg-warm);
+      border: 1px solid #EDE6E1;
+      border-left: 4px solid var(--primary);
+      border-radius: 0 5px 5px 0;
+      padding: 16px 18px;
+      max-width: 480px;
+    }
+    .placement-detail.is-performance { border-left-color: #D8CEC8; }
+    .placement-detail-eyebrow {
+      font-family: 'Lato', sans-serif;
+      font-weight: 900;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin: 0 0 6px;
+    }
+    .placement-detail.is-performance .placement-detail-eyebrow { color: var(--secondary-text); }
+    .placement-detail-name {
+      font-family: 'Bitter', Georgia, serif;
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--dark);
+      margin: 0 0 6px;
+    }
+    .placement-detail-body {
+      font-family: 'Lato', sans-serif;
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--body);
+      margin: 0;
+    }
+    .placement-detail-est {
+      font-family: 'Lato', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--dark);
+      margin: 10px 0 0;
+    }
+    .placement-detail-est .est-label { font-weight: 400; color: var(--secondary-text); }
+
   </style>
 </head>
 <body>
@@ -5026,9 +5141,100 @@
       </div>
     </section>
 
-    <!-- ============= 08 LAYOUT ============= -->
+    <!-- ============= 08 ANNOTATION COMPONENTS (proposed) ============= -->
     <section class="group">
-      <h2><span class="num">08</span>Layout</h2>
+      <h2><span class="num">08</span>Annotation Components</h2>
+      <p class="group-desc">Interactive components for partner-facing annotated artifacts — surfaces that overlay sales context on a rendered brand artifact (e.g. an edition with its ad placements called out). Screen-only, unlike Deck / Print (§07). First used by the <code class="tok">roundup-placement-map</code> prototype. State colors reuse existing values: Terracotta <code class="tok">#C2604A</code> (flat-rate placements), <code class="tok">#D8CEC8</code> (performance placements — same value as the deck components' house/neutral fills), <code class="tok">#EDE6E1</code> (editorial — the newsletter Hairline token).</p>
+
+      <h3 style="font-family: 'Bitter', Georgia, serif; font-size: 22px; color: var(--dark); margin: 32px 0 12px;">8.1 View Toggle</h3>
+      <p class="group-desc">A two-option segmented switch for flipping a whole surface between render modes (e.g. Partner view / Reader view). Mode chrome, not an action — so the active fill is Espresso, keeping Terracotta reserved for links and CTAs on the surface below. Buttons carry <code class="tok">aria-pressed</code>; targets clear 44px.</p>
+      <div class="demo">
+        <div class="demo-row">
+          <p class="caption">Default (first option active)</p>
+          <div class="view-toggle" role="group" aria-label="View mode">
+            <button type="button" aria-pressed="true">Partner view</button>
+            <button type="button" aria-pressed="false">Reader view</button>
+          </div>
+        </div>
+        <div class="demo-row">
+          <p class="caption">Second option active</p>
+          <div class="view-toggle" role="group" aria-label="View mode">
+            <button type="button" aria-pressed="false">Partner view</button>
+            <button type="button" aria-pressed="true">Reader view</button>
+          </div>
+        </div>
+        <div class="demo-row">
+          <p class="caption">Focus-visible (inactive option)</p>
+          <div class="view-toggle" role="group" aria-label="View mode">
+            <button type="button" aria-pressed="true">Partner view</button>
+            <button type="button" aria-pressed="false" class="demo-focus">Reader view</button>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="font-family: 'Bitter', Georgia, serif; font-size: 22px; color: var(--dark); margin: 32px 0 12px;">8.2 Placement Annotation</h3>
+      <p class="group-desc">Marks modules of a rendered edition in the annotated view. Annotated modules get a 2px inset ring in the state color plus a corner tag half-off the top edge (square, unrotated — drafting register, distinct from the hand-marked Pinned Stamp). Editorial modules mute to 35% opacity + grayscale, which also silences their terracotta links so the state colors stay the loudest signal. Transitions collapse under the global reduced-motion guard.</p>
+      <div class="demo" style="background: #FAF6F4; padding: 28px 20px;">
+        <div class="demo-row">
+          <p class="caption">Flat-rate placement (annotated)</p>
+          <div class="placement-module is-flat-rate">
+            <span class="placement-tag is-flat-rate">Lead Feature · Flat Rate</span>
+            <p style="font-family: 'Bitter', Georgia, serif; font-size: 16px; line-height: 24px; color: var(--nl-ink); margin: 0;">Today's sponsor, <a href="#" style="color: var(--nl-accent); font-weight: 700;">Babbel</a>, has folks around Naples ordering in Italian before their summer flights take off — <a href="#" style="color: var(--nl-accent); font-weight: 700;">get 55% off right now</a>.*</p>
+          </div>
+        </div>
+        <div class="demo-row">
+          <p class="caption">Performance placement (annotated)</p>
+          <div class="placement-module is-performance">
+            <span class="placement-tag is-performance">We Got Your Back · Performance</span>
+            <p style="font-family: 'Bitter', Georgia, serif; font-size: 16px; line-height: 24px; color: var(--nl-ink); margin: 0;"><strong>Google your own name and you'll probably find your home address:</strong> Incogni gets it taken down. * <a href="#" style="color: var(--nl-accent); font-weight: 700;">Remove my data →</a></p>
+          </div>
+        </div>
+        <div class="demo-row">
+          <p class="caption">Editorial module (muted in annotated view)</p>
+          <div class="placement-module is-muted">
+            <p style="font-family: 'Bitter', Georgia, serif; font-size: 16px; line-height: 24px; color: var(--nl-ink); margin: 0;"><strong>Funding split sparks local debate:</strong> The 2026–2027 budget set aside $65.9 million for arts — <a href="#" style="color: var(--nl-accent); font-weight: 700;">see the arts funding split</a>.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="font-family: 'Bitter', Georgia, serif; font-size: 22px; color: var(--dark); margin: 32px 0 12px;">8.3 Annotation Legend</h3>
+      <p class="group-desc">Three-state key for any annotated surface. Same chip geometry as the deck edition map's legend; labels name the deal model, not the internal slot vocabulary.</p>
+      <div class="demo">
+        <div class="demo-row">
+          <div class="annot-legend">
+            <span><span class="swatch"></span>Editorial</span>
+            <span><span class="swatch is-flat-rate"></span>Flat Rate</span>
+            <span><span class="swatch is-performance"></span>Performance</span>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="font-family: 'Bitter', Georgia, serif; font-size: 22px; color: var(--dark); margin: 32px 0 12px;">8.4 Placement Detail Card</h3>
+      <p class="group-desc">The tap-through detail for an annotated placement: eyebrow in the state color, name, one-paragraph description, optional estimate line. Same shell as the Deliverability Callout (paper fill, 4px left border) with the border carrying the placement state. The performance variant's eyebrow uses Gray — <code class="tok">#D8CEC8</code> text would fail contrast.</p>
+      <div class="demo">
+        <div class="demo-row">
+          <p class="caption">Flat-rate placement</p>
+          <div class="placement-detail">
+            <p class="placement-detail-eyebrow">Flat Rate · Option 01</p>
+            <p class="placement-detail-name">Lead Feature</p>
+            <p class="placement-detail-body">The edition's lead module, right after the masthead. The first thing every opener sees. Runs network-wide, in every city's email, the same morning.</p>
+            <p class="placement-detail-est">500–1,500 <span class="est-label">est. unique clicks per send</span></p>
+          </div>
+        </div>
+        <div class="demo-row">
+          <p class="caption">Performance placement</p>
+          <div class="placement-detail is-performance">
+            <p class="placement-detail-eyebrow">Performance · Run by our team</p>
+            <p class="placement-detail-name">We Got Your Back</p>
+            <p class="placement-detail-body">Five recommendation cards written by our house team. This is where partner pilots start: 3–5 variations enter, winners graduate to louder slots.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============= 09 LAYOUT ============= -->
+    <section class="group">
+      <h2><span class="num">09</span>Layout</h2>
       <p class="group-desc">Content widths, padding, and breakpoints. Reference table only.</p>
 
       <h3 style="font-family: 'Bitter', Georgia, serif; font-size: 22px; color: var(--dark); margin: 32px 0 12px;">Content widths</h3>
@@ -5068,9 +5274,9 @@
       </div>
     </section>
 
-    <!-- ============= 09 ACCESSIBILITY ============= -->
+    <!-- ============= 10 ACCESSIBILITY ============= -->
     <section class="group">
-      <h2><span class="num">09</span>Accessibility</h2>
+      <h2><span class="num">10</span>Accessibility</h2>
       <p class="group-desc">Contrast targets and minimum sizes. Reference table only.</p>
 
       <div class="demo demo-light">
