@@ -115,7 +115,7 @@ None dynamic — fully static page. Implementation needs:
 
 - **Outbound CTA URL:** all offer links (CTA buttons + every linked "TIBO") point to the gettibo.com tracking URL `https://gettibo.com/offer-01-s/?lpid=1135&source_id=DL&utm_source=34143&utm_term=1135&aff_id=34143&oid=1135&affid=34143` (empty `req_id`/`utm_medium`/`sub_id`/`device_type`/`country_name` params are placeholders the tracking platform fills per click). HTML-encodes `&` as `&amp;` in `href`.
 - All CTAs: `target="_blank" rel="noopener noreferrer"`.
-- Images served from local `assets/` (11 files, sourced from the Hoom advertorial CDN). `knife-wear-chart.png` and `board-in-hand.png` are downloaded but unused — available for iteration.
+- Images served from local `assets/` (9 files, sourced from the Hoom advertorial CDN).
 - Fonts: Bitter 400/700 + Lato 400/500/700/900 via Google Fonts.
 - Logo: `../../assets/logos/baselocal-full-dark.svg` (28px height per design system).
 
