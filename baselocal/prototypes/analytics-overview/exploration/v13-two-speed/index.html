@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Analytics Overview — V13 Two-Speed</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F3EEE7; --card:#FCFAF6; --study:#ECE5DA;
+  --ink:#26201C; --mut:#7C7166; --faint:#A79A8B;
+  --line:#E2D8CB; --hair:#EFE8DE;
+  --terra:#B8593A; --terra-d:#8A3F2A; --terra-l:#D89B7F;
+  --green:#2D7A2D; --green-bg:#EDF5EC; --amber:#B45309; --amber-bg:#FCF4E4; --red:#C0392B; --red-bg:#F9EAE6;
+  --b0:#E5D7C7; --b1:#EFE5D8; --b2:#F8F2E9;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',ui-sans-serif,system-ui,sans-serif;background:var(--paper);color:var(--ink);font-size:13px;font-variant-numeric:tabular-nums;padding-bottom:72px}
+svg text{font-variant-numeric:tabular-nums}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+[hidden]{display:none !important}
+.caption{background:#1C1713;color:#F3EEE7;padding:10px 16px;font-size:13px;line-height:1.5}
+.caption strong{color:#EFB9A2}
+.page{max-width:1240px;margin:0 auto;padding:18px 24px 0}
+
+/* ═══ header ═══ */
+.pagehead{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:2px}
+h1{font-size:20px;font-weight:800;letter-spacing:-.01em}
+.pagehead .date{color:var(--mut);font-size:12.5px}
+.pagehead .right{margin-left:auto;display:flex;gap:10px;align-items:center}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--card)}
+.seg button{padding:6px 14px;font-size:12px;font-weight:600;color:var(--mut)}
+.seg button.on{background:var(--ink);color:var(--card)}
+.seghint{font-size:10.5px;color:var(--faint)}
+.subline{color:var(--mut);font-size:12.5px;margin-bottom:14px}
+.subline b{color:var(--ink);font-family:var(--mono);font-weight:600;font-size:11.5px}
+
+/* ═══ GLANCE LAYER ═══ */
+.glance-eyebrow{display:flex;align-items:baseline;gap:10px;margin-bottom:8px}
+.glance-eyebrow .gl{font-size:10px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--terra-d)}
+.glance-eyebrow .gh{font-size:10.5px;color:var(--faint)}
+
+/* month strip */
+.stripwrap{position:relative;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:visible;box-shadow:0 1px 2px rgba(38,32,28,.05)}
+.striphead{display:flex;align-items:center;gap:10px;padding:9px 14px 0}
+.striphead .t{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--mut)}
+.striphead .gear{margin-left:auto;border:1px solid var(--line);background:var(--card);border-radius:7px;padding:4px 11px;font-size:11.5px;font-weight:600;color:var(--mut)}
+.striphead .gear:hover{color:var(--terra-d);border-color:var(--terra-l)}
+.path{display:grid;grid-template-columns:repeat(8,1fr);margin-top:7px;border-top:1px solid var(--hair)}
+.path .cell{padding:10px 14px 9px}
+.path .cell+.cell{border-left:1px solid var(--hair)}
+.path .m{font-size:9.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--mut);margin-bottom:3px}
+.path .v{font-family:var(--mono);font-size:16.5px;font-weight:600;letter-spacing:-.02em}
+.path .v.future{color:var(--faint);font-weight:400}
+.path .s{font-size:10px;color:var(--faint);margin-top:1px}
+.path .s .miss{color:var(--terra);font-weight:700}
+.path .s .beat{color:var(--ink);font-weight:700}
+.pathnote{font-size:10px;color:var(--faint);text-align:right;padding:5px 14px 8px}
+
+/* edit-targets popover */
+.pop{position:absolute;right:10px;top:40px;width:330px;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 12px 32px rgba(38,32,28,.16);padding:16px 18px;z-index:30}
+.pop h3{font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;margin-bottom:9px}
+.pop .row{display:flex;justify-content:space-between;gap:12px;padding:6px 0;border-top:1px solid var(--hair);font-size:11.5px}
+.pop .row span:first-child{color:var(--mut)}
+.pop .row b{font-family:var(--mono);font-weight:600;text-align:right}
+.pop .note{font-size:10.5px;color:var(--mut);margin-top:10px;line-height:1.5}
+.pop .close{margin-top:10px;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--terra-d);font-weight:700}
+
+/* verdict chips */
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.chip{display:inline-flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:99px;padding:6px 13px 6px 10px;font-size:11.5px;font-weight:600;color:var(--ink)}
+.chip .dot{width:8px;height:8px;border-radius:50%;flex:none}
+.chip .dot.g{background:var(--green);box-shadow:0 0 0 3px var(--green-bg)}
+.chip .dot.a{background:var(--amber);box-shadow:0 0 0 3px var(--amber-bg)}
+.chip .dot.r{background:var(--red);box-shadow:0 0 0 3px var(--red-bg)}
+.chip .vd{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.04em}
+.chip .vd.g{color:var(--green)}.chip .vd.a{color:var(--amber)}.chip .vd.r{color:var(--red)}
+
+/* guardrail tiles — v10 anatomy, color = status only */
+.tiles{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:11px 12px 8px;min-width:0}
+.tl{font-size:9.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sdot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;background:var(--card);border:1.5px solid #C9BBA9;vertical-align:0}
+.s-green .sdot{background:var(--green);border-color:var(--green)}
+.s-amber .sdot{background:var(--amber);border-color:var(--amber)}
+.s-red .sdot{background:var(--red);border-color:var(--red)}
+.tn{display:flex;align-items:baseline;gap:7px;margin:4px 0 5px;flex-wrap:wrap}
+.big{font-family:var(--mono);font-size:19px;font-weight:600;letter-spacing:-.02em;color:var(--ink)}
+.dl{font-size:10px;font-weight:700;color:var(--mut);background:var(--hair);border-radius:99px;padding:1px 7px;white-space:nowrap}
+.tc{height:44px}
+.tf{font-size:9.5px;color:var(--faint);margin-top:6px;border-top:1px solid var(--hair);padding-top:5px;line-height:1.45}
+
+/* ═══ THE SEAM ═══ */
+.seam{background:var(--ink);color:#EDE4DF;margin-top:18px}
+.seam .in{max-width:1240px;margin:0 auto;padding:10px 24px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.seam .t{font-size:10.5px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:#EFB9A2}
+.seam .h{font-size:10.5px;color:#B3A79E}
+.seam .key{margin-left:auto;display:flex;gap:14px;align-items:center;flex-wrap:wrap;font-size:10px;color:#B3A79E}
+.seam .ki{display:inline-flex;align-items:center;gap:5px}
+.kband{width:30px;height:10px;border-radius:2px;background:linear-gradient(90deg,#E5D7C7 33%,#EFE5D8 33% 66%,#F8F2E9 66%)}
+.kbar{width:14px;height:5px;background:#F3EEE7}
+.ktick{width:2px;height:12px;background:#F3EEE7}
+.kdiam{width:6px;height:6px;border:1.3px solid #B3A79E;background:var(--ink);transform:rotate(45deg)}
+.kproj{width:2px;height:10px;background:var(--terra-l)}
+.kguard{width:2px;height:10px;background:#E77;box-shadow:none}
+
+/* ═══ STUDY LAYER ═══ */
+.study{background:var(--study);padding:18px 0 6px;border-bottom:1px solid var(--line)}
+.study .in{max-width:1240px;margin:0 auto;padding:0 24px}
+.sec{background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:0 1px 2px rgba(38,32,28,.05);margin-bottom:16px;overflow:hidden}
+.sechead{display:flex;align-items:baseline;gap:11px;padding:13px 18px 11px;border-bottom:1px solid var(--hair);flex-wrap:wrap}
+.klabel{font-size:10.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+.hero{font-family:var(--mono);font-size:21px;font-weight:600;letter-spacing:-.02em}
+.delta{font-family:var(--mono);font-size:10.5px;font-weight:600;padding:2px 8px;border-radius:99px}
+.delta.up{background:var(--green-bg);color:var(--green)}
+.versus{font-size:11.5px;color:var(--faint);margin-left:auto}
+.versus b{color:var(--terra-d);font-weight:700}
+.secgrid{display:grid;grid-template-columns:390px 1fr;gap:0}
+.bcol{padding:12px 18px 10px;border-right:1px solid var(--hair)}
+.bcol .bt{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);margin-bottom:4px}
+.brow{display:grid;grid-template-columns:96px 1fr 74px;gap:9px;align-items:center;padding:4px 0}
+.brow+.brow{border-top:1px dashed var(--hair)}
+.bl{font-size:11px;font-weight:600;line-height:1.3}
+.bl span{display:block;font-size:9.5px;color:var(--faint);font-weight:500;margin-top:1px}
+.bviz{height:40px;min-width:0}
+.bv{text-align:right}
+.bv b{font-family:var(--mono);font-size:13px;font-weight:600;display:block}
+.bv small{display:block;font-size:9.5px;color:var(--faint);margin-top:1px;line-height:1.3}
+.ccol{padding:12px 18px 10px;min-width:0}
+.chartbox+.chartbox{border-top:1px solid var(--hair);margin-top:10px;padding-top:10px}
+.charttitle{font-size:11px;font-weight:600;color:var(--mut);margin-bottom:4px}
+.chartsub{font-size:10px;color:var(--faint);margin:-2px 0 4px}
+.srcleg{display:flex;gap:12px;flex-wrap:wrap;font-size:10px;color:var(--mut);margin-top:4px}
+.srcleg i{display:inline-block;width:7px;height:7px;border-radius:2px;margin-right:3px}
+.footnote{font-size:10.5px;color:var(--mut);padding:2px 2px 12px;max-width:1240px;margin:0 auto}
+.footnote .in2{padding:0 0}
+.studyfoot{max-width:1240px;margin:0 auto;padding:0 24px 10px;font-size:10.5px;color:var(--mut)}
+.studyfoot b{color:var(--ink)}
+
+@media(max-width:1160px){.tiles{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:1020px){.secgrid{grid-template-columns:1fr}.bcol{border-right:none;border-bottom:1px solid var(--hair)}.path{grid-template-columns:repeat(4,1fr)}.path .cell:nth-child(5){border-left:none;border-top:1px solid var(--hair)}.path .cell:nth-child(n+5){border-top:1px solid var(--hair)}}
+@media(max-width:700px){.tiles{grid-template-columns:repeat(2,1fr)}.pagehead .right{margin-left:0}.seam .key{margin-left:0}.versus{margin-left:0;width:100%}}
+@media(max-width:460px){.tiles{grid-template-columns:1fr}.path{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="caption"><strong>V13 — Two-Speed:</strong> two explicit layers with a visible seam. The glance layer fits one screen — North-Star month strip, six guardrail tiles (color = status only), four verdicts as chips. Below the seam, the study layer: each core led by a column of bullet graphs, charts beside, weekly ⇄ monthly.</div>
+
+<div class="page">
+  <div class="pagehead">
+    <h1>Analytics Overview</h1>
+    <span class="date">Friday, Jul 3 · month 3 of the roadmap</span>
+    <div class="right">
+      <span class="seghint">affects the study layer</span>
+      <div class="seg"><button class="on" id="g-w" onclick="setGrain('w')">Weekly</button><button id="g-m" onclick="setGrain('m')">Monthly</button></div>
+    </div>
+  </div>
+  <div class="subline">July target <b>$400k</b> · floor <b>$12k/day</b> · RPS path <b>$0.30 → $0.50</b> · spam cap <b>0.05%</b> · book goal <b>2.0M by Dec</b></div>
+
+  <!-- ═══════════ GLANCE LAYER ═══════════ -->
+  <div class="glance-eyebrow"><span class="gl">The glance</span><span class="gh">one screen · the path, the guardrails, the verdicts</span></div>
+
+  <!-- North-Star month strip -->
+  <div class="stripwrap">
+    <div class="striphead">
+      <span class="t">The path to $1M / month</span>
+      <button class="gear" onclick="togglePop()">Edit targets</button>
+    </div>
+    <div class="pop" id="pop" hidden>
+      <h3>Targets — set monthly</h3>
+      <div class="row"><span>July revenue</span><b>$400k</b></div>
+      <div class="row"><span>Roadmap ($k, May→Dec)</span><b>205 · 290 · 400 · 500 · 700 · 800 · 900 · 1,000</b></div>
+      <div class="row"><span>RPS by December</span><b>$0.50</b></div>
+      <div class="row"><span>RPS guardrail (Aug)</span><b>$0.45</b></div>
+      <div class="row"><span>Daily revenue floor</span><b>$12k</b></div>
+      <div class="row"><span>Net new / month</span><b>200k</b></div>
+      <div class="row"><span>Churn cap</span><b>22%</b></div>
+      <div class="row"><span>Spam cap</span><b>0.05%</b></div>
+      <div class="row"><span>Welcome yield</span><b>$0.15 / gross sub</b></div>
+      <div class="note">Editing writes to the roadmap in production. Read-only in this mock — the point is that targets live one click from the strip they drive.</div>
+      <button class="close" onclick="togglePop()">Close</button>
+    </div>
+    <div class="path">
+      <div class="cell"><div class="m">May</div><div class="v">$211k</div><div class="s">of 205 · <span class="beat">+6 beat</span></div></div>
+      <div class="cell"><div class="m">Jun</div><div class="v">$286k</div><div class="s">of 290 · <span class="miss">−4 short</span></div></div>
+      <div class="cell"><div class="m">Jul</div><div class="v">$386k*</div><div class="s">of 400 · <span class="miss">−14 pace</span></div></div>
+      <div class="cell"><div class="m">Aug</div><div class="v future">$500k</div><div class="s">target</div></div>
+      <div class="cell"><div class="m">Sep</div><div class="v future">$700k</div><div class="s">target</div></div>
+      <div class="cell"><div class="m">Oct</div><div class="v future">$800k</div><div class="s">target</div></div>
+      <div class="cell"><div class="m">Nov</div><div class="v future">$900k</div><div class="s">target</div></div>
+      <div class="cell"><div class="m">Dec</div><div class="v future">$1,000k</div><div class="s">the goal</div></div>
+    </div>
+    <div class="pathnote">*projected · targets are monthly-set — Edit targets to amend</div>
+  </div>
+
+  <!-- verdict chips -->
+  <div class="chips">
+    <span class="chip"><span class="dot a"></span>Hit $400k this month?<span class="vd a">CLOSE — $386K PACE</span></span>
+    <span class="chip"><span class="dot a"></span>RPS on the path to $0.50?<span class="vd a">MOVING — $0.34</span></span>
+    <span class="chip"><span class="dot r"></span>Subs growing fast enough?<span class="vd r">NO — 146K VS 200K</span></span>
+    <span class="chip"><span class="dot g"></span>Audience healthy at scale?<span class="vd g">YES</span></span>
+  </div>
+
+  <!-- six guardrail tiles -->
+  <div class="tiles">
+    <div class="tile s-green">
+      <div class="tl"><span class="sdot"></span>Revenue / day vs floor</div>
+      <div class="tn"><span class="big">$12.5k</span><span class="dl">floor $12k</span></div>
+      <div class="tc" id="t-b1"></div>
+      <div class="tf">MTD avg · 1 floor dip in 21d · target pace $12.9k</div>
+    </div>
+    <div class="tile s-amber">
+      <div class="tl"><span class="sdot"></span>RPS vs path</div>
+      <div class="tn"><span class="big">$0.34</span><span class="dl">▲ $0.03 vs Jun</span></div>
+      <div class="tc" id="t-b2"></div>
+      <div class="tf">path $0.30 → $0.50 by Dec · Aug guardrail $0.45</div>
+    </div>
+    <div class="tile s-red">
+      <div class="tl"><span class="sdot"></span>Net-new pace vs 200k</div>
+      <div class="tn"><span class="big">+146k</span><span class="dl">14.2k in</span></div>
+      <div class="tc" id="t-b3"></div>
+      <div class="tf">July pace · at 4.7k/day, needs 6.5k</div>
+    </div>
+    <div class="tile s-green">
+      <div class="tl"><span class="sdot"></span>Churn vs 22% cap</div>
+      <div class="tn"><span class="big">19.4%</span><span class="dl">▲ 0.6pt vs Jun</span></div>
+      <div class="tc" id="t-b4"></div>
+      <div class="tf">monthly · existing Engaged Audience definition</div>
+    </div>
+    <div class="tile s-green">
+      <div class="tl"><span class="sdot"></span>Spam vs 0.05% cap</div>
+      <div class="tn"><span class="big">0.027%</span><span class="dl">▲ from 0.021</span></div>
+      <div class="tc" id="t-b5"></div>
+      <div class="tf">latest week · rising with volume — watching</div>
+    </div>
+    <div class="tile s-green">
+      <div class="tl"><span class="sdot"></span>Welcome yield vs $0.15</div>
+      <div class="tn"><span class="big">$0.11</span><span class="dl">▲ $0.02 vs Jun</span></div>
+      <div class="tc" id="t-b6"></div>
+      <div class="tf">$ per gross new sub · ramping ≈ +$0.02/mo</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ THE SEAM ═══════════ -->
+<div class="seam">
+  <div class="in">
+    <span class="t">The detail</span>
+    <span class="h">the slower read — bullets, roadmaps, trends</span>
+    <div class="key">
+      <span class="ki"><span class="kband"></span> behind / near / on</span>
+      <span class="ki"><span class="kbar"></span> actual</span>
+      <span class="ki"><span class="ktick"></span> target</span>
+      <span class="ki"><span class="kdiam"></span> last period</span>
+      <span class="ki"><span class="kproj"></span> projection</span>
+      <span class="ki"><span class="kguard"></span> guardrail</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ STUDY LAYER ═══════════ -->
+<div class="study">
+  <div class="in">
+
+    <!-- ── REVENUE ── -->
+    <div class="sec">
+      <div class="sechead">
+        <span class="klabel">Revenue</span>
+        <span class="hero">$286k</span><span style="font-size:11px;color:var(--mut);font-weight:600">June, monthly</span>
+        <span class="delta up">+35.5% vs May</span>
+        <span class="versus">July: $37.4k in · projecting <b>$386k</b> against $400k</span>
+      </div>
+      <div class="secgrid">
+        <div class="bcol">
+          <div class="bt">Instruments</div>
+          <div class="brow"><div class="bl">July revenue<span>target $400k</span></div><div class="bviz" id="b-jul"></div>
+            <div class="bv"><b>$386k</b><small>proj · $37.4k in</small></div></div>
+          <div class="brow"><div class="bl">Pace, $/day<span>MTD avg</span></div><div class="bviz" id="b-pace"></div>
+            <div class="bv"><b>$12.5k</b><small>needs $12.9k</small></div></div>
+          <div class="brow"><div class="bl">Last full week<span>Jun W4</span></div><div class="bviz" id="b-week"></div>
+            <div class="bv"><b>$82k</b><small>pace ≈ $92k/wk</small></div></div>
+          <div class="brow"><div class="bl">RPS · July<span>Aug guardrail $0.45</span></div><div class="bviz" id="b-rps"></div>
+            <div class="bv"><b>$0.34</b><small>target $0.50</small></div></div>
+          <div style="border-top:1px solid var(--hair);margin-top:9px;padding-top:8px;font-size:10px;color:var(--faint);line-height:1.5">
+            RPC <b style="font-family:var(--mono);color:var(--ink)">$1.86</b> · 34 active offers · 3 of 10 June winners solidified · 15 sends/wk → 22 Jul 20 → 25 Aug</div>
+        </div>
+        <div class="ccol">
+          <div class="chartbox">
+            <div class="charttitle">Revenue roadmap — one bullet per month</div>
+            <div class="chartsub">shared scale $0–1050k · tick = monthly target · ink bar = actual · terracotta = July projection · Aug–Dec ghosted</div>
+            <div id="roadmap" style="height:212px"></div>
+          </div>
+          <div class="chartbox">
+            <div class="charttitle" id="t-src"></div>
+            <div id="c-src" style="height:168px"></div>
+            <div class="srcleg">
+              <span><i style="background:#B8593A"></i>Morning Roundup</span>
+              <span><i style="background:#D89B7F"></i>Daily News</span>
+              <span><i style="background:#2D7A2D"></i>Welcome</span>
+              <span><i style="background:#B45309"></i>Bridge</span>
+              <span><i style="background:#C9BBA9"></i>Other</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── ENGAGEMENT ── -->
+    <div class="sec">
+      <div class="sechead">
+        <span class="klabel">Engagement</span>
+        <span class="hero">52.6%</span><span style="font-size:11px;color:var(--mut);font-weight:600">June engaged share</span>
+        <span class="delta up">+0.7pt vs May</span>
+        <span class="versus">July-to-date <b>54.0%</b> · churn 19.4% vs 22% · spam 0.027% vs 0.05%</span>
+      </div>
+      <div class="secgrid">
+        <div class="bcol">
+          <div class="bt">Instruments</div>
+          <div class="brow"><div class="bl">Open rate<span>weekly, of delivered</span></div><div class="bviz" id="b-open"></div>
+            <div class="bv"><b>41.2%</b><small>40.0% in May</small></div></div>
+          <div class="brow"><div class="bl">CTR<span>of delivered</span></div><div class="bviz" id="b-ctr"></div>
+            <div class="bv"><b>2.1%</b><small>1.95% in May</small></div></div>
+          <div class="brow"><div class="bl">CTOR<span>clicks per open</span></div><div class="bviz" id="b-ctor"></div>
+            <div class="bv"><b>5.10%</b><small>4.88% in May</small></div></div>
+          <div class="brow"><div class="bl">Spam rate<span>cap 0.05% · lower better</span></div><div class="bviz" id="b-spam"></div>
+            <div class="bv"><b>0.027%</b><small>from 0.021</small></div></div>
+          <div class="brow"><div class="bl">Churn<span>monthly · lower better</span></div><div class="bviz" id="b-churn"></div>
+            <div class="bv"><b>19.4%</b><small>cap 22%</small></div></div>
+          <div class="brow"><div class="bl">Engaged share<span>July-to-date</span></div><div class="bviz" id="b-eng"></div>
+            <div class="bv"><b>54.0%</b><small>+1.4pt MTD</small></div></div>
+        </div>
+        <div class="ccol">
+          <div class="chartbox">
+            <div class="charttitle" id="t-eng1"></div>
+            <div id="c-eng1" style="height:126px"></div>
+          </div>
+          <div class="chartbox">
+            <div class="charttitle" id="t-eng2"></div>
+            <div id="c-eng2" style="height:110px"></div>
+          </div>
+          <div class="chartbox">
+            <div class="charttitle" id="t-eng3"></div>
+            <div id="c-eng3" style="height:110px"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── ACQUISITION ── -->
+    <div class="sec">
+      <div class="sechead">
+        <span class="klabel">Acquisition</span>
+        <span class="hero">+118k</span><span style="font-size:11px;color:var(--mut);font-weight:600">June net new</span>
+        <span class="delta up">+15.7% vs May</span>
+        <span class="versus">July pacing <b>+146k</b> vs 200k/mo needed · book at 985k</span>
+      </div>
+      <div class="secgrid">
+        <div class="bcol">
+          <div class="bt">Instruments</div>
+          <div class="brow"><div class="bl">July net new<span>target 200k</span></div><div class="bviz" id="b-net"></div>
+            <div class="bv"><b>+146k</b><small>pace · 14.2k in</small></div></div>
+          <div class="brow"><div class="bl">Net per day<span>needs 6.5k</span></div><div class="bviz" id="b-netday"></div>
+            <div class="bv"><b>4.7k</b><small>Jun avg 3.9k</small></div></div>
+          <div class="brow"><div class="bl">Gross adds<span>last full week</span></div><div class="bviz" id="b-gross"></div>
+            <div class="bv"><b>42k</b><small>needs ≈56k/wk</small></div></div>
+          <div class="brow"><div class="bl">Book size<span>Jul milestone 1.09M</span></div><div class="bviz" id="b-book"></div>
+            <div class="bv"><b>985k</b><small>Dec goal 2.0M</small></div></div>
+          <div class="brow"><div class="bl">CAC payback<span>days · lower better</span></div><div class="bviz" id="b-cac"></div>
+            <div class="bv"><b>41d</b><small>cap 45d</small></div></div>
+        </div>
+        <div class="ccol">
+          <div class="chartbox">
+            <div class="charttitle" id="t-acq1"></div>
+            <div id="c-acq1" style="height:200px"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div class="studyfoot"><b>Reading the panel:</b> band shades run dark → light for behind → near → on-target (reversed where lower is better). Week labels M1–M4 = May, J1–J4 = June; “Jul” is the partial week ending Jul 3, shown ghosted or hollow. Weekly ⇄ Monthly (top right) redraws the study-layer trend charts; the glance layer and marked numbers stay monthly.</div>
+
+<script>
+"use strict";
+/* ═══ shared dataset (exploration-wide) + V13 extensions ═══ */
+const DATA = {
+  asOf: "Jul 3",
+  months: ["May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
+  revTargets: [205,290,400,500,700,800,900,1000],
+  revActuals: [211,286,37.4],
+  julProjected: 386, julNeedPerDay: 12.9,
+  revWeekly: [44,48,52,55,62,68,74,82,37.4],
+  daily21: [11.8,12.6,13.1,12.2,12.9,13.4,12.7,13.0,12.4,11.1,12.8,13.2,12.6,13.8,12.9,13.1,12.5,13.3,11.9,13.2,12.5],
+  dailyFloor: 12,
+  rpsWeekly: [0.27,0.28,0.29,0.30,0.30,0.31,0.31,0.32,0.34],
+  rpsMonthly: [0.29,0.31,0.34], rpsTarget: 0.50, rpsAugGuardrail: 0.45,
+  subscribers: 985, bookActuals: [852,912,985],
+  bookTargetPath: [985,1090,1290,1490,1640,1790,1930,2000],
+  netNewWeekly: [24,26,25,27,27,29,30,32,14.2],
+  netNewMonthly: [102,118,146], julNetPace: 146, netTarget: 200,
+  grossWeekly: [31,33,32,35,35,37,38,42,18.6],
+  lossWeekly: [7,7,7,8,8,8,8,10,4.4],
+  churnMonthly: [18.1,18.8,19.4], churnGuardrail: 22,
+  opensWeekly: [40.0,40.2,40.1,40.4,40.5,40.7,40.8,41.0,41.2],
+  ctrWeekly: [1.95,2.0,2.0,2.02,2.02,2.05,2.05,2.08,2.1],
+  engagedWeekly: [51.2,51.6,51.9,52.0,52.1,52.3,52.6,53.1,54.0],
+  engagedMonthly: [51.9,52.6,54.0],
+  unsubsMonthly: [0.27,0.29,0.31],
+  welcomeYield: [0.06,0.09,0.11], welcomeTarget: 0.15,
+  rpc: 1.86, cacPaybackDays: 41,
+  weekLabels: ["M1","M2","M3","M4","J1","J2","J3","J4","Jul"],
+  /* ── V13 extensions ── */
+  ctorWeekly: [4.88,4.90,4.93,4.95,4.97,5.00,5.02,5.06,5.10],
+  ctorMonthly: [4.96,5.03,5.10],
+  spamWeekly: [0.021,0.021,0.022,0.023,0.023,0.024,0.025,0.026,0.027],
+  spamMonthly: [0.022,0.026,0.027], spamGuardrail: 0.05,
+  sources: [
+    { name:"Morning Roundup", color:"#B8593A", w:[62,61.5,61,60.5,60,59.5,59,58.5,58], m:[61,59,58] },
+    { name:"Daily News",      color:"#D89B7F", w:[22,22,22,22,22,22,22,22,22],          m:[22,22,22] },
+    { name:"Welcome",         color:"#2D7A2D", w:[6,6.4,6.8,7.1,7.5,7.9,8.3,8.6,9],     m:[7,8,9]   },
+    { name:"Bridge",          color:"#B45309", w:[5,5.1,5.2,5.4,5.5,5.6,5.7,5.9,6],     m:[5,6,6]   },
+    { name:"Other",           color:"#C9BBA9", w:[5,5,5,5,5,5,5,5,5],                   m:[5,5,5]   }
+  ],
+  srcMonthlyTotals: [211,286,386] /* Jul = projection, ghosted */
+};
+
+/* ═══ svg + registry helpers ═══ */
+const $=id=>document.getElementById(id);
+const NS="http://www.w3.org/2000/svg";
+const MONO="'IBM Plex Mono',monospace";
+function S(tag,at,parent){const e=document.createElementNS(NS,tag);for(const k in at)e.setAttribute(k,at[k]);if(parent)parent.appendChild(e);return e;}
+function txt(parent,x,y,str,at){const a=Object.assign({x:x,y:y,"font-size":9,fill:"#A79A8B","font-family":"'Inter',sans-serif"},at||{});const t=S("text",a,parent);t.textContent=str;return t;}
+const draws=new Map();
+function reg(id,f){draws.set(id,f);f();}
+let raf=null;
+window.addEventListener("resize",function(){cancelAnimationFrame(raf);raf=requestAnimationFrame(function(){draws.forEach(function(f){f();});});});
+
+/* ═══ bullet graph — cockpit language ═══ */
+function bullet(id,cfg){
+  reg(id,function(){
+    const m=$(id); const W=Math.max(m.clientWidth,100), H=cfg.h||40;
+    const yMid=H/2-6;
+    const min=cfg.min||0, max=cfg.max;
+    const x=v=>((v-min)/(max-min))*(W-2)+1;
+    const svg=S("svg",{width:W,height:H,viewBox:"0 0 "+W+" "+H});
+    m.replaceChildren(svg);
+    const g=S("g",{"shape-rendering":"crispEdges"},svg);
+    const cols=cfg.invert?["#F8F2E9","#EFE5D8","#E5D7C7"]:["#E5D7C7","#EFE5D8","#F8F2E9"];
+    const stops=[min,cfg.bands[0],cfg.bands[1],max];
+    for(let i=0;i<3;i++)S("rect",{x:x(stops[i]),y:yMid-7,width:Math.max(x(stops[i+1])-x(stops[i]),0),height:16,fill:cols[i]},g);
+    if(cfg.proj!=null){
+      S("rect",{x:x(min),y:yMid-1,width:x(cfg.proj)-x(min),height:4,fill:"#D89B7F"},g);
+      S("rect",{x:x(cfg.proj)-1,y:yMid-5,width:2,height:12,fill:"#B8593A"},g);
+    }
+    S("rect",{x:x(min),y:yMid-2,width:Math.max(x(cfg.value)-x(min),1.5),height:6,fill:"#26201C"},g);
+    if(cfg.guard!=null)S("rect",{x:x(cfg.guard)-1,y:yMid-7,width:2,height:16,fill:"#C0392B"},g);
+    if(cfg.target!=null)S("rect",{x:x(cfg.target)-1,y:yMid-10,width:2,height:22,fill:"#26201C"},g);
+    if(cfg.prev!=null){
+      const px=x(cfg.prev), py=yMid+1;
+      S("path",{d:"M "+px+" "+(py-4.5)+" L "+(px+4)+" "+py+" L "+px+" "+(py+4.5)+" L "+(px-4)+" "+py+" Z",fill:"#FCFAF6",stroke:"#8A7D70","stroke-width":1.2},svg);
+    }
+    const f=cfg.fmt||(v=>String(v));
+    txt(svg,1,H-2,f(min),{"text-anchor":"start","font-size":8,"font-family":MONO});
+    txt(svg,W-1,H-2,f(max),{"text-anchor":"end","font-size":8,"font-family":MONO});
+  });
+}
+
+/* ═══ line chart (dual-axis capable) ═══ */
+function linechart(id,cfg){
+  reg(id,function(){
+    const m=$(id); const W=Math.max(m.clientWidth,160), H=cfg.h||m.clientHeight||120;
+    const pad={t:12,r:cfg.right?44:12,b:18,l:42};
+    const svg=S("svg",{width:W,height:H,viewBox:"0 0 "+W+" "+H});
+    m.replaceChildren(svg);
+    const iw=W-pad.l-pad.r;
+    const yOf=(v,ax)=>pad.t+(1-(v-ax.min)/(ax.max-ax.min))*(H-pad.t-pad.b);
+    [0,0.5,1].forEach(function(fr){
+      const v=cfg.left.min+fr*(cfg.left.max-cfg.left.min);
+      const y=yOf(v,cfg.left);
+      S("line",{x1:pad.l,y1:y,x2:W-pad.r,y2:y,stroke:"#EFE8DE"},svg);
+      txt(svg,pad.l-6,y+3,cfg.left.fmt(v),{"text-anchor":"end","font-family":MONO,"font-size":8.5});
+      if(cfg.right){
+        const rv=cfg.right.min+fr*(cfg.right.max-cfg.right.min);
+        txt(svg,W-pad.r+6,y+3,cfg.right.fmt(rv),{"text-anchor":"start","font-family":MONO,"font-size":8.5,fill:"#C08F77"});
+      }
+    });
+    (cfg.hlines||[]).forEach(function(h){
+      const y=yOf(h.v,cfg.left);
+      S("line",{x1:pad.l,y1:y,x2:W-pad.r,y2:y,stroke:h.color,"stroke-dasharray":"4 3","stroke-width":1.3},svg);
+      if(h.label)txt(svg,W-pad.r-2,y-4,h.label,{"text-anchor":"end",fill:h.color,"font-size":8.5,"font-weight":600});
+    });
+    const n=cfg.labels.length;
+    const xOf=i=>pad.l+(n===1?0:(i/(n-1))*iw);
+    cfg.series.forEach(function(sr){
+      const ax=sr.axis==="r"?cfg.right:cfg.left;
+      const x0=sr.x0||0;
+      const pts=sr.data.map(function(v,j){return [xOf(j+x0),yOf(v,ax)];});
+      S("polyline",{points:pts.map(p=>p.join(",")).join(" "),fill:"none",stroke:sr.color,"stroke-width":sr.width||2,"stroke-linejoin":"round","stroke-linecap":"round","stroke-dasharray":sr.dash||"none"},svg);
+      (sr.dots||[]).forEach(function(i){S("circle",{cx:pts[i][0],cy:pts[i][1],r:3.2,fill:sr.color},svg);});
+      (sr.hollow||[]).forEach(function(i){S("circle",{cx:pts[i][0],cy:pts[i][1],r:3.2,fill:"#FCFAF6",stroke:sr.color,"stroke-width":1.8},svg);});
+    });
+    cfg.labels.forEach(function(lb,i){if(lb)txt(svg,xOf(i),H-5,lb,{"text-anchor":"middle","font-size":8.5});});
+  });
+}
+
+/* ═══ stacked bars — revenue by source ═══ */
+function stackchart(id,cfg){
+  reg(id,function(){
+    const m=$(id); const W=Math.max(m.clientWidth,220), H=cfg.h||m.clientHeight||168;
+    const pad={t:16,r:12,b:18,l:42};
+    const svg=S("svg",{width:W,height:H,viewBox:"0 0 "+W+" "+H});
+    m.replaceChildren(svg);
+    const y=v=>pad.t+(1-v/cfg.max)*(H-pad.t-pad.b);
+    [0,0.5,1].forEach(function(fr){
+      const v=fr*cfg.max, yy=y(v);
+      S("line",{x1:pad.l,y1:yy,x2:W-pad.r,y2:yy,stroke:"#EFE8DE"},svg);
+      txt(svg,pad.l-6,yy+3,cfg.fmt(v),{"text-anchor":"end","font-family":MONO,"font-size":8.5});
+    });
+    const n=cfg.totals.length, iw=(W-pad.l-pad.r)/n, bw=Math.min(iw*0.62,46);
+    cfg.totals.forEach(function(total,i){
+      const cx=pad.l+iw*(i+0.5);
+      const ghost=(cfg.ghost||[]).indexOf(i)>=0;
+      const g=S("g",{opacity:ghost?0.5:1,"shape-rendering":"crispEdges"},svg);
+      let acc=0;
+      DATA.sources.forEach(function(src){
+        const share=(cfg.grain==="w"?src.w:src.m)[i];
+        const val=share/100*total;
+        const y1=y(acc+val), y0=y(acc);
+        S("rect",{x:cx-bw/2,y:y1,width:bw,height:Math.max(y0-y1,0.5),fill:src.color},g);
+        acc+=val;
+      });
+      txt(svg,cx,y(total)-5,cfg.marks&&cfg.marks[i]!=null?cfg.marks[i]:"",{"text-anchor":"middle","font-family":MONO,"font-size":8.5,"font-weight":600,fill:ghost?"#8A3F2A":"#26201C"});
+      txt(svg,cx,H-5,cfg.labels[i],{"text-anchor":"middle","font-size":8.5});
+    });
+  });
+}
+
+/* ═══ glance-tile bullets (six guardrails) ═══ */
+const kf=v=>"$"+v+"k";
+bullet("t-b1",{h:44,max:16,  bands:[10,12],   value:12.5, guard:12,  target:12.9, prev:9.5,  fmt:kf});
+bullet("t-b2",{h:44,max:0.55,bands:[0.30,0.45],value:0.34, guard:0.45,target:0.50, prev:0.31, fmt:v=>"$"+v.toFixed(2)});
+bullet("t-b3",{h:44,max:220, bands:[130,180], value:146,  target:200, prev:118, fmt:v=>v+"k"});
+bullet("t-b4",{h:44,max:26,  bands:[17,22],   value:19.4, guard:22,  prev:18.8, invert:true, fmt:v=>v+"%"});
+bullet("t-b5",{h:44,max:0.06,bands:[0.03,0.05],value:0.027,guard:0.05,prev:0.026,invert:true, fmt:v=>v+"%"});
+bullet("t-b6",{h:44,max:0.18,bands:[0.09,0.13],value:0.11, target:0.15,prev:0.09, fmt:v=>"$"+v.toFixed(2)});
+
+/* ═══ study-layer instrument bullets ═══ */
+bullet("b-jul",  {max:450, bands:[290,380], value:37.4, proj:386, target:400, prev:286, fmt:kf});
+bullet("b-pace", {max:16,  bands:[10,12],   value:12.5, target:12.9, prev:9.5, fmt:kf});
+bullet("b-week", {max:100, bands:[62,85],   value:82,   target:92,  prev:74,  fmt:kf});
+bullet("b-rps",  {max:0.55,bands:[0.30,0.45],value:0.34,target:0.50,guard:0.45,prev:0.31,fmt:v=>"$"+v.toFixed(2)});
+
+bullet("b-open", {max:50,  bands:[30,38],   value:41.2, prev:40.5, fmt:v=>v+"%"});
+bullet("b-ctr",  {max:3,   bands:[1.5,2.0], value:2.1,  prev:2.02, fmt:v=>v+"%"});
+bullet("b-ctor", {min:4,max:5.6,bands:[4.6,5.0],value:5.10,prev:5.03,fmt:v=>v.toFixed(1)+"%"});
+bullet("b-spam", {max:0.06,bands:[0.03,0.05],value:0.027,guard:0.05,prev:0.026,invert:true,fmt:v=>v+"%"});
+bullet("b-churn",{max:26,  bands:[17,22],   value:19.4, guard:22, prev:18.8, invert:true, fmt:v=>v+"%"});
+bullet("b-eng",  {min:40,max:60,bands:[48,52],value:54.0,prev:52.6,fmt:v=>v+"%"});
+
+bullet("b-net",  {max:220, bands:[130,180], value:14.2, proj:146, target:200, prev:118, fmt:v=>"+"+v+"k"});
+bullet("b-netday",{max:8,  bands:[4.5,6],   value:4.7,  target:6.5, prev:3.9, fmt:v=>v+"k"});
+bullet("b-gross",{max:60,  bands:[40,52],   value:42,   target:56,  prev:38,  fmt:v=>v+"k"});
+bullet("b-book", {max:1200,bands:[950,1050],value:985,  target:1090,prev:912, fmt:v=>v>=1000?(v/1000)+"M":v+"k"});
+bullet("b-cac",  {max:60,  bands:[35,45],   value:41,   guard:45,   prev:44,  invert:true, fmt:v=>v+"d"});
+
+/* ═══ roadmap: one tall bullet per month ═══ */
+reg("roadmap",function(){
+  const m=$("roadmap"); const W=Math.max(m.clientWidth,520), H=212;
+  const svg=S("svg",{width:W,height:H,viewBox:"0 0 "+W+" "+H});
+  m.replaceChildren(svg);
+  const padL=42,padR=6,padT=22,padB=34,MAX=1050;
+  const y=v=>padT+(1-v/MAX)*(H-padT-padB);
+  [0,250,500,750,1000].forEach(function(v){
+    S("line",{x1:padL,y1:y(v),x2:W-padR,y2:y(v),stroke:"#EFE8DE"},svg);
+    if(v%500===0)txt(svg,padL-6,y(v)+3,"$"+v+"k",{"text-anchor":"end","font-family":MONO,"font-size":8.5});
+  });
+  const targets=DATA.revTargets, actuals=DATA.revActuals, n=targets.length, colW=(W-padL-padR)/n;
+  targets.forEach(function(T,i){
+    const cx=padL+colW*(i+0.5), bw=Math.min(32,colW*0.5);
+    const future=i>2;
+    const g=S("g",{opacity:future?0.55:1,"shape-rendering":"crispEdges"},svg);
+    S("rect",{x:cx-bw/2,y:y(0.6*T),width:bw,height:y(0)-y(0.6*T),fill:"#E5D7C7"},g);
+    S("rect",{x:cx-bw/2,y:y(0.9*T),width:bw,height:y(0.6*T)-y(0.9*T),fill:"#EFE5D8"},g);
+    S("rect",{x:cx-bw/2,y:y(MAX),width:bw,height:y(0.9*T)-y(MAX),fill:"#F8F2E9"},g);
+    S("rect",{x:cx-bw/2-5,y:y(T)-1,width:bw+10,height:2,fill:"#26201C",opacity:future?0.75:1,"shape-rendering":"crispEdges"},svg);
+    if(i===2){
+      S("rect",{x:cx-2,y:y(DATA.julProjected),width:4,height:y(0)-y(DATA.julProjected),fill:"#D89B7F"},svg);
+      S("rect",{x:cx-bw/2-2,y:y(DATA.julProjected)-1,width:bw+4,height:2,fill:"#B8593A"},svg);
+    }
+    const a=actuals[i];
+    if(a!=null){
+      S("rect",{x:cx-5,y:y(a),width:10,height:y(0)-y(a),fill:"#26201C"},svg);
+      txt(svg,cx,y(i===2?DATA.julProjected:a)-6,(i===2?"37.4 ▸ "+DATA.julProjected:String(a)),
+        {"text-anchor":"middle",fill:i===2?"#8A3F2A":"#26201C","font-weight":600,"font-family":MONO,"font-size":9.5});
+    }
+    txt(svg,cx,H-20,DATA.months[i],{"text-anchor":"middle","font-size":10,fill:"#7C7166","font-weight":600});
+    txt(svg,cx,H-8,"t "+T,{"text-anchor":"middle","font-family":MONO,"font-size":8.5});
+  });
+});
+
+/* ═══ grain-aware study charts ═══ */
+let grain="w";
+function drawCharts(){
+  const wl=DATA.weekLabels;
+  if(grain==="w"){
+    stackchart("c-src",{grain:"w",totals:DATA.revWeekly,max:100,ghost:[8],labels:wl,
+      marks:DATA.revWeekly.map(function(v,i){return i===7?"$82k":(i===8?"$37.4k*":null);}),fmt:v=>"$"+Math.round(v)+"k"});
+    $("t-src").textContent="Revenue by source — weekly, $k · Welcome grows 6% → 9% of mix · * partial week";
+    linechart("c-eng1",{h:126,labels:wl,left:{min:38,max:43,fmt:v=>v.toFixed(1)+"%"},right:{min:1.8,max:2.3,fmt:v=>v.toFixed(1)+"%"},
+      series:[{data:DATA.opensWeekly,color:"#26201C",dots:[8]},
+              {data:DATA.ctrWeekly,axis:"r",color:"#C08F77",width:1.6,dots:[8]}]});
+    $("t-eng1").textContent="Opens (left, ink) & CTR (right, clay) — weekly";
+    linechart("c-eng2",{h:110,labels:wl,left:{min:4.6,max:5.3,fmt:v=>v.toFixed(1)+"%"},
+      series:[{data:DATA.ctorWeekly,color:"#B8593A",dots:[8]}]});
+    $("t-eng2").textContent="CTOR — clicks per open, weekly · quality holding as volume ramps";
+    linechart("c-eng3",{h:110,labels:wl,left:{min:0,max:0.06,fmt:v=>v.toFixed(2)+"%"},
+      series:[{data:DATA.spamWeekly,color:"#26201C",dots:[8]}],
+      hlines:[{v:DATA.spamGuardrail,color:"#C0392B",label:"0.05% cap"}]});
+    $("t-eng3").textContent="Spam rate — weekly vs the 0.05% cap";
+    linechart("c-acq1",{h:200,labels:wl,left:{min:0,max:50,fmt:v=>Math.round(v)+"k"},
+      series:[{data:DATA.grossWeekly,color:"#2D7A2D",width:1.6},
+              {data:DATA.lossWeekly,color:"#C0392B",width:1.6},
+              {data:DATA.netNewWeekly,color:"#26201C",dots:[7],hollow:[8]}],
+      hlines:[{v:46,color:"#8A7D70",label:"46k net/wk for 200k/mo"}]});
+    $("t-acq1").textContent="Adds vs losses — gross (green) · losses (red) · net (ink) — weekly";
+  } else {
+    stackchart("c-src",{grain:"m",totals:DATA.srcMonthlyTotals,max:450,ghost:[2],labels:["May","Jun","Jul*"],
+      marks:["$211k","$286k","$386k proj"],fmt:v=>"$"+Math.round(v)+"k"});
+    $("t-src").textContent="Revenue by source — monthly, $k · July = projection, ghosted";
+    linechart("c-eng1",{h:126,labels:["May","Jun","Jul td"],left:{min:50,max:56,fmt:v=>v.toFixed(1)+"%"},right:{min:0.2,max:0.35,fmt:v=>v.toFixed(2)+"%"},
+      series:[{data:DATA.engagedMonthly,color:"#26201C",dots:[2]},
+              {data:DATA.unsubsMonthly,axis:"r",color:"#C08F77",width:1.6}]});
+    $("t-eng1").textContent="Engaged share (left) & unsubs/send (right) — monthly";
+    linechart("c-eng2",{h:110,labels:["May","Jun","Jul td"],left:{min:4.6,max:5.3,fmt:v=>v.toFixed(1)+"%"},
+      series:[{data:DATA.ctorMonthly,color:"#B8593A",dots:[2]}]});
+    $("t-eng2").textContent="CTOR — clicks per open, monthly · 4.96 → 5.10";
+    linechart("c-eng3",{h:110,labels:["May","Jun","Jul td"],left:{min:0,max:0.06,fmt:v=>v.toFixed(2)+"%"},
+      series:[{data:DATA.spamMonthly,color:"#26201C",dots:[2]}],
+      hlines:[{v:DATA.spamGuardrail,color:"#C0392B",label:"0.05% cap"}]});
+    $("t-eng3").textContent="Spam rate — monthly vs the 0.05% cap";
+    linechart("c-acq1",{h:200,labels:["May","Jun","Jul*"],left:{min:0,max:220,fmt:v=>v+"k"},
+      series:[{data:DATA.netNewMonthly,color:"#26201C",dots:[0,1],hollow:[2]}],
+      hlines:[{v:DATA.netTarget,color:"#C0392B",label:"200k/mo target"}]});
+    $("t-acq1").textContent="Net new — monthly vs the 200k target · Jul = pace, hollow";
+  }
+}
+function setGrain(g){
+  grain=g;
+  $("g-w").classList.toggle("on",g==="w");
+  $("g-m").classList.toggle("on",g==="m");
+  drawCharts();
+}
+drawCharts();
+
+/* ═══ edit-targets popover ═══ */
+function togglePop(){ $("pop").toggleAttribute("hidden"); }
+document.addEventListener("click",function(e){
+  const pop=$("pop");
+  if(!pop.hasAttribute("hidden") && !pop.contains(e.target) && !e.target.closest(".gear")) pop.setAttribute("hidden","");
+});
+</script>
+</body>
+</html>

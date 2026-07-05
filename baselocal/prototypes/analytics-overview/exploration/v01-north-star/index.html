@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Analytics Overview — V1 North Star</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#2C2421; --bg:#FAF6F4; --hair:#E8E0DC; --acc:#B8593A;
+  --mut:#8C7F76; --faint:#B3A79E;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg)}
+body{
+  font-family:'Inter',system-ui,sans-serif; color:var(--ink);
+  font-size:13px; line-height:1.5; font-variant-numeric:tabular-nums;
+  padding-bottom:72px;
+}
+svg text{font-variant-numeric:tabular-nums}
+[hidden]{display:none !important}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+
+.caption{background:var(--ink);color:#EDE4DF;padding:10px 20px;font-size:12.5px;line-height:1.5}
+.caption strong{color:#E8A98F;font-weight:600}
+
+.wrap{max-width:1180px;margin:0 auto;padding:0 32px}
+
+/* ── header ── */
+header{display:flex;align-items:center;gap:18px;padding:22px 0 20px;border-bottom:1px solid var(--hair);position:relative}
+.brand{font-size:10.5px;font-weight:600;letter-spacing:.22em;text-transform:uppercase}
+.hdate{font-size:11px;color:var(--mut);letter-spacing:.06em}
+header .right{margin-left:auto;display:flex;align-items:center;gap:22px}
+.grain{display:flex;gap:14px;font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase}
+.grain button{color:var(--faint);padding:2px 0;border-bottom:2px solid transparent;letter-spacing:inherit;text-transform:inherit;font-size:inherit;font-weight:inherit}
+.grain button.on{color:var(--ink);border-bottom-color:var(--acc)}
+.gear{font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);border:1px solid var(--hair);padding:7px 14px;border-radius:2px;transition:color .15s,border-color .15s}
+.gear:hover{color:var(--acc);border-color:var(--acc)}
+
+/* edit-targets popover */
+.pop{position:absolute;right:0;top:64px;width:340px;background:var(--bg);border:1px solid var(--hair);box-shadow:0 12px 32px rgba(44,36,33,.12);padding:20px;z-index:20}
+.pop h3{font-size:10.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;margin-bottom:12px}
+.pop .row{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-top:1px solid var(--hair);font-size:12px}
+.pop .row span:first-child{color:var(--mut)}
+.pop .row b{font-weight:600;text-align:right}
+.pop .note{font-size:11px;color:var(--mut);margin-top:12px;line-height:1.55}
+.pop .close{margin-top:12px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--acc);font-weight:600}
+
+/* ── hero ── */
+.hero{text-align:center;padding:64px 0 24px}
+.eyebrow{font-size:11px;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:var(--mut);margin-bottom:14px}
+.north{font-weight:200;font-size:clamp(96px,13vw,168px);line-height:.95;letter-spacing:-.045em}
+.north .cur,.north .unit{font-size:.38em;font-weight:300;letter-spacing:-.01em;color:var(--mut);vertical-align:.62em}
+.north .unit{margin-left:.04em}
+.ofline{font-size:14.5px;color:var(--mut);margin-top:18px}
+.ofline b{color:var(--ink);font-weight:600}
+.ofline b.acc{color:var(--acc)}
+
+/* progress track */
+.trackzone{margin:44px auto 0;max-width:920px;position:relative;padding-top:26px}
+.caret{position:absolute;top:0;transform:translateX(-50%);font-size:10.5px;font-weight:600;color:var(--acc);white-space:nowrap}
+.caret::after{content:"";display:block;width:1px;height:12px;background:var(--acc);margin:3px auto 0}
+.track{position:relative;height:8px;background:#F1EAE6;border-radius:0}
+.fill{position:absolute;left:0;top:0;bottom:0;background:var(--acc)}
+.fill.proj{opacity:.35}
+.tick{position:absolute;top:-3px;width:1px;height:14px;background:var(--faint)}
+.ticklab{position:absolute;top:16px;transform:translateX(-50%);font-size:9.5px;color:var(--faint);white-space:nowrap;letter-spacing:.03em}
+.ticklab.strong{color:var(--ink);font-weight:600}
+.ticklab.end{transform:translateX(-92%)}
+.trackzone .labels{position:relative;height:34px}
+
+.herofacts{display:flex;justify-content:center;gap:0;margin:34px auto 0;max-width:860px}
+.herofacts .f{flex:1;padding:0 26px;font-size:11.5px;color:var(--mut);line-height:1.6}
+.herofacts .f+.f{border-left:1px solid var(--hair)}
+.herofacts b{display:block;font-size:16px;font-weight:600;color:var(--ink);letter-spacing:-.01em}
+
+/* ── path strip ── */
+.path{display:grid;grid-template-columns:repeat(8,1fr);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);margin-top:56px}
+.path .cell{padding:16px 18px 14px}
+.path .cell+.cell{border-left:1px solid var(--hair)}
+.path .m{font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--mut);margin-bottom:6px}
+.path .v{font-size:19px;font-weight:600;letter-spacing:-.01em}
+.path .v.future{color:var(--faint);font-weight:400}
+.path .s{font-size:10.5px;color:var(--faint);margin-top:2px}
+.path .s .miss{color:var(--acc);font-weight:600}
+.path .s .beat{color:var(--ink);font-weight:600}
+.pathnote{font-size:10.5px;color:var(--faint);padding:10px 0 0;text-align:right}
+
+/* ── key questions ── */
+.questions{display:grid;grid-template-columns:repeat(4,1fr);margin-top:52px;border-top:1px solid var(--hair)}
+.q{padding:22px 26px 6px}
+.q+.q{border-left:1px solid var(--hair)}
+.q .verdict{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;margin-bottom:10px}
+.q .verdict.warm{color:var(--acc)}
+.q .verdict.ok{color:var(--ink)}
+.q .qq{font-size:13.5px;font-weight:600;line-height:1.4;margin-bottom:8px;letter-spacing:-.005em}
+.q .aa{font-size:11.5px;color:var(--mut);line-height:1.65}
+
+/* ── cores ── */
+.coreszone{margin-top:64px}
+.coreshead{display:flex;align-items:baseline;gap:14px;margin-bottom:6px}
+.coreshead h2{font-size:11px;font-weight:600;letter-spacing:.24em;text-transform:uppercase}
+.coreshead .hint{font-size:10.5px;color:var(--faint);margin-left:auto}
+.cores{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--hair)}
+.core{padding:26px 28px 8px}
+.core+.core{border-left:1px solid var(--hair)}
+.klabel{font-size:10px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--mut)}
+.kheroline{display:flex;align-items:baseline;gap:12px;margin-top:10px}
+.khero{font-size:44px;font-weight:300;letter-spacing:-.03em;line-height:1}
+.kdelta{font-size:11px;font-weight:600;letter-spacing:.02em}
+.kmark{font-size:11px;color:var(--faint);margin-top:6px;margin-bottom:18px}
+
+.blk{padding:18px 0 14px;border-top:1px solid var(--hair)}
+.blk.first{border-top:none;padding-top:4px}
+.blk .t{font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--mut);margin-bottom:10px}
+.blk .foot{font-size:10.5px;color:var(--faint);margin-top:6px;line-height:1.5}
+
+/* mix bar */
+.mixbar{display:flex;height:10px;margin:4px 0 10px}
+.mixleg{font-size:10.5px;color:var(--mut);line-height:1.7}
+.mixleg b{color:var(--ink);font-weight:600}
+
+/* stat list */
+.stats .row{display:flex;justify-content:space-between;gap:10px;padding:6.5px 0;border-top:1px solid #F1EAE6;font-size:12px}
+.stats .row:first-child{border-top:none}
+.stats .row span:first-child{color:var(--mut)}
+.stats .row b{font-weight:600;text-align:right;white-space:nowrap}
+.stats .row b .dim{color:var(--faint);font-weight:400}
+.stats .row b .warm{color:var(--acc)}
+
+footer{margin-top:56px;border-top:1px solid var(--hair);padding-top:14px;font-size:10.5px;color:var(--faint);display:flex;gap:24px}
+footer span:last-child{margin-left:auto}
+
+@media(prefers-reduced-motion:reduce){*{transition:none !important}}
+@media(max-width:980px){
+  .cores{grid-template-columns:1fr}
+  .core+.core{border-left:none;border-top:1px solid var(--hair)}
+  .questions{grid-template-columns:1fr 1fr}
+  .q:nth-child(3){border-left:none}
+  .path{grid-template-columns:repeat(4,1fr)}
+  .path .cell:nth-child(5){border-left:none}
+  .herofacts{flex-direction:column;gap:14px}
+  .herofacts .f+.f{border-left:none}
+}
+</style>
+</head>
+<body>
+
+<div class="caption"><strong>V1 — North Star:</strong> the entire report orbits one number — projected monthly run-rate against the $1M/mo December goal. Three quiet columns beneath explain the gap.</div>
+
+<div class="wrap">
+
+  <header>
+    <div class="brand">BaseLocal · Analytics Overview</div>
+    <div class="hdate">Thursday, July 3</div>
+    <div class="right">
+      <div class="grain">
+        <button id="gw" class="on" onclick="setGrain('w')">Weekly</button>
+        <button id="gm" onclick="setGrain('m')">Monthly</button>
+      </div>
+      <button class="gear" onclick="toggleTargets()">Edit targets</button>
+    </div>
+    <div class="pop" id="pop" hidden>
+      <h3>Targets — set monthly</h3>
+      <div class="row"><span>July revenue</span><b>$400k</b></div>
+      <div class="row"><span>Roadmap ($k, May→Dec)</span><b>205 · 290 · 400 · 500 · 700 · 800 · 900 · 1,000</b></div>
+      <div class="row"><span>RPS by December</span><b>$0.50</b></div>
+      <div class="row"><span>RPS guardrail (Aug)</span><b>$0.45</b></div>
+      <div class="row"><span>Book by December</span><b>2.0M subs</b></div>
+      <div class="row"><span>Net new / month</span><b>200k</b></div>
+      <div class="row"><span>Daily revenue floor</span><b>$12k</b></div>
+      <div class="row"><span>Churn cap</span><b>22%</b></div>
+      <div class="note">Editing writes to the roadmap in production. Read-only in this mock — the point is that targets live here, one click from the number they drive.</div>
+      <button class="close" onclick="toggleTargets()">Close</button>
+    </div>
+  </header>
+
+  <!-- ═══ THE NORTH STAR ═══ -->
+  <section class="hero">
+    <div class="eyebrow">July, projected · monthly run-rate</div>
+    <div class="north"><span class="cur">$</span>386<span class="unit">k</span></div>
+    <div class="ofline">of <b>$1,000k</b> a month by December — <b class="acc">$614k still to build</b>, five months to do it. July&rsquo;s own target: <b>$400k</b>.</div>
+
+    <div class="trackzone">
+      <div class="caret" id="caret" style="left:38.6%">$386k projected</div>
+      <div class="track" id="track">
+        <div class="fill" style="width:28.6%"></div>
+        <div class="fill proj" style="left:28.6%;width:10%"></div>
+      </div>
+      <div class="labels" id="tlabels"></div>
+    </div>
+
+    <div class="herofacts">
+      <div class="f"><b>$37.4k</b>banked July 1–3</div>
+      <div class="f"><b>$12.9k / day</b>needed from here · best recent day $13.8k</div>
+      <div class="f"><b>15 → 22 → 25</b>sends per week · Jul 20, then August</div>
+    </div>
+  </section>
+
+  <!-- ═══ THE PATH ═══ -->
+  <div class="path">
+    <div class="cell"><div class="m">May</div><div class="v">$211k</div><div class="s">of 205 · <span class="beat">+6 beat</span></div></div>
+    <div class="cell"><div class="m">Jun</div><div class="v">$286k</div><div class="s">of 290 · <span class="miss">−4 short</span></div></div>
+    <div class="cell"><div class="m">Jul</div><div class="v">$386k*</div><div class="s">of 400 · <span class="miss">−14 pace</span></div></div>
+    <div class="cell"><div class="m">Aug</div><div class="v future">$500k</div><div class="s">target</div></div>
+    <div class="cell"><div class="m">Sep</div><div class="v future">$700k</div><div class="s">target</div></div>
+    <div class="cell"><div class="m">Oct</div><div class="v future">$800k</div><div class="s">target</div></div>
+    <div class="cell"><div class="m">Nov</div><div class="v future">$900k</div><div class="s">target</div></div>
+    <div class="cell"><div class="m">Dec</div><div class="v future">$1,000k</div><div class="s">the goal</div></div>
+  </div>
+  <div class="pathnote">*projected · targets are monthly-set — Edit targets to amend</div>
+
+  <!-- ═══ KEY QUESTIONS ═══ -->
+  <div class="questions">
+    <div class="q">
+      <div class="verdict warm">Close — $386k pace</div>
+      <div class="qq">Will we hit $400k this month?</div>
+      <div class="aa">Needs $12.9k a day; the best recent day brought $13.8k. The Jul 20 jump to 22 sends is the closing lever.</div>
+    </div>
+    <div class="q">
+      <div class="verdict warm">Moving — $0.34</div>
+      <div class="qq">Is RPS on the path to $0.50?</div>
+      <div class="aa">Up $0.03 on June. The path needs about $0.04 a month; reassess if August prints under the $0.45 guardrail.</div>
+    </div>
+    <div class="q">
+      <div class="verdict warm">No — 146k vs 200k</div>
+      <div class="qq">Are subscribers growing fast enough?</div>
+      <div class="aa">Needs 6.5k net a day; July is producing 4.7k. This is the distance between $386k and $1M.</div>
+    </div>
+    <div class="q">
+      <div class="verdict ok">Yes</div>
+      <div class="qq">Is the audience healthy while we scale?</div>
+      <div class="aa">Churn 19.4% against the 22% cap, opens 41.2% and rising. Unsubs per send ticked up with volume — expected, watched.</div>
+    </div>
+  </div>
+
+  <!-- ═══ THREE CORES ═══ -->
+  <div class="coreszone">
+    <div class="coreshead">
+      <h2>The three cores</h2>
+      <div class="hint">Weekly ⇄ Monthly redraws the core charts · marked numbers stay monthly · Jul W1 is 3 days, shown ghosted</div>
+    </div>
+    <div class="cores">
+
+      <!-- REVENUE -->
+      <div class="core">
+        <div class="klabel">Revenue</div>
+        <div class="kheroline"><span class="khero">$286k</span><span class="kdelta">▲ 35.5% vs May</span></div>
+        <div class="kmark">June, marked monthly · July banked $37.4k, projecting $386k</div>
+
+        <div class="blk first">
+          <div class="t">Revenue — <span class="grainword">weekly</span>, $k</div>
+          <div id="c-rev"></div>
+        </div>
+        <div class="blk">
+          <div class="t">Daily — last 21 days, $k</div>
+          <div id="c-daily"></div>
+          <div class="foot">One dip under the $12k floor in the last seven days.</div>
+        </div>
+        <div class="blk">
+          <div class="t">RPS — path to $0.50</div>
+          <div id="c-rps"></div>
+          <div class="foot">Monthly marks: $0.29 May · $0.31 Jun · $0.34 Jul-td.</div>
+        </div>
+        <div class="blk">
+          <div class="t">July mix</div>
+          <div class="mixbar">
+            <div style="flex:58;background:#2C2421"></div>
+            <div style="flex:22;background:#2C2421;opacity:.68"></div>
+            <div style="flex:9;background:#2C2421;opacity:.46"></div>
+            <div style="flex:6;background:#2C2421;opacity:.3"></div>
+            <div style="flex:5;background:#2C2421;opacity:.16"></div>
+          </div>
+          <div class="mixleg"><b>Morning Roundup 58</b> · Daily News 22 · Welcome 9 · Bridge 6 · Other 5</div>
+        </div>
+        <div class="blk stats">
+          <div class="row"><span>Revenue per click</span><b>$1.86</b></div>
+          <div class="row"><span>Active offers</span><b>34</b></div>
+          <div class="row"><span>June test winners solidified</span><b>3 <span class="dim">of 10</span></b></div>
+          <div class="row"><span>Sends per week</span><b>15 <span class="dim">→ 22 Jul 20 → 25 Aug</span></b></div>
+        </div>
+      </div>
+
+      <!-- ENGAGEMENT -->
+      <div class="core">
+        <div class="klabel">Engagement</div>
+        <div class="kheroline"><span class="khero">52.6%</span><span class="kdelta">▲ 0.7pt vs May</span></div>
+        <div class="kmark">June engaged share, marked monthly · July-to-date 54.0%</div>
+
+        <div class="blk first">
+          <div class="t">Engaged share — <span class="grainword">weekly</span>, %</div>
+          <div id="c-eng"></div>
+        </div>
+        <div class="blk">
+          <div class="t">Churn — monthly, vs 22% cap</div>
+          <div id="c-churn"></div>
+          <div class="foot">Existing Engaged Audience definition.</div>
+        </div>
+        <div class="blk">
+          <div class="t">Opens — weekly, % of delivered</div>
+          <div id="c-opens"></div>
+          <div class="foot">Watch through the Jul 20 send expansion.</div>
+        </div>
+        <div class="blk stats">
+          <div class="row"><span>Click-through, delivered</span><b>2.1% <span class="dim">from 1.95</span></b></div>
+          <div class="row"><span>Unsubs per send</span><b>0.31% <span class="dim">from 0.27</span></b></div>
+          <div class="row"><span>Open rate, latest week</span><b>41.2%</b></div>
+          <div class="row"><span>Engaged share, July-td</span><b>54.0%</b></div>
+        </div>
+      </div>
+
+      <!-- ACQUISITION -->
+      <div class="core">
+        <div class="klabel">Acquisition</div>
+        <div class="kheroline"><span class="khero">+118k</span><span class="kdelta">▲ 15.7% vs May</span></div>
+        <div class="kmark">June net new, marked monthly · July pacing +146k of 200k</div>
+
+        <div class="blk first">
+          <div class="t">Net new subs — <span class="grainword">weekly</span>, k</div>
+          <div id="c-acq"></div>
+        </div>
+        <div class="blk">
+          <div class="t">Book — path to 2.0M by December</div>
+          <div id="c-book"></div>
+          <div class="foot">2.0M × $0.50 RPS = $1M a month.</div>
+        </div>
+        <div class="blk">
+          <div class="t">Flows — gross · net · lost, weekly k</div>
+          <div id="c-flow"></div>
+          <div class="foot">* Jul W1 is 3 days.</div>
+        </div>
+        <div class="blk">
+          <div class="t">Welcome yield — $ per gross new sub</div>
+          <div id="c-welcome"></div>
+        </div>
+        <div class="blk stats">
+          <div class="row"><span>Subscribers today</span><b>985k</b></div>
+          <div class="row"><span>Net per day, needed vs now</span><b>6.5k <span class="warm">vs 4.7k</span></b></div>
+          <div class="row"><span>CAC payback</span><b>41 days</b></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <span>Data through Thursday, July 3 · Jul W1 covers 3 days and is shown ghosted or dashed</span>
+    <span>Targets are monthly-set · Edit targets, top right</span>
+  </footer>
+
+</div>
+
+<script>
+/* ── Shared dataset — identical across exploration variants ── */
+const DATA = {
+  asOf: "Jul 3, 2026",
+  months: ["May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
+  revTargets: [205,290,400,500,700,800,900,1000],
+  revActuals: [211,286],
+  julMTD: 37.4, julProjected: 386, julNeedPerDay: 12.9,
+  revWeekly: [44,48,52,55,62,68,74,82,37.4],
+  daily21: [11.8,12.6,13.1,12.2,12.9,13.4,12.7,13.0,12.4,11.1,12.8,13.2,12.6,13.8,12.9,13.1,12.5,13.3,11.9,13.2,12.5],
+  dailyFloor: 12,
+  rpsWeekly: [0.27,0.28,0.29,0.30,0.30,0.31,0.31,0.32,0.34],
+  rpsMonthly: [0.29,0.31,0.34],
+  rpsTarget: 0.50, rpsAugGuardrail: 0.45,
+  subscribers: 985,
+  bookActuals: [852,912,985],
+  bookTargetPath: [985,1090,1290,1490,1640,1790,1930,2000],
+  netNewWeekly: [24,26,25,27,27,29,30,32,14.2],
+  netNewMonthly: [102,118],
+  julNetPace: 146, netTarget: 200,
+  grossWeekly: [31,33,32,35,35,37,38,42,18.6],
+  lossWeekly: [7,7,7,8,8,8,8,10,4.4],
+  churnMonthly: [18.1,18.8,19.4], churnGuardrail: 22,
+  opensWeekly: [40.0,40.2,40.1,40.4,40.5,40.7,40.8,41.0,41.2],
+  ctrWeekly: [1.95,1.97,1.99,2.00,2.02,2.04,2.06,2.08,2.10],
+  engagedWeekly: [51.2,51.6,51.9,52.0,52.1,52.3,52.6,53.1,54.0],
+  engagedMonthly: [51.9,52.6,54.0],
+  unsubsMonthly: [0.27,0.29,0.31],
+  mix: [["Morning Roundup",58],["Daily News",22],["Welcome",9],["Bridge",6],["Other",5]],
+  welcomeYield: [0.06,0.09,0.11], welcomeTarget: 0.15,
+  rpc: 1.86, activeOffers: 34, winners: [3,10], cacPaybackDays: 41,
+  emailsPerWeek: 15, emailsJul20: 22, emailsAug: 25,
+  weekLabels: ["May W1","May W2","May W3","May W4","Jun W1","Jun W2","Jun W3","Jun W4","Jul W1*"]
+};
+
+/* ── minimal-ink chart kit ── */
+const INK="#2C2421", MUT="#8C7F76", HAIR="#E8E0DC", ACC="#B8593A", BG="#FAF6F4";
+const NSVG="http://www.w3.org/2000/svg";
+function E(t,a){const e=document.createElementNS(NSVG,t);for(const k in a)e.setAttribute(k,a[k]);return e;}
+function T(s,x,y,str,a){
+  const t=E("text",Object.assign({x:x,y:y,"font-size":9.5,fill:MUT},a||{}));
+  t.textContent=str; s.appendChild(t); return t;
+}
+function mount(id,w,h){
+  const s=E("svg",{viewBox:"0 0 "+w+" "+h});
+  s.style.width="100%"; s.style.display="block";
+  document.getElementById(id).replaceChildren(s);
+  return s;
+}
+function vline(id,o){
+  const w=o.w||340,h=o.h||120,pad=o.pad||{t:16,r:58,b:20,l:10};
+  const s=mount(id,w,h);
+  const n=Math.max.apply(null,o.series.map(function(sr){return sr.data.length}));
+  const X=function(i){return pad.l+i*(w-pad.l-pad.r)/(n-1)};
+  const Y=function(v){return pad.t+(1-(v-o.min)/(o.max-o.min))*(h-pad.t-pad.b)};
+  const fmt=o.fmt||function(v){return v};
+  s.appendChild(E("line",{x1:pad.l,y1:h-pad.b,x2:w-pad.r,y2:h-pad.b,stroke:HAIR}));
+  (o.refs||[]).forEach(function(r){
+    const y=Y(r.v);
+    s.appendChild(E("line",{x1:pad.l,y1:y,x2:w-pad.r,y2:y,stroke:ACC,"stroke-width":1,"stroke-dasharray":"3 4",opacity:r.soft?0.5:1}));
+    T(s,w-pad.r+5,y+3,r.label,{fill:ACC,"font-size":8.5,opacity:r.soft?0.75:1});
+  });
+  o.series.forEach(function(sr){
+    const col=sr.color||INK, wd=sr.width||1.75, op=(sr.op!=null)?sr.op:1;
+    const m=sr.data.length;
+    const pts=sr.data.map(function(v,i){return [X(i),Y(v)]});
+    const str=function(a){return a.map(function(p){return p[0]+","+p[1]}).join(" ")};
+    if(sr.partial && m>1){
+      if(m>2) s.appendChild(E("polyline",{points:str(pts.slice(0,m-1)),fill:"none",stroke:col,"stroke-width":wd,opacity:op,"stroke-linejoin":"round","stroke-linecap":"round"}));
+      s.appendChild(E("line",{x1:pts[m-2][0],y1:pts[m-2][1],x2:pts[m-1][0],y2:pts[m-1][1],stroke:col,"stroke-width":wd,opacity:op,"stroke-dasharray":"2 4","stroke-linecap":"round"}));
+    } else {
+      s.appendChild(E("polyline",{points:str(pts),fill:"none",stroke:col,"stroke-width":wd,opacity:op,"stroke-linejoin":"round","stroke-linecap":"round"}));
+    }
+    (sr.dots||[]).forEach(function(i){ s.appendChild(E("circle",{cx:pts[i][0],cy:pts[i][1],r:2.6,fill:col,opacity:op})); });
+    const last=pts[m-1];
+    if(sr.endDot!==false) s.appendChild(E("circle",{cx:last[0],cy:last[1],r:2.8,fill:sr.open?BG:col,stroke:col,"stroke-width":sr.open?1.5:0,opacity:op}));
+    if(sr.endLabel!==false) T(s,last[0]+6,last[1]+3.5+(sr.endDy||0),(sr.endLabel!=null)?sr.endLabel:fmt(sr.data[m-1]),{fill:col,"font-weight":600,opacity:Math.min(op+0.25,1)});
+    if(sr.startLabel) T(s,pts[0][0],pts[0][1]-7,fmt(sr.data[0]),{"font-size":8.5});
+  });
+  (o.xlabels||[]).forEach(function(lb,i){ if(lb) T(s,X(i),h-6,lb,{"text-anchor":"middle","font-size":8.5}); });
+}
+function vbars(id,o){
+  const w=o.w||340,h=o.h||120,pad=o.pad||{t:16,r:58,b:20,l:10};
+  const s=mount(id,w,h);
+  const data=o.data,n=data.length,iw=(w-pad.l-pad.r)/n,min=o.min||0;
+  const Y=function(v){return pad.t+(1-(v-min)/(o.max-min))*(h-pad.t-pad.b)};
+  const fmt=o.fmt||function(v){return v};
+  s.appendChild(E("line",{x1:pad.l,y1:h-pad.b,x2:w-pad.r,y2:h-pad.b,stroke:HAIR}));
+  data.forEach(function(v,i){
+    const y=Y(v), bh=Math.max(h-pad.b-y,1.5);
+    const ghost=(o.ghost||[]).indexOf(i)>=0;
+    const below=(o.belowRef!=null)&&v<o.belowRef;
+    s.appendChild(E("rect",{x:pad.l+i*iw+iw*0.2,y:y,width:iw*0.6,height:bh,rx:1,fill:below?ACC:INK,opacity:ghost?0.28:(below?1:0.82)}));
+  });
+  (o.refs||[]).forEach(function(r){
+    const y=Y(r.v);
+    s.appendChild(E("line",{x1:pad.l,y1:y,x2:w-pad.r,y2:y,stroke:ACC,"stroke-width":1,"stroke-dasharray":"3 4"}));
+    T(s,w-pad.r+5,y+3,r.label,{fill:ACC,"font-size":8.5});
+  });
+  (o.marks||[]).forEach(function(m){
+    T(s,pad.l+m.i*iw+iw/2,Y(data[m.i])-5,(m.label!=null)?m.label:fmt(data[m.i]),{"text-anchor":"middle","font-weight":600,fill:m.color||INK,"font-size":9});
+  });
+  (o.xlabels||[]).forEach(function(lb,i){ if(lb) T(s,pad.l+i*iw+iw/2,h-6,lb,{"text-anchor":"middle","font-size":8.5}); });
+}
+
+/* ── progress track ticks ── */
+(function(){
+  const track=document.getElementById("track");
+  const labels=document.getElementById("tlabels");
+  DATA.months.forEach(function(m,i){
+    const pct=DATA.revTargets[i]/10; // /1000*100
+    const t=document.createElement("div");
+    t.className="tick"; t.style.left=pct+"%";
+    track.appendChild(t);
+    const l=document.createElement("div");
+    l.className="ticklab"+((i===2||i===7)?" strong":"")+(i===7?" end":"");
+    l.style.left=pct+"%";
+    l.textContent=(i===2)?"Jul $400k":(i===7)?"Dec $1M":(m+" "+DATA.revTargets[i]);
+    labels.appendChild(l);
+  });
+})();
+
+/* ── grain toggle + cores ── */
+const WL=["M1","","","M4","J1","","","J4","Jul*"];
+let grain="w";
+function setGrain(g){
+  grain=g;
+  document.getElementById("gw").classList.toggle("on",g==="w");
+  document.getElementById("gm").classList.toggle("on",g==="m");
+  document.querySelectorAll(".grainword").forEach(function(e){e.textContent=(g==="w")?"weekly":"monthly";});
+  drawCores();
+}
+function drawCores(){
+  if(grain==="w"){
+    vbars("c-rev",{data:DATA.revWeekly,max:95,ghost:[8],marks:[{i:7}],xlabels:WL,fmt:function(v){return "$"+v+"k"}});
+    vline("c-eng",{series:[{data:DATA.engagedWeekly,startLabel:true,endLabel:"54.0%"}],min:48,max:58,xlabels:WL,fmt:function(v){return v.toFixed(1)+"%"}});
+    vbars("c-acq",{data:DATA.netNewWeekly,max:52,ghost:[8],refs:[{v:46,label:"46k/wk"}],marks:[{i:7}],xlabels:WL,fmt:function(v){return "+"+v+"k"}});
+  } else {
+    vbars("c-rev",{data:[211,286,386],max:460,ghost:[2],refs:[{v:400,label:"$400k"}],marks:[{i:0},{i:1},{i:2,label:"$386k proj"}],xlabels:["May","Jun","Jul*"],fmt:function(v){return "$"+v+"k"}});
+    vline("c-eng",{series:[{data:DATA.engagedMonthly,dots:[0,1],startLabel:true,endLabel:"54.0%"}],min:48,max:58,xlabels:["May","Jun","Jul td"],fmt:function(v){return v.toFixed(1)+"%"}});
+    vbars("c-acq",{data:[102,118,146],max:230,ghost:[2],refs:[{v:200,label:"200k"}],marks:[{i:0},{i:1},{i:2,label:"+146k pace"}],xlabels:["May","Jun","Jul*"],fmt:function(v){return "+"+v+"k"}});
+  }
+}
+drawCores();
+
+/* ── static deep charts ── */
+vbars("c-daily",{data:DATA.daily21,max:16,belowRef:12,refs:[{v:12,label:"floor $12k"}],marks:[{i:13,label:"$13.8k"}],
+  xlabels:DATA.daily21.map(function(_,i){return (i%5===0)?("-"+(21-i)+"d"):""}),fmt:function(v){return "$"+v+"k"}});
+
+vline("c-rps",{series:[{data:DATA.rpsWeekly,dots:[3,7],startLabel:true,endLabel:"$0.34"}],
+  min:0.2,max:0.55,pad:{t:16,r:82,b:20,l:10},
+  refs:[{v:0.5,label:"$0.50 by Dec"},{v:0.45,label:"$0.45 Aug g'rail",soft:true}],
+  xlabels:WL,fmt:function(v){return "$"+v.toFixed(2)}});
+
+vbars("c-churn",{data:DATA.churnMonthly,max:26,refs:[{v:22,label:"22% cap"}],
+  marks:[{i:0},{i:1},{i:2}],xlabels:["May","Jun","Jul td"],fmt:function(v){return v.toFixed(1)+"%"}});
+
+vline("c-opens",{series:[{data:DATA.opensWeekly,startLabel:true,endLabel:"41.2%"}],
+  min:38,max:43,xlabels:WL,fmt:function(v){return v.toFixed(1)+"%"}});
+
+vline("c-book",{series:[
+    {data:DATA.bookTargetPath,color:MUT,width:1.25,op:0.7,endDot:false,endLabel:"2.0M path"},
+    {data:DATA.bookActuals,width:2,startLabel:true,endLabel:"985k"}
+  ],min:700,max:2150,pad:{t:16,r:62,b:20,l:10},
+  xlabels:["May","","","Aug","","","","Dec"],fmt:function(v){return Math.round(v)+"k"}});
+
+vline("c-flow",{series:[
+    {data:DATA.grossWeekly,op:0.45,width:1.5,partial:true,endLabel:"gross 18.6",endDy:-3},
+    {data:DATA.netNewWeekly,width:2,partial:true,endLabel:"net 14.2",endDy:4},
+    {data:DATA.lossWeekly,color:ACC,width:1.25,partial:true,endLabel:"lost 4.4"}
+  ],min:0,max:46,pad:{t:14,r:70,b:20,l:10},xlabels:WL,fmt:function(v){return v+"k"}});
+
+vline("c-welcome",{series:[{data:DATA.welcomeYield,width:2,dots:[0,1],startLabel:true,endLabel:"$0.11"}],
+  min:0,max:0.18,pad:{t:16,r:74,b:20,l:10},
+  refs:[{v:0.15,label:"$0.15 target"}],
+  xlabels:["May","Jun","Jul td"],fmt:function(v){return "$"+v.toFixed(2)}});
+
+/* ── edit-targets popover ── */
+function toggleTargets(){ document.getElementById("pop").toggleAttribute("hidden"); }
+</script>
+</body>
+</html>

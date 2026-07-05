@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hero variants — header + revenue chart</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Bitter:wght@700;800&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#2C2421; --body:#444; --mut:#797979; --faint:#9ca3af;
+  --line:#E8E0DC; --hair:#f3f4f6; --cream:#FAF6F4; --page:#F3F0ED;
+  --terra:#C2604A; --terra-d:#A84E3B; --amber:#b45309; --green:#2D7A2D;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:var(--page);color:var(--ink);font-size:14px;padding-bottom:100px}
+.caption{background:#111827;color:#fff;padding:10px 16px;font-size:13px}
+.caption strong{color:#f7cfc2}
+.wrap{max-width:1140px;margin:0 auto;padding:20px}
+.tnum{font-variant-numeric:tabular-nums}
+.var{margin:0 0 46px}
+.vlabel{font-size:13px;font-weight:700;margin-bottom:10px;color:var(--ink)}
+.vlabel .n{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:8px;background:#111827;color:#fff;font-size:12px;margin-right:8px}
+.vlabel .rec{color:var(--terra-d);font-weight:700;margin-left:8px}
+.vlabel .d{color:var(--mut);font-weight:400;margin-left:8px}
+.frame{border-radius:14px;overflow:hidden;box-shadow:0 2px 10px rgba(44,36,33,.07)}
+
+/* shared header pieces */
+.hd{display:flex;align-items:center;gap:14px;padding:14px 24px;background:#fff}
+.hd img{height:22px;display:block}
+.hd h1{font-family:'Bitter',Georgia,serif;font-size:19px;font-weight:800}
+.hd .date{color:var(--mut);font-size:12.5px}
+.hd .gear{margin-left:auto;border:1px solid var(--line);background:#fff;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:600;color:var(--mut)}
+/* shared hero pieces */
+.hero{padding:22px 26px 16px;background:#fff}
+.kick{font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--terra)}
+.hl{display:flex;align-items:baseline;gap:14px;margin:5px 0 0}
+.hl .big{font-family:'Bitter',Georgia,serif;font-size:46px;font-weight:800;letter-spacing:-.02em}
+.hl .of{font-family:'Bitter',Georgia,serif;font-size:20px;color:var(--faint);font-weight:700}
+.sub{font-size:14px;color:var(--body);margin:2px 0 4px}
+.sub b{color:var(--amber)}
+.chart{margin-top:6px}
+.stats{display:flex;margin-top:6px;border-top:1px solid var(--hair);padding-top:12px}
+.stats .s{flex:1;padding:0 18px;border-left:1px solid var(--hair)}
+.stats .s:first-child{border-left:none;padding-left:2px}
+.stats .v{font-size:16px;font-weight:800}
+.stats .l{font-size:10.5px;color:var(--mut);font-weight:600;margin-top:1px}
+.stats .gap .v{color:var(--amber)}
+
+/* V2 espresso masthead */
+.v2 .hd{background:var(--ink)}
+.v2 .hd h1{color:#fff}
+.v2 .hd .date{color:#a89e99}
+.v2 .hd .gear{background:transparent;border-color:#4a403b;color:#c7bdb6}
+
+/* V3 cream canvas */
+.v3 .frame{box-shadow:none;border:1px solid var(--line)}
+.v3 .hd{background:#fff;border-bottom:2px solid var(--ink)}
+.v3 .hero{background:var(--cream)}
+.v3 .stats{border-top-color:var(--line)}
+
+/* V4 editorial rule */
+.v4 .frame{box-shadow:none;border-radius:0;overflow:visible}
+.v4 .hd{background:transparent;border-top:3px solid var(--ink);border-bottom:1px solid var(--ink);padding:12px 4px}
+.v4 .hero{background:transparent;padding:20px 4px 8px}
+.v4 .hl .big{font-size:56px}
+.v4 .stats{border-top:1px solid var(--ink)}
+
+/* V5 terracotta wash */
+.v5 .hero{padding:0;background:#fff}
+.v5 .washband{background:#F9EDE8;padding:20px 26px 16px}
+.v5 .chartzone{padding:14px 26px 16px}
+.v5 .kick{color:var(--terra-d)}
+
+/* V8 split */
+.v8 .hero{display:grid;grid-template-columns:2fr 3fr;gap:26px}
+.v8 .stats{flex-direction:column;border-top:none;margin-top:14px;padding-top:0;gap:12px}
+.v8 .stats .s{border-left:none;padding:0;border-top:1px solid var(--hair);padding-top:10px}
+.v8 .stats .s:first-child{border-top:none;padding-top:0}
+
+/* V9 espresso chart */
+.v9 .plotdark{background:var(--ink);border-radius:12px;padding:12px 12px 6px;margin-top:8px}
+
+/* V10 minimal */
+.v10 .frame{box-shadow:none;border-radius:0}
+.v10 .hd{background:transparent;padding:12px 4px;border-bottom:1px solid var(--line)}
+.v10 .hero{background:transparent;padding:26px 4px 8px}
+.v10 .hl .big{font-size:64px}
+.v10 .stats{border-top:none;padding-top:4px}
+.v10 .statline{font-size:13.5px;color:var(--mut);margin-top:10px}
+.v10 .statline b{color:var(--ink)}
+.v10 .statline .g{color:var(--amber);font-weight:800}
+text{font-family:'Inter',sans-serif}
+</style>
+</head>
+<body>
+<div class="caption"><strong>Hero finalists — 10 treatments of the header row + revenue chart.</strong> Identical content everywhere; only BaseLocal styling changes. My pick is starred. Choose by number.</div>
+<div class="wrap" id="wrap"></div>
+
+<script>
+const NS="http://www.w3.org/2000/svg";
+const el=(t,a)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e};
+const days=31, tgt=400, proj=386, actual=[12.4,24.9,37.4], daily=[12.4,12.5,12.5];
+
+function pace(container,{type="line",dark=false,h=230}={}){
+  const w=1060,p={t:14,r:14,b:26,l:50};
+  const s=el("svg",{viewBox:`0 0 ${w} ${h}`,width:"100%",height:h});container.appendChild(s);
+  const gridC = dark?"#4a403b":"#f3f4f6", axisC = dark?"#8d8078":"#9ca3af", axisF = dark?"#a89e99":"#9ca3af";
+  const X=i=>p.l+i*(w-p.l-p.r)/days, Y=v=>p.t+(1-v/420)*(h-p.t-p.b);
+  [[0,0],[0.5,210],[1,420]].forEach(([fr,v])=>{const y=p.t+(1-fr)*(h-p.t-p.b);
+    s.appendChild(el("line",{x1:p.l,y1:y,x2:w-p.r,y2:y,stroke:gridC}));
+    const t=el("text",{x:p.l-8,y:y+4,"text-anchor":"end","font-size":11,fill:axisF});t.textContent="$"+v+"k";s.appendChild(t)});
+  if(type==="bars"){
+    const Yb=v=>p.t+(1-v/16)*(h-p.t-p.b); // daily scale
+    [[0,0],[0.5,8],[1,16]].forEach(([fr,v],i)=>{}); // grid already drawn on 420 scale; redraw labels for bars scale
+    s.replaceChildren();
+    [[0,0],[0.5,8],[1,16]].forEach(([fr,v])=>{const y=p.t+(1-fr)*(h-p.t-p.b);
+      s.appendChild(el("line",{x1:p.l,y1:y,x2:w-p.r,y2:y,stroke:gridC}));
+      const t=el("text",{x:p.l-8,y:y+4,"text-anchor":"end","font-size":11,fill:axisF});t.textContent="$"+v+"k";s.appendChild(t)});
+    daily.forEach((v,i)=>{const d=i+1,bw=(w-p.l-p.r)/days*.62;
+      s.appendChild(el("rect",{x:X(d)-bw/2,y:Yb(v),width:bw,height:(h-p.b)-Yb(v),rx:2,fill:"#B8593A"}))});
+    const yn=Yb(12.9);
+    s.appendChild(el("line",{x1:p.l,y1:yn,x2:w-p.r,y2:yn,stroke:"#8a3f2a","stroke-dasharray":"5 4","stroke-width":1.5}));
+  } else {
+    // target + projection + actual (cumulative)
+    s.appendChild(el("polyline",{points:[...Array(days+1)].map((_,i)=>`${X(i)},${Y(tgt*i/days)}`).join(" "),fill:"none",stroke:dark?"#5b5049":"#E8E0DC","stroke-width":2,"stroke-dasharray":"6 4"}));
+    const pj=[];for(let i=3;i<=days;i++)pj.push(`${X(i)},${Y(actual[2]+(proj-actual[2])*(i-3)/(days-3))}`);
+    s.appendChild(el("polyline",{points:pj.join(" "),fill:"none",stroke:dark?"#e0a68f":"#d98a6d","stroke-width":2.5,"stroke-dasharray":"3 5"}));
+    const actPts=`${X(0)},${Y(0)} `+actual.map((v,i)=>`${X(i+1)},${Y(v)}`).join(" ");
+    if(type==="area"){
+      s.appendChild(el("path",{d:`M ${X(0)},${Y(0)} `+actual.map((v,i)=>`L ${X(i+1)},${Y(v)}`).join(" ")+` L ${X(3)},${Y(0)} Z`,fill:"#C2604A",opacity:.14}));
+    }
+    const mainC = dark?"#F0A98E":(type==="mini"?"#2C2421":"#B8593A");
+    s.appendChild(el("polyline",{points:actPts,fill:"none",stroke:mainC,"stroke-width":type==="mini"?2:3.5,"stroke-linecap":"round"}));
+    s.appendChild(el("circle",{cx:X(3),cy:Y(37.4),r:type==="mini"?4:5,fill:mainC}));
+  }
+  for(let d=1;d<=days;d++){const em=d===1||d%5===0||d===31;
+    s.appendChild(el("line",{x1:X(d),y1:h-p.b,x2:X(d),y2:h-p.b+(em?5:3),stroke:em?(dark?"#8d8078":"#c7bdb6"):(dark?"#5b5049":"#E8E0DC"),"stroke-width":1}));
+    const t=el("text",{x:X(d),y:h-7,"text-anchor":"middle","font-size":em?10.5:9,fill:em?axisC:(dark?"#5b5049":"#c7bdb6")});t.textContent=d;s.appendChild(t)}
+}
+
+const LOGO_D='../../../../assets/logos/baselocal-full-dark.svg';
+const LOGO_W='../../../../assets/logos/baselocal-full-white.svg';
+const LOGO_T='../../../../assets/logos/baselocal-full-terracotta.svg';
+
+function header(logo){return `<div class="hd"><img src="${logo}" alt="BaseLocal"><h1>Analytics Overview</h1><span class="date">Friday, Jul 3</span><button class="gear">Edit targets</button></div>`}
+const HL=`<div class="kick">July revenue</div>
+<div class="hl"><span class="big tnum">$37.4k</span><span class="of tnum">of $400k</span></div>
+<div class="sub tnum">Pacing to $386k — <b>$14k short</b></div>`;
+const STATS=`<div class="stats">
+<div class="s"><div class="v tnum">$12.5k</div><div class="l">made / day so far</div></div>
+<div class="s"><div class="v tnum">$12.9k</div><div class="l">needed / day from here</div></div>
+<div class="s gap"><div class="v tnum">+$0.4k</div><div class="l">the daily gap to close</div></div></div>`;
+
+const V=[
+ {n:1,name:"Settled (as converged)",rec:true,d:"white card, Bitter numerals, terracotta kicker, clean line — the version your last four rounds shaped",cls:"v1",logo:LOGO_D,type:"line"},
+ {n:2,name:"Espresso masthead",d:"the header goes dark espresso with the white wordmark; hero unchanged — strongest brand frame",cls:"v2",logo:LOGO_W,type:"line"},
+ {n:3,name:"Cream hero",d:"header ruled in espresso, hero on warm cream, chart straight on cream — the newsletter's own warmth",cls:"v3",logo:LOGO_D,type:"line"},
+ {n:4,name:"Editorial",d:"no card at all — triple-rule masthead, oversized Bitter, open layout like a printed report",cls:"v4",logo:LOGO_D,type:"line"},
+ {n:5,name:"Terracotta wash",d:"headline block on a soft terracotta tint band, chart below on white — one bold brand moment",cls:"v5",logo:LOGO_D,type:"line",wash:true},
+ {n:6,name:"Area fill",d:"same as №1 but the actual line carries a terracotta area fill — more visual weight on money made",cls:"v1",logo:LOGO_D,type:"area"},
+ {n:7,name:"Daily bars",d:"the chart shows each day's revenue as bars against the needed-per-day line — daily accountability over cumulative shape",cls:"v1",logo:LOGO_D,type:"bars"},
+ {n:8,name:"Split hero",d:"headline + stats stacked left, chart right — horizontal composition, chart gets full height",cls:"v8",logo:LOGO_D,type:"line",split:true},
+ {n:9,name:"Espresso plot",d:"the chart plots on a dark espresso panel — dramatic centerpiece, terracotta line glowing on it",cls:"v9",logo:LOGO_D,type:"line",dark:true},
+ {n:10,name:"Minimal ink",d:"no cards, huge numeral, hairline espresso chart, stats as one quiet line — maximum whitespace",cls:"v10",logo:LOGO_T,type:"mini",minimal:true},
+];
+
+const wrap=document.getElementById("wrap");
+V.forEach(v=>{
+  const d=document.createElement("div");d.className=`var ${v.cls}`;
+  let hero;
+  if(v.wash){hero=`<div class="hero"><div class="washband">${HL}</div><div class="chartzone"><div class="chart" id="c${v.n}"></div>${STATS}</div></div>`}
+  else if(v.split){hero=`<div class="hero"><div>${HL}${STATS}</div><div class="chart" id="c${v.n}"></div></div>`}
+  else if(v.dark){hero=`<div class="hero">${HL}<div class="plotdark"><div class="chart" id="c${v.n}"></div></div>${STATS}</div>`}
+  else if(v.minimal){hero=`<div class="hero">${HL}<div class="chart" id="c${v.n}"></div><div class="statline tnum"><b>$12.5k</b> made/day · <b>$12.9k</b> needed/day · <span class="g">+$0.4k gap</span></div></div>`}
+  else{hero=`<div class="hero">${HL}<div class="chart" id="c${v.n}"></div>${STATS}</div>`}
+  d.innerHTML=`<div class="vlabel"><span class="n">${v.n}</span>${v.name}${v.rec?'<span class="rec">★ my pick</span>':''}<span class="d">${v.d}</span></div>
+    <div class="frame">${header(v.logo)}${hero}</div>`;
+  wrap.appendChild(d);
+  pace(document.getElementById("c"+v.n),{type:v.type,dark:!!v.dark,h:v.split?300:(v.minimal?200:230)});
+});
+</script>
+</body>
+</html>

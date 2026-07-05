@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deep-dive section — round 3, 10 mocks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,700;0,800;1,400&family=Lato:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#2C2421; --body:#444; --mut:#797979; --faint:#9ca3af;
+  --line:#E8E0DC; --hair:#f3f4f6; --band:#F5EEE9; --tint:#FCFAF8;
+  --brand:#B8593A; --brand-d:#8a3f2a; --green:#2D7A2D; --green-bg:#EEF7ED; --amber:#b45309;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Lato',sans-serif;background:#F3F0ED;color:var(--ink);padding:36px 28px 100px;font-size:14px}
+.wrap{max-width:1040px;margin:0 auto}
+h1{font-family:'Bitter',Georgia,serif;font-size:26px;font-weight:800;letter-spacing:-.01em}
+p.sub{color:var(--mut);font-size:13.5px;margin:8px 0 8px;line-height:1.6;max-width:78ch}
+.tag{display:flex;align-items:baseline;gap:10px;margin:52px 0 12px;flex-wrap:wrap}
+.tag .n{width:28px;height:28px;border-radius:9px;background:var(--ink);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex:none;align-self:center}
+.tag .t{font-size:15px;font-weight:700}
+.tag .d{font-size:12.5px;color:var(--mut);line-height:1.5}
+.tag .star{background:var(--brand);color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px;align-self:center}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 1px 4px rgba(44,36,33,.05);overflow:hidden}
+.bt{font-family:'Bitter',Georgia,serif;font-weight:800;letter-spacing:-.01em}
+.links a{color:var(--brand-d);text-decoration:none;font-size:12px;font-weight:600}
+.links a:hover{text-decoration:underline}
+svg{display:block;width:100%}
+.tnum{font-variant-numeric:tabular-nums}
+[data-v]{cursor:pointer;user-select:none}
+.ct{font-size:13px;font-weight:700;color:var(--body)}
+.cs{font-size:11.5px;color:var(--faint);margin-bottom:12px}
+.otable{width:100%;border-collapse:collapse;font-size:12.5px}
+.otable th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);padding:7px 10px;border-bottom:1px solid var(--line)}
+.otable td{padding:8px 10px;border-bottom:1px solid #f6f3f0}
+.otable .chip{font-size:11px;font-weight:700;padding:2px 10px;border-radius:99px}
+.otable .locked{background:var(--green-bg);color:var(--green)}
+.otable .testing{background:#fffbeb;color:var(--amber)}
+
+/* 1 — baseline, polished (current design, tightened) */
+.m1 .strip{padding:13px 26px;background:var(--band);border-bottom:1px solid var(--line);font-size:13px;color:var(--body);display:flex;gap:16px}
+.m1 .strip .bt{font-size:16px;margin-right:2px}
+.m1 .strip .links{margin-left:auto}.m1 .strip .links a{margin-left:16px}
+.m1 .tabs{display:flex;gap:4px;padding:12px 26px 0;border-bottom:1px solid var(--hair)}
+.m1 .tabs b{font-size:13px;font-weight:600;color:var(--mut);padding:8px 14px 10px;border-bottom:2px solid transparent;margin-bottom:-1px}
+.m1 .tabs b.on{color:var(--brand-d);font-weight:700;border-bottom-color:var(--brand)}
+.m1 .bodyc{padding:20px 26px 22px}
+
+/* 2 — header tabs right */
+.m2 .hd{display:flex;align-items:baseline;gap:20px;padding:18px 26px 0;border-bottom:1px solid var(--hair)}
+.m2 .hd .bt{font-size:20px;padding-bottom:14px}
+.m2 .tabs{display:flex;gap:2px;margin-left:auto}
+.m2 .tabs b{font-size:13px;font-weight:600;color:var(--mut);padding:6px 13px 14px;border-bottom:2px solid transparent}
+.m2 .tabs b.on{color:var(--ink);font-weight:700;border-bottom-color:var(--brand)}
+.m2 .hd .links{padding-bottom:14px;margin-left:22px}.m2 .hd .links a{margin-left:15px}
+.m2 .bodyc{padding:20px 26px 22px}
+
+/* 3 — toolbar: title · segmented switcher · links */
+.m3 .hd{display:flex;align-items:center;gap:20px;padding:14px 22px;border-bottom:1px solid var(--hair)}
+.m3 .hd .bt{font-size:20px}
+.m3 .seg{display:flex;background:var(--band);border-radius:99px;padding:3px;margin:0 auto}
+.m3 .seg b{font-size:12.5px;font-weight:600;color:var(--mut);padding:7px 15px;border-radius:99px;white-space:nowrap}
+.m3 .seg b.on{background:#fff;color:var(--brand-d);font-weight:700;box-shadow:0 1px 3px rgba(44,36,33,.14)}
+.m3 .hd .links a{margin-left:15px}
+.m3 .bodyc{padding:20px 26px 22px}
+
+/* 4 — tint tab band */
+.m4 .hd{display:flex;align-items:baseline;gap:16px;padding:18px 26px 12px}
+.m4 .hd .bt{font-size:20px}
+.m4 .hd .links{margin-left:auto}.m4 .hd .links a{margin-left:15px}
+.m4 .tabband{display:flex;background:var(--band);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.m4 .tabband b{flex:1;text-align:center;font-size:13px;font-weight:600;color:#8a7f76;padding:11px 8px;border-right:1px solid #e7dcd3}
+.m4 .tabband b:last-child{border-right:0}
+.m4 .tabband b.on{background:#fff;color:var(--brand-d);font-weight:700;box-shadow:inset 0 -2px 0 var(--brand)}
+.m4 .bodyc{padding:20px 26px 22px}
+
+/* 5 — scoreboard head (daylight ticker, refined) */
+.m5 .hd{display:flex;align-items:center;padding:0 26px;border-bottom:1px solid var(--hair)}
+.m5 .hd .bt{font-size:20px;padding:18px 0}
+.m5 .cells{display:flex;margin-left:34px}
+.m5 .cell{padding:12px 22px;border-left:1px solid var(--hair)}
+.m5 .cell .l{font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--mut)}
+.m5 .cell .v{font-size:17px;font-weight:800;margin-top:1px}
+.m5 .cell .v.ok{color:var(--green)}
+.m5 .hd .links{margin-left:auto}.m5 .hd .links a{margin-left:15px}
+.m5 .tabs{display:flex;gap:4px;padding:10px 26px 0;border-bottom:1px solid var(--hair)}
+.m5 .tabs b{font-size:13px;font-weight:600;color:var(--mut);padding:8px 14px 10px;border-bottom:2px solid transparent;margin-bottom:-1px}
+.m5 .tabs b.on{color:var(--brand-d);font-weight:700;border-bottom-color:var(--brand)}
+.m5 .bodyc{padding:20px 26px 22px}
+
+/* 6 — split canvas with read rail */
+.m6 .hd{display:flex;align-items:center;gap:20px;padding:14px 26px 0;border-bottom:1px solid var(--hair)}
+.m6 .hd .bt{font-size:20px;padding-bottom:12px}
+.m6 .tabs{display:flex;gap:2px}
+.m6 .tabs b{font-size:13px;font-weight:600;color:var(--mut);padding:10px 13px 12px;border-bottom:2px solid transparent}
+.m6 .tabs b.on{color:var(--ink);font-weight:700;border-bottom-color:var(--brand)}
+.m6 .hd .links{margin-left:auto;padding-bottom:12px}.m6 .hd .links a{margin-left:15px}
+.m6 .cols{display:grid;grid-template-columns:1fr 250px}
+.m6 .bodyc{padding:20px 20px 20px 26px;min-width:0}
+.m6 .rail{border-left:1px solid var(--hair);background:var(--tint);padding:20px 22px}
+.m6 .rlabel{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--brand-d)}
+.m6 .rail p{font-size:13px;line-height:1.7;color:var(--body);margin-top:9px}
+
+/* 7 — inset chart panel */
+.m7 .hd{display:flex;align-items:baseline;gap:16px;padding:18px 26px 14px}
+.m7 .hd .bt{font-size:20px}
+.m7 .hd .links{margin-left:auto}.m7 .hd .links a{margin-left:15px}
+.m7 .panelwrap{padding:0 22px 22px}
+.m7 .tabs{display:flex;gap:6px;padding:0 4px 10px}
+.m7 .tabs b{font-size:12.5px;font-weight:600;color:var(--mut);padding:7px 14px;border-radius:9px}
+.m7 .tabs b.on{background:var(--ink);color:#fff;font-weight:700}
+.m7 .panel{background:var(--tint);border:1px solid var(--line);border-radius:12px;padding:18px 18px 14px}
+
+/* 8 — chip tabs */
+.m8 .hd{display:flex;align-items:baseline;gap:16px;padding:18px 26px 4px}
+.m8 .hd .bt{font-size:20px}
+.m8 .hd .links{margin-left:auto}.m8 .hd .links a{margin-left:15px}
+.m8 .tabs{display:flex;gap:8px;padding:10px 26px 16px}
+.m8 .tabs b{font-size:12.5px;font-weight:600;color:var(--body);padding:7px 16px;border-radius:99px;border:1px solid var(--line);background:#fff}
+.m8 .tabs b:hover{border-color:#d8c9c0}
+.m8 .tabs b.on{background:#FBF1EC;border-color:#e2b8a6;color:var(--brand-d);font-weight:700}
+.m8 .bodyc{padding:4px 26px 22px}
+
+/* 9 — title rail left */
+.m9 .cols{display:grid;grid-template-columns:212px 1fr}
+.m9 .rail{border-right:1px solid var(--hair);padding:22px 22px;display:flex;flex-direction:column;gap:10px}
+.m9 .rail .bt{font-size:20px}
+.m9 .rail .pl{font-size:12.5px;color:var(--body);line-height:1.6}
+.m9 .rail .pl b{color:var(--green)}
+.m9 .main .tabs{display:flex;gap:4px;padding:12px 24px 0;border-bottom:1px solid var(--hair)}
+.m9 .main .tabs b{font-size:13px;font-weight:600;color:var(--mut);padding:8px 14px 10px;border-bottom:2px solid transparent;margin-bottom:-1px}
+.m9 .main .tabs b.on{color:var(--brand-d);font-weight:700;border-bottom-color:var(--brand)}
+.m9 .bodyc{padding:18px 24px 20px}
+
+/* 10 — editorial-quiet */
+.m10 .hd{padding:22px 30px 0}
+.m10 .hd .toprow{display:flex;align-items:baseline;gap:18px}
+.m10 .hd .bt{font-size:24px}
+.m10 .hd .pacetxt{font-size:13px;color:var(--body)}
+.m10 .hd .pacetxt b{color:var(--green)}
+.m10 .hd .links{margin-left:auto}.m10 .hd .links a{margin-left:15px}
+.m10 .tabs{display:flex;gap:26px;padding:16px 30px 0;border-bottom:1px solid var(--line)}
+.m10 .tabs b{font-size:13.5px;font-weight:600;color:var(--mut);padding:0 2px 12px;border-bottom:2px solid transparent;margin-bottom:-1px}
+.m10 .tabs b.on{color:var(--ink);font-weight:700;border-bottom-color:var(--ink)}
+.m10 .bodyc{padding:22px 30px 24px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Deep-dive section — round 3</h1>
+  <p class="sub">Ten full-quality executions in the report's own design language — same width, tokens, and type as v11. All four RPS views behind working tabs (click them), one view at a time — report links removed per your call, so the headers spend their space on the section itself. Differences are in the header architecture and switcher treatment — the things you'd actually feel day to day. <b>№3 is my pick</b>; №1 is the current design polished, as the control.</p>
+  <div id="stage"></div>
+</div>
+<script>
+function el(t,a){const e=document.createElementNS("http://www.w3.org/2000/svg",t);for(const k in a)e.setAttribute(k,a[k]);return e}
+function svgBase(host,W,h){const s=el("svg",{viewBox:`0 0 ${W} ${h}`});host.appendChild(s);return s}
+function grid(s,W,h,p,ticks,f){ticks.forEach(([fr,v])=>{const y=p.t+(1-fr)*(h-p.t-p.b);
+  s.appendChild(el("line",{x1:p.l,y1:y,x2:W-p.r,y2:y,stroke:"#f3f4f6"}));
+  const t=el("text",{x:p.l-8,y:y+4,"text-anchor":"end","font-size":11,fill:"#9ca3af"});t.textContent=f(v);s.appendChild(t)})}
+function xlab(s,W,h,p,X,labels){labels.forEach((lb,i)=>{if(!lb)return;
+  const t=el("text",{x:X(i),y:h-6,"text-anchor":"middle","font-size":11,fill:"#9ca3af"});t.textContent=lb;s.appendChild(t)})}
+const WLB=["May 1","","","","Jun 1","","","","Jul"];
+function chartPacing(host,{W=960,h=250}={}){
+  const p={t:16,r:12,b:26,l:44},s=svgBase(host,W,h);
+  const A=[.27,.28,.29,.30,.30,.31,.31,.32,.34],min=.24,max=.40;
+  const X=i=>p.l+i*(W-p.l-p.r)/9,Y=v=>p.t+(1-(v-min)/(max-min))*(h-p.t-p.b);
+  grid(s,W,h,p,[[0,min],[.5,.32],[1,max]],v=>"$"+v.toFixed(2));
+  const ty=Y(.35);
+  s.appendChild(el("line",{x1:p.l,y1:ty,x2:W-p.r,y2:ty,stroke:"#8a3f2a","stroke-dasharray":"5 4","stroke-width":1.5}));
+  const tl=el("text",{x:W-p.r,y:ty-6,"text-anchor":"end","font-size":11,fill:"#8a3f2a"});tl.textContent="$0.35 July target";s.appendChild(tl);
+  const pts=A.map((v,i)=>[X(i),Y(v)]);
+  s.appendChild(el("path",{d:"M"+pts.map(q=>q.join(",")).join(" L ")+` L ${pts[8][0]},${h-p.b} L ${pts[0][0]},${h-p.b} Z`,fill:"#B8593A",opacity:.07}));
+  s.appendChild(el("polyline",{points:`${X(8)},${Y(.34)} ${X(9)},${Y(.36)}`,fill:"none",stroke:"#d98a6d","stroke-width":2.5,"stroke-dasharray":"3 5"}));
+  s.appendChild(el("circle",{cx:X(9),cy:Y(.36),r:5,fill:"#fff",stroke:"#d98a6d","stroke-width":2.5}));
+  s.appendChild(el("polyline",{points:pts.map(q=>q.join(",")).join(" "),fill:"none",stroke:"#B8593A","stroke-width":3.5,"stroke-linejoin":"round","stroke-linecap":"round"}));
+  s.appendChild(el("circle",{cx:X(8),cy:Y(.34),r:5,fill:"#B8593A"}));
+  xlab(s,W,h,p,X,[...WLB,"Jul 31"]);
+}
+function chartSource(host,{W=960,h=250}={}){
+  const p={t:16,r:12,b:26,l:44},s=svgBase(host,W,h);
+  const rev=[44,48,52,55,62,68,74,82,37.4],max=100,iw=(W-p.l-p.r)/9;
+  grid(s,W,h,p,[[0,0],[.5,50],[1,100]],v=>"$"+v+"k");
+  const shares=[[.62,.20,.06,.12],[.62,.20,.06,.12],[.61,.21,.06,.12],[.61,.21,.07,.11],[.60,.21,.07,.12],[.60,.22,.07,.11],[.59,.22,.08,.11],[.59,.22,.08,.11],[.58,.22,.09,.11]];
+  const colors=["#B8593A","#d98a6d","#8a3f2a","#EBD3C6"];
+  rev.forEach((v,i)=>{let y=h-p.b;
+    colors.forEach((c,si)=>{const bh=(v*shares[i][si]/max)*(h-p.t-p.b);y-=bh;
+      s.appendChild(el("rect",{x:p.l+i*iw+iw*.18,y,width:iw*.64,height:Math.max(bh,.5),fill:c,opacity:i===8?.5:1}))})});
+  xlab(s,W,h,p,i=>p.l+i*iw+iw/2,WLB);
+  const lg=el("text",{x:W-p.r,y:p.t+2,"text-anchor":"end","font-size":11,fill:"#797979"});lg.textContent="core · partners · welcome · other";s.appendChild(lg);
+}
+function chartWelcome(host,{W=960,h=250}={}){
+  const p={t:16,r:12,b:26,l:44},s=svgBase(host,W,h);
+  const A=[.05,.06,.06,.07,.08,.09,.09,.10,.11],min=0,max=.18;
+  const X=i=>p.l+i*(W-p.l-p.r)/8,Y=v=>p.t+(1-(v-min)/(max-min))*(h-p.t-p.b);
+  grid(s,W,h,p,[[0,0],[.5,.09],[1,.18]],v=>"$"+v.toFixed(2));
+  const ty=Y(.15);
+  s.appendChild(el("line",{x1:p.l,y1:ty,x2:W-p.r,y2:ty,stroke:"#8a3f2a","stroke-dasharray":"5 4","stroke-width":1.5}));
+  const tl=el("text",{x:W-p.r,y:ty-6,"text-anchor":"end","font-size":11,fill:"#8a3f2a"});tl.textContent="$0.15 milestone · Jul 20";s.appendChild(tl);
+  const pts=A.map((v,i)=>[X(i),Y(v)]);
+  s.appendChild(el("path",{d:"M"+pts.map(q=>q.join(",")).join(" L ")+` L ${pts[8][0]},${h-p.b} L ${pts[0][0]},${h-p.b} Z`,fill:"#B8593A",opacity:.07}));
+  s.appendChild(el("polyline",{points:pts.map(q=>q.join(",")).join(" "),fill:"none",stroke:"#B8593A","stroke-width":3.5,"stroke-linejoin":"round","stroke-linecap":"round"}));
+  s.appendChild(el("circle",{cx:X(8),cy:Y(.11),r:5,fill:"#B8593A"}));
+  xlab(s,W,h,p,X,WLB);
+}
+function tableOffers(host){
+  host.innerHTML=`<table class="otable"><thead><tr><th>Offer</th><th>RPC</th><th>Status</th></tr></thead><tbody>
+  <tr><td>Finance Buzz Car Insurance</td><td class="tnum">$2.65</td><td><span class="chip locked">Locked</span></td></tr>
+  <tr><td>Lemonade</td><td class="tnum">$2.48</td><td><span class="chip locked">Locked</span></td></tr>
+  <tr><td>Goldco</td><td class="tnum">$2.38</td><td><span class="chip locked">Locked</span></td></tr>
+  <tr><td>American Home Shield</td><td class="tnum">$2.26</td><td><span class="chip testing">Testing</span></td></tr>
+  <tr><td>Babbel</td><td class="tnum">$2.25</td><td><span class="chip testing">Testing</span></td></tr>
+  <tr><td>Wells Fargo Reflect</td><td class="tnum">$2.00</td><td><span class="chip testing">Testing</span></td></tr>
+  </tbody></table>`;
+}
+const VIEWS={
+  pacing:{name:"RPS pacing",sub:"actual and pacing vs the $0.35 July target",read:"July needs $0.35 a head. We're at $0.34 with the line bending the right way — pacing lands at $0.36, a cent over, if the last two weeks hold.",render:chartPacing},
+  source:{name:"Revenue by source",sub:"weekly mix — welcome climbing 6% → 9% of revenue",read:"Core sends still carry six of every ten dollars. The story is welcome: 6% of revenue in May, 9% now — the only source gaining share.",render:chartSource},
+  welcome:{name:"Welcome yield",sub:"$ per gross new subscriber · milestone $0.15 by Jul 20",read:"$0.11 per gross new subscriber, up from $0.05 in May — on the current slope the Jul 20 milestone falls early.",render:chartWelcome},
+  offers:{name:"Offer economics",sub:"June pipeline — 3 of 10 locked · RPC $1.86 across 34 offers",read:"Three of ten June offers locked, all above $2.38 RPC. The testing tail is what holds blended RPC at $1.86.",render:(h,o)=>tableOffers(h)},
+};
+const ORDER=["pacing","source","welcome","offers"];
+const TABS=ORDER.map(k=>`<b data-v="${k}">${VIEWS[k].name}</b>`).join("");
+
+const VARS=[
+{n:1,t:"Baseline, polished",init:"pacing",d:"the section exactly as it is in v11 today, tightened — the honest control to judge the rest against. Title and links fold into the narrative strip.",
+ html:`<div class="card m1">
+  <div class="strip"><span class="bt">RPS</span><span>$0.34 → $0.50 by August-end, or reassess</span></div>
+  <div class="tabs">${TABS}</div>
+  <div class="bodyc"><div class="ct vt"></div><div class="cs vs"></div><div class="stagehost"></div></div></div>`},
+{n:2,t:"Header tabs right",init:"pacing",d:"one header row does everything: title left, tabs right of it, links at the far edge. No band, no strip — the leanest possible top.",
+ html:`<div class="card m2">
+  <div class="hd"><span class="bt">RPS</span><span class="tabs">${TABS}</span></div>
+  <div class="bodyc"><div class="ct vt"></div><div class="cs vs"></div><div class="stagehost"></div></div></div>`},
+{n:3,star:1,t:"Toolbar",init:"pacing",d:"title left, a segmented pill switcher centered, links right — one calm toolbar, then the full width belongs to the chart. The switcher reads as a control, not navigation chrome.",
+ html:`<div class="card m3">
+  <div class="hd"><span class="bt">RPS</span><span class="seg">${TABS}</span></div>
+  <div class="bodyc"><div class="ct vt"></div><div class="cs vs"></div><div class="stagehost"></div></div></div>`},
+{n:4,t:"Tint tab band",init:"source",d:"tabs as a full-width warm band of equal cells — the active one lifts to white. Big targets, obvious state, BaseLocal cream not espresso.",
+ html:`<div class="card m4">
+  <div class="hd"><span class="bt">RPS</span></div>
+  <div class="tabband">${TABS}</div>
+  <div class="bodyc"><div class="ct vt"></div><div class="cs vs"></div><div class="stagehost"></div></div></div>`},
+{n:5,t:"Scoreboard head",init:"pacing",d:"the daylight ticker, properly built: the section's so far · target · pacing cells share the header with the title and links, tabs beneath. The section carries its verdict at all times.",
+ html:`<div class="card m5">
+  <div class="hd"><span class="bt">RPS</span>
+    <span class="cells">
+      <span class="cell"><span class="l">July so far</span><span class="v tnum">$0.34</span></span>
+      <span class="cell"><span class="l">July target</span><span class="v tnum">$0.35</span></span>
+      <span class="cell"><span class="l">Pacing to</span><span class="v tnum ok">$0.36</span></span>
+    </span>
+    </div>
+  <div class="tabs">${TABS}</div>
+  <div class="bodyc"><div class="ct vt"></div><div class="cs vs"></div><div class="stagehost"></div></div></div>`},
+{n:6,t:"Split canvas",init:"welcome",d:"tabs across the top, chart left, and a quiet reading rail right whose two sentences rewrite per tab. Words on the rail, data on the canvas — never both in numbers.",
+ html:`<div class="card m6">
+  <div class="hd"><span class="bt">RPS</span><span class="tabs">${TABS}</span></div>
+  <div class="cols">
+    <div class="bodyc"><div class="ct vt"></div><div class="cs vs"></div><div class="stagehost" data-w="690"></div></div>
+    <aside class="rail"><span class="rlabel">The read</span><p class="readtxt"></p></aside>
+  </div></div>`},
+{n:7,t:"Inset panel",init:"pacing",d:"dark ink pill tabs sit above a tinted, bordered chart panel — the data gets a stage of its own inside the card. Strongest figure-ground separation.",
+ html:`<div class="card m7">
+  <div class="hd"><span class="bt">RPS</span></div>
+  <div class="panelwrap">
+    <div class="tabs">${TABS}</div>
+    <div class="panel"><div class="ct vt"></div><div class="cs vs"></div><div class="stagehost"></div></div>
+  </div></div>`},
+{n:8,t:"Chip tabs",init:"source",d:"the switcher as outlined chips — roomier and softer than an underline row; the active chip fills blush. Friendliest of the ten.",
+ html:`<div class="card m8">
+  <div class="hd"><span class="bt">RPS</span></div>
+  <div class="tabs">${TABS}</div>
+  <div class="bodyc"><div class="ct vt"></div><div class="cs vs"></div><div class="stagehost"></div></div></div>`},
+{n:9,t:"Title rail",init:"pacing",d:"a narrow left rail holds the title, the pacing sentence, and the links stacked; tabs and chart get the rest. The section reads left-to-right: what → how → proof.",
+ html:`<div class="card m9"><div class="cols">
+  <div class="rail"><span class="bt">RPS</span><span class="pl tnum">$0.34 of $0.35<br>Pacing to $0.36 — <b>$0.01 ahead</b></span>
+    </div>
+  <div class="main"><div class="tabs">${TABS}</div>
+    <div class="bodyc"><div class="ct vt"></div><div class="cs vs"></div><div class="stagehost" data-w="730"></div></div>
+  </div></div></div>`},
+{n:10,t:"Editorial quiet",init:"pacing",d:"a bigger serif title with the pacing sentence beside it, generous whitespace, ink underline tabs spaced wide. The least chrome per square inch — typography does the structure.",
+ html:`<div class="card m10">
+  <div class="hd"><div class="toprow"><span class="bt">RPS</span><span class="pacetxt tnum">$0.34 of $0.35 · pacing to $0.36 — <b>$0.01 ahead</b></span></div></div>
+  <div class="tabs">${TABS}</div>
+  <div class="bodyc"><div class="ct vt"></div><div class="cs vs"></div><div class="stagehost"></div></div></div>`},
+];
+function activate(mock,key){
+  mock.dataset.cur=key;
+  mock.querySelectorAll("[data-v]").forEach(b=>b.classList.toggle("on",b.dataset.v===key));
+  const host=mock.querySelector(".stagehost");host.innerHTML="";
+  VIEWS[key].render(host,{W:+(host.dataset.w||960),h:250});
+  mock.querySelectorAll(".vt").forEach(x=>x.textContent=VIEWS[key].name);
+  mock.querySelectorAll(".vs").forEach(x=>x.textContent=VIEWS[key].sub);
+  const rd=mock.querySelector(".readtxt");if(rd)rd.textContent=VIEWS[key].read;
+}
+const stage=document.getElementById("stage");
+VARS.forEach(v=>{
+  const tag=document.createElement("div");tag.className="tag";
+  tag.innerHTML=`<span class="n">${v.n}</span><span class="t">${v.t}</span>${v.star?'<span class="star">RECOMMENDED</span>':''}<span class="d">— ${v.d}</span>`;
+  stage.appendChild(tag);
+  const holder=document.createElement("div");holder.innerHTML=v.html;
+  const mock=holder.firstElementChild;mock.classList.add("mockroot");
+  stage.appendChild(mock);
+  activate(mock,v.init);
+});
+stage.addEventListener("click",e=>{
+  const mock=e.target.closest(".mockroot");if(!mock)return;
+  const b=e.target.closest("[data-v]");
+  if(b&&b.dataset.v)activate(mock,b.dataset.v);
+});
+</script>
+</body>
+</html>

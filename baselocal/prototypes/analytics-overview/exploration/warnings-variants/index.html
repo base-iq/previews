@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Warnings — 10 variants</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,700;0,800;1,400&family=Lato:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#2C2421;--body:#444;--mut:#797979;--faint:#9ca3af;
+  --line:#E8E0DC;--hair:#f3f4f6;--band:#F5EEE9;--tint:#FCFAF8;
+  --brand:#B8593A;--brand-d:#8a3f2a;--green:#2D7A2D;--green-bg:#EEF7ED;
+  --amber:#b45309;--amber-bg:#fffbeb;--red:#C0392B;--red-bg:#FBEAE7;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Lato',sans-serif;background:#F3F0ED;color:var(--ink);padding:36px 28px 100px;font-size:14px}
+.wrap{max-width:1040px;margin:0 auto}
+h1{font-family:'Bitter',Georgia,serif;font-size:26px;font-weight:800;letter-spacing:-.01em}
+p.sub{color:var(--mut);font-size:13.5px;margin:8px 0 8px;line-height:1.6;max-width:80ch}
+.tag{display:flex;align-items:baseline;gap:10px;margin:50px 0 12px;flex-wrap:wrap}
+.tag .n{width:28px;height:28px;border-radius:9px;background:var(--ink);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex:none;align-self:center}
+.tag .t{font-size:15px;font-weight:700}
+.tag .d{font-size:12.5px;color:var(--mut);line-height:1.5}
+.tag .star{background:var(--brand);color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px;align-self:center}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 1px 4px rgba(44,36,33,.05);padding:22px 24px}
+.bt{font-family:'Bitter',Georgia,serif;font-weight:800;letter-spacing:-.01em}
+.tnum{font-variant-numeric:tabular-nums}
+a.act{color:var(--brand-d);font-weight:700;text-decoration:none;font-size:12.5px}
+a.act:hover{text-decoration:underline}
+svg{display:block}
+
+/* shared severity accents */
+.amber{--c:var(--amber);--cbg:var(--amber-bg);--cbd:#f0ddb4}
+.red{--c:var(--red);--cbg:var(--red-bg);--cbd:#eec4bd}
+.green{--c:var(--green);--cbg:var(--green-bg);--cbd:#d3e6d2}
+
+/* V1 gauge cards */
+.v1 .g{display:grid;grid-template-columns:150px 1fr 150px;gap:18px;align-items:center;padding:15px 0;border-top:1px solid var(--hair)}
+.v1 .g:first-of-type{border-top:0}
+.v1 .gname{font-weight:800;font-size:14px}
+.v1 .gname small{display:block;font-weight:600;color:var(--mut);font-size:11.5px;margin-top:2px}
+.v1 .gmid .lead{font-size:13px;font-weight:700;color:var(--c);margin-bottom:6px}
+.v1 .gright{text-align:right}
+.v1 .gright .st{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--c);background:var(--cbg);border:1px solid var(--cbd);border-radius:99px;padding:3px 10px}
+.v1 .gright a{display:block;margin-top:8px}
+
+/* V2 severity list (current) */
+.v2 .w{padding:13px 17px;border-radius:10px;margin-bottom:10px;font-size:13.5px;line-height:1.6;color:var(--body);background:var(--cbg);border:1px solid var(--cbd)}
+.v2 .w:last-child{margin-bottom:0}
+.v2 .w b{color:var(--c)}
+
+/* V3 triage table */
+.v3 table{width:100%;border-collapse:collapse;font-size:13px}
+.v3 th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);padding:8px 10px;border-bottom:1px solid var(--line)}
+.v3 td{padding:11px 10px;border-bottom:1px solid #f6f3f0}
+.v3 .stt{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--c);background:var(--cbg);padding:2px 9px;border-radius:99px}
+.v3 .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--c);margin-right:7px}
+
+/* V4 stoplight tiles */
+.v4 .grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.v4 .tile{border:1px solid var(--cbd);background:var(--cbg);border-radius:12px;padding:16px}
+.v4 .tile .top{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.v4 .tile .light{width:12px;height:12px;border-radius:50%;background:var(--c);box-shadow:0 0 0 3px color-mix(in srgb,var(--c) 22%,transparent)}
+.v4 .tile .nm{font-weight:800;font-size:13.5px}
+.v4 .tile .big{font-size:22px;font-weight:800;color:var(--c)}
+.v4 .tile .lim{font-size:11.5px;color:var(--mut);margin:1px 0 8px}
+.v4 .tile .ln{font-size:12px;color:var(--body);line-height:1.5}
+
+/* V5 countdown */
+.v5 .c{display:grid;grid-template-columns:120px 1fr auto;gap:18px;align-items:center;padding:16px 0;border-top:1px solid var(--hair)}
+.v5 .c:first-of-type{border-top:0}
+.v5 .eta{font-family:'Bitter',Georgia,serif;font-size:20px;font-weight:800;color:var(--c);line-height:1.1}
+.v5 .eta small{display:block;font-family:'Lato';font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);margin-top:3px}
+.v5 .c .txt{font-size:13px;line-height:1.55;color:var(--body)}
+.v5 .c .txt b{color:var(--c)}
+
+/* V6 priority stack */
+.v6 .p{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-top:1px solid var(--hair)}
+.v6 .p:first-of-type{border-top:0}
+.v6 .rank{width:26px;height:26px;border-radius:8px;background:var(--c);color:#fff;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;flex:none}
+.v6 .p .bar{height:6px;border-radius:3px;background:var(--c);margin:8px 0 0}
+.v6 .p .lead{font-weight:800;font-size:13.5px}
+.v6 .p .txt{font-size:12.5px;color:var(--body);line-height:1.5;margin-top:2px}
+
+/* V7 alert banners */
+.v7 .a{display:flex;align-items:center;gap:14px;background:var(--cbg);border:1px solid var(--cbd);border-left:4px solid var(--c);border-radius:10px;padding:13px 16px;margin-bottom:10px}
+.v7 .a:last-child{margin-bottom:0}
+.v7 .ico{width:26px;height:26px;border-radius:50%;background:var(--c);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none;font-size:15px}
+.v7 .a .msg{flex:1;font-size:13px;line-height:1.5}
+.v7 .a .msg b{color:var(--c)}
+.v7 .a .btn{border:1px solid var(--c);color:var(--c);background:#fff;border-radius:8px;padding:6px 13px;font-size:12.5px;font-weight:700;white-space:nowrap;cursor:pointer;text-decoration:none}
+
+/* V8 sparkline cards */
+.v8 .s{display:grid;grid-template-columns:160px 120px 1fr auto;gap:18px;align-items:center;padding:15px 0;border-top:1px solid var(--hair)}
+.v8 .s:first-of-type{border-top:0}
+.v8 .s .nm{font-weight:800;font-size:14px}
+.v8 .s .nm small{display:block;font-weight:600;color:var(--mut);font-size:11.5px}
+.v8 .s .txt{font-size:12.5px;color:var(--body);line-height:1.5}
+.v8 .s .txt b{color:var(--c)}
+
+/* V9 monitoring log */
+.v9 .log{font-family:'Lato';font-size:13px}
+.v9 .e{display:flex;gap:14px;padding:10px 0;border-bottom:1px solid #f6f3f0}
+.v9 .e:last-child{border-bottom:0}
+.v9 .ts{color:var(--faint);font-size:12px;white-space:nowrap;font-variant-numeric:tabular-nums;width:96px;flex:none}
+.v9 .lvl{font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--c);width:60px;flex:none}
+.v9 .e .m{color:var(--body);line-height:1.5}
+.v9 .e .m b{color:var(--ink)}
+
+/* V10 KPI tiles */
+.v10 .grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.v10 .k{border:1px solid var(--line);border-radius:12px;padding:16px;border-top:3px solid var(--c)}
+.v10 .k .nm{font-size:12px;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:.05em}
+.v10 .k .big{font-size:30px;font-weight:800;color:var(--c);line-height:1.1;margin:6px 0 2px}
+.v10 .k .big .arr{font-size:16px}
+.v10 .k .lim{font-size:12px;color:var(--body)}
+.v10 .k .head{font-size:12px;color:var(--mut);margin-top:6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Warnings — 10 variants</h1>
+  <p class="sub">Ten ways to present the guardrail warnings. Same three signals in every one: <b>Churn</b> (amber, rising toward the 22% limit), <b>Spam</b> (amber, under the cap), <b>RPS floor</b> (green, clear for now). A guardrail warning should make "how close are we to breaching" and "what to do" instant. <b>№1 is my pick.</b></p>
+  <div id="stage"></div>
+</div>
+<script>
+const GR=[
+ {name:"Churn",cur:"19.4%",limit:"22%",kind:"ceiling",lim:22,val:19.4,scale:24,sev:"amber",
+  lead:"Churn rising two straight months",eta:"~4 months",etaLab:"to breach",head:"2.6pt of headroom",trend:"rising",
+  detail:"18.1% → 19.4% since May. At this climb it crosses the 22% reassess line in about four months.",
+  spark:[17.9,18.1,18.4,18.8,19.1,19.4],act:"Dig into retention",to:"Subscribers"},
+ {name:"Spam",cur:"0.027%",limit:"0.05%",kind:"ceiling",lim:0.05,val:0.027,scale:0.06,sev:"amber",
+  lead:"Spam rate up 23% since May",eta:"not imminent",etaLab:"to cap",head:"roughly half the cap",trend:"rising",
+  detail:"0.022% → 0.027%, still well under the 0.05% cap. No action yet — flag again above 0.035%.",
+  spark:[0.021,0.023,0.024,0.025,0.026,0.027],act:"Open Deliverability",to:"Deliverability"},
+ {name:"RPS floor",cur:"$0.34",limit:"$0.45",kind:"floor",lim:0.45,val:0.34,scale:0.5,sev:"green",
+  lead:"RPS floor clear — for now",eta:"August",etaLab:"checkpoint",head:"floor activates in August",trend:"climbing",
+  detail:"$0.34 today, pacing to $0.36 by July-end. The $0.45 floor takes effect in August — the climb is the watch item.",
+  spark:[0.29,0.31,0.32,0.33,0.34,0.36],act:"Lift RPS",to:"Campaigns"},
+];
+function meter(g){const W=300,H=22,x=v=>5+(v/g.scale)*(W-10),cc=g.sev==="green"?"#2D7A2D":g.sev==="red"?"#C0392B":"#b45309";
+  return `<svg viewBox="0 0 ${W} ${H}" width="100%" height="${H}" preserveAspectRatio="none">
+    <rect x="5" y="7" width="${W-10}" height="8" rx="4" fill="#EFEAE6"/>
+    <rect x="5" y="7" width="${Math.max(x(g.val)-5,3)}" height="8" rx="4" fill="${cc}"/>
+    <line x1="${x(g.lim)}" y1="2" x2="${x(g.lim)}" y2="20" stroke="#2C2421" stroke-width="1.5" stroke-dasharray="2 2"/>
+  </svg>`;}
+function spark(data,sev){const sw=110,sh=30,mn=Math.min(...data),mx=Math.max(...data)+1e-9,cc=sev==="green"?"#2D7A2D":sev==="red"?"#C0392B":"#b45309";
+  const pts=data.map((v,i)=>`${3+i*(sw-6)/(data.length-1)},${(sh-4-(v-mn)/(mx-mn)*(sh-8)).toFixed(1)}`);
+  return `<svg viewBox="0 0 ${sw} ${sh}" width="${sw}" height="${sh}"><polyline points="${pts.join(' ')}" fill="none" stroke="${cc}" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><circle cx="${pts[pts.length-1].split(',')[0]}" cy="${pts[pts.length-1].split(',')[1]}" r="3" fill="${cc}"/></svg>`;}
+
+const V=[
+{n:1,star:1,t:"Gauge cards",d:"each guardrail is a meter showing exactly how close the current value sits to its limit (the dashed mark) — the fastest read of 'are we about to breach', paired with the lead and the action.",
+ render:g=>`<div class="g ${g.sev}"><div class="gname">${g.name}<small>${g.cur} · limit ${g.limit}</small></div>
+   <div class="gmid"><div class="lead">${g.lead}</div>${meter(g)}</div>
+   <div class="gright"><span class="st">${g.sev==="green"?"Clear":"Watch"}</span><a class="act" href="#">${g.act} →</a></div></div>`},
+{n:2,t:"Severity list (current)",d:"the version in the report today — a colored prose block per warning. The honest control.",
+ render:g=>`<div class="w ${g.sev}"><b>${g.lead}</b> — ${g.detail}</div>`},
+{n:3,t:"Triage table",d:"one scannable row per guardrail: current, limit, headroom, trend, status. Densest — best when there are many guardrails.",
+ table:true,render:g=>`<tr class="${g.sev}"><td><span class="dot"></span><b>${g.name}</b></td><td class="tnum">${g.cur}</td><td class="tnum">${g.limit}</td><td>${g.head}</td><td>${g.trend} ↗</td><td><span class="stt">${g.sev==="green"?"Clear":"Watch"}</span></td></tr>`},
+{n:4,t:"Stoplight tiles",d:"a status-light tile per guardrail in a row — glanceable at a distance, colour does the triage.",
+ grid:true,render:g=>`<div class="tile ${g.sev}"><div class="top"><span class="light"></span><span class="nm">${g.name}</span></div><div class="big">${g.cur}</div><div class="lim">of ${g.limit} limit</div><div class="ln">${g.detail}</div></div>`},
+{n:5,t:"Countdown",d:"leads with time-to-breach — turns each guardrail into a clock so the most urgent reads first.",
+ render:g=>`<div class="c ${g.sev}"><div class="eta">${g.eta}<small>${g.etaLab}</small></div><div class="txt">${g.detail}</div><a class="act" href="#">${g.act} →</a></div>`},
+{n:6,t:"Priority stack",d:"ranked by urgency, numbered, each with a severity bar — an ordered to-do, most pressing on top.",
+ rank:true,render:(g,i)=>`<div class="p ${g.sev}"><div class="rank">${i+1}</div><div style="flex:1"><div class="lead">${g.lead}</div><div class="txt">${g.detail}</div><div class="bar" style="width:${g.sev==="green"?30:g.name==="Churn"?85:55}%"></div></div></div>`},
+{n:7,t:"Alert banners",d:"notification style — icon, message, and an action button on each. Reads like a system alert you dismiss by acting.",
+ render:g=>`<div class="a ${g.sev}"><div class="ico">${g.sev==="green"?"✓":"!"}</div><div class="msg"><b>${g.lead}.</b> ${g.detail}</div><a class="btn" href="#">${g.act}</a></div>`},
+{n:8,t:"Sparkline cards",d:"each warning carries a mini trend so you see the approach to the limit, not just the current number.",
+ render:g=>`<div class="s ${g.sev}"><div class="nm">${g.name}<small>${g.cur} of ${g.limit}</small></div><div>${spark(g.spark,g.sev)}</div><div class="txt"><b>${g.lead}.</b> ${g.head}.</div><a class="act" href="#">${g.act} →</a></div>`},
+{n:9,t:"Monitoring log",d:"timestamped entries like an ops log — emphasises when a threshold was crossed. Good for an audit trail.",
+ log:true,render:g=>`<div class="e ${g.sev}"><span class="ts">Jul 5 · 06:00</span><span class="lvl">${g.sev==="green"?"OK":"WATCH"}</span><span class="m"><b>${g.name}</b> ${g.sev==="green"?"below":"approaching"} limit — ${g.detail}</span></div>`},
+{n:10,t:"KPI tiles",d:"big-number tiles with limit, headroom, and a trend arrow — matches the driver cards up top for visual consistency.",
+ grid:true,render:g=>`<div class="k ${g.sev}"><div class="nm">${g.name}</div><div class="big">${g.cur} <span class="arr">${g.sev==="green"?"↗":"↗"}</span></div><div class="lim">limit ${g.limit}</div><div class="head">${g.head}</div></div>`},
+];
+const stage=document.getElementById("stage");
+V.forEach(v=>{
+  const tag=document.createElement("div");tag.className="tag";
+  tag.innerHTML=`<span class="n">${v.n}</span><span class="t">${v.t}</span>${v.star?'<span class="star">RECOMMENDED</span>':''}<span class="d">— ${v.d}</span>`;
+  stage.appendChild(tag);
+  const card=document.createElement("div");card.className="card v"+v.n;
+  let inner=GR.map((g,i)=>v.render(g,i)).join("");
+  if(v.table)inner=`<table><thead><tr><th>Guardrail</th><th>Current</th><th>Limit</th><th>Headroom</th><th>Trend</th><th>Status</th></tr></thead><tbody>${inner}</tbody></table>`;
+  if(v.grid)inner=`<div class="grid">${inner}</div>`;
+  if(v.log)inner=`<div class="log">${inner}</div>`;
+  card.innerHTML=inner;
+  stage.appendChild(card);
+});
+</script>
+</body>
+</html>

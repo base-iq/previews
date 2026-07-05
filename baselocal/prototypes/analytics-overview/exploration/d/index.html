@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Analytics Overview — v2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#2C2421; --body:#444; --mut:#797979; --faint:#9ca3af;
+  --line:#E8E0DC; --hair:#f3f4f6; --band:#F5EEE9; --tint:#FCFAF8;
+  --brand:#B8593A; --brand-d:#8a3f2a; --green:#2D7A2D; --green-bg:#EEF7ED;
+  --amber:#b45309; --amber-bg:#fffbeb; --red:#C0392B; --red-bg:#FBEAE7;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',ui-sans-serif,system-ui,sans-serif;background:#f9fafb;color:var(--ink);font-size:13px;padding-bottom:80px}
+.caption{background:#111827;color:#fff;padding:10px 16px;font-size:13px}
+.caption strong{color:#f7cfc2}
+.page{max-width:1200px;margin:0 auto;padding:22px 20px}
+
+.pagehead{display:flex;align-items:baseline;gap:14px;margin-bottom:4px}
+h1{font-size:21px;font-weight:800;letter-spacing:-.01em}
+.pagehead .date{color:var(--mut);font-size:12.5px}
+.pagehead .right{margin-left:auto;display:flex;gap:8px;align-items:center}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#fff}
+.seg button{border:none;background:none;padding:6px 14px;font:inherit;font-size:12px;font-weight:600;color:var(--mut);cursor:pointer}
+.seg button.on{background:var(--band);color:var(--brand-d)}
+.gear{border:1px solid var(--line);background:#fff;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:600;color:var(--mut);cursor:pointer}
+.gear:hover{color:var(--brand-d)}
+.subline{color:var(--mut);font-size:12.5px;margin-bottom:20px}
+.subline b{color:var(--ink)}
+
+/* ── top band: three cores ── */
+.cores{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px}
+.core{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 18px 12px;box-shadow:0 1px 3px rgba(44,36,33,.04)}
+.core .label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mut)}
+.core .heroline{display:flex;align-items:baseline;gap:10px;margin:6px 0 2px}
+.core .hero{font-size:32px;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.core .unit{font-size:12.5px;color:var(--mut);font-weight:600}
+.delta{font-size:12px;font-weight:700;padding:2px 9px;border-radius:99px;font-variant-numeric:tabular-nums}
+.up{background:var(--green-bg);color:var(--green)}
+.down{background:var(--red-bg);color:var(--red)}
+.flat{background:var(--amber-bg);color:var(--amber)}
+.core .versus{font-size:11.5px;color:var(--faint);margin-bottom:10px}
+.core .chart{margin:4px -4px 4px}
+.core .foot{display:flex;gap:14px;border-top:1px solid var(--hair);margin-top:10px;padding-top:9px}
+.core .foot .f{flex:1}
+.core .foot .fv{font-size:14px;font-weight:700;font-variant-numeric:tabular-nums}
+.core .foot .fv small{font-size:10.5px;color:var(--faint);font-weight:600}
+.core .foot .fl{font-size:10.5px;color:var(--mut);margin-top:1px}
+
+/* ── deep dives ── */
+.dive{background:#fff;border:1px solid var(--line);border-radius:14px;margin-bottom:22px;box-shadow:0 1px 3px rgba(44,36,33,.04);overflow:hidden}
+.divehead{display:flex;align-items:center;gap:12px;padding:14px 20px;background:var(--band);border-bottom:1px solid var(--line)}
+.divehead h2{font-size:15px;font-weight:800}
+.divehead .links{margin-left:auto;font-size:12px}
+.divehead .links a{color:var(--brand-d);font-weight:600;text-decoration:none;margin-left:16px}
+.divehead .links a:hover{text-decoration:underline}
+.divegrid{display:grid;grid-template-columns:3fr 2fr;gap:0}
+.divegrid>div{padding:16px 20px}
+.divegrid>div+div{border-left:1px solid var(--hair)}
+.blocktitle{font-size:12px;font-weight:700;color:var(--body);margin-bottom:2px}
+.blocksub{font-size:11px;color:var(--faint);margin-bottom:10px}
+.statrow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:12px 20px 16px;border-top:1px solid var(--hair)}
+.stat .v{font-size:17px;font-weight:800;font-variant-numeric:tabular-nums}
+.stat .v small{font-size:11px;color:var(--faint);font-weight:600}
+.stat .l{font-size:10.5px;color:var(--mut);font-weight:600;margin-top:1px}
+.mix{display:flex;height:22px;border-radius:6px;overflow:hidden;margin:8px 0 6px}
+.mix div{display:flex;align-items:center;padding:0 8px;color:#fff;font-size:10.5px;font-weight:700;white-space:nowrap;overflow:hidden}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:11px;color:var(--mut)}
+.legend i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:4px}
+
+/* ── FAQ ── */
+.faq{margin-top:6px}
+.faq h2{font-size:15px;font-weight:800;margin-bottom:10px}
+.qa{background:#fff;border:1px solid var(--line);border-radius:12px;margin-bottom:8px;padding:12px 16px}
+.qa .qq{display:flex;gap:10px;align-items:center;font-size:13.5px;font-weight:700}
+.qa .pill{margin-left:auto;font-size:11.5px;font-weight:700;padding:2px 10px;border-radius:99px;white-space:nowrap}
+.qa .aa{font-size:12.5px;color:var(--body);margin-top:6px;line-height:1.6}
+.qa .aa a{color:var(--brand-d);font-weight:600;text-decoration:none}
+text{font-family:'Inter',sans-serif}
+@media(max-width:900px){.cores{grid-template-columns:1fr}.divegrid{grid-template-columns:1fr}.divegrid>div+div{border-left:none;border-top:1px solid var(--hair)}.statrow{grid-template-columns:repeat(2,1fr)}.pagehead{flex-wrap:wrap}.pagehead .right{margin-left:0}}
+</style>
+</head>
+<body>
+<div class="caption"><strong>Analytics Overview v2.</strong> Your IA: three cores on top — chart + number + vs-previous-period — deep-dive sections below, questions as a bottom FAQ. Weekly ⇄ Monthly toggles the core charts; the marked numbers stay monthly.</div>
+<div class="page">
+  <div class="pagehead">
+    <h1>Analytics Overview</h1>
+    <span class="date">Thursday, Jul 3</span>
+    <div class="right">
+      <div class="seg"><button class="on" id="wk" onclick="setGrain('w')">Weekly</button><button id="mo" onclick="setGrain('m')">Monthly</button></div>
+      <button class="gear">Edit targets</button>
+    </div>
+  </div>
+  <div class="subline">July target <b>$400k</b> · floor <b>$12k/day</b> · RPS path <b>$0.30 → $0.50</b> · targets are editable, monthly-set</div>
+
+  <!-- ═══ TOP BAND ═══ -->
+  <div class="cores">
+    <div class="core">
+      <div class="label">Revenue</div>
+      <div class="heroline"><span class="hero">$286k</span><span class="unit">June, monthly</span><span class="delta up">+35.5% vs May</span></div>
+      <div class="versus">July: $37.4k in · projecting $386k vs $400k target</div>
+      <div class="chart" id="c-rev"></div>
+      <div class="foot">
+        <div class="f"><div class="fv">$12.5k</div><div class="fl">avg/day MTD · floor $12k</div></div>
+        <div class="f"><div class="fv">$0.34</div><div class="fl">RPS July-to-date</div></div>
+        <div class="f"><div class="fv">15<small>/wk</small></div><div class="fl">emails · 22 by Jul 20</div></div>
+      </div>
+    </div>
+
+    <div class="core">
+      <div class="label">Engagement</div>
+      <div class="heroline"><span class="hero">52.6%</span><span class="unit">June engaged share</span><span class="delta up">+0.7pt vs May</span></div>
+      <div class="versus">July-to-date: 54.0% · churn 19.4% vs 22% guardrail</div>
+      <div class="chart" id="c-eng"></div>
+      <div class="foot">
+        <div class="f"><div class="fv">41.2%</div><div class="fl">open rate</div></div>
+        <div class="f"><div class="fv">2.1%</div><div class="fl">CTR (delivered)</div></div>
+        <div class="f"><div class="fv">0.31%</div><div class="fl">unsubs / send</div></div>
+      </div>
+    </div>
+
+    <div class="core">
+      <div class="label">Acquisition</div>
+      <div class="heroline"><span class="hero">+118k</span><span class="unit">June net new</span><span class="delta up">+15.7% vs May</span></div>
+      <div class="versus">July pacing +146k vs 200k/mo target · book at 985k</div>
+      <div class="chart" id="c-acq"></div>
+      <div class="foot">
+        <div class="f"><div class="fv">+4.7k</div><div class="fl">net/day · needs 6.5k</div></div>
+        <div class="f"><div class="fv">$0.11</div><div class="fl">welcome $ / gross sub</div></div>
+        <div class="f"><div class="fv">41d</div><div class="fl">CAC payback</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ REVENUE DIVE ═══ -->
+  <div class="dive">
+    <div class="divehead"><h2>Revenue</h2>
+      <div class="links"><a href="#">Campaigns</a><a href="#">Performance</a><a href="#">Data Entry</a></div>
+    </div>
+    <div class="divegrid">
+      <div>
+        <div class="blocktitle">Daily revenue — last 21 days</div>
+        <div class="blocksub">floor $12k · dips highlighted</div>
+        <div id="c-daily"></div>
+      </div>
+      <div>
+        <div class="blocktitle">RPS — path to $0.50</div>
+        <div class="blocksub">weekly, monthly marks · Aug guardrail $0.45</div>
+        <div id="c-rps"></div>
+      </div>
+    </div>
+    <div style="padding:0 20px 6px">
+      <div class="blocktitle">July revenue mix</div>
+      <div class="mix">
+        <div style="flex:58;background:#B8593A">Morning Roundup 58%</div>
+        <div style="flex:22;background:#d98a6d">Daily News 22%</div>
+        <div style="flex:9;background:#2D7A2D">Welcome 9%</div>
+        <div style="flex:6;background:#b45309">Bridge 6%</div>
+        <div style="flex:5;background:#9ca3af">Other</div>
+      </div>
+    </div>
+    <div class="statrow">
+      <div class="stat"><div class="v">$1.86</div><div class="l">RPC</div></div>
+      <div class="stat"><div class="v">34</div><div class="l">active offers</div></div>
+      <div class="stat"><div class="v">3<small> of 10</small></div><div class="l">June winners solidified</div></div>
+      <div class="stat"><div class="v">1</div><div class="l">floor dips, last 7 days</div></div>
+    </div>
+  </div>
+
+  <!-- ═══ ENGAGEMENT DIVE ═══ -->
+  <div class="dive">
+    <div class="divehead"><h2>Engagement</h2>
+      <div class="links"><a href="#">Engaged Audience</a><a href="#">Email Performance</a></div>
+    </div>
+    <div class="divegrid">
+      <div>
+        <div class="blocktitle">Churn — monthly vs 22% guardrail</div>
+        <div class="blocksub">existing Engaged Audience definition</div>
+        <div id="c-churn"></div>
+      </div>
+      <div>
+        <div class="blocktitle">Opens &amp; CTR — weekly</div>
+        <div class="blocksub">watch through the Jul 20 send expansion</div>
+        <div id="c-open"></div>
+      </div>
+    </div>
+    <div class="statrow">
+      <div class="stat"><div class="v">54.0%</div><div class="l">engaged share (July td)</div></div>
+      <div class="stat"><div class="v">41.2%</div><div class="l">open rate</div></div>
+      <div class="stat"><div class="v">0.31%</div><div class="l">unsubs / send</div></div>
+      <div class="stat"><div class="v">19.4%</div><div class="l">churn · cap 22%</div></div>
+    </div>
+  </div>
+
+  <!-- ═══ ACQUISITION DIVE ═══ -->
+  <div class="dive">
+    <div class="divehead"><h2>Acquisition</h2>
+      <div class="links"><a href="#">Subscriber Acquisition</a><a href="#">Acquisition Economics</a><a href="#">Welcome Page</a></div>
+    </div>
+    <div class="divegrid">
+      <div>
+        <div class="blocktitle">Gross adds vs losses — weekly</div>
+        <div class="blocksub">net new line overlaid · 200k/mo needs ≈46k net/wk</div>
+        <div id="c-subs"></div>
+      </div>
+      <div>
+        <div class="blocktitle">Book trajectory — to 2M by Dec</div>
+        <div class="blocksub">2M × $0.50 RPS = $1M/mo</div>
+        <div id="c-traj"></div>
+      </div>
+    </div>
+    <div class="statrow">
+      <div class="stat"><div class="v">985k</div><div class="l">subscribers</div></div>
+      <div class="stat"><div class="v">18.6k</div><div class="l">gross adds MTD</div></div>
+      <div class="stat"><div class="v">$0.11<small> → $0.15</small></div><div class="l">welcome $ / gross sub</div></div>
+      <div class="stat"><div class="v">41d</div><div class="l">CAC payback</div></div>
+    </div>
+  </div>
+
+  <!-- ═══ FAQ ═══ -->
+  <div class="faq">
+    <h2>Key questions</h2>
+    <div class="qa"><div class="qq">Will we hit $400k this month?<span class="pill" style="background:var(--amber-bg);color:var(--amber)">CLOSE — $386k pace</span></div>
+      <div class="aa">Needs $12.9k/day from here; best recent day was $13.8k. The Jul 20 expansion to 22 emails is the closing lever. <a href="#">Daily revenue →</a></div></div>
+    <div class="qa"><div class="qq">Is RPS on the path to $0.50?<span class="pill" style="background:var(--amber-bg);color:var(--amber)">MOVING — $0.34</span></div>
+      <div class="aa">+$0.03 vs June; the path needs ~+$0.04/mo from offer optimization and welcome yield ($0.11 → $0.15). Reassess if August lands under $0.45. <a href="#">Campaigns →</a></div></div>
+    <div class="qa"><div class="qq">Are subscribers growing fast enough for $1M?<span class="pill" style="background:var(--red-bg);color:var(--red)">NO — 146k pace vs 200k</span></div>
+      <div class="aa">Growth must reach 6.5k net/day (currently 4.7k). At $0.50 RPS the December book needs 2M; we're at 985k. <a href="#">Subscriber Acquisition →</a></div></div>
+    <div class="qa"><div class="qq">Is the audience staying healthy while we scale?<span class="pill" style="background:var(--green-bg);color:var(--green)">YES</span></div>
+      <div class="aa">Churn 19.4% vs the 22% guardrail, opens 41.2%, engaged share rising. Unsubs/send ticked up with volume — expected, watching. <a href="#">Engaged Audience →</a></div></div>
+  </div>
+</div>
+
+<script>
+/* ── tiny chart kit: consistent axes, warm palette ────────────────────── */
+const NS = "http://www.w3.org/2000/svg";
+function svgEl(t, at){ const e = document.createElementNS(NS, t); for (const k in at) e.setAttribute(k, at[k]); return e; }
+function chart(el, w, h){ const s = svgEl("svg", {viewBox:`0 0 ${w} ${h}`, width:"100%", height:h}); document.getElementById(el).replaceChildren(s); return s; }
+function gridY(s, w, h, pad, ticks, fmt){
+  ticks.forEach(([frac, label]) => {
+    const y = pad.t + (1-frac)*(h-pad.t-pad.b);
+    s.appendChild(svgEl("line",{x1:pad.l,y1:y,x2:w-pad.r,y2:y,stroke:"#f3f4f6"}));
+    const t = svgEl("text",{x:pad.l-6,y:y+3,"text-anchor":"end","font-size":9,fill:"#9ca3af"}); t.textContent = fmt(label); s.appendChild(t);
+  });
+}
+function bars(el,{w=520,h=150,pad={t:14,r:8,b:20,l:34},data,max,color="#B8593A",labels=[],target,partial,fmt=(v)=>v}){
+  const s = chart(el,w,h), iw = (w-pad.l-pad.r)/data.length;
+  gridY(s,w,h,pad,[[0,0],[0.5,max/2],[1,max]],fmt);
+  data.forEach((v,i)=>{
+    const bh = (v/max)*(h-pad.t-pad.b), x = pad.l+i*iw+iw*0.15;
+    const b = svgEl("rect",{x, y:h-pad.b-bh, width:iw*0.7, height:Math.max(bh,1), rx:3,
+      fill: typeof color==="function"?color(v,i):color, opacity: partial===i?0.45:1});
+    s.appendChild(b);
+    if (labels[i]){ const t=svgEl("text",{x:pad.l+i*iw+iw/2,y:h-6,"text-anchor":"middle","font-size":9,fill:"#9ca3af"}); t.textContent=labels[i]; s.appendChild(t); }
+  });
+  if (target!=null){ const y=pad.t+(1-target/max)*(h-pad.t-pad.b);
+    s.appendChild(svgEl("line",{x1:pad.l,y1:y,x2:w-pad.r,y2:y,stroke:"#8a3f2a","stroke-dasharray":"4 3","stroke-width":1.5})); }
+  return s;
+}
+function line(el,{w=520,h=150,pad={t:14,r:8,b:20,l:34},series,max,min=0,labels=[],bands=[],targets=[],fmt=(v)=>v}){
+  const s = chart(el,w,h), n = series[0].data.length, ix = (w-pad.l-pad.r)/(n-1);
+  bands.forEach(([lo,hi,color])=>{ const y1=pad.t+(1-(hi-min)/(max-min))*(h-pad.t-pad.b), y2=pad.t+(1-(lo-min)/(max-min))*(h-pad.t-pad.b);
+    s.appendChild(svgEl("rect",{x:pad.l,y:y1,width:w-pad.l-pad.r,height:y2-y1,fill:color,opacity:0.5})); });
+  gridY(s,w,h,pad,[[0,min],[0.5,(min+max)/2],[1,max]],fmt);
+  targets.forEach(([v,color])=>{ const y=pad.t+(1-(v-min)/(max-min))*(h-pad.t-pad.b);
+    s.appendChild(svgEl("line",{x1:pad.l,y1:y,x2:w-pad.r,y2:y,stroke:color,"stroke-dasharray":"4 3","stroke-width":1.5})); });
+  series.forEach(({data,color,width=2.5,dots})=>{
+    const pts = data.map((v,i)=>`${pad.l+i*ix},${pad.t+(1-(v-min)/(max-min))*(h-pad.t-pad.b)}`).join(" ");
+    s.appendChild(svgEl("polyline",{points:pts,fill:"none",stroke:color,"stroke-width":width,"stroke-linejoin":"round","stroke-linecap":"round"}));
+    (dots||[]).forEach(i=>{ const [x,y]=pts.split(" ")[i].split(","); s.appendChild(svgEl("circle",{cx:x,cy:y,r:4,fill:color})); });
+  });
+  labels.forEach((lb,i)=>{ if(!lb) return; const t=svgEl("text",{x:pad.l+i*ix,y:h-6,"text-anchor":"middle","font-size":9,fill:"#9ca3af"}); t.textContent=lb; s.appendChild(t); });
+  return s;
+}
+
+/* ── data (weekly May W1 → Jul W1; monthly rollups) ── */
+const D = {
+  rev:   { w:[44,48,52,55, 62,68,74,82, 37.4], m:[211,286,37.4], wl:["M1","","","M4","J1","","","J4","Jul"], ml:["May","Jun","Jul"] },
+  eng:   { w:[51.2,51.6,51.9,52.0, 52.1,52.3,52.6,53.1, 54.0], m:[51.9,52.6,54.0] },
+  acq:   { w:[24,26,25,27, 27,29,30,32, 14.2], m:[102,118,14.2] },
+  daily: [11.8,12.6,13.1,12.2,12.9,13.4,12.7,13.0,12.4,11.1,12.8,13.2,12.6,13.8,12.9,13.1,12.5,13.3,11.9,13.2,12.5],
+  rps:   [0.27,0.28,0.29,0.30, 0.30,0.31,0.31,0.32, 0.34],
+  churn: [18.1,18.8,19.4],
+  opens: [40.0,40.2,40.1,40.4, 40.5,40.7,40.8,41.0, 41.2],
+  ctr:   [1.95,2.0,2.0,2.02, 2.02,2.05,2.05,2.08, 2.1],
+  gross: [31,33,32,35, 35,37,38,42, 18.6],
+  loss:  [7,7,7,8, 8,8,8,10, 4.4],
+  traj:  [852,867,985], trajTargets:[985,1090,1290,1490,1640,1790,1930,2000],
+};
+
+let grain = "w";
+function setGrain(g){
+  grain = g;
+  document.getElementById("wk").classList.toggle("on", g==="w");
+  document.getElementById("mo").classList.toggle("on", g==="m");
+  drawCores();
+}
+function drawCores(){
+  const w = grain==="w";
+  bars("c-rev", { h:120, data: w?D.rev.w:D.rev.m, max: w?100:450, labels: w?D.rev.wl:D.rev.ml,
+    partial:(w?D.rev.w:D.rev.m).length-1, target: w?null:400, fmt:v=>"$"+v+"k" });
+  line("c-eng", { h:120, series:[{data: w?D.eng.w:D.eng.m, color:"#2D7A2D", dots: w?[8]:[2]}],
+    min:48, max:58, labels: w?D.rev.wl:D.rev.ml, fmt:v=>v+"%" });
+  bars("c-acq", { h:120, data: w?D.acq.w:D.acq.m, max: w?50:220, labels: w?D.rev.wl:D.rev.ml,
+    partial:(w?D.acq.w:D.acq.m).length-1, target: w?46:200, color:"#d98a6d", fmt:v=>"+"+v+"k" });
+}
+drawCores();
+
+/* deep dives (static weekly) */
+bars("c-daily", { h:150, data:D.daily, max:16, target:12,
+  color:(v)=> v<12 ? "#C0392B" : "#e0a68f", labels:D.daily.map((_,i)=> i%5===0? `-${21-i}d`:""), fmt:v=>"$"+v+"k" });
+line("c-rps", { h:150, series:[{data:D.rps, color:"#B8593A", dots:[3,7,8]}], min:0.2, max:0.55,
+  targets:[[0.5,"#2D7A2D"]], bands:[[0.43,0.47,"#fffbeb"]], labels:D.rev.wl, fmt:v=>"$"+v.toFixed(2) });
+bars("c-churn", { h:150, data:D.churn, max:26, target:22, color:"#2D7A2D", labels:["May","Jun","Jul td"], fmt:v=>v+"%" });
+line("c-open", { h:150, series:[{data:D.opens,color:"#B8593A",dots:[8]},{data:D.ctr.map(v=>v*16),color:"#d98a6d",width:1.5}],
+  min:28, max:46, labels:D.rev.wl, fmt:v=>v+"%" });
+(function(){ // gross vs loss stacked + net line
+  const s = bars("c-subs", { h:150, data:D.gross, max:50, color:"#2D7A2D", labels:D.rev.wl, partial:8, fmt:v=>v+"k" });
+  const w=520,h=150,pad={t:14,r:8,b:20,l:34},iw=(w-pad.l-pad.r)/D.gross.length;
+  D.loss.forEach((v,i)=>{ const bh=(v/50)*(h-pad.t-pad.b);
+    s.appendChild(svgEl("rect",{x:pad.l+i*iw+iw*0.15,y:h-pad.b-bh,width:iw*0.7,height:bh,rx:2,fill:"#C0392B",opacity:i===8?0.45:0.85})); });
+})();
+line("c-traj", { h:150, series:[
+    {data:D.trajTargets, color:"#E8E0DC", width:2},
+    {data:D.traj, color:"#B8593A", dots:[2]},
+  ], min:700, max:2100, labels:["May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"], targets:[[2000,"#2D7A2D"]], fmt:v=>(v/1000).toFixed(1)+"M" });
+</script>
+</body>
+</html>

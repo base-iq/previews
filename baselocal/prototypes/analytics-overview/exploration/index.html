@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Analytics Overview — 10 variations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#FAF6F4;color:#2C2421;padding:40px 24px}
+.wrap{max-width:880px;margin:0 auto}
+h1{font-size:24px;font-weight:800;letter-spacing:-.01em}
+p.sub{color:#797979;font-size:13.5px;margin:6px 0 26px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+a.card{display:block;background:#fff;border:1px solid #E8E0DC;border-radius:12px;padding:16px 18px;text-decoration:none;color:inherit;transition:box-shadow .15s,transform .15s}
+a.card:hover{box-shadow:0 6px 20px rgba(44,36,33,.10);transform:translateY(-1px)}
+.n{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:8px;background:#2C2421;color:#fff;font-size:12px;font-weight:700;margin-right:8px}
+.t{font-size:15px;font-weight:700}
+.d{font-size:12.5px;color:#797979;margin-top:6px;line-height:1.5}
+.base{grid-column:1 / -1;border-color:#B8593A;background:#fdf5f2}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Analytics Overview — variation gallery</h1>
+  <p class="sub">Identical data in every one (Jul 3 · $37.4k MTD vs $400k · RPS $0.34 · 985k subs · churn 19.4%). Only the presentation changes.</p>
+  <div class="grid">
+    <a class="card base" href="d/"><span class="n">v2</span><span class="t">Baseline — your IA, straight</span><div class="d">Three cores with charts + vs-prev, deep dives, FAQ. The reference the ten variations push against.</div></a>
+    <a class="card" href="v01-north-star/"><span class="n">1</span><span class="t">North Star</span><div class="d">Everything orbits one enormous number — the gap to $1M. Monochrome, one accent.</div></a>
+    <a class="card" href="v02-broadsheet/"><span class="n">2</span><span class="t">Broadsheet</span><div class="d">Financial-newspaper editorial: headline that states the story, FT-style small multiples, serif display.</div></a>
+    <a class="card" href="v03-terminal/"><span class="n">3</span><span class="t">Terminal</span><div class="d">Dark trading desk: dense mono grid, guardrail ticker, status glyphs.</div></a>
+    <a class="card" href="v04-tv-wall/"><span class="n">4</span><span class="t">TV Wall</span><div class="d">For the office TV at 3 meters: huge type, twelve elements max, nothing small.</div></a>
+    <a class="card" href="v05-narrative/"><span class="n">5</span><span class="t">Narrative</span><div class="d">A briefing in four acts — where we are, what's working, what's at risk, what happens next.</div></a>
+    <a class="card" href="v06-swiss/"><span class="n">6</span><span class="t">Swiss</span><div class="d">Annual-report minimalism: 12-column grid, massive numerals, two colors, radical whitespace.</div></a>
+    <a class="card" href="v07-cockpit/"><span class="n">7</span><span class="t">Cockpit</span><div class="d">Bullet graphs everywhere — the canonical target-vs-actual visualization, done beautifully.</div></a>
+    <a class="card" href="v08-heatmap/"><span class="n">8</span><span class="t">Heatmap</span><div class="d">The year as a daily heat calendar — the climb to December visible as a gradient.</div></a>
+    <a class="card" href="v09-spine/"><span class="n">9</span><span class="t">Spine</span><div class="d">The roadmap as a vertical rail down the page; months dock to it, July expands into the cores.</div></a>
+    <a class="card" href="v10-multiples/"><span class="n">10</span><span class="t">Small Multiples</span><div class="d">One relentless uniform tile grid — scanning beats hierarchy; deviation becomes instantly legible.</div></a>
+  </div>
+  <p class="sub" style="margin:26px 0 14px"><b style="color:#2C2421">Syntheses</b> — Baseline skeleton + North Star month strip + Cockpit bullet roadmap + Small-Multiple tiles, with CTOR, spam rate, and revenue-by-source added. Same parts, five arrangements.</p>
+  <div class="grid">
+    <a class="card" href="v11-strip-first/"><span class="n">11</span><span class="t">Strip First</span><div class="d">The year strip opens the page; cores carry tile rows; the bullet roadmap anchors the revenue dive.</div></a>
+    <a class="card" href="v12-roadmap-leads/"><span class="n">12</span><span class="t">Roadmap Leads</span><div class="d">Bullet roadmap as hero with the strip as its numeric caption; one unified tile wall below.</div></a>
+    <a class="card" href="v13-two-speed/"><span class="n">13</span><span class="t">Two-Speed</span><div class="d">A one-screen glance layer (strip + guardrail tiles + verdicts), then a labeled study layer of bullets and charts.</div></a>
+    <a class="card" href="v14-revenue-dominant/"><span class="n">14</span><span class="t">Revenue Dominant</span><div class="d">Revenue owns two-thirds of the page; Engagement and Acquisition run as a tile rail.</div></a>
+    <a class="card" href="v15-console/"><span class="n">15</span><span class="t">Console</span><div class="d">Sticky summary header + switchable core panels — flip between cores without scrolling.</div></a>
+  </div>
+</div>
+</body>
+</html>

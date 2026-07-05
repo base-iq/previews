@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Analytics Overview — v05 Narrative</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#2C2421; --body:#3d3531; --mut:#797068; --faint:#a89c94;
+  --line:#E8E0DC; --hair:#F0EAE5; --band:#F5EEE9; --paper:#FBF8F5;
+  --brand:#B8593A; --brand-d:#8a3f2a; --green:#2D7A2D; --green-bg:#EEF7ED;
+  --amber:#b45309; --amber-bg:#FDF6E3; --red:#C0392B; --red-bg:#FBEAE7;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{background:var(--paper);color:var(--ink);font-family:'Newsreader',Georgia,serif;font-size:19px;line-height:1.65;padding-bottom:110px}
+.caption{background:#17120F;color:#fff;padding:11px 18px;font-family:'Inter',sans-serif;font-size:13px;line-height:1.5}
+.caption strong{color:#f0c4b3}
+
+.col{max-width:880px;margin:0 auto;padding:0 28px}
+.prose{max-width:680px}
+
+/* masthead */
+.mast{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;padding:34px 0 10px;border-bottom:1px solid var(--ink)}
+.mast .kick{font-family:'Inter',sans-serif;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mut)}
+.mast .right{margin-left:auto;display:flex;gap:10px;align-items:center}
+h1{font-size:44px;font-weight:500;letter-spacing:-.01em;line-height:1.1;padding:22px 0 6px}
+.dateline{font-family:'Inter',sans-serif;font-size:12.5px;color:var(--mut);margin-bottom:26px}
+.dateline b{color:var(--ink);font-weight:600}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#fff;font-family:'Inter',sans-serif}
+.seg button{border:none;background:none;padding:6px 13px;font:inherit;font-size:12px;font-weight:600;color:var(--mut);cursor:pointer}
+.seg button.on{background:var(--band);color:var(--brand-d)}
+.gear{border:1px solid var(--line);background:#fff;border-radius:8px;padding:6px 13px;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:var(--mut);cursor:pointer}
+.gear:hover{color:var(--brand-d);border-color:var(--brand)}
+
+.lede{font-size:23px;line-height:1.55;font-weight:400;max-width:760px;margin-bottom:34px}
+.lede b{font-weight:600}
+
+/* cores strip */
+.cores{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--ink);border-bottom:1px solid var(--line);margin:0 0 54px;font-family:'Inter',sans-serif}
+.core{padding:18px 20px 16px}
+.core+.core{border-left:1px solid var(--hair)}
+.core .label{font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--mut)}
+.core .heroline{display:flex;align-items:baseline;gap:9px;margin:8px 0 1px;flex-wrap:wrap}
+.core .hero{font-size:34px;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.core .unit{font-size:11.5px;color:var(--mut);font-weight:600}
+.delta{font-size:11.5px;font-weight:700;padding:2px 9px;border-radius:99px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.up{background:var(--green-bg);color:var(--green)}
+.down{background:var(--red-bg);color:var(--red)}
+.core .versus{font-size:11.5px;color:var(--faint);margin:2px 0 10px;line-height:1.5}
+.core .versus b{color:var(--body);font-weight:600}
+
+/* acts */
+.act{margin:64px 0 22px}
+.act .rule{height:3px;background:var(--ink);width:56px;margin-bottom:18px}
+.act .kick{font-family:'Inter',sans-serif;font-size:11px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--brand-d);margin-bottom:10px}
+.act .qrow{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap}
+.act h2{font-size:33px;font-weight:500;letter-spacing:-.01em;line-height:1.2}
+.pill{font-family:'Inter',sans-serif;font-size:12px;font-weight:800;letter-spacing:.02em;padding:4px 13px;border-radius:99px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.pill.amber{background:var(--amber-bg);color:var(--amber);border:1px solid #ecd9a8}
+.pill.green{background:var(--green-bg);color:var(--green);border:1px solid #cfe6cd}
+.pill.red{background:var(--red-bg);color:var(--red);border:1px solid #f0cdc5}
+
+p.p{max-width:680px;margin:0 0 22px;color:var(--body)}
+p.p b{color:var(--ink);font-weight:600}
+p.p .num{font-family:'Inter',sans-serif;font-size:16.5px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--ink)}
+
+/* figures */
+.fig{margin:30px 0 38px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 20px 12px;box-shadow:0 1px 3px rgba(44,36,33,.04)}
+.figcap{font-family:'Inter',sans-serif;font-size:12.5px;font-weight:700;color:var(--ink);margin-bottom:1px}
+.figsub{font-family:'Inter',sans-serif;font-size:11px;color:var(--faint);margin-bottom:10px}
+.fig svg{display:block;height:auto}
+.figrow{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:30px 0 38px}
+.figrow .fig{margin:0}
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:30px 0 38px}
+.trio .fig{margin:0;padding:16px 16px 10px}
+text{font-family:'Inter',sans-serif;font-variant-numeric:tabular-nums}
+
+/* mix bar */
+.mix{display:flex;height:26px;border-radius:7px;overflow:hidden;margin:10px 0 8px;font-family:'Inter',sans-serif}
+.mix div{display:flex;align-items:center;padding:0 9px;color:#fff;font-size:10.5px;font-weight:700;white-space:nowrap;overflow:hidden}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-family:'Inter',sans-serif;font-size:11px;color:var(--mut);padding-bottom:4px}
+.legend i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:4px}
+
+/* inline stat band */
+.statband{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);padding:14px 2px;margin:28px 0 34px;font-family:'Inter',sans-serif}
+.statband .v{font-size:19px;font-weight:800;font-variant-numeric:tabular-nums}
+.statband .v small{font-size:11px;color:var(--faint);font-weight:600}
+.statband .l{font-size:10.5px;color:var(--mut);font-weight:600;margin-top:2px;line-height:1.4}
+
+/* timeline */
+.timeline{border-top:1px solid var(--ink);margin:30px 0 20px;font-family:'Inter',sans-serif;max-width:760px}
+.tl{display:grid;grid-template-columns:120px 1fr;gap:18px;padding:15px 2px;border-bottom:1px solid var(--hair)}
+.tl .d{font-size:13px;font-weight:800;color:var(--brand-d);font-variant-numeric:tabular-nums}
+.tl .t{font-size:13.5px;color:var(--body);line-height:1.55}
+.tl .t b{color:var(--ink);font-weight:700}
+
+.close{margin-top:64px;padding-top:26px;border-top:1px solid var(--ink);font-size:20px;max-width:720px}
+.foot{font-family:'Inter',sans-serif;font-size:12px;color:var(--faint);margin-top:26px}
+.foot button{border:none;background:none;font:inherit;font-weight:700;color:var(--brand-d);cursor:pointer;text-decoration:underline}
+
+/* edit-targets modal */
+.tmask{display:none;position:fixed;inset:0;background:rgba(23,18,15,.45);z-index:40}
+.tmask.open{display:block}
+.tmodal{position:fixed;top:12%;left:50%;transform:translateX(-50%);width:min(440px,92vw);background:#fff;border:1px solid var(--line);border-radius:16px;padding:24px 26px;z-index:41;font-family:'Inter',sans-serif;box-shadow:0 18px 50px rgba(44,36,33,.22)}
+.tmodal h3{font-size:16px;font-weight:800;margin-bottom:4px}
+.tmodal .note{font-size:11.5px;color:var(--faint);margin-bottom:16px}
+.trow{display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--hair)}
+.trow label{flex:1;font-size:12.5px;font-weight:600;color:var(--body)}
+.trow input{width:92px;border:1px solid var(--line);border-radius:7px;padding:6px 9px;font:inherit;font-size:13px;font-weight:600;text-align:right;font-variant-numeric:tabular-nums}
+.tmodal .actions{display:flex;justify-content:flex-end;gap:10px;margin-top:18px}
+.tmodal .actions button{font:inherit;font-size:12.5px;font-weight:700;padding:8px 16px;border-radius:8px;cursor:pointer;border:1px solid var(--line);background:#fff;color:var(--mut)}
+.tmodal .actions .save{background:var(--brand);border-color:var(--brand);color:#fff}
+
+@media(max-width:900px){
+  .cores{grid-template-columns:1fr}
+  .core+.core{border-left:none;border-top:1px solid var(--hair)}
+  .figrow,.trio{grid-template-columns:1fr}
+  .statband{grid-template-columns:repeat(2,1fr)}
+  h1{font-size:34px}.act h2{font-size:26px}.lede{font-size:20px}
+  body{font-size:17px}
+}
+</style>
+</head>
+<body>
+<div class="caption"><strong>Variation 5 — Narrative.</strong> The overview reads top-to-bottom as a four-act monthly briefing — where we are, what's working, what's at risk, what happens next — with the key-question verdicts as act-header pills and charts interleaved as evidence. Built for reading, not scanning.</div>
+
+<div class="col">
+  <div class="mast">
+    <span class="kick">BaseLocal · Analytics Overview</span>
+    <div class="right">
+      <div class="seg"><button class="on" id="wk" onclick="setGrain('w')">Weekly</button><button id="mo" onclick="setGrain('m')">Monthly</button></div>
+      <button class="gear" onclick="openTargets()">Edit targets</button>
+    </div>
+  </div>
+  <h1>The July Briefing</h1>
+  <div class="dateline">Thursday, July 3 · month target <b>$400k</b> · daily floor <b>$12k</b> · RPS path <b>$0.34 → $0.50</b> · targets are monthly-set and editable</div>
+
+  <p class="lede">Three days into July, the business is pacing to <b>$386k</b> against a <b>$400k</b> target — the closest we've come to catching the roadmap, and still fourteen thousand dollars short of it. The audience is healthy, revenue per subscriber keeps climbing, and the one number genuinely off the path is the one that matters most for December: <b>subscriber growth</b>.</p>
+
+  <!-- cores -->
+  <div class="cores">
+    <div class="core">
+      <div class="label">Revenue</div>
+      <div class="heroline"><span class="hero">$286k</span><span class="unit">June, monthly</span><span class="delta up">+35.5% vs May</span></div>
+      <div class="versus">July: <b>$37.4k</b> banked · projecting <b>$386k</b> vs $400k target</div>
+      <div id="sp-rev"></div>
+    </div>
+    <div class="core">
+      <div class="label">Engagement</div>
+      <div class="heroline"><span class="hero">52.6%</span><span class="unit">June engaged share</span><span class="delta up">+0.7pt vs May</span></div>
+      <div class="versus">July-to-date: <b>54.0%</b> · churn 19.4% vs 22% guardrail</div>
+      <div id="sp-eng"></div>
+    </div>
+    <div class="core">
+      <div class="label">Acquisition</div>
+      <div class="heroline"><span class="hero">+118k</span><span class="unit">June net new</span><span class="delta up">+15.7% vs May</span></div>
+      <div class="versus">July pacing <b>+146k</b> vs 200k/mo target · book at <b>985k</b></div>
+      <div id="sp-acq"></div>
+    </div>
+  </div>
+
+  <!-- ═══ ACT I ═══ -->
+  <div class="act">
+    <div class="rule"></div>
+    <div class="kick">Act I · Where we are</div>
+    <div class="qrow"><h2>Will we hit $400k this month?</h2><span class="pill amber">CLOSE — $386k pace</span></div>
+  </div>
+  <p class="p">June closed at <span class="num">$286k</span> against a $290k target — 99% of plan, and up 35.5% on May. July asks for <span class="num">$400k</span>. Through three days we've banked <span class="num">$37.4k</span>, an average of $12.5k a day, and the straight-line projection lands at <b>$386k</b>. Closing the gap means <span class="num">$12.9k a day</span> from here forward.</p>
+  <div class="fig">
+    <div class="figcap">Revenue vs the roadmap — May through December</div>
+    <div class="figsub">ghost bars are monthly targets · solid bars are actuals · July shows banked + projection</div>
+    <div id="f-pace"></div>
+  </div>
+  <p class="p">Is $12.9k a day realistic? Our best day in the last three weeks was <span class="num">$13.8k</span>, so the number is reachable — but it has to become the median, not the ceiling. The floor held on 18 of the last 21 days; three dips below $12k, only one of them in the last seven days.</p>
+  <div class="fig">
+    <div class="figcap">Daily revenue — last 21 days</div>
+    <div class="figsub">$12k floor (solid) · $12.9k/day required pace (dashed) · dips in red</div>
+    <div id="f-daily"></div>
+  </div>
+
+  <!-- ═══ ACT II ═══ -->
+  <div class="act">
+    <div class="rule"></div>
+    <div class="kick">Act II · What's working</div>
+    <div class="qrow"><h2>Is the audience staying healthy while we scale?</h2><span class="pill green">YES</span></div>
+  </div>
+  <p class="p">Everything we watch for audience fatigue is moving the right way, nine weeks running. Engaged share is up from <span class="num">51.2%</span> to <span class="num">54.0%</span>. Opens climbed from 40.0% to <span class="num">41.2%</span>. Click-through went from 1.95% to <span class="num">2.1%</span>. This is what it looks like when volume grows and the audience doesn't flinch.</p>
+  <div class="trio">
+    <div class="fig"><div class="figcap">Engaged share</div><div class="figsub">weekly · % of book</div><div id="f-engaged"></div></div>
+    <div class="fig"><div class="figcap">Open rate</div><div class="figsub">weekly · % delivered</div><div id="f-opens"></div></div>
+    <div class="fig"><div class="figcap">Click-through</div><div class="figsub">weekly · % delivered</div><div id="f-ctr"></div></div>
+  </div>
+  <p class="p">Churn is the guardrail metric, and it's holding: <span class="num">19.4%</span> in July-to-date against a 22% cap. It has crept up three months straight — 18.1, 18.8, 19.4 — which is the expected cost of adding sends, not a fire. Unsubscribes per send ticked from 0.27% to <span class="num">0.31%</span> over the same stretch; also expected, also watched.</p>
+  <div class="figrow">
+    <div class="fig"><div class="figcap">Churn vs the 22% guardrail</div><div class="figsub">monthly · engaged-audience definition</div><div id="f-churn"></div></div>
+    <div class="fig">
+      <div class="figcap">July revenue mix</div>
+      <div class="figsub">share of revenue by product</div>
+      <div class="mix">
+        <div style="flex:58;background:#B8593A">Morning Roundup 58%</div>
+        <div style="flex:22;background:#d98a6d">Daily News 22%</div>
+        <div style="flex:9;background:#2D7A2D">Welcome 9%</div>
+        <div style="flex:6;background:#b45309">Bridge 6%</div>
+        <div style="flex:5;background:#a89c94">5%</div>
+      </div>
+      <div class="legend"><span><i style="background:#B8593A"></i>Morning Roundup</span><span><i style="background:#d98a6d"></i>Daily News</span><span><i style="background:#2D7A2D"></i>Welcome</span><span><i style="background:#b45309"></i>Bridge</span><span><i style="background:#a89c94"></i>Other</span></div>
+    </div>
+  </div>
+  <p class="p">On the monetization side, the offer book is earning its keep: <span class="num">$1.86</span> revenue per click across <span class="num">34</span> active offers, with 3 of June's 10 test winners already solidified into the rotation. Morning Roundup carries 58% of revenue — a strength today, a concentration risk worth naming.</p>
+  <div class="statband">
+    <div><div class="v">$1.86</div><div class="l">revenue per click</div></div>
+    <div><div class="v">34</div><div class="l">active offers</div></div>
+    <div><div class="v">3<small> of 10</small></div><div class="l">June winners solidified</div></div>
+    <div><div class="v">0.31%</div><div class="l">unsubs / send · was 0.27%</div></div>
+  </div>
+
+  <!-- ═══ ACT III ═══ -->
+  <div class="act">
+    <div class="rule"></div>
+    <div class="kick">Act III · What's at risk</div>
+    <div class="qrow"><h2>Are subscribers growing fast enough for the $1M month?</h2><span class="pill red">NO — 146k pace vs 200k</span></div>
+  </div>
+  <p class="p">The December math is unforgiving: <b>$1M a month requires 2M subscribers at $0.50 RPS.</b> We're at <span class="num">985k</span>. Net adds were 102k in May, 118k in June, and July is pacing to <span class="num">+146k</span> against the 200k a month the path demands. That's <span class="num">4.7k net a day</span> when we need <span class="num">6.5k</span>.</p>
+  <div class="fig">
+    <div class="figcap">Subscriber book — actuals, target path, and today's pace</div>
+    <div class="figsub">terracotta: actuals · ticks: monthly target path · dashed: projection at +146k/mo</div>
+    <div id="f-traj"></div>
+  </div>
+  <p class="p">Hold today's pace and December lands near <span class="num">1.85M</span> — roughly <b>150k short</b> of the book the $1M month needs. The gap doesn't show up this month; it compounds as the path steepens through the fall. Gross adds are actually climbing — 31k to 42k a week since May — but weekly losses climbed too, from 7k to 10k.</p>
+  <div class="figrow">
+    <div class="fig"><div class="figcap">Gross adds vs losses — weekly</div><div class="figsub">adds above the line, losses below · final week partial</div><div id="f-flow"></div></div>
+    <div class="fig"><div class="figcap">Welcome revenue per gross new sub</div><div class="figsub">monthly · target $0.15</div><div id="f-welcome"></div></div>
+  </div>
+  <p class="p">The second risk hides inside the first: every new subscriber is underpaying on arrival. Welcome flow yields <span class="num">$0.11</span> per gross new sub against a <span class="num">$0.15</span> target — up from $0.06 in May, still $0.04 light. At 42k gross adds a week, that gap is real money, and it also stretches CAC payback, currently <span class="num">41 days</span>.</p>
+
+  <!-- ═══ ACT IV ═══ -->
+  <div class="act">
+    <div class="rule"></div>
+    <div class="kick">Act IV · What happens next</div>
+    <div class="qrow"><h2>Is RPS on the path to $0.50?</h2><span class="pill amber">MOVING — $0.34</span></div>
+  </div>
+  <p class="p">Revenue per subscriber is the lever that makes the December book requirement smaller — and it's moving: <span class="num">$0.29 → $0.31 → $0.34</span> across May, June, and July-to-date. The path to <span class="num">$0.50</span> by December needs roughly <b>+$0.04 a month</b> from here. August is the checkpoint: if RPS lands under <span class="num">$0.45</span>, we pause the send expansion and reassess.</p>
+  <div class="fig">
+    <div class="figcap">RPS — the path to $0.50</div>
+    <div class="figsub">weekly actuals · dashed: required path · August guardrail marked</div>
+    <div id="f-rps"></div>
+  </div>
+  <p class="p">Four dated moves carry the second half. Each one feeds either the RPS line above or the subscriber gap in Act III — nothing on this list is decoration.</p>
+  <div class="timeline">
+    <div class="tl"><div class="d">Jul 20</div><div class="t"><b>Send expansion: 15 → 22 emails/week.</b> The single biggest revenue lever for closing July's $14k gap. Watch opens and unsubs through the transition.</div></div>
+    <div class="tl"><div class="d">Aug 1</div><div class="t"><b>Second expansion: 22 → 25 emails/week</b> — conditional on the audience holding. RPS guardrail: stay at or above <b>$0.45</b> for August or the expansion pauses.</div></div>
+    <div class="tl"><div class="d">August</div><div class="t"><b>Welcome yield $0.11 → $0.15 per gross sub.</b> Closes the arrival-value gap and shortens the 41-day CAC payback, which unlocks more acquisition spend against the 200k/mo target.</div></div>
+    <div class="tl"><div class="d">July</div><div class="t"><b>Solidify the remaining 7 of 10 June offer winners.</b> The cheapest RPS gain on the board — proven offers, just not yet locked into rotation.</div></div>
+  </div>
+
+  <div class="close">The month is winnable, the audience can carry more, and the machine that turns attention into revenue keeps improving. What we don't have yet is enough new readers walking in the door. That's the problem July needs to solve.</div>
+  <div class="foot">Targets are monthly-set — $400k July revenue, $0.50 RPS by December, 200k net new/month, 22% churn cap, $12k daily floor. <button onclick="openTargets()">Edit targets</button></div>
+</div>
+
+<!-- edit targets modal -->
+<div class="tmask" id="tmask" onclick="closeTargets()"></div>
+<div class="tmodal" id="tmodal" style="display:none" role="dialog" aria-label="Edit targets">
+  <h3>Edit targets</h3>
+  <div class="note">Monthly-set. Changes apply from the current month forward. (Mock — values don't persist.)</div>
+  <div class="trow"><label>July revenue target ($k)</label><input value="400"></div>
+  <div class="trow"><label>Daily revenue floor ($k)</label><input value="12"></div>
+  <div class="trow"><label>RPS target, December ($)</label><input value="0.50"></div>
+  <div class="trow"><label>RPS guardrail, August ($)</label><input value="0.45"></div>
+  <div class="trow"><label>Net new subs / month (k)</label><input value="200"></div>
+  <div class="trow"><label>Churn guardrail (%)</label><input value="22"></div>
+  <div class="actions"><button onclick="closeTargets()">Cancel</button><button class="save" onclick="closeTargets()">Save targets</button></div>
+</div>
+
+<script>
+/* ── shared data (identical across variations) ─────────────────────────── */
+const DATA = {
+  roadmap:{ months:["May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
+            targets:[205,290,400,500,700,800,900,1000], actuals:[211,286] },
+  july:{ mtd:37.4, asOf:"Jul 3", projected:386, needPerDay:12.9, avgPerDay:12.5 },
+  revWeekly:[44,48,52,55,62,68,74,82,37.4],
+  revMonthly:[211,286,37.4],
+  weekLabels:["M1","","","M4","J1","","","J4","Jul"],
+  monthLabels:["May","Jun","Jul"],
+  daily21:[11.8,12.6,13.1,12.2,12.9,13.4,12.7,13.0,12.4,11.1,12.8,13.2,12.6,13.8,12.9,13.1,12.5,13.3,11.9,13.2,12.5],
+  dailyFloor:12,
+  rps:{ weekly:[0.27,0.28,0.29,0.30,0.30,0.31,0.31,0.32,0.34], monthly:[0.29,0.31,0.34], target:0.50, augGuardrail:0.45 },
+  subs:{ book:985, actuals:[852,912,985], pathMonths:["Jul","Aug","Sep","Oct","Nov","Dec"],
+         path:[1090,1290,1490,1640,1790,1930], goal:2000,
+         pace:[1117,1263,1409,1555,1701,1847] },
+  netNew:{ weekly:[24,26,25,27,27,29,30,32,14.2], monthly:[102,118,14.2], julyPace:146, target:200, perDay:4.7, needPerDay:6.5 },
+  gross:{ weekly:[31,33,32,35,35,37,38,42,18.6] },
+  losses:{ weekly:[7,7,7,8,8,8,8,10,4.4] },
+  churn:{ monthly:[18.1,18.8,19.4], guardrail:22 },
+  opens:{ weekly:[40.0,40.2,40.1,40.4,40.5,40.7,40.8,41.0,41.2] },
+  ctr:{ weekly:[1.95,2.0,2.0,2.02,2.02,2.05,2.05,2.08,2.1] },
+  engaged:{ weekly:[51.2,51.6,51.9,52.0,52.1,52.3,52.6,53.1,54.0], monthly:[51.9,52.6,54.0] },
+  unsubs:{ monthly:[0.27,0.29,0.31] },
+  mix:[["Morning Roundup",58],["Daily News",22],["Welcome",9],["Bridge",6],["Other",5]],
+  welcome:{ monthly:[0.06,0.09,0.11], target:0.15 },
+  econ:{ rpc:1.86, offers:34, winners:"3/10", cacDays:41 },
+  sends:{ now:15, jul20:22, aug:25 }
+};
+
+/* ── svg helpers ───────────────────────────────────────────────────────── */
+const NS = "http://www.w3.org/2000/svg";
+function E(t, at){ const e = document.createElementNS(NS, t); for (const k in at) e.setAttribute(k, at[k]); return e; }
+function TX(x, y, str, at){ const t = E("text", Object.assign({x:x, y:y, "font-size":10, fill:"#797068"}, at||{})); t.textContent = str; return t; }
+function mount(id, w, h){
+  const s = E("svg", {viewBox:"0 0 "+w+" "+h, width:"100%", preserveAspectRatio:"xMidYMid meet"});
+  document.getElementById(id).replaceChildren(s);
+  return s;
+}
+
+/* ── Act I: pace chart ─────────────────────────────────────────────────── */
+function figPace(){
+  const W=820, H=290, pl=46, pr=14, pt=30, pb=26;
+  const s = mount("f-pace", W, H);
+  const R = DATA.roadmap, n = R.months.length, colW = (W-pl-pr)/n;
+  const sy = v => pt + (1 - v/1050) * (H-pt-pb);
+  [0,250,500,750,1000].forEach(v => {
+    s.appendChild(E("line",{x1:pl,y1:sy(v),x2:W-pr,y2:sy(v),stroke:"#F0EAE5"}));
+    s.appendChild(TX(pl-8, sy(v)+3, "$"+v+"k", {"text-anchor":"end", fill:"#a89c94"}));
+  });
+  R.months.forEach((m,i) => {
+    const x0 = pl+i*colW, bw = colW*0.56, bx = x0+(colW-bw)/2;
+    s.appendChild(E("rect",{x:bx, y:sy(R.targets[i]), width:bw, height:sy(0)-sy(R.targets[i]), fill:"#F1E7E1"}));
+    if (i >= 2) s.appendChild(TX(bx+bw/2, sy(R.targets[i])-5, R.targets[i], {"text-anchor":"middle", fill:"#b3a69e"}));
+    s.appendChild(TX(x0+colW/2, H-8, m, {"text-anchor":"middle", "font-size":11}));
+  });
+  R.actuals.forEach((v,i) => {
+    const x0 = pl+i*colW, bw = colW*0.32, bx = x0+(colW-bw)/2;
+    s.appendChild(E("rect",{x:bx, y:sy(v), width:bw, height:sy(0)-sy(v), fill:"#B8593A", rx:2}));
+    s.appendChild(TX(bx+bw/2, sy(v)-5, "$"+v+"k", {"text-anchor":"middle", fill:"#2C2421", "font-weight":700, "font-size":11}));
+  });
+  // July: projection outline + banked solid
+  const jx0 = pl+2*colW, jbw = colW*0.32, jbx = jx0+(colW-jbw)/2;
+  s.appendChild(E("rect",{x:jbx, y:sy(DATA.july.projected), width:jbw, height:sy(0)-sy(DATA.july.projected),
+    fill:"#B8593A", "fill-opacity":0.13, stroke:"#B8593A", "stroke-dasharray":"4 3", rx:2}));
+  s.appendChild(E("rect",{x:jbx, y:sy(DATA.july.mtd), width:jbw, height:sy(0)-sy(DATA.july.mtd), fill:"#B8593A", rx:2}));
+  s.appendChild(TX(jbx+jbw/2, sy(DATA.july.mtd)-5, "37.4 in", {"text-anchor":"middle", fill:"#8a3f2a", "font-size":9.5, "font-weight":700}));
+  s.appendChild(TX(jbx-7, sy(DATA.july.projected)+4, "proj $386k", {"text-anchor":"end", fill:"#8a3f2a", "font-weight":700, "font-size":11}));
+}
+
+/* ── Act I: daily bars ─────────────────────────────────────────────────── */
+function figDaily(){
+  const W=820, H=200, pl=38, pr=118, pt=16, pb=22;
+  const s = mount("f-daily", W, H);
+  const d = DATA.daily21, iw = (W-pl-pr)/d.length;
+  const sy = v => pt + (1 - v/15) * (H-pt-pb);
+  [0,5,10,15].forEach(v => {
+    s.appendChild(E("line",{x1:pl,y1:sy(v),x2:W-pr,y2:sy(v),stroke:"#F0EAE5"}));
+    s.appendChild(TX(pl-7, sy(v)+3, v, {"text-anchor":"end", fill:"#a89c94"}));
+  });
+  d.forEach((v,i) => {
+    const dip = v < DATA.dailyFloor;
+    s.appendChild(E("rect",{x:pl+i*iw+iw*0.18, y:sy(v), width:iw*0.64, height:sy(0)-sy(v), rx:2,
+      fill: dip ? "#C0392B" : "#E3B39F"}));
+    if (i%5===0 || i===d.length-1){
+      const lab = i===d.length-1 ? "today" : "-"+(21-i)+"d";
+      s.appendChild(TX(pl+i*iw+iw/2, H-6, lab, {"text-anchor":"middle", "font-size":9.5}));
+    }
+  });
+  s.appendChild(E("line",{x1:pl,y1:sy(12),x2:W-pr+6,y2:sy(12),stroke:"#2C2421","stroke-width":1}));
+  s.appendChild(TX(W-pr+11, sy(12)+3, "floor $12k", {fill:"#2C2421","font-weight":700}));
+  s.appendChild(E("line",{x1:pl,y1:sy(12.9),x2:W-pr+6,y2:sy(12.9),stroke:"#B8593A","stroke-width":1.4,"stroke-dasharray":"5 4"}));
+  s.appendChild(TX(W-pr+11, sy(12.9)+3, "needs $12.9k/day", {fill:"#8a3f2a","font-weight":700}));
+}
+
+/* ── Act II: small multiples ───────────────────────────────────────────── */
+function miniLine(id, data, lo, hi, color, fmt){
+  const W=250, H=168, pl=36, pr=12, pt=26, pb=18;
+  const s = mount(id, W, H);
+  const n = data.length, ix = (W-pl-pr)/(n-1);
+  const sy = v => pt + (1 - (v-lo)/(hi-lo)) * (H-pt-pb);
+  [lo,(lo+hi)/2,hi].forEach(v => {
+    s.appendChild(E("line",{x1:pl,y1:sy(v),x2:W-pr,y2:sy(v),stroke:"#F0EAE5"}));
+    s.appendChild(TX(pl-6, sy(v)+3, fmt(v), {"text-anchor":"end", fill:"#a89c94", "font-size":9}));
+  });
+  const pts = data.map((v,i) => (pl+i*ix)+","+sy(v)).join(" ");
+  s.appendChild(E("polyline",{points:pts, fill:"none", stroke:color, "stroke-width":2.4, "stroke-linejoin":"round", "stroke-linecap":"round"}));
+  s.appendChild(E("circle",{cx:pl+(n-1)*ix, cy:sy(data[n-1]), r:4, fill:color}));
+  s.appendChild(TX(pl+2, sy(data[0])-9, fmt(data[0]), {fill:"#797068", "font-size":10}));
+  s.appendChild(TX(W-pr, sy(data[n-1])-10, fmt(data[n-1]), {"text-anchor":"end", fill:"#2C2421", "font-weight":800, "font-size":12}));
+  s.appendChild(TX(pl, H-4, "9 wks ago", {"font-size":9, fill:"#a89c94"}));
+  s.appendChild(TX(W-pr, H-4, "now", {"text-anchor":"end", "font-size":9, fill:"#a89c94"}));
+}
+
+/* ── Act II: churn ─────────────────────────────────────────────────────── */
+function figChurn(){
+  const W=390, H=190, pl=38, pr=96, pt=16, pb=24;
+  const s = mount("f-churn", W, H);
+  const d = DATA.churn.monthly, labs = ["May","Jun","Jul td"], iw = (W-pl-pr)/d.length;
+  const sy = v => pt + (1 - v/25) * (H-pt-pb);
+  [0,10,20].forEach(v => {
+    s.appendChild(E("line",{x1:pl,y1:sy(v),x2:W-pr,y2:sy(v),stroke:"#F0EAE5"}));
+    s.appendChild(TX(pl-7, sy(v)+3, v+"%", {"text-anchor":"end", fill:"#a89c94"}));
+  });
+  d.forEach((v,i) => {
+    const bw = iw*0.5, bx = pl+i*iw+(iw-bw)/2;
+    s.appendChild(E("rect",{x:bx, y:sy(v), width:bw, height:sy(0)-sy(v), fill:"#2D7A2D", rx:3}));
+    s.appendChild(TX(bx+bw/2, sy(v)-6, v+"%", {"text-anchor":"middle", fill:"#2C2421", "font-weight":700, "font-size":11}));
+    s.appendChild(TX(pl+i*iw+iw/2, H-7, labs[i], {"text-anchor":"middle"}));
+  });
+  s.appendChild(E("line",{x1:pl,y1:sy(22),x2:W-pr+6,y2:sy(22),stroke:"#C0392B","stroke-width":1.4,"stroke-dasharray":"5 4"}));
+  s.appendChild(TX(W-pr+11, sy(22)+3, "guardrail 22%", {fill:"#C0392B","font-weight":700,"font-size":9.5}));
+}
+
+/* ── Act III: trajectory ───────────────────────────────────────────────── */
+function figTraj(){
+  const W=820, H=260, pl=52, pr=118, pt=18, pb=24;
+  const s = mount("f-traj", W, H);
+  const months = ["May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  const n = months.length, ix = (W-pl-pr)/(n-1);
+  const sy = v => pt + (1 - (v-700)/(2100-700)) * (H-pt-pb);
+  const sx = i => pl + i*ix;
+  [800,1200,1600,2000].forEach(v => {
+    s.appendChild(E("line",{x1:pl,y1:sy(v),x2:W-pr,y2:sy(v),stroke:"#F0EAE5"}));
+    s.appendChild(TX(pl-8, sy(v)+3, (v/1000).toFixed(1)+"M", {"text-anchor":"end", fill:"#a89c94"}));
+  });
+  months.forEach((m,i) => s.appendChild(TX(sx(i), H-6, m, {"text-anchor":"middle", "font-size":11})));
+  // target path ticks + light line (Jul..Dec = idx 2..7)
+  const tp = DATA.subs.path;
+  const tpts = tp.map((v,i) => sx(i+2)+","+sy(v)).join(" ");
+  s.appendChild(E("polyline",{points:tpts, fill:"none", stroke:"#d9c9bf", "stroke-width":2}));
+  tp.forEach((v,i) => s.appendChild(E("line",{x1:sx(i+2)-6, y1:sy(v), x2:sx(i+2)+6, y2:sy(v), stroke:"#8a3f2a", "stroke-width":2})));
+  // goal marker at Dec
+  s.appendChild(E("circle",{cx:sx(7), cy:sy(DATA.subs.goal), r:4.5, fill:"none", stroke:"#2D7A2D", "stroke-width":2}));
+  s.appendChild(TX(W-pr+10, sy(DATA.subs.goal)+3, "goal 2.0M", {fill:"#2D7A2D","font-weight":800}));
+  s.appendChild(TX(W-pr+10, sy(tp[5])+10, "path 1.93M", {fill:"#8a3f2a","font-weight":600,"font-size":9.5}));
+  // pace projection (dashed) from Jul onward
+  const pace = DATA.subs.pace;
+  const ppts = pace.map((v,i) => sx(i+2)+","+sy(v)).join(" ");
+  s.appendChild(E("polyline",{points:ppts, fill:"none", stroke:"#2C2421", "stroke-width":1.6, "stroke-dasharray":"5 4", opacity:0.65}));
+  s.appendChild(TX(W-pr+10, sy(pace[5])+3, "pace 1.85M", {fill:"#2C2421","font-weight":800}));
+  s.appendChild(TX(W-pr+10, sy(pace[5])+15, "−153k short", {fill:"#C0392B","font-weight":700,"font-size":9.5}));
+  // actuals May..Jul
+  const act = DATA.subs.actuals;
+  const apts = act.map((v,i) => sx(i)+","+sy(v)).join(" ");
+  s.appendChild(E("polyline",{points:apts, fill:"none", stroke:"#B8593A", "stroke-width":3, "stroke-linecap":"round", "stroke-linejoin":"round"}));
+  s.appendChild(E("circle",{cx:sx(2), cy:sy(985), r:5, fill:"#B8593A"}));
+  s.appendChild(TX(sx(2), sy(985)-11, "985k today", {"text-anchor":"middle", fill:"#8a3f2a", "font-weight":800, "font-size":11}));
+}
+
+/* ── Act III: gross vs losses (diverging) ──────────────────────────────── */
+function figFlow(){
+  const W=390, H=200, pl=36, pr=12, pt=16, pb=20;
+  const s = mount("f-flow", W, H);
+  const g = DATA.gross.weekly, l = DATA.losses.weekly, n = g.length;
+  const iw = (W-pl-pr)/n;
+  const zeroY = pt + (H-pt-pb)*0.72;
+  const syU = v => zeroY - (v/45)*(zeroY-pt);          // adds, up
+  const syD = v => zeroY + (v/14)*(H-pb-zeroY);        // losses, down
+  s.appendChild(E("line",{x1:pl,y1:zeroY,x2:W-pr,y2:zeroY,stroke:"#2C2421","stroke-width":1}));
+  g.forEach((v,i) => {
+    const part = i===n-1 ? 0.45 : 1;
+    s.appendChild(E("rect",{x:pl+i*iw+iw*0.16, y:syU(v), width:iw*0.68, height:zeroY-syU(v), fill:"#2D7A2D", opacity:part, rx:2}));
+    s.appendChild(E("rect",{x:pl+i*iw+iw*0.16, y:zeroY, width:iw*0.68, height:syD(l[i])-zeroY, fill:"#C0392B", opacity:part*0.88, rx:2}));
+  });
+  s.appendChild(TX(pl+7*iw+iw/2, syU(g[7])-5, "+42k", {"text-anchor":"middle", fill:"#2D7A2D", "font-weight":800}));
+  s.appendChild(TX(pl+7*iw+iw/2, syD(l[7])+11, "−10k", {"text-anchor":"middle", fill:"#C0392B", "font-weight":800, "font-size":9.5}));
+  DATA.weekLabels.forEach((lb,i) => { if(lb) s.appendChild(TX(pl+i*iw+iw/2, H-5, lb, {"text-anchor":"middle", "font-size":9.5})); });
+  s.appendChild(TX(pl-4, syU(40), "adds", {"text-anchor":"end", "font-size":9, fill:"#2D7A2D", "font-weight":700}));
+  s.appendChild(TX(pl-4, syD(10)+3, "losses", {"text-anchor":"end", "font-size":9, fill:"#C0392B", "font-weight":700}));
+}
+
+/* ── Act III: welcome yield ────────────────────────────────────────────── */
+function figWelcome(){
+  const W=390, H=200, pl=42, pr=98, pt=16, pb=24;
+  const s = mount("f-welcome", W, H);
+  const d = DATA.welcome.monthly, labs = ["May","Jun","Jul"], iw = (W-pl-pr)/d.length;
+  const sy = v => pt + (1 - v/0.18) * (H-pt-pb);
+  [0,0.05,0.10,0.15].forEach(v => {
+    s.appendChild(E("line",{x1:pl,y1:sy(v),x2:W-pr,y2:sy(v),stroke:"#F0EAE5"}));
+    s.appendChild(TX(pl-7, sy(v)+3, "$"+v.toFixed(2).slice(1), {"text-anchor":"end", fill:"#a89c94"}));
+  });
+  d.forEach((v,i) => {
+    const bw = iw*0.5, bx = pl+i*iw+(iw-bw)/2;
+    s.appendChild(E("rect",{x:bx, y:sy(v), width:bw, height:sy(0)-sy(v), fill:"#B8593A", rx:3}));
+    s.appendChild(TX(bx+bw/2, sy(v)-6, "$"+v.toFixed(2), {"text-anchor":"middle", fill:"#2C2421", "font-weight":700, "font-size":11}));
+    s.appendChild(TX(pl+i*iw+iw/2, H-7, labs[i], {"text-anchor":"middle"}));
+  });
+  s.appendChild(E("line",{x1:pl,y1:sy(0.15),x2:W-pr+6,y2:sy(0.15),stroke:"#2D7A2D","stroke-width":1.4,"stroke-dasharray":"5 4"}));
+  s.appendChild(TX(W-pr+11, sy(0.15)+3, "target $0.15", {fill:"#2D7A2D","font-weight":700,"font-size":9.5}));
+}
+
+/* ── Act IV: RPS path ──────────────────────────────────────────────────── */
+function figRps(){
+  const W=820, H=230, pl=44, pr=138, pt=18, pb=24;
+  const s = mount("f-rps", W, H);
+  const d = DATA.rps.weekly, n = d.length;
+  const pw = W-pl-pr;
+  const sxw = i => pl + (i/(n-1)) * pw * 0.60;   // weekly region = left 60%
+  const sxm = f => pl + (0.60 + f*0.40) * pw;    // future months Jul→Dec
+  const sy = v => pt + (1 - (v-0.20)/0.35) * (H-pt-pb);
+  [0.20,0.30,0.40,0.50].forEach(v => {
+    s.appendChild(E("line",{x1:pl,y1:sy(v),x2:W-pr,y2:sy(v),stroke:"#F0EAE5"}));
+    s.appendChild(TX(pl-7, sy(v)+3, "$"+v.toFixed(2), {"text-anchor":"end", fill:"#a89c94"}));
+  });
+  // required path (dashed) from now to Dec target
+  s.appendChild(E("line",{x1:sxw(n-1), y1:sy(d[n-1]), x2:sxm(1), y2:sy(0.50),
+    stroke:"#2C2421", "stroke-width":1.5, "stroke-dasharray":"5 4", opacity:0.6}));
+  s.appendChild(E("circle",{cx:sxm(1), cy:sy(0.50), r:4.5, fill:"none", stroke:"#2D7A2D", "stroke-width":2}));
+  s.appendChild(TX(sxm(1)+11, sy(0.50)+3, "$0.50 · Dec target", {fill:"#2D7A2D","font-weight":800}));
+  // Aug guardrail marker
+  const gx = sxm(0.2);
+  s.appendChild(E("line",{x1:gx-12, y1:sy(0.45), x2:gx+12, y2:sy(0.45), stroke:"#b45309", "stroke-width":2.4}));
+  s.appendChild(TX(gx, sy(0.45)-9, "Aug guardrail $0.45", {"text-anchor":"middle", fill:"#b45309", "font-weight":700, "font-size":9.5}));
+  // weekly actuals
+  const pts = d.map((v,i) => sxw(i)+","+sy(v)).join(" ");
+  s.appendChild(E("polyline",{points:pts, fill:"none", stroke:"#B8593A", "stroke-width":2.8, "stroke-linejoin":"round", "stroke-linecap":"round"}));
+  [3,7,8].forEach(i => s.appendChild(E("circle",{cx:sxw(i), cy:sy(d[i]), r:4, fill:"#B8593A"})));
+  s.appendChild(TX(sxw(0), sy(d[0])+16, "$0.27", {"text-anchor":"middle", fill:"#797068"}));
+  s.appendChild(TX(sxw(n-1), sy(d[n-1])-11, "$0.34 now", {"text-anchor":"middle", fill:"#8a3f2a", "font-weight":800, "font-size":11.5}));
+  // x labels
+  DATA.weekLabels.forEach((lb,i) => { if(lb) s.appendChild(TX(sxw(i), H-6, lb, {"text-anchor":"middle", "font-size":9.5})); });
+  s.appendChild(TX(sxm(0.2), H-6, "Aug", {"text-anchor":"middle", "font-size":9.5}));
+  s.appendChild(TX(sxm(1), H-6, "Dec", {"text-anchor":"middle", "font-size":9.5}));
+  // monthly note
+  s.appendChild(TX(pl, pt-6, "monthly closes: $0.29 → $0.31 → $0.34", {"font-size":9.5, fill:"#a89c94"}));
+}
+
+/* ── core sparklines (respond to Weekly ⇄ Monthly grain) ───────────────── */
+function sparkBars(id, data, max, target, color){
+  const W=250, H=56, pl=2, pr=2, pt=8, pb=2;
+  const s = mount(id, W, H);
+  const iw = (W-pl-pr)/data.length;
+  const sy = v => pt + (1 - v/max) * (H-pt-pb);
+  data.forEach((v,i) => {
+    s.appendChild(E("rect",{x:pl+i*iw+iw*0.14, y:sy(v), width:iw*0.72, height:(H-pb)-sy(v), rx:2,
+      fill:color, opacity: i===data.length-1 ? 0.45 : 1}));
+  });
+  if (target != null){
+    s.appendChild(E("line",{x1:pl, y1:sy(target), x2:W-pr, y2:sy(target), stroke:"#8a3f2a", "stroke-width":1.2, "stroke-dasharray":"4 3"}));
+  }
+}
+function sparkLine(id, data, lo, hi, color){
+  const W=250, H=56, pl=2, pr=6, pt=8, pb=6;
+  const s = mount(id, W, H);
+  const n = data.length, ix = (W-pl-pr)/(n-1);
+  const sy = v => pt + (1 - (v-lo)/(hi-lo)) * (H-pt-pb);
+  const pts = data.map((v,i) => (pl+i*ix)+","+sy(v)).join(" ");
+  s.appendChild(E("polyline",{points:pts, fill:"none", stroke:color, "stroke-width":2.2, "stroke-linejoin":"round", "stroke-linecap":"round"}));
+  s.appendChild(E("circle",{cx:pl+(n-1)*ix, cy:sy(data[n-1]), r:3.5, fill:color}));
+}
+
+let grain = "w";
+function setGrain(g){
+  grain = g;
+  document.getElementById("wk").classList.toggle("on", g==="w");
+  document.getElementById("mo").classList.toggle("on", g==="m");
+  drawSparks();
+}
+function drawSparks(){
+  const w = grain === "w";
+  sparkBars("sp-rev", w ? DATA.revWeekly : DATA.revMonthly, w ? 100 : 450, w ? null : 400, "#B8593A");
+  sparkLine("sp-eng", w ? DATA.engaged.weekly : DATA.engaged.monthly, 48, 58, "#2D7A2D");
+  sparkBars("sp-acq", w ? DATA.netNew.weekly : DATA.netNew.monthly, w ? 50 : 220, w ? 46 : 200, "#d98a6d");
+}
+
+/* ── edit-targets modal ────────────────────────────────────────────────── */
+function openTargets(){
+  document.getElementById("tmask").classList.add("open");
+  document.getElementById("tmodal").style.display = "block";
+}
+function closeTargets(){
+  document.getElementById("tmask").classList.remove("open");
+  document.getElementById("tmodal").style.display = "none";
+}
+
+/* ── draw everything ───────────────────────────────────────────────────── */
+drawSparks();
+figPace();
+figDaily();
+miniLine("f-engaged", DATA.engaged.weekly, 50, 55, "#2D7A2D", v => v.toFixed(1)+"%");
+miniLine("f-opens",   DATA.opens.weekly,   39, 42, "#B8593A", v => v.toFixed(1)+"%");
+miniLine("f-ctr",     DATA.ctr.weekly,    1.8, 2.2, "#d98a6d", v => v.toFixed(2)+"%");
+figChurn();
+figTraj();
+figFlow();
+figWelcome();
+figRps();
+</script>
+</body>
+</html>

@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Analytics Overview — v03 Terminal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;0,800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0e1116; --strip:#0a0d11; --panel:#131922; --panel2:#10151d;
+  --line:#232e3c; --hair:#1b2431;
+  --txt:#c9d3df; --bright:#e9eff6; --dim:#8493a5; --faint:#5b6a7d;
+  --cyan:#5cc8dc; --amber:#e2ab52; --green:#63cf85; --red:#e2685e;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font:12px/1.55 'JetBrains Mono',ui-monospace,SFMono-Regular,monospace;font-variant-numeric:tabular-nums;padding-bottom:64px}
+svg{display:block}
+svg text{font-family:'JetBrains Mono',monospace}
+.up{color:var(--green)} .dn{color:var(--red)} .md{color:var(--amber)} .cy{color:var(--cyan)}
+
+/* caption */
+.caption{background:#05070a;border-bottom:1px solid var(--line);padding:10px 20px;font-size:12px;color:#93a2b4}
+.caption b{color:var(--amber)}
+
+/* guardrail ticker */
+.ticker{overflow:hidden;white-space:nowrap;background:var(--strip);border-bottom:1px solid var(--line)}
+.tape{display:inline-block;padding:7px 0;font-size:11px;animation:tick 40s linear infinite}
+.tape span{margin:0 30px;color:var(--dim)}
+.tape b{color:var(--txt);font-weight:500}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion: reduce){.tape{animation:none}}
+
+.wrap{max-width:1280px;margin:0 auto;padding:18px 20px 8px}
+
+/* header */
+.tophead{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:6px}
+h1{font-size:15px;font-weight:800;letter-spacing:.05em;color:var(--bright)}
+h1 i{font-style:normal;color:var(--cyan)}
+.meta{color:var(--faint);font-size:11px}
+.right{margin-left:auto;display:flex;gap:10px;align-items:center}
+.seg{display:inline-flex;border:1px solid var(--line)}
+.seg button{background:none;border:none;color:var(--dim);font:inherit;font-size:11px;padding:4px 12px;cursor:pointer}
+.seg button.on{background:#1c2637;color:var(--cyan)}
+.btn{border:1px solid var(--line);background:var(--panel);color:var(--dim);font:inherit;font-size:11px;padding:4px 12px;cursor:pointer;letter-spacing:.04em}
+.btn:hover{color:var(--amber);border-color:var(--amber)}
+kbd{border:1px solid var(--line);border-bottom-width:2px;border-radius:3px;padding:0 4px;font-size:10px;color:var(--dim);background:#0b0f14}
+.subline{font-size:11px;color:var(--faint);margin-bottom:14px}
+.subline b{color:var(--dim)}
+
+/* cores */
+.cores{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.core{background:var(--panel);border:1px solid var(--line)}
+.core .head{display:flex;justify-content:space-between;align-items:center;padding:6px 12px;border-bottom:1px solid var(--hair);font-size:10px;letter-spacing:.14em;color:var(--dim)}
+.heroline{display:flex;align-items:baseline;gap:10px;padding:10px 12px 0;flex-wrap:wrap}
+.hero{font-size:30px;font-weight:800;color:var(--bright);letter-spacing:-.01em;line-height:1.1}
+.herotag{font-size:10px;color:var(--faint);letter-spacing:.08em}
+.delta{font-size:11.5px;font-weight:700;margin-left:auto}
+.core .sub{padding:1px 12px 4px;font-size:10.5px;color:var(--dim)}
+.core .sub b{color:var(--txt);font-weight:500}
+.chartbox{padding:2px 10px 0}
+.core .foot{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--hair);margin-top:6px}
+.core .foot>div{padding:6px 10px;border-left:1px solid var(--hair);min-width:0}
+.core .foot>div:first-child{border-left:none}
+.fv{font-size:12.5px;font-weight:700;color:var(--bright);white-space:nowrap}
+.fl{font-size:9px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase}
+.legendline{font-size:10px;color:var(--faint);margin:8px 2px 0}
+
+/* sections */
+.sechead{display:flex;align-items:center;gap:10px;margin:22px 0 8px;font-size:11px;letter-spacing:.16em;color:var(--dim)}
+.sechead::after{content:"";flex:1;border-top:1px dashed var(--hair)}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.panel{background:var(--panel);border:1px solid var(--line);display:flex;flex-direction:column}
+.phead{display:flex;justify-content:space-between;gap:8px;padding:6px 12px;border-bottom:1px solid var(--hair);font-size:10px;letter-spacing:.1em;color:var(--dim);text-transform:uppercase}
+.pmeta{color:var(--faint);letter-spacing:0}
+.pbody{padding:8px 10px 8px;flex:1}
+.pfoot{border-top:1px solid var(--hair);padding:6px 12px;font-size:10.5px;color:var(--dim)}
+.pfoot b{color:var(--txt);font-weight:500}
+.trow{display:flex;justify-content:space-between;gap:8px;font-size:11px;color:var(--dim);padding:3px 2px;border-bottom:1px dotted var(--hair)}
+.trow:last-child{border-bottom:none}
+.trow b{color:var(--txt);font-weight:500}
+
+/* roadmap strip */
+.roadmap{margin-top:12px;background:var(--panel2);border:1px solid var(--line);padding:7px 12px;font-size:10.5px;color:var(--faint);display:flex;flex-wrap:wrap;gap:4px 20px;align-items:baseline}
+.roadmap .rt{letter-spacing:.14em;color:var(--dim)}
+.roadmap b{color:var(--txt);font-weight:500}
+
+/* mix */
+.mixrow{display:grid;grid-template-columns:118px 1fr 34px;gap:8px;align-items:center;font-size:10px;color:var(--dim);margin:4px 0;letter-spacing:.04em}
+.mixrow .pct{text-align:right;color:var(--txt)}
+.mixbar{height:7px;background:#0b0f14;border:1px solid var(--hair);position:relative}
+.mixbar i{position:absolute;top:0;bottom:0;left:0;opacity:.8}
+
+/* questions */
+.qgrid{display:grid;gap:8px}
+.qrow{display:flex;gap:12px;align-items:baseline;background:var(--panel);border:1px solid var(--line);padding:9px 14px;font-size:12px;flex-wrap:wrap}
+.qrow .g{width:14px;text-align:center}
+.qrow .q{font-weight:700;color:var(--bright);min-width:290px}
+.qrow .v{font-weight:800;letter-spacing:.05em;white-space:nowrap}
+.qrow .why{color:var(--dim);font-size:11px;flex:1;min-width:300px}
+
+/* fixed key bar */
+.keys{position:fixed;left:0;right:0;bottom:0;background:var(--strip);border-top:1px solid var(--line);padding:7px 20px;font-size:10.5px;color:var(--faint);display:flex;gap:20px;flex-wrap:wrap;z-index:10}
+.keys span{white-space:nowrap}
+
+/* edit-targets modal */
+.modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(4,6,9,.75);z-index:50}
+.modal.open{display:flex}
+.mpanel{background:var(--panel);border:1px solid var(--amber);width:440px;max-width:92vw}
+.mhead{display:flex;justify-content:space-between;padding:8px 14px;border-bottom:1px solid var(--hair);font-size:11px;letter-spacing:.14em;color:var(--amber)}
+.mbody{padding:10px 14px}
+.mbody table{width:100%;border-collapse:collapse;font-size:11.5px}
+.mbody td{padding:4px 6px;border-bottom:1px dotted var(--hair);color:var(--dim)}
+.mbody td:first-child{letter-spacing:.1em}
+.mbody td.act{text-align:right;color:var(--txt)}
+.mbody input{background:#0b0f14;border:1px solid var(--line);color:var(--bright);font:inherit;font-size:11.5px;padding:3px 6px;width:86px;text-align:right}
+.mbody input:focus{outline:none;border-color:var(--amber)}
+.mnote{font-size:10px;color:var(--faint);margin-top:8px}
+.mfoot{display:flex;gap:10px;align-items:center;padding:10px 14px;border-top:1px solid var(--hair)}
+.mstatus{font-size:10.5px;color:var(--green);margin-left:auto}
+
+@media(max-width:980px){
+  .cores,.grid3{grid-template-columns:1fr}
+  .qrow .q,.qrow .why{min-width:0}
+}
+</style>
+</head>
+<body>
+
+<div class="caption"><b>V03 — TERMINAL.</b> The business as a trading desk: guardrails run on the tape, every series is a dense monospace grid, and the keyboard drives — built for the operator who checks this forty times a day.</div>
+
+<div class="ticker" aria-label="Guardrail ticker"><div class="tape" id="tape">
+  <span><b class="up">●</b> DAILY FLOOR <b>$12.0K/D</b> — avg $12.5k MTD · 1 dip in last 7d</span>
+  <span><b class="md">●</b> RPS GUARDRAIL <b>$0.45 BY AUG</b> — now $0.34, needs ~+$0.04/mo</span>
+  <span><b class="up">●</b> CHURN CAP <b>22.0%</b> — now 19.4% and 2.6pt of headroom</span>
+  <span><b class="dn">▼</b> NET-NEW TARGET <b>200K/MO</b> — pacing 146k, needs 6.5k/d vs 4.7k</span>
+  <span><b class="up">●</b> DAILY FLOOR <b>$12.0K/D</b> — avg $12.5k MTD · 1 dip in last 7d</span>
+  <span><b class="md">●</b> RPS GUARDRAIL <b>$0.45 BY AUG</b> — now $0.34, needs ~+$0.04/mo</span>
+  <span><b class="up">●</b> CHURN CAP <b>22.0%</b> — now 19.4% and 2.6pt of headroom</span>
+  <span><b class="dn">▼</b> NET-NEW TARGET <b>200K/MO</b> — pacing 146k, needs 6.5k/d vs 4.7k</span>
+</div></div>
+
+<div class="wrap">
+
+  <div class="tophead">
+    <h1>BASELOCAL<i>://</i>ANALYTICS/OVERVIEW</h1>
+    <span class="meta">THU 2026-07-03 · DATA AS OF JUL 3</span>
+    <div class="right">
+      <div class="seg">
+        <button id="g-w" class="on" onclick="setGrain('w')">[W]EEKLY</button>
+        <button id="g-m" onclick="setGrain('m')">[M]ONTHLY</button>
+      </div>
+      <button class="btn" onclick="openTargets()">[T] EDIT TARGETS</button>
+    </div>
+  </div>
+  <div class="subline">JUL TARGET <b>$400K</b> · FLOOR <b>$12K/D</b> · RPS PATH <b>$0.34 → $0.50</b> · BOOK <b>985K → 2M DEC</b> · heroes are monthly-marked; charts follow the <b><span class="gword">WEEKLY</span></b> grain</div>
+
+  <!-- ═══ cores ═══ -->
+  <div class="cores">
+    <div class="core">
+      <div class="head"><span><kbd>R</kbd> REVENUE</span><span>HERO · JUN MONTHLY</span></div>
+      <div class="heroline"><span class="hero">$286k</span><span class="herotag">JUN</span><span class="delta up">▲ +35.5% VS MAY</span></div>
+      <div class="sub">JUL MTD <b>$37.4k</b> → PROJ <b>$386k</b> / TGT $400k · AVG $12.5k/d · 15 EMAILS/WK</div>
+      <div class="chartbox" id="c-rev"></div>
+      <div class="foot">
+        <div><div class="fv">$37.4k</div><div class="fl">JUL MTD</div></div>
+        <div><div class="fv md">$386k</div><div class="fl">PROJ / TGT 400</div></div>
+        <div><div class="fv">$12.9k/d</div><div class="fl">NEEDED PACE</div></div>
+      </div>
+    </div>
+
+    <div class="core">
+      <div class="head"><span><kbd>E</kbd> ENGAGEMENT</span><span>HERO · JUN MONTHLY</span></div>
+      <div class="heroline"><span class="hero">52.6%</span><span class="herotag">JUN ENGAGED</span><span class="delta up">▲ +0.7PT VS MAY</span></div>
+      <div class="sub">JUL TD <b>54.0%</b> · CHURN <b>19.4%</b> / CAP 22% · UNSUB/SEND 0.31%</div>
+      <div class="chartbox" id="c-eng"></div>
+      <div class="foot">
+        <div><div class="fv">41.2%</div><div class="fl">OPEN RATE</div></div>
+        <div><div class="fv">2.10%</div><div class="fl">CTR DELIV.</div></div>
+        <div><div class="fv up">19.4%</div><div class="fl">CHURN / 22 CAP</div></div>
+      </div>
+    </div>
+
+    <div class="core">
+      <div class="head"><span><kbd>A</kbd> ACQUISITION</span><span>HERO · JUN MONTHLY</span></div>
+      <div class="heroline"><span class="hero">+118k</span><span class="herotag">JUN NET NEW</span><span class="delta up">▲ +15.7% VS MAY</span></div>
+      <div class="sub">JUL PACE <b>+146k</b> / TGT 200k · BOOK <b>985k</b> · GROSS 18.6k MTD</div>
+      <div class="chartbox" id="c-acq"></div>
+      <div class="foot">
+        <div><div class="fv dn">4.7k/d</div><div class="fl">NET · NEED 6.5K</div></div>
+        <div><div class="fv">$0.11</div><div class="fl">WELCOME/SUB</div></div>
+        <div><div class="fv">41d</div><div class="fl">CAC PAYBACK</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="legendline">* / DASHED SEGMENT / HOLLOW DOT = PARTIAL PERIOD IN PROGRESS · SOLID DOT = SERIES HIGH · HOLLOW = SERIES LOW</div>
+
+  <!-- ═══ revenue deep ═══ -->
+  <div class="sechead" id="sec-r"><kbd>R</kbd> REVENUE / DEEP</div>
+  <div class="grid3">
+    <div class="panel">
+      <div class="phead"><span>DAILY REV · LAST 21D</span><span class="pmeta">floor $12.0k · dips red</span></div>
+      <div class="pbody" id="ch-daily"></div>
+      <div class="pfoot">1 FLOOR DIP LAST 7D · BEST RECENT DAY <b>$13.8k</b> · NEEDED FROM HERE <b>$12.9k/d</b></div>
+    </div>
+    <div class="panel">
+      <div class="phead"><span>RPS · PATH TO $0.50</span><span class="pmeta">weekly · dots = month marks</span></div>
+      <div class="pbody" id="ch-rps"></div>
+      <div class="pfoot">MONTHLY <b>$0.29 → $0.31 → $0.34</b> · AUG GUARDRAIL <b>$0.45</b> — reassess path if missed</div>
+    </div>
+    <div class="panel">
+      <div class="phead"><span>JUL REVENUE MIX</span><span class="pmeta">share of $</span></div>
+      <div class="pbody">
+        <div id="mixrows"></div>
+        <div style="height:6px"></div>
+        <div class="trow"><span>RPC</span><b>$1.86</b></div>
+        <div class="trow"><span>ACTIVE OFFERS</span><b>34</b></div>
+        <div class="trow"><span>JUN WINNERS SOLIDIFIED</span><b>3 OF 10</b></div>
+      </div>
+      <div class="pfoot">SEND VOLUME <b>15/wk</b> → <b>22</b> JUL 20 → <b>25</b> AUG — the $400k closing lever</div>
+    </div>
+  </div>
+  <div class="roadmap" id="roadmap"><span class="rt">ROADMAP TGT→ACT ($K)</span></div>
+
+  <!-- ═══ engagement deep ═══ -->
+  <div class="sechead" id="sec-e"><kbd>E</kbd> ENGAGEMENT / DEEP</div>
+  <div class="grid3">
+    <div class="panel">
+      <div class="phead"><span>CHURN · MONTHLY</span><span class="pmeta">engaged-audience defn · cap 22%</span></div>
+      <div class="pbody" id="ch-churn"></div>
+      <div class="pfoot">RISING WITH VOLUME BUT <b>2.6pt UNDER CAP</b> — expected, watching through jul 20 expansion</div>
+    </div>
+    <div class="panel">
+      <div class="phead"><span>OPENS + CTR · WEEKLY</span><span class="pmeta">delivered basis</span></div>
+      <div class="pbody">
+        <div id="ch-open"></div>
+        <div style="height:6px"></div>
+        <div id="ch-ctr"></div>
+      </div>
+      <div class="pfoot">OPENS <b>40.0 → 41.2%</b> · CTR <b>1.95 → 2.10%</b> — both up while sends held at 15/wk</div>
+    </div>
+    <div class="panel">
+      <div class="phead"><span>ENGAGED SHARE + UNSUBS</span><span class="pmeta">monthly</span></div>
+      <div class="pbody">
+        <div class="trow"><span>ENGAGED SHARE MAY→JUL</span><b>51.9 → 52.6 → 54.0%</b></div>
+        <div class="trow"><span>UNSUBS / SEND MAY→JUL</span><b class="md">0.27 → 0.29 → 0.31%</b></div>
+        <div style="height:6px"></div>
+        <div id="ch-unsub"></div>
+      </div>
+      <div class="pfoot">UNSUBS TICKING UP WITH VOLUME — <b>hold under watch</b> as sends go 15 → 22 → 25/wk</div>
+    </div>
+  </div>
+
+  <!-- ═══ acquisition deep ═══ -->
+  <div class="sechead" id="sec-a"><kbd>A</kbd> ACQUISITION / DEEP</div>
+  <div class="grid3">
+    <div class="panel">
+      <div class="phead"><span>ADDS VS LOSSES · WEEKLY</span><span class="pmeta">net line cyan · 200k/mo ≈ 46k/wk</span></div>
+      <div class="pbody" id="ch-subs"></div>
+      <div class="pfoot">GROSS <b>31 → 42k/wk</b> · LOSSES <b>7 → 10k/wk</b> · NET NEVER ABOVE <b>32k</b> vs 46k needed</div>
+    </div>
+    <div class="panel">
+      <div class="phead"><span>BOOK → 2M BY DEC</span><span class="pmeta">2m × $0.50 rps = $1m/mo</span></div>
+      <div class="pbody" id="ch-traj"></div>
+      <div class="pfoot">ACTUALS <b>852 → 912 → 985k</b> · JUL CHECKPOINT <b>1,090k</b> — currently 105k behind path</div>
+    </div>
+    <div class="panel">
+      <div class="phead"><span>ACQUISITION ECONOMICS</span><span class="pmeta">welcome yield → $0.15</span></div>
+      <div class="pbody">
+        <div id="ch-welcome"></div>
+        <div style="height:6px"></div>
+        <div class="trow"><span>WELCOME $/GROSS SUB</span><b>$0.06 → $0.09 → $0.11</b></div>
+        <div class="trow"><span>CAC PAYBACK</span><b>41 DAYS</b></div>
+        <div class="trow"><span>NET/DAY NOW → NEEDED</span><b class="dn">4.7k → 6.5k</b></div>
+      </div>
+      <div class="pfoot">EVERY $0.01 OF WELCOME YIELD SHORTENS PAYBACK — <b>$0.15 target unlocks faster spend</b></div>
+    </div>
+  </div>
+
+  <!-- ═══ questions ═══ -->
+  <div class="sechead" id="sec-q"><kbd>Q</kbd> KEY QUESTIONS</div>
+  <div class="qgrid">
+    <div class="qrow"><span class="g md">●</span><span class="q">WILL WE HIT $400K THIS MONTH?</span><span class="v md">CLOSE — $386K PACE</span>
+      <span class="why">needs $12.9k/d from here; best recent day $13.8k; the jul 20 send expansion (15→22/wk) is the closing lever</span></div>
+    <div class="qrow"><span class="g md">●</span><span class="q">IS RPS ON THE PATH TO $0.50?</span><span class="v md">MOVING — $0.34</span>
+      <span class="why">+$0.03 vs jun; path needs ~+$0.04/mo from offer optimization + welcome yield $0.11→$0.15; reassess if aug lands under $0.45</span></div>
+    <div class="qrow"><span class="g dn">▼</span><span class="q">SUBS GROWING FAST ENOUGH FOR $1M?</span><span class="v dn">NO — 146K VS 200K</span>
+      <span class="why">needs 6.5k net/d (now 4.7k); dec book must reach 2m at $0.50 rps; book at 985k, 105k behind the jul checkpoint</span></div>
+    <div class="qrow"><span class="g up">▲</span><span class="q">AUDIENCE HEALTHY WHILE WE SCALE?</span><span class="v up">YES</span>
+      <span class="why">churn 19.4% vs 22% cap; opens 41.2% and rising; engaged share 54.0%; unsubs/send up with volume — expected, watching</span></div>
+  </div>
+</div>
+
+<!-- key bar -->
+<div class="keys">
+  <span><kbd>R</kbd> REVENUE</span>
+  <span><kbd>E</kbd> ENGAGEMENT</span>
+  <span><kbd>A</kbd> ACQUISITION</span>
+  <span><kbd>Q</kbd> QUESTIONS</span>
+  <span><kbd>W</kbd>/<kbd>M</kbd> GRAIN</span>
+  <span><kbd>T</kbd> EDIT TARGETS</span>
+  <span><kbd>ESC</kbd> CLOSE</span>
+</div>
+
+<!-- edit targets -->
+<div class="modal" id="modal">
+  <div class="mpanel">
+    <div class="mhead"><span>EDIT TARGETS · MONTHLY-SET</span><span>[ESC]</span></div>
+    <div class="mbody">
+      <table><tbody id="tbody"></tbody></table>
+      <div class="mnote">DEC RUN-RATE MATH: 2M SUBS × $0.50 RPS ≈ $1M/MO. GUARDRAILS (FLOOR, RPS AUG, CHURN CAP) EDIT HERE TOO IN PRODUCTION.</div>
+    </div>
+    <div class="mfoot">
+      <button class="btn" onclick="applyTargets()">APPLY</button>
+      <button class="btn" onclick="closeTargets()">CANCEL</button>
+      <span class="mstatus" id="mstatus"></span>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ═══ SHARED DATA (identical across v03/v04) ═══ */
+const DATA = {
+  asOf:"Jul 3",
+  targetsMonthly:[["May",205],["Jun",290],["Jul",400],["Aug",500],["Sep",700],["Oct",800],["Nov",900],["Dec",1000]],
+  actualMonthly:{May:211,Jun:286},
+  revMTD:37.4, revProjection:386, revNeedPerDay:12.9, revTargetJul:400,
+  revWeekly:[44,48,52,55,62,68,74,82,37.4],
+  daily21:[11.8,12.6,13.1,12.2,12.9,13.4,12.7,13.0,12.4,11.1,12.8,13.2,12.6,13.8,12.9,13.1,12.5,13.3,11.9,13.2,12.5],
+  dailyFloor:12,
+  rpsWeekly:[0.27,0.28,0.29,0.30,0.30,0.31,0.31,0.32,0.34],
+  rpsMonthly:[0.29,0.31,0.34], rpsTarget:0.50, rpsAugGuardrail:0.45,
+  subscribers:985, bookActual:[852,912,985],
+  bookTargetPath:[1090,1290,1490,1640,1790,1930,2000],
+  netNewWeekly:[24,26,25,27,27,29,30,32,14.2],
+  netNewMonthly:[102,118], julyNetPace:146, netTargetMonthly:200,
+  grossWeekly:[31,33,32,35,35,37,38,42,18.6],
+  lossWeekly:[7,7,7,8,8,8,8,10,4.4],
+  churnMonthly:[18.1,18.8,19.4], churnGuardrail:22,
+  opensWeekly:[40.0,40.2,40.1,40.4,40.5,40.7,40.8,41.0,41.2],
+  ctrWeekly:[1.95,2.0,2.0,2.02,2.02,2.05,2.05,2.08,2.1],
+  engagedWeekly:[51.2,51.6,51.9,52.0,52.1,52.3,52.6,53.1,54.0],
+  engagedMonthly:[51.9,52.6,54.0],
+  unsubsPerSendMonthly:[0.27,0.29,0.31],
+  mixJuly:[["Morning Roundup",58],["Daily News",22],["Welcome",9],["Bridge",6],["Other",5]],
+  welcomePerGrossSub:[0.06,0.09,0.11], welcomeTarget:0.15,
+  rpc:1.86, activeOffers:34, winnersSolidified:"3 of 10", cacPaybackDays:41,
+  emailsPerWeek:15, emailsJul20:22, emailsAug:25
+};
+
+/* ═══ tiny terminal chart kit ═══ */
+const NS="http://www.w3.org/2000/svg";
+const C={cyan:"#5cc8dc",amber:"#e2ab52",green:"#63cf85",red:"#e2685e",dim:"#8493a5",faint:"#5b6a7d",bg:"#0e1116"};
+function E(t,a,str){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(str!=null)e.textContent=str;return e;}
+function mount(id,w,h){const s=E("svg",{viewBox:"0 0 "+w+" "+h,width:"100%"});document.getElementById(id).replaceChildren(s);return s;}
+function txt(s,x,y,str,fill,anchor){s.appendChild(E("text",{x:x,y:y,"font-size":9,fill:fill||C.faint,"text-anchor":anchor||"start"},str));}
+function clampY(y,h){return Math.max(10,Math.min(h-8,y));}
+
+/* thin sparkline with hi/lo gutter labels, refs, partial-tail, month marks */
+function spark(id,o){
+  const data=o.data,w=o.w||360,h=o.h||88,color=o.color||C.cyan,fmt=o.fmt||(v=>v),
+        refs=o.refs||[],partial=!!o.partial,marks=o.marks||[],gut=o.gut||58;
+  const padT=10,padB=14,padL=4,cw=w-padL-gut;
+  const all=data.concat(refs.map(r=>r.v));
+  let lo=Math.min.apply(null,all),hi=Math.max.apply(null,all);
+  const span=(hi-lo)||1; lo-=span*0.1; hi+=span*0.1;
+  const X=i=>padL+(data.length===1?0:i*(cw/(data.length-1)));
+  const Y=v=>padT+(1-(v-lo)/(hi-lo))*(h-padT-padB);
+  const s=mount(id,w,h);
+  refs.forEach(r=>{const y=Y(r.v);
+    s.appendChild(E("line",{x1:padL,y1:y,x2:padL+cw,y2:y,stroke:r.c,"stroke-width":1,"stroke-dasharray":"3 3",opacity:.7}));
+    txt(s,padL+cw+5,clampY(y+3,h),r.t,r.c);});
+  const n=data.length,se=partial?n-2:n-1;
+  const seg=(a2,b2)=>data.slice(a2,b2+1).map((v,j)=>X(a2+j)+","+Y(v)).join(" ");
+  s.appendChild(E("polyline",{points:seg(0,se),fill:"none",stroke:color,"stroke-width":1.4,"stroke-linejoin":"round","stroke-linecap":"round"}));
+  if(partial&&se<n-1)s.appendChild(E("polyline",{points:seg(se,n-1),fill:"none",stroke:color,"stroke-width":1.4,"stroke-dasharray":"2 3"}));
+  marks.forEach(i=>s.appendChild(E("circle",{cx:X(i),cy:Y(data[i]),r:2.4,fill:color})));
+  const comp=data.slice(0,se+1);
+  const mx=Math.max.apply(null,comp),mn=Math.min.apply(null,comp);
+  let yH=clampY(Y(mx)+3,h),yL=clampY(Y(mn)+3,h);
+  if(yL-yH<10)yL=yH+10;
+  txt(s,padL+cw+5,yH,"hi "+fmt(mx),C.dim);
+  txt(s,padL+cw+5,yL,"lo "+fmt(mn),C.faint);
+  s.appendChild(E("circle",{cx:X(comp.indexOf(mx)),cy:Y(mx),r:2,fill:color}));
+  s.appendChild(E("circle",{cx:X(comp.indexOf(mn)),cy:Y(mn),r:2,fill:C.bg,stroke:color,"stroke-width":1}));
+  s.appendChild(E("circle",{cx:X(n-1),cy:Y(data[n-1]),r:2.6,fill:partial?C.bg:color,stroke:color,"stroke-width":1.3}));
+  if(o.start)txt(s,padL,h-2,o.start,C.faint);
+  if(o.end)txt(s,padL+cw,h-2,o.end,C.faint,"end");
+  return s;
+}
+
+/* bars with floor/cap refs + hi/lo gutter labels */
+function barchart(id,o){
+  const data=o.data,w=o.w||360,h=o.h||96,max=o.max,color=o.color,fmt=o.fmt||(v=>v),
+        refs=o.refs||[],partial=!!o.partial,labels=o.labels||[],gut=o.gut||58;
+  const padT=10,padB=14,padL=4,cw=w-padL-gut,bw=cw/data.length;
+  const Y=v=>padT+(1-v/max)*(h-padT-padB);
+  const s=mount(id,w,h);
+  refs.forEach(r=>{const y=Y(r.v);
+    s.appendChild(E("line",{x1:padL,y1:y,x2:padL+cw,y2:y,stroke:r.c,"stroke-width":1,"stroke-dasharray":"3 3",opacity:.8}));
+    txt(s,padL+cw+5,clampY(y-3,h),r.t,r.c);});
+  data.forEach((v,i)=>{
+    const y=Y(v),fill=(typeof color==="function")?color(v,i):color;
+    s.appendChild(E("rect",{x:padL+i*bw+bw*0.18,y:y,width:Math.max(bw*0.64,1.5),height:Math.max(h-padB-y,1),fill:fill,opacity:(partial&&i===data.length-1)?0.45:0.9}));
+    if(labels[i])txt(s,padL+i*bw+bw/2,h-2,labels[i],C.faint,"middle");
+  });
+  const comp=partial?data.slice(0,-1):data;
+  const mx=Math.max.apply(null,comp),mn=Math.min.apply(null,comp);
+  let yH=clampY(Y(mx)+3,h),yL=clampY(Y(mn)+3,h);
+  if(yL-yH<10)yL=yH+10;
+  txt(s,padL+cw+5,yH,"hi "+fmt(mx),C.dim);
+  txt(s,padL+cw+5,yL,"lo "+fmt(mn),C.faint);
+  if(o.start)txt(s,padL,h-2,o.start,C.faint);
+  if(o.end)txt(s,padL+cw,h-2,o.end,C.faint,"end");
+  return s;
+}
+
+/* grouped adds vs losses + net overlay */
+function grouped(id){
+  const a=DATA.grossWeekly,b=DATA.lossWeekly,net=DATA.netNewWeekly;
+  const w=360,h=104,max=48,gut=58,padT=10,padB=14,padL=4,cw=w-padL-gut,gw=cw/a.length;
+  const Y=v=>padT+(1-v/max)*(h-padT-padB);
+  const s=mount(id,w,h);
+  const needY=Y(46);
+  s.appendChild(E("line",{x1:padL,y1:needY,x2:padL+cw,y2:needY,stroke:C.red,"stroke-width":1,"stroke-dasharray":"3 3",opacity:.8}));
+  txt(s,padL+cw+5,clampY(needY+3,h),"need 46",C.red);
+  a.forEach((v,i)=>{
+    const op=(i===a.length-1)?0.45:0.9;
+    s.appendChild(E("rect",{x:padL+i*gw+gw*0.12,y:Y(v),width:gw*0.34,height:h-padB-Y(v),fill:C.green,opacity:op}));
+    s.appendChild(E("rect",{x:padL+i*gw+gw*0.52,y:Y(b[i]),width:gw*0.34,height:h-padB-Y(b[i]),fill:C.red,opacity:op}));
+  });
+  const pts=net.map((v,i)=>(padL+i*gw+gw/2)+","+Y(v)).join(" ");
+  s.appendChild(E("polyline",{points:pts,fill:"none",stroke:C.cyan,"stroke-width":1.3}));
+  txt(s,padL+cw+5,clampY(Y(42)+3,h),"adds 42",C.green);
+  txt(s,padL+cw+5,clampY(Y(28)+3,h),"net 32",C.cyan);
+  txt(s,padL+cw+5,clampY(Y(10)+3,h),"loss 10",C.red);
+  txt(s,padL,h-2,"MAY W1",C.faint);
+  txt(s,padL+cw,h-2,"JUL W1*",C.faint,"end");
+}
+
+/* book trajectory to 2M */
+function traj(id){
+  const w=360,h=112,padT=10,padB=14,padL=4,gut=58,cw=w-padL-gut;
+  const lo=780,hi=2120;
+  const X=t=>padL+t*(cw/7);
+  const Y=v=>padT+(1-(v-lo)/(hi-lo))*(h-padT-padB);
+  const s=mount(id,w,h);
+  const y2=Y(2000);
+  s.appendChild(E("line",{x1:padL,y1:y2,x2:padL+cw,y2:y2,stroke:C.green,"stroke-dasharray":"3 3","stroke-width":1,opacity:.7}));
+  txt(s,padL+cw+5,clampY(y2+3,h),"2.0M dec",C.green);
+  const tpts=DATA.bookTargetPath.map((v,i)=>X(2+i*(5/6))+","+Y(v)).join(" ");
+  s.appendChild(E("polyline",{points:tpts,fill:"none",stroke:"#3a4757","stroke-width":1.4,"stroke-dasharray":"4 3"}));
+  const apts=DATA.bookActual.map((v,i)=>X(i)+","+Y(v)).join(" ");
+  s.appendChild(E("polyline",{points:apts,fill:"none",stroke:C.cyan,"stroke-width":1.6}));
+  s.appendChild(E("circle",{cx:X(2),cy:Y(985),r:2.6,fill:C.cyan}));
+  txt(s,padL+cw+5,clampY(Y(985)+3,h),"now 985k",C.cyan);
+  txt(s,X(2)+6,clampY(Y(1090)-2,h),"jul tgt 1090",C.amber);
+  txt(s,padL,h-2,"MAY",C.faint);
+  txt(s,X(2),h-2,"JUL",C.faint,"middle");
+  txt(s,padL+cw,h-2,"DEC",C.faint,"end");
+}
+
+/* ═══ cores (weekly ⇄ monthly grain) ═══ */
+let grain="w";
+function setGrain(g){
+  grain=g;
+  document.getElementById("g-w").classList.toggle("on",g==="w");
+  document.getElementById("g-m").classList.toggle("on",g==="m");
+  document.querySelectorAll(".gword").forEach(e=>{e.textContent=(g==="w")?"WEEKLY":"MONTHLY";});
+  drawCores();
+}
+function drawCores(){
+  const w=(grain==="w");
+  spark("c-rev", w
+    ? {data:DATA.revWeekly,partial:true,fmt:v=>"$"+v+"k",start:"MAY W1",end:"JUL W1*",h:82}
+    : {data:[211,286,386],partial:true,refs:[{v:400,c:C.green,t:"tgt 400"}],fmt:v=>"$"+v+"k",start:"MAY",end:"JUL PROJ*",h:82,marks:[0,1]});
+  spark("c-eng", w
+    ? {data:DATA.engagedWeekly,fmt:v=>v.toFixed(1)+"%",start:"MAY W1",end:"JUL W1",h:82}
+    : {data:DATA.engagedMonthly,fmt:v=>v.toFixed(1)+"%",start:"MAY",end:"JUL TD",h:82,marks:[0,1,2]});
+  spark("c-acq", w
+    ? {data:DATA.netNewWeekly,partial:true,color:C.amber,refs:[{v:46,c:C.red,t:"need 46"}],fmt:v=>"+"+v+"k",start:"MAY W1",end:"JUL W1*",h:82}
+    : {data:[102,118,146],partial:true,color:C.amber,refs:[{v:200,c:C.red,t:"tgt 200"}],fmt:v=>"+"+v+"k",start:"MAY",end:"JUL PACE*",h:82,marks:[0,1]});
+}
+
+/* ═══ deep dives (static weekly) ═══ */
+function drawDeep(){
+  barchart("ch-daily",{data:DATA.daily21,max:16,h:104,
+    color:v=>(v<DATA.dailyFloor?C.red:C.amber),
+    refs:[{v:DATA.dailyFloor,c:C.amber,t:"floor 12"}],
+    fmt:v=>"$"+v.toFixed(1)+"k",start:"-21D",end:"TODAY"});
+  spark("ch-rps",{data:DATA.rpsWeekly,marks:[3,7,8],h:104,
+    refs:[{v:DATA.rpsTarget,c:C.green,t:"tgt .50"},{v:DATA.rpsAugGuardrail,c:C.amber,t:"aug .45"}],
+    fmt:v=>"$"+v.toFixed(2),start:"MAY W1",end:"JUL"});
+  barchart("ch-churn",{data:DATA.churnMonthly,max:26,h:104,color:C.cyan,
+    refs:[{v:DATA.churnGuardrail,c:C.red,t:"cap 22"}],
+    fmt:v=>v.toFixed(1)+"%",labels:["MAY","JUN","JUL TD"]});
+  spark("ch-open",{data:DATA.opensWeekly,h:48,fmt:v=>v.toFixed(1)+"%"});
+  spark("ch-ctr",{data:DATA.ctrWeekly,h:48,color:C.amber,fmt:v=>v.toFixed(2)+"%",start:"MAY W1",end:"JUL"});
+  spark("ch-unsub",{data:DATA.unsubsPerSendMonthly,h:52,color:C.amber,marks:[0,1,2],fmt:v=>v.toFixed(2)+"%",start:"MAY",end:"JUL"});
+  grouped("ch-subs");
+  traj("ch-traj");
+  spark("ch-welcome",{data:DATA.welcomePerGrossSub,h:60,marks:[0,1,2],
+    refs:[{v:DATA.welcomeTarget,c:C.green,t:"tgt .15"}],
+    fmt:v=>"$"+v.toFixed(2),start:"MAY",end:"JUL"});
+}
+
+/* mix rows */
+function drawMix(){
+  const cols=["#5cc8dc","#3f93a6","#63cf85","#e2ab52","#5b6a7d"];
+  const host=document.getElementById("mixrows");
+  DATA.mixJuly.forEach((row,i)=>{
+    const d=document.createElement("div");
+    d.className="mixrow";
+    d.innerHTML="<span>"+row[0].toUpperCase()+"</span>"+
+      "<span class='mixbar'><i style='width:"+row[1]+"%;background:"+cols[i]+"'></i></span>"+
+      "<span class='pct'>"+row[1]+"%</span>";
+    host.appendChild(d);
+  });
+}
+
+/* roadmap strip */
+function drawRoadmap(){
+  const host=document.getElementById("roadmap");
+  DATA.targetsMonthly.forEach(pair=>{
+    const m=pair[0],t=pair[1],act=DATA.actualMonthly[m];
+    const cell=document.createElement("span");
+    let html=m.toUpperCase()+" <b>"+t+"</b>";
+    if(act!=null){
+      const hit=act>=t;
+      html+=" → <b>"+act+"</b> <span class='"+(hit?"up":"dn")+"'>"+(hit?"▲":"▼")+"</span>";
+    }else if(m==="Jul"){
+      html+=" → <b class='md'>proj 386</b>";
+    }
+    cell.innerHTML=html;
+    host.appendChild(cell);
+  });
+  const tail=document.createElement("span");
+  tail.innerHTML="DEC MATH: <b>2M × $0.50 = $1M/MO</b>";
+  host.appendChild(tail);
+}
+
+/* ═══ edit targets modal ═══ */
+const modal=document.getElementById("modal");
+function buildTargets(){
+  const tb=document.getElementById("tbody");
+  DATA.targetsMonthly.forEach(pair=>{
+    const m=pair[0],t=pair[1],act=DATA.actualMonthly[m];
+    let actHtml="—";
+    if(act!=null)actHtml="$"+act+"k <span class='"+(act>=t?"up":"dn")+"'>"+(act>=t?"▲":"▼")+"</span>";
+    else if(m==="Jul")actHtml="$37.4k mtd";
+    const tr=document.createElement("tr");
+    tr.innerHTML="<td>"+m.toUpperCase()+"</td><td><input value='"+t+"' inputmode='numeric' aria-label='"+m+" target $k'></td><td class='act'>"+actHtml+"</td>";
+    tb.appendChild(tr);
+  });
+}
+function openTargets(){document.getElementById("mstatus").textContent="";modal.classList.add("open");}
+function closeTargets(){modal.classList.remove("open");}
+function applyTargets(){
+  document.getElementById("mstatus").textContent="SAVED (MOCK · SESSION ONLY)";
+  setTimeout(closeTargets,800);
+}
+modal.addEventListener("click",e=>{if(e.target===modal)closeTargets();});
+
+/* ═══ keyboard ═══ */
+function loc(id){const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:"smooth",block:"start"});}
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape"){closeTargets();return;}
+  const tag=(e.target&&e.target.tagName)||"";
+  if(/INPUT|TEXTAREA|SELECT/.test(tag))return;
+  if(e.metaKey||e.ctrlKey||e.altKey)return;
+  const k=e.key.toLowerCase();
+  if(k==="w")setGrain("w");
+  else if(k==="m")setGrain("m");
+  else if(k==="t")openTargets();
+  else if(k==="r")loc("sec-r");
+  else if(k==="e")loc("sec-e");
+  else if(k==="a")loc("sec-a");
+  else if(k==="q")loc("sec-q");
+});
+
+/* init */
+buildTargets();
+drawMix();
+drawRoadmap();
+drawCores();
+drawDeep();
+</script>
+</body>
+</html>

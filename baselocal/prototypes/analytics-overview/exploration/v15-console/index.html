@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Analytics Overview — V15 Console</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F5F0E9; --card:#FCFAF6; --ink:#26201C; --body:#4A423B; --mut:#7C7166; --faint:#A79A8B;
+  --line:#E2D8CB; --hair:#EFE8DE;
+  --terra:#B8593A; --terra-d:#8A3F2A; --terra-l:#D89B7F;
+  --green:#2D7A2D; --green-bg:#EDF5EC; --amber:#B45309; --amber-bg:#FCF4E4; --red:#C0392B; --red-bg:#F9EAE6;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',ui-sans-serif,system-ui,sans-serif;background:var(--paper);color:var(--ink);font-size:13px;font-variant-numeric:tabular-nums;padding-bottom:60px}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+.caption{background:#1C1713;color:#F3EEE7;padding:10px 16px;font-size:13px;line-height:1.5}
+.caption strong{color:#EFB9A2}
+
+/* ═══ sticky console header ═══ */
+.hd{position:sticky;top:0;z-index:50;background:var(--card);border-bottom:1px solid var(--line);box-shadow:0 1px 0 rgba(38,32,28,.03)}
+.hd.mini{box-shadow:0 3px 14px rgba(38,32,28,.10)}
+.hdin{max-width:1240px;margin:0 auto;padding:12px 20px 0}
+.hd.mini .hdin{padding-top:8px}
+
+.row1{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.brand{font-size:15px;font-weight:800;letter-spacing:-.01em}
+.brand small{font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);margin-right:8px}
+.date{color:var(--mut);font-size:12px}
+.row1 .right{margin-left:auto;display:flex;gap:8px;align-items:center}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--card)}
+.seg button{padding:5px 12px;font-size:11.5px;font-weight:600;color:var(--mut)}
+.seg button.on{background:var(--ink);color:var(--card)}
+.gear{border:1px solid var(--line);background:var(--card);border-radius:8px;padding:5px 11px;font-size:11.5px;font-weight:600;color:var(--mut)}
+.gear:hover{color:var(--terra-d);border-color:var(--terra-l)}
+
+/* month strip — May–Dec micro-columns (from V1) */
+.striprow{display:flex;align-items:flex-end;gap:10px;margin-top:10px}
+.strip{display:grid;grid-template-columns:repeat(8,1fr);border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--card);flex:1}
+.cell{padding:7px 10px 6px;transition:padding .18s ease}
+.cell+.cell{border-left:1px solid var(--hair)}
+.cell .m{font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mut)}
+.cell .v{font-family:var(--mono);font-size:14px;font-weight:600;letter-spacing:-.02em;margin-top:1px;transition:font-size .18s ease}
+.cell .v.future{color:var(--faint);font-weight:400}
+.cell .s{font-size:9.5px;color:var(--faint);margin-top:1px;white-space:nowrap}
+.cell .s .beat{color:var(--green);font-weight:600}
+.cell .s .miss{color:var(--terra);font-weight:600}
+.stripnote{font-size:9.5px;color:var(--faint);text-align:right;padding:2px 2px 0}
+.hd.mini .cell{padding:4px 10px 4px}
+.hd.mini .cell .v{font-size:12px}
+.hd.mini .cell .s,.hd.mini .stripnote{display:none}
+
+/* verdict chips (four questions) */
+.chips{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px}
+.chip{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:8px;padding:6px 10px;background:var(--card);min-width:0;transition:padding .18s ease}
+.dot{width:8px;height:8px;border-radius:50%;flex:none}
+.dot.g{background:var(--green);box-shadow:0 0 0 3px var(--green-bg)}
+.dot.a{background:var(--amber);box-shadow:0 0 0 3px var(--amber-bg)}
+.dot.r{background:var(--red);box-shadow:0 0 0 3px var(--red-bg)}
+.chip .tx{min-width:0}
+.chip .verdict{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.05em;white-space:nowrap}
+.chip .verdict.g{color:var(--green)}.chip .verdict.a{color:var(--amber)}.chip .verdict.r{color:var(--red)}
+.chip .q{font-size:10.5px;font-weight:600;color:var(--body);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
+.hd.mini .chip{padding:4px 10px}
+.hd.mini .chip .q{display:none}
+
+/* tab bar — the console switch */
+.tabs{display:flex;align-items:center;gap:14px;margin-top:10px;border-top:1px solid var(--hair);padding:8px 0}
+.tabset{display:inline-flex;background:var(--paper);border:1px solid var(--line);border-radius:9px;padding:3px;gap:3px}
+.tabset button{padding:6px 22px;font-size:12.5px;font-weight:700;color:var(--mut);border-radius:6px}
+.tabset button.on{background:var(--ink);color:var(--card);box-shadow:0 1px 3px rgba(38,32,28,.25)}
+.tabset button:not(.on):hover{color:var(--terra-d)}
+.tabhint{font-size:10.5px;color:var(--faint);margin-left:auto}
+
+/* ═══ panels ═══ */
+.page{max-width:1240px;margin:0 auto;padding:16px 20px 0}
+.panel{display:none}
+.panel.on{display:block}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;box-shadow:0 1px 2px rgba(38,32,28,.05)}
+.card+.card,.grid+.card,.card+.grid,.grid+.grid,.card+.tiles,.tiles+.card,.grid+.tiles,.tiles+.grid,.tiles+.tiles{margin-top:12px}
+.ct{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+.ct h2{font-size:13px;font-weight:800}
+.ct .sub{font-size:10.5px;color:var(--faint)}
+.ct .gw{color:var(--terra-d)}
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}
+.g3{grid-template-columns:1.5fr 1fr 1fr}
+
+/* mix (by source) */
+.mix{display:flex;height:14px;border-radius:4px;overflow:hidden;margin:6px 0 8px}
+.mixrows .r{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--body);padding:3.5px 0;border-top:1px dashed var(--hair)}
+.mixrows .r:first-child{border-top:none}
+.mixrows i{width:8px;height:8px;border-radius:2px;flex:none}
+.mixrows b{font-family:var(--mono);font-weight:600;margin-left:auto}
+.mixrows .d{font-family:var(--mono);color:var(--faint);width:64px;text-align:right}
+
+/* ═══ tiles — the V10 anatomy: color = status only ═══ */
+.tiles{display:grid;gap:10px}
+.t7{grid-template-columns:repeat(4,1fr)}
+.t6{grid-template-columns:repeat(3,1fr)}
+.tmini{grid-template-columns:repeat(6,1fr)}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:11px 13px 8px;min-width:0;box-shadow:0 1px 2px rgba(38,32,28,.04)}
+.tl{font-size:9.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sdot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;background:var(--card);border:1.5px solid #C9BEB2;vertical-align:0}
+.s-green .sdot{background:var(--green);border-color:var(--green)}
+.s-red .sdot{background:var(--red);border-color:var(--red)}
+.tn{display:flex;align-items:baseline;gap:8px;margin:5px 0 6px;flex-wrap:wrap}
+.big{font-family:var(--mono);font-size:20px;font-weight:600;letter-spacing:-.02em}
+.big small{font-size:12px;font-weight:600;color:var(--mut)}
+.dl{font-size:10px;font-weight:700;color:var(--mut);background:var(--hair);border-radius:99px;padding:1px 8px;white-space:nowrap}
+.tc{height:60px}
+.tc svg{display:block}
+.tf{font-size:9.5px;color:var(--faint);margin-top:6px;border-top:1px solid var(--hair);padding-top:5px;line-height:1.5}
+.tile.mini{padding:10px 13px 9px}
+.tile.mini .big{font-size:17px}
+.tile.mini .tf{margin-top:5px}
+.statuskey{font-size:10.5px;color:var(--faint);margin:8px 2px 0}
+.statuskey i{display:inline-block;width:8px;height:8px;border-radius:50%;margin:0 4px 0 10px;vertical-align:baseline}
+
+/* ═══ FAQ footer strip — always visible ═══ */
+.faq{max-width:1240px;margin:18px auto 0;padding:0 20px}
+.faqcard{background:var(--card);border:1px solid var(--line);border-top:3px solid var(--terra);border-radius:12px;padding:12px 16px 10px}
+.faqhead{font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);margin-bottom:8px}
+.faqgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+.qa{padding:2px 16px 2px 0}
+.qa+.qa{border-left:1px solid var(--hair);padding-left:16px}
+.qa .verdict{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.05em;margin-bottom:4px}
+.qa .verdict.g{color:var(--green)}.qa .verdict.a{color:var(--amber)}.qa .verdict.r{color:var(--red)}
+.qa .qq{font-size:12px;font-weight:700;line-height:1.35;margin-bottom:4px}
+.qa .aa{font-size:10.5px;color:var(--mut);line-height:1.55}
+.footnote{max-width:1240px;margin:12px auto 0;padding:0 20px;font-size:10px;color:var(--faint)}
+
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(8px);background:var(--ink);color:var(--paper);font-size:12px;font-weight:500;padding:9px 16px;border-radius:8px;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;max-width:90vw;z-index:99}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+text{font-family:'Inter',sans-serif}
+@media (prefers-reduced-motion: reduce){*{transition:none !important}}
+@media(max-width:1060px){
+  .t7,.t6,.tmini{grid-template-columns:repeat(2,1fr)}
+  .g2,.g3{grid-template-columns:1fr}
+  .chips{grid-template-columns:repeat(2,1fr)}
+  .strip{grid-template-columns:repeat(4,1fr)}
+  .cell:nth-child(5){border-left:none}
+  .faqgrid{grid-template-columns:1fr 1fr}
+  .qa:nth-child(3){border-left:none;padding-left:0}
+  .tabhint{display:none}
+}
+@media(max-width:600px){
+  .t7,.t6,.tmini,.chips,.faqgrid{grid-template-columns:1fr}
+  .qa+.qa{border-left:none;padding-left:0;margin-top:8px}
+}
+</style>
+</head>
+<body>
+<div class="caption"><strong>V15 — Console:</strong> a sticky summary header — the month strip in micro-columns plus the four verdict chips — compresses on scroll and stays put while a segmented control flips three full-width core panels (Revenue · Engagement · Acquisition) in place, no scrolling between cores; FAQ rides in a footer strip below everything.</div>
+
+<!-- ═══ STICKY CONSOLE HEADER ═══ -->
+<header class="hd" id="hd">
+  <div class="hdin">
+    <div class="row1">
+      <div class="brand"><small>BaseLocal</small>Analytics Overview</div>
+      <span class="date">Friday, Jul 3 · month 3 of the roadmap</span>
+      <div class="right">
+        <div class="seg"><button class="on" id="g-w" onclick="setGrain('w')">Weekly</button><button id="g-m" onclick="setGrain('m')">Monthly</button></div>
+        <button class="gear" onclick="toast('Targets are monthly-set. Editing writes to Data Entry in production — static in this mock.')">Edit targets</button>
+      </div>
+    </div>
+
+    <div class="striprow">
+      <div class="strip">
+        <div class="cell"><div class="m">May</div><div class="v">$211k</div><div class="s">of 205 · <span class="beat">+6 beat</span></div></div>
+        <div class="cell"><div class="m">Jun</div><div class="v">$286k</div><div class="s">of 290 · <span class="miss">−4 short</span></div></div>
+        <div class="cell"><div class="m">Jul</div><div class="v">$386k*</div><div class="s">of 400 · <span class="miss">−14 pace</span></div></div>
+        <div class="cell"><div class="m">Aug</div><div class="v future">$500k</div><div class="s">target</div></div>
+        <div class="cell"><div class="m">Sep</div><div class="v future">$700k</div><div class="s">target</div></div>
+        <div class="cell"><div class="m">Oct</div><div class="v future">$800k</div><div class="s">target</div></div>
+        <div class="cell"><div class="m">Nov</div><div class="v future">$900k</div><div class="s">target</div></div>
+        <div class="cell"><div class="m">Dec</div><div class="v future">$1,000k</div><div class="s">the goal</div></div>
+      </div>
+    </div>
+    <div class="stripnote">*projected · targets are monthly-set — Edit targets to amend</div>
+
+    <div class="chips">
+      <div class="chip"><span class="dot a"></span><div class="tx"><div class="verdict a">CLOSE — $386K PACE</div><div class="q">Will we hit $400k this month?</div></div></div>
+      <div class="chip"><span class="dot a"></span><div class="tx"><div class="verdict a">MOVING — $0.34</div><div class="q">Is RPS on the path to $0.50?</div></div></div>
+      <div class="chip"><span class="dot r"></span><div class="tx"><div class="verdict r">NO — 146K VS 200K</div><div class="q">Are subscribers growing fast enough?</div></div></div>
+      <div class="chip"><span class="dot g"></span><div class="tx"><div class="verdict g">YES</div><div class="q">Is the audience healthy at scale?</div></div></div>
+    </div>
+
+    <div class="tabs">
+      <div class="tabset" role="tablist" aria-label="Core">
+        <button id="tab-rev" class="on" role="tab" aria-selected="true" onclick="setTab('rev')">Revenue</button>
+        <button id="tab-eng" role="tab" aria-selected="false" onclick="setTab('eng')">Engagement</button>
+        <button id="tab-acq" role="tab" aria-selected="false" onclick="setTab('acq')">Acquisition</button>
+      </div>
+      <span class="tabhint">All three cores are loaded — switching is instant · Weekly ⇄ Monthly redraws the trend charts</span>
+    </div>
+  </div>
+</header>
+
+<div class="page">
+
+  <!-- ═══ PANEL · REVENUE ═══ -->
+  <section class="panel on" id="p-rev" role="tabpanel">
+
+    <div class="card">
+      <div class="ct"><h2>Revenue roadmap — one bullet per month</h2>
+        <span class="sub">shared scale $0–1050k · tick = monthly target · ink bar = actual · terracotta = July projection · Aug–Dec ghosted</span></div>
+      <div id="roadmap"></div>
+    </div>
+
+    <div class="grid g3">
+      <div class="card">
+        <div class="ct"><h2>Daily vs the $12k floor</h2><span class="sub">last 21 days · dips in red · best day marked</span></div>
+        <div id="c-daily"></div>
+      </div>
+      <div class="card">
+        <div class="ct"><h2>RPS — path to $0.50</h2><span class="sub"><span class="gw">weekly</span> · Aug guardrail $0.45</span></div>
+        <div id="c-rps"></div>
+      </div>
+      <div class="card">
+        <div class="ct"><h2>Revenue by source</h2><span class="sub">July mix · of $37.4k MTD</span></div>
+        <div class="mix">
+          <div style="flex:58;background:#B8593A"></div><div style="flex:22;background:#D89B7F"></div>
+          <div style="flex:9;background:#2D7A2D"></div><div style="flex:6;background:#B45309"></div><div style="flex:5;background:#A79A8B"></div>
+        </div>
+        <div class="mixrows">
+          <div class="r"><i style="background:#B8593A"></i>Morning Roundup<span class="d">$21.7k</span><b>58%</b></div>
+          <div class="r"><i style="background:#D89B7F"></i>Daily News<span class="d">$8.2k</span><b>22%</b></div>
+          <div class="r"><i style="background:#2D7A2D"></i>Welcome<span class="d">$3.4k</span><b>9%</b></div>
+          <div class="r"><i style="background:#B45309"></i>Bridge<span class="d">$2.2k</span><b>6%</b></div>
+          <div class="r"><i style="background:#A79A8B"></i>Other<span class="d">$1.9k</span><b>5%</b></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tiles tmini">
+      <div class="tile mini s-red"><div class="tl"><span class="sdot"></span>Pace, $/day</div>
+        <div class="tn"><span class="big">$12.5k</span></div><div class="tf">MTD avg · needs $12.9k/day for $400k</div></div>
+      <div class="tile mini"><div class="tl"><span class="sdot"></span>Floor dips</div>
+        <div class="tn"><span class="big">3<small> in 21d</small></span></div><div class="tf">1 in the last 7 days · floor $12k</div></div>
+      <div class="tile mini"><div class="tl"><span class="sdot"></span>Revenue per click</div>
+        <div class="tn"><span class="big">$1.86</span></div><div class="tf">July-to-date</div></div>
+      <div class="tile mini"><div class="tl"><span class="sdot"></span>Active offers</div>
+        <div class="tn"><span class="big">34</span></div><div class="tf">across all sends</div></div>
+      <div class="tile mini"><div class="tl"><span class="sdot"></span>June winners</div>
+        <div class="tn"><span class="big">3<small> of 10</small></span></div><div class="tf">test winners solidified</div></div>
+      <div class="tile mini"><div class="tl"><span class="sdot"></span>Send volume</div>
+        <div class="tn"><span class="big">15<small>/wk</small></span></div><div class="tf">→ 22 on Jul 20 → 25 in August</div></div>
+    </div>
+    <div class="statuskey">Color is status only:<i style="background:var(--green)"></i>on target<i style="background:var(--red)"></i>behind<i style="background:var(--card);border:1.5px solid #C9BEB2"></i>no target</div>
+  </section>
+
+  <!-- ═══ PANEL · ENGAGEMENT ═══ -->
+  <section class="panel" id="p-eng" role="tabpanel">
+    <div class="tiles t7">
+      <div class="tile"><div class="tl"><span class="sdot"></span>Open rate</div>
+        <div class="tn"><span class="big">41.2%</span><span class="dl">▲ 1.2pt vs May W1</span></div>
+        <div class="tc" id="t-open"></div><div class="tf">latest week · weekly, May→Jul · watch through Jul 20 expansion</div></div>
+      <div class="tile"><div class="tl"><span class="sdot"></span>CTR (delivered)</div>
+        <div class="tn"><span class="big">2.10%</span><span class="dl">▲ 0.15pt vs May W1</span></div>
+        <div class="tc" id="t-ctr"></div><div class="tf">latest week · weekly, May→Jul</div></div>
+      <div class="tile"><div class="tl"><span class="sdot"></span>CTOR</div>
+        <div class="tn"><span class="big">5.10%</span><span class="dl">▲ 0.22pt vs May W1</span></div>
+        <div class="tc" id="t-ctor"></div><div class="tf">clicks per open, latest week · monthly 4.96 → 5.03 → 5.10</div></div>
+      <div class="tile s-green"><div class="tl"><span class="sdot"></span>Spam rate</div>
+        <div class="tn"><span class="big">0.027%</span><span class="dl">▲ 0.006pt vs May W1</span></div>
+        <div class="tc" id="t-spam"></div><div class="tf">latest week · guardrail 0.05% · rising with volume — watched</div></div>
+      <div class="tile s-green"><div class="tl"><span class="sdot"></span>Churn vs guardrail</div>
+        <div class="tn"><span class="big">19.4%</span><span class="dl">▲ 0.6pt vs Jun</span></div>
+        <div class="tc" id="t-churn"></div><div class="tf">Jul-to-date · monthly · guardrail 22%</div></div>
+      <div class="tile s-green"><div class="tl"><span class="sdot"></span>Engaged share</div>
+        <div class="tn"><span class="big">54.0%</span><span class="dl">▲ 1.4pt MTD</span></div>
+        <div class="tc" id="t-eng"></div><div class="tf">Jul-to-date · June marked 52.6% · weekly, May→Jul</div></div>
+      <div class="tile"><div class="tl"><span class="sdot"></span>Unsubs per send</div>
+        <div class="tn"><span class="big">0.31%</span><span class="dl">▲ 0.02pt vs Jun</span></div>
+        <div class="tc" id="t-unsub"></div><div class="tf">Jul-to-date · monthly · rising with volume — expected</div></div>
+    </div>
+
+    <div class="grid g2">
+      <div class="card">
+        <div class="ct"><h2>Churn vs the 22% guardrail</h2><span class="sub">monthly · existing Engaged Audience definition</span></div>
+        <div id="c-churn"></div>
+      </div>
+      <div class="card">
+        <div class="ct"><h2>Opens · CTR · CTOR — trend</h2><span class="sub"><span class="gw">weekly</span> · indexed, first period = 100 · end labels are actual values</span></div>
+        <div id="c-trend"></div>
+      </div>
+    </div>
+    <div class="statuskey">Color is status only:<i style="background:var(--green)"></i>on target<i style="background:var(--red)"></i>behind<i style="background:var(--card);border:1.5px solid #C9BEB2"></i>no target</div>
+  </section>
+
+  <!-- ═══ PANEL · ACQUISITION ═══ -->
+  <section class="panel" id="p-acq" role="tabpanel">
+    <div class="tiles t6">
+      <div class="tile s-red"><div class="tl"><span class="sdot"></span>Net new vs 200k/mo</div>
+        <div class="tn"><span class="big">+146k</span><span class="dl">July pace · 14.2k in</span></div>
+        <div class="tc" id="t-net"></div><div class="tf">monthly · +4.7k/day now, needs 6.5k · Jun +118k</div></div>
+      <div class="tile"><div class="tl"><span class="sdot"></span>Gross adds</div>
+        <div class="tn"><span class="big">42k</span><span class="dl">▲ 4k vs prior wk</span></div>
+        <div class="tc" id="t-gross"></div><div class="tf">last full week · weekly, May→Jul · 18.6k MTD (partial faded)</div></div>
+      <div class="tile"><div class="tl"><span class="sdot"></span>Losses</div>
+        <div class="tn"><span class="big">10k</span><span class="dl">▲ 2k vs prior wk</span></div>
+        <div class="tc" id="t-loss"></div><div class="tf">last full week · weekly, May→Jul · same scale as gross adds</div></div>
+      <div class="tile s-red"><div class="tl"><span class="sdot"></span>Book vs target path</div>
+        <div class="tn"><span class="big">985k</span><span class="dl">▲ 73k vs Jun</span></div>
+        <div class="tc" id="t-book"></div><div class="tf">subscribers now · Jul milestone 1.09M · Dec goal 2.0M</div></div>
+      <div class="tile"><div class="tl"><span class="sdot"></span>CAC payback</div>
+        <div class="tn"><span class="big">41<small>d</small></span><span class="dl">▼ 3d vs Jun</span></div>
+        <div class="tc" id="t-cac"></div><div class="tf">days to recoup acquisition spend · monthly · improving</div></div>
+      <div class="tile s-green"><div class="tl"><span class="sdot"></span>Welcome $ / gross sub</div>
+        <div class="tn"><span class="big">$0.11</span><span class="dl">▲ $0.02 vs Jun</span></div>
+        <div class="tc" id="t-wel"></div><div class="tf">Jul-to-date · monthly · ramping to $0.15 target</div></div>
+    </div>
+
+    <div class="grid g2">
+      <div class="card">
+        <div class="ct"><h2>Gross adds vs losses</h2><span class="sub"><span class="gw">weekly</span> · net overlaid in ink · 200k/mo ≈ 46k net/wk</span></div>
+        <div id="c-flow"></div>
+      </div>
+      <div class="card">
+        <div class="ct"><h2>Trajectory — to 2.0M by December</h2><span class="sub">2.0M × $0.50 RPS = $1M a month · dashed = target path</span></div>
+        <div id="c-traj"></div>
+      </div>
+    </div>
+    <div class="statuskey">Color is status only:<i style="background:var(--green)"></i>on target<i style="background:var(--red)"></i>behind<i style="background:var(--card);border:1.5px solid #C9BEB2"></i>no target</div>
+  </section>
+</div>
+
+<!-- ═══ FAQ FOOTER STRIP — always visible ═══ -->
+<div class="faq">
+  <div class="faqcard">
+    <div class="faqhead">Key questions</div>
+    <div class="faqgrid">
+      <div class="qa"><div class="verdict a">CLOSE — $386K PACE</div><div class="qq">Will we hit $400k this month?</div>
+        <div class="aa">Needs $12.9k/day from here; best recent day $13.8k. The Jul 20 expansion to 22 emails/wk is the closing lever.</div></div>
+      <div class="qa"><div class="verdict a">MOVING — $0.34</div><div class="qq">Is RPS on the path to $0.50?</div>
+        <div class="aa">+$0.03 vs June; the path needs ~+$0.04/mo from offers and welcome yield ($0.11 → $0.15). Reassess if Aug lands under $0.45.</div></div>
+      <div class="qa"><div class="verdict r">NO — 146K VS 200K</div><div class="qq">Are subscribers growing fast enough?</div>
+        <div class="aa">Growth must reach 6.5k net/day (currently 4.7k). At $0.50 RPS the December book needs 2M; we're at 985k.</div></div>
+      <div class="qa"><div class="verdict g">YES</div><div class="qq">Is the audience healthy at scale?</div>
+        <div class="aa">Churn 19.4% vs 22% guardrail, spam 0.027% vs 0.05%, opens 41.2% and rising. Unsubs/send up with volume — expected, watching.</div></div>
+    </div>
+  </div>
+</div>
+<div class="footnote">Data through Friday, Jul 3 · Jul W1 covers 3 days — shown faded or hollow · week labels M1–M4 = May, J1–J4 = June · targets are monthly-set, Edit targets top right</div>
+
+<div id="toast" role="status"></div>
+
+<script>
+"use strict";
+/* ═══ shared dataset (identical across exploration variants) + V15 extensions ═══ */
+const DATA = {
+  asOf: "Jul 3, 2026",
+  months: ["May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
+  revTargets: [205,290,400,500,700,800,900,1000],
+  revActuals: [211,286,37.4],
+  julProjected: 386, julNeedPerDay: 12.9,
+  revWeekly: [44,48,52,55,62,68,74,82,37.4],
+  daily21: [11.8,12.6,13.1,12.2,12.9,13.4,12.7,13.0,12.4,11.1,12.8,13.2,12.6,13.8,12.9,13.1,12.5,13.3,11.9,13.2,12.5],
+  dailyFloor: 12,
+  rpsWeekly: [0.27,0.28,0.29,0.30,0.30,0.31,0.31,0.32,0.34],
+  rpsMonthly: [0.29,0.31,0.34], rpsTarget: 0.50, rpsAugGuardrail: 0.45,
+  subscribers: 985,
+  bookActuals: [852,912,985],
+  bookTargetPath: [985,1090,1290,1490,1640,1790,1930,2000],
+  netNewWeekly: [24,26,25,27,27,29,30,32,14.2],
+  netNewMonthly: [102,118,146], /* Jul = pace */
+  julNetPace: 146, netTarget: 200,
+  grossWeekly: [31,33,32,35,35,37,38,42,18.6],
+  grossMonthly: [131,152,18.6],
+  lossWeekly: [7,7,7,8,8,8,8,10,4.4],
+  lossMonthly: [29,34,4.4],
+  churnMonthly: [18.1,18.8,19.4], churnGuardrail: 22,
+  opensWeekly: [40.0,40.2,40.1,40.4,40.5,40.7,40.8,41.0,41.2],
+  opensMonthly: [40.2,40.8,41.2],
+  ctrWeekly: [1.95,2.0,2.0,2.02,2.02,2.05,2.05,2.08,2.10],
+  ctrMonthly: [1.99,2.05,2.10],
+  engagedWeekly: [51.2,51.6,51.9,52.0,52.1,52.3,52.6,53.1,54.0],
+  engagedMonthly: [51.9,52.6,54.0],
+  unsubsMonthly: [0.27,0.29,0.31],
+  /* V15 extensions */
+  ctorWeekly: [4.88,4.91,4.93,4.96,4.98,5.01,5.03,5.06,5.10],
+  ctorMonthly: [4.96,5.03,5.10],
+  spamWeekly: [0.021,0.021,0.022,0.023,0.023,0.024,0.025,0.026,0.027],
+  spamMonthly: [0.022,0.026,0.027], spamGuardrail: 0.05,
+  cacMonthly: [46,44,41],
+  mix: [["Morning Roundup",58],["Daily News",22],["Welcome",9],["Bridge",6],["Other",5]],
+  welcomeYield: [0.06,0.09,0.11], welcomeTarget: 0.15,
+  weekLabels: ["M1","M2","M3","M4","J1","J2","J3","J4","Jul"],
+  monthLabels3: ["May","Jun","Jul td"]
+};
+
+/* ═══ svg helpers — fixed viewBox so hidden panels draw correctly ═══ */
+const $=id=>document.getElementById(id);
+const NS="http://www.w3.org/2000/svg";
+const MONO="'IBM Plex Mono',monospace";
+const INK="#26201C", MUT="#7C7166", FAINT="#A79A8B", HAIR="#EFE8DE",
+      TERRA="#B8593A", TERRAD="#8A3F2A", TERRAL="#D89B7F",
+      GREEN="#2D7A2D", RED="#C0392B", AMBER="#B45309";
+function S(tag,at,parent){const e=document.createElementNS(NS,tag);for(const k in at)e.setAttribute(k,at[k]);if(parent)parent.appendChild(e);return e;}
+function txt(parent,x,y,str,at){const a=Object.assign({x:x,y:y,"font-size":9,fill:FAINT},at||{});const t=S("text",a,parent);t.textContent=str;return t;}
+function mount(id,w,h){
+  const s=S("svg",{viewBox:"0 0 "+w+" "+h});
+  s.style.width="100%"; s.style.display="block";
+  $(id).replaceChildren(s);
+  return s;
+}
+
+/* line chart */
+function lineChart(id,o){
+  const w=o.w||560,h=o.h||170,pad=o.pad||{t:14,r:68,b:22,l:40};
+  const s=mount(id,w,h);
+  const min=(o.min!=null)?o.min:0,max=o.max;
+  const Y=v=>pad.t+(1-(v-min)/(max-min))*(h-pad.t-pad.b);
+  const n=o.n||Math.max.apply(null,o.series.map(sr=>(sr.x0||0)+sr.data.length));
+  const X=i=>pad.l+i*(w-pad.l-pad.r)/(n-1);
+  [0,0.5,1].forEach(fr=>{
+    const v=min+fr*(max-min), y=Y(v);
+    S("line",{x1:pad.l,y1:y,x2:w-pad.r,y2:y,stroke:HAIR},s);
+    txt(s,pad.l-6,y+3,(o.fmt||(x=>x))(v),{"text-anchor":"end","font-family":MONO,"font-size":8.5});
+  });
+  (o.refs||[]).forEach(r=>{
+    const y=Y(r.v);
+    S("line",{x1:pad.l,y1:y,x2:w-pad.r,y2:y,stroke:r.color||TERRAD,"stroke-dasharray":"4 3","stroke-width":1.3},s);
+    txt(s,w-pad.r+5,y+3,r.label,{fill:r.color||TERRAD,"font-size":8.5,"font-weight":600});
+  });
+  o.series.forEach(sr=>{
+    const x0=sr.x0||0;
+    const pts=sr.data.map((v,j)=>[X(j+x0),Y(v)]);
+    S("polyline",{points:pts.map(p=>p.join(",")).join(" "),fill:"none",stroke:sr.color,
+      "stroke-width":sr.width||2,"stroke-linejoin":"round","stroke-linecap":"round","stroke-dasharray":sr.dash||"none"},s);
+    (sr.dots||[]).forEach(i=>S("circle",{cx:pts[i][0],cy:pts[i][1],r:3.2,fill:sr.color},s));
+    (sr.hollow||[]).forEach(i=>S("circle",{cx:pts[i][0],cy:pts[i][1],r:3.2,fill:"#FCFAF6",stroke:sr.color,"stroke-width":1.8},s));
+    if(sr.endLabel){const p=pts[pts.length-1];
+      txt(s,p[0]+7,p[1]+3.5+(sr.endDy||0),sr.endLabel,{fill:sr.color,"font-weight":600,"font-family":MONO,"font-size":9});}
+  });
+  (o.xlabels||[]).forEach((lb,i)=>{if(lb)txt(s,X(i),h-6,lb,{"text-anchor":"middle","font-size":8.5});});
+}
+
+/* bar chart */
+function barChart(id,o){
+  const w=o.w||560,h=o.h||170,pad=o.pad||{t:14,r:68,b:22,l:40};
+  const s=mount(id,w,h);
+  const min=o.min||0,max=o.max,data=o.data,n=data.length;
+  const iw=(w-pad.l-pad.r)/n;
+  const Y=v=>pad.t+(1-(v-min)/(max-min))*(h-pad.t-pad.b);
+  [0,0.5,1].forEach(fr=>{
+    const v=min+fr*(max-min), y=Y(v);
+    S("line",{x1:pad.l,y1:y,x2:w-pad.r,y2:y,stroke:HAIR},s);
+    txt(s,pad.l-6,y+3,(o.fmt||(x=>x))(v),{"text-anchor":"end","font-family":MONO,"font-size":8.5});
+  });
+  data.forEach((v,i)=>{
+    const y=Y(v),bh=Math.max(h-pad.b-y,1.5);
+    const below=(o.belowRef!=null)&&v<o.belowRef;
+    const ghost=(o.ghost||[]).indexOf(i)>=0;
+    S("rect",{x:pad.l+i*iw+iw*0.2,y:y,width:iw*0.6,height:bh,rx:1.5,
+      fill:below?RED:(o.color||"#C4B4A0"),opacity:ghost?0.35:(below?1:0.9)},s);
+  });
+  (o.refs||[]).forEach(r=>{
+    const y=Y(r.v);
+    S("line",{x1:pad.l,y1:y,x2:w-pad.r,y2:y,stroke:r.color||TERRAD,"stroke-dasharray":"4 3","stroke-width":1.3},s);
+    txt(s,w-pad.r+5,y+3,r.label,{fill:r.color||TERRAD,"font-size":8.5,"font-weight":600});
+  });
+  (o.marks||[]).forEach(m=>{
+    txt(s,pad.l+m.i*iw+iw/2,Y(data[m.i])-5,(m.label!=null)?m.label:(o.fmt||(x=>x))(data[m.i]),
+      {"text-anchor":"middle","font-weight":600,fill:m.color||INK,"font-family":MONO,"font-size":9});
+  });
+  (o.xlabels||[]).forEach((lb,i)=>{if(lb)txt(s,pad.l+i*iw+iw/2,h-6,lb,{"text-anchor":"middle","font-size":8.5});});
+}
+
+/* ═══ tile chart — the V10 anatomy: 240×60 frame, identical everywhere ═══ */
+const TW=240,TH=60,TPT=11,TPB=8,TPL=2,TPR=40;
+const TILE_BAR="#C9BEB2", TILE_LINE="#8B837E";
+function tframe(id){
+  const s=S("svg",{viewBox:"0 0 "+TW+" "+TH,width:"100%",height:"60",preserveAspectRatio:"none"});
+  $(id).replaceChildren(s);
+  S("line",{x1:0,y1:TH-TPB,x2:TW,y2:TH-TPB,stroke:HAIR},s);
+  return s;
+}
+function tTargetLine(s,y,label,color){
+  S("line",{x1:0,y1:y,x2:TW-TPR,y2:y,stroke:color||FAINT,"stroke-dasharray":"3 3","stroke-width":1},s);
+  txt(s,TW-TPR+3,y+3,label,{fill:color||FAINT,"font-size":8});
+}
+function tchart(id,cfg){
+  const s=tframe(id);
+  const min=cfg.min||0,max=cfg.max;
+  const y=v=>TPT+(1-(v-min)/(max-min))*(TH-TPT-TPB);
+  if(cfg.target!=null)tTargetLine(s,y(cfg.target),cfg.tlabel,cfg.tcolor);
+  const data=cfg.data,n=data.length,span=TW-TPL-TPR;
+  const fmt=cfg.fmt||(v=>v);
+  if(cfg.type==="bars"){
+    const iw=span/n;
+    data.forEach((v,i)=>{
+      const bh=Math.max((v-min)/(max-min)*(TH-TPT-TPB),1);
+      S("rect",{x:TPL+i*iw+iw*0.18,y:TH-TPB-bh,width:iw*0.64,height:bh,rx:1.5,
+        fill:cfg.color?cfg.color(v,i):TILE_BAR,opacity:cfg.partial===i?0.4:1},s);
+    });
+    txt(s,TPL+iw*0.5,Math.max(y(data[0])-3,7),fmt(data[0]),{"font-size":8,fill:"#7C7166"});
+    txt(s,TPL+(n-0.5)*iw,Math.max(y(data[n-1])-3,7),fmt(data[n-1]),{"text-anchor":"end","font-size":8,fill:"#7C7166"});
+  } else {
+    if(cfg.path){
+      const m=cfg.path.length,px=span/(m-1);
+      S("polyline",{points:cfg.path.map((v,i)=>(TPL+i*px)+","+y(v)).join(" "),
+        fill:"none",stroke:"#DDD2C4","stroke-width":1.5,"stroke-dasharray":"3 3"},s);
+    }
+    const step=span/((cfg.xspan||n)-1);
+    const pts=data.map((v,i)=>[TPL+i*step,y(v)]);
+    S("polyline",{points:pts.map(p=>p.join(",")).join(" "),fill:"none",stroke:TILE_LINE,
+      "stroke-width":1.8,"stroke-linejoin":"round","stroke-linecap":"round"},s);
+    const last=pts[pts.length-1];
+    S("circle",{cx:last[0],cy:last[1],r:2.5,fill:INK},s);
+    txt(s,pts[0][0],Math.max(pts[0][1]-4,7),fmt(data[0]),{"font-size":8,fill:"#7C7166"});
+    txt(s,Math.min(last[0],TW-TPR),Math.max(last[1]-5,7),fmt(data[n-1]),{"text-anchor":"end","font-size":8,fill:"#7C7166"});
+  }
+}
+
+/* ═══ REVENUE · monthly-bullet roadmap (from V7) ═══ */
+(function(){
+  const W=1150,H=222;
+  const s=mount("roadmap",W,H);
+  const padL=42,padR=6,padT=24,padB=34,MAX=1050;
+  const y=v=>padT+(1-v/MAX)*(H-padT-padB);
+  [0,250,500,750,1000].forEach(v=>{
+    S("line",{x1:padL,y1:y(v),x2:W-padR,y2:y(v),stroke:HAIR},s);
+    if(v%500===0)txt(s,padL-6,y(v)+3,"$"+v+"k",{"text-anchor":"end","font-family":MONO,"font-size":8.5});
+  });
+  const targets=DATA.revTargets, actuals=DATA.revActuals, n=targets.length, colW=(W-padL-padR)/n;
+  targets.forEach((T,i)=>{
+    const cx=padL+colW*(i+0.5), bw=Math.min(34,colW*0.5);
+    const future=i>2;
+    const g=S("g",{opacity:future?0.55:1,"shape-rendering":"crispEdges"},s);
+    S("rect",{x:cx-bw/2,y:y(0.6*T),width:bw,height:y(0)-y(0.6*T),fill:"#E5D7C7"},g);
+    S("rect",{x:cx-bw/2,y:y(0.9*T),width:bw,height:y(0.6*T)-y(0.9*T),fill:"#EFE5D8"},g);
+    S("rect",{x:cx-bw/2,y:y(MAX),width:bw,height:y(0.9*T)-y(MAX),fill:"#F8F2E9"},g);
+    S("rect",{x:cx-bw/2-5,y:y(T)-1,width:bw+10,height:2,fill:INK,opacity:future?0.75:1,"shape-rendering":"crispEdges"},s);
+    if(i===2){
+      S("rect",{x:cx-2,y:y(DATA.julProjected),width:4,height:y(0)-y(DATA.julProjected),fill:TERRAL},s);
+      S("rect",{x:cx-bw/2-2,y:y(DATA.julProjected)-1,width:bw+4,height:2,fill:TERRA},s);
+    }
+    const a=actuals[i];
+    if(a!=null){
+      S("rect",{x:cx-5,y:y(a),width:10,height:y(0)-y(a),fill:INK},s);
+      txt(s,cx,y(i===2?DATA.julProjected:a)-6,(i===2?"37.4 ▸ "+DATA.julProjected:String(a)),
+        {"text-anchor":"middle",fill:i===2?TERRAD:INK,"font-weight":600,"font-family":MONO,"font-size":9.5});
+    }
+    txt(s,cx,H-20,DATA.months[i],{"text-anchor":"middle","font-size":10,fill:MUT,"font-weight":600});
+    txt(s,cx,H-8,"t "+T,{"text-anchor":"middle","font-family":MONO,"font-size":8.5});
+  });
+})();
+
+/* ═══ static charts ═══ */
+barChart("c-daily",{w:560,h:170,data:DATA.daily21,max:16,belowRef:DATA.dailyFloor,
+  refs:[{v:DATA.dailyFloor,label:"floor $12k",color:TERRAD}],
+  marks:[{i:13,label:"$13.8k"}],
+  xlabels:DATA.daily21.map((_,i)=>(i%5===0)?("-"+(21-i)+"d"):""),fmt:v=>"$"+v+"k"});
+
+barChart("c-churn",{w:560,h:190,data:DATA.churnMonthly,max:26,color:"#C4B4A0",
+  refs:[{v:DATA.churnGuardrail,label:"22% cap",color:RED}],
+  marks:[{i:0},{i:1},{i:2}],xlabels:DATA.monthLabels3,fmt:v=>v.toFixed(1)+"%"});
+
+lineChart("c-traj",{w:560,h:190,min:700,max:2150,pad:{t:14,r:72,b:22,l:44},
+  refs:[{v:2000,label:"2M goal",color:GREEN}],
+  series:[
+    {data:DATA.bookTargetPath,color:"#C9BBA9",dash:"4 3",width:1.5},
+    {data:DATA.bookActuals,color:TERRA,width:2.2,dots:[0,1],hollow:[2],endLabel:"985k"}
+  ],n:8,xlabels:["May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],fmt:v=>(v/1000).toFixed(1)+"M"});
+
+/* ═══ tiles (V10 anatomy) ═══ */
+tchart("t-open", {type:"line",data:DATA.opensWeekly,min:38,max:44,fmt:v=>v.toFixed(1)+"%"});
+tchart("t-ctr",  {type:"line",data:DATA.ctrWeekly,min:1.5,max:2.5,fmt:v=>v.toFixed(2)+"%"});
+tchart("t-ctor", {type:"line",data:DATA.ctorWeekly,min:4.5,max:5.5,fmt:v=>v.toFixed(2)+"%"});
+tchart("t-spam", {type:"line",data:DATA.spamWeekly,min:0,max:0.06,target:DATA.spamGuardrail,tlabel:"0.05%",tcolor:RED,fmt:v=>v.toFixed(3)+"%"});
+tchart("t-churn",{type:"bars",data:DATA.churnMonthly,max:26,target:DATA.churnGuardrail,tlabel:"22% cap",fmt:v=>v.toFixed(1)+"%"});
+tchart("t-eng",  {type:"line",data:DATA.engagedWeekly,min:48,max:58,fmt:v=>v.toFixed(1)+"%"});
+tchart("t-unsub",{type:"bars",data:DATA.unsubsMonthly,max:0.4,fmt:v=>v.toFixed(2)+"%"});
+
+tchart("t-net",  {type:"bars",data:DATA.netNewMonthly,max:220,partial:2,target:DATA.netTarget,tlabel:"200k",fmt:v=>"+"+v+"k"});
+tchart("t-gross",{type:"bars",data:DATA.grossWeekly,max:50,partial:8,fmt:v=>v+"k"});
+tchart("t-loss", {type:"bars",data:DATA.lossWeekly,max:50,partial:8,fmt:v=>v+"k"});
+tchart("t-book", {type:"line",data:DATA.bookActuals,min:700,max:2100,xspan:8,path:DATA.bookTargetPath,
+  target:2000,tlabel:"2.0M Dec",fmt:v=>v+"k"});
+tchart("t-cac",  {type:"bars",data:DATA.cacMonthly,max:60,fmt:v=>v+"d"});
+tchart("t-wel",  {type:"bars",data:DATA.welcomeYield,max:0.18,target:DATA.welcomeTarget,tlabel:"$0.15",tcolor:GREEN,fmt:v=>"$"+v.toFixed(2)});
+
+/* ═══ grain-aware trend charts (Weekly ⇄ Monthly) ═══ */
+const idx=a=>a.map(v=>v/a[0]*100);
+let grain="w";
+function drawGrain(){
+  const w=grain==="w";
+  document.querySelectorAll(".gw").forEach(e=>{e.textContent=w?"weekly":"monthly";});
+
+  /* RPS path */
+  lineChart("c-rps",{w:360,h:170,min:0.2,max:0.55,pad:{t:14,r:80,b:22,l:40},
+    refs:[{v:DATA.rpsTarget,label:"$0.50 Dec",color:GREEN},{v:DATA.rpsAugGuardrail,label:"$0.45 Aug",color:AMBER}],
+    series:[w
+      ?{data:DATA.rpsWeekly,color:TERRA,width:2.2,dots:[3,7],hollow:[8],endLabel:"$0.34"}
+      :{data:DATA.rpsMonthly,color:TERRA,width:2.2,dots:[0,1],hollow:[2],endLabel:"$0.34"}],
+    xlabels:w?DATA.weekLabels:DATA.monthLabels3,fmt:v=>"$"+v.toFixed(2)});
+
+  /* Opens · CTR · CTOR — indexed trend */
+  const O=w?DATA.opensWeekly:DATA.opensMonthly,
+        C=w?DATA.ctrWeekly:DATA.ctrMonthly,
+        K=w?DATA.ctorWeekly:DATA.ctorMonthly;
+  lineChart("c-trend",{w:560,h:190,min:97,max:110,pad:{t:14,r:96,b:22,l:36},
+    refs:[{v:100,label:"= 100",color:FAINT}],
+    series:[
+      {data:idx(C),color:TERRAL,width:1.7,endLabel:"CTR "+C[C.length-1].toFixed(2)+"%",endDy:-8},
+      {data:idx(K),color:TERRA,width:2,endLabel:"CTOR "+K[K.length-1].toFixed(2)+"%",endDy:2},
+      {data:idx(O),color:INK,width:2,endLabel:"Opens "+O[O.length-1].toFixed(1)+"%",endDy:12}
+    ],xlabels:w?DATA.weekLabels:DATA.monthLabels3,fmt:v=>Math.round(v)});
+
+  /* Adds vs losses */
+  lineChart("c-flow",{w:560,h:190,min:0,max:w?50:210,pad:{t:14,r:82,b:22,l:40},
+    refs:w?[{v:46,label:"46k net/wk",color:FAINT}]:[{v:200,label:"200k/mo",color:FAINT}],
+    series:w?[
+      {data:DATA.grossWeekly,color:GREEN,width:1.6,endLabel:"gross 18.6",endDy:-4},
+      {data:DATA.lossWeekly,color:RED,width:1.4,endLabel:"lost 4.4"},
+      {data:DATA.netNewWeekly,color:INK,width:2.2,dots:[7],hollow:[8],endLabel:"net 14.2",endDy:8}
+    ]:[
+      {data:DATA.grossMonthly,color:GREEN,width:1.6,hollow:[2],endLabel:"gross 18.6",endDy:-4},
+      {data:DATA.lossMonthly,color:RED,width:1.4,hollow:[2],endLabel:"lost 4.4"},
+      {data:[102,118,14.2],color:INK,width:2.2,dots:[1],hollow:[2],endLabel:"net 14.2",endDy:8}
+    ],xlabels:w?DATA.weekLabels:["May","Jun","Jul (3d)"],fmt:v=>Math.round(v)+"k"});
+}
+function setGrain(g){
+  grain=g;
+  $("g-w").classList.toggle("on",g==="w");
+  $("g-m").classList.toggle("on",g==="m");
+  drawGrain();
+}
+drawGrain();
+
+/* ═══ tab switching — all panels stay in the DOM ═══ */
+function setTab(t){
+  ["rev","eng","acq"].forEach(k=>{
+    $("p-"+k).classList.toggle("on",k===t);
+    const b=$("tab-"+k);
+    b.classList.toggle("on",k===t);
+    b.setAttribute("aria-selected",k===t?"true":"false");
+  });
+}
+
+/* ═══ sticky header compresses on scroll ═══ */
+let ticking=false;
+window.addEventListener("scroll",function(){
+  if(!ticking){
+    requestAnimationFrame(function(){
+      $("hd").classList.toggle("mini",window.scrollY>48);
+      ticking=false;
+    });
+    ticking=true;
+  }
+},{passive:true});
+
+/* ═══ toast ═══ */
+function toast(msg){
+  const t=$("toast");t.textContent=msg;t.classList.add("show");
+  clearTimeout(toast._t);toast._t=setTimeout(function(){t.classList.remove("show");},3200);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Analytics Overview — V12 Roadmap Leads</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FAF6F4; --card:#FFFFFF; --ink:#2C2421; --body:#4A423C; --mut:#7C7166; --faint:#A79A8B;
+  --line:#E8E0DC; --hair:#F1EAE6; --band:#F5EEE9;
+  --terra:#B8593A; --terra-d:#8A3F2A; --terra-l:#D89B7F;
+  --green:#2D7A2D; --green-bg:#EDF5EC; --amber:#B45309; --amber-bg:#FCF4E4; --red:#C0392B; --red-bg:#F9EAE6;
+  --b0:#E5D7C7; --b1:#EFE5D8; --b2:#F8F2E9;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',ui-sans-serif,system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:13px;font-variant-numeric:tabular-nums;padding-bottom:80px}
+svg text{font-variant-numeric:tabular-nums}
+.caption{background:#1C1713;color:#F3EEE7;padding:10px 16px;font-size:13px;line-height:1.5}
+.caption strong{color:#EFB9A2}
+.page{max-width:1240px;margin:0 auto;padding:22px 20px}
+
+/* ── header ── */
+.pagehead{display:flex;align-items:baseline;gap:14px;margin-bottom:4px;flex-wrap:wrap}
+h1{font-size:21px;font-weight:800;letter-spacing:-.01em}
+.pagehead .date{color:var(--mut);font-size:12.5px}
+.pagehead .right{margin-left:auto;display:flex;gap:8px;align-items:center}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--card)}
+.seg button{border:none;background:none;padding:6px 14px;font:inherit;font-size:12px;font-weight:600;color:var(--mut);cursor:pointer}
+.seg button.on{background:var(--band);color:var(--terra-d)}
+.gear{border:1px solid var(--line);background:var(--card);border-radius:8px;padding:6px 12px;font:inherit;font-size:12px;font-weight:600;color:var(--mut);cursor:pointer}
+.gear:hover{color:var(--terra-d);border-color:var(--terra-l)}
+.subline{color:var(--mut);font-size:12.5px;margin-bottom:16px}
+.subline b{color:var(--ink)}
+
+/* ── hero: roadmap + month strip, one composed unit ── */
+.road{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 18px 14px;box-shadow:0 1px 3px rgba(44,36,33,.05);margin-bottom:14px}
+.roadhead{display:flex;align-items:baseline;gap:12px;margin-bottom:2px;flex-wrap:wrap}
+.roadhead h2{font-size:15px;font-weight:800}
+.roadhead .sub{font-size:11px;color:var(--faint)}
+#roadmap{height:236px}
+
+.strip{display:grid;grid-template-columns:repeat(8,1fr);border-top:1px solid var(--line);margin:6px 6px 0 42px}
+.strip .cell{padding:11px 12px 9px}
+.strip .cell+.cell{border-left:1px solid var(--hair)}
+.strip .m{font-size:9.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);margin-bottom:4px}
+.strip .v{font-size:17px;font-weight:800;letter-spacing:-.01em}
+.strip .v.future{color:var(--faint);font-weight:500}
+.strip .s{font-size:10px;color:var(--faint);margin-top:1px}
+.strip .s .miss{color:var(--terra);font-weight:700}
+.strip .s .beat{color:var(--green);font-weight:700}
+.roadfoot{display:flex;gap:16px;flex-wrap:wrap;margin:10px 6px 0 42px;font-size:10.5px;color:var(--faint)}
+.roadfoot b{color:var(--mut)}
+.roadfoot span:last-child{margin-left:auto}
+
+/* ── verdict row: the so-what ── */
+.verdicts{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:10px}
+.vq{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 13px 9px}
+.vq .pill{display:inline-block;font-size:10.5px;font-weight:800;padding:1px 9px;border-radius:99px;white-space:nowrap;margin-bottom:5px}
+.p-amber{background:var(--amber-bg);color:var(--amber)}
+.p-red{background:var(--red-bg);color:var(--red)}
+.p-green{background:var(--green-bg);color:var(--green)}
+.vq .qq{font-size:12px;font-weight:700;line-height:1.35}
+.vq .aa{font-size:10.5px;color:var(--mut);line-height:1.5;margin-top:3px}
+.legend{font-size:11px;color:var(--faint);margin:0 2px 4px}
+.legend i{display:inline-block;width:8px;height:8px;border-radius:50%;margin:0 4px 0 10px;vertical-align:baseline}
+
+/* ── the wall: thin core bands + one tile template ── */
+.bandrow{display:flex;align-items:baseline;gap:14px;border-top:2px solid var(--ink);margin-top:22px;padding:7px 2px 10px}
+.bandrow h2{font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+.bandrow .bstats{margin-left:auto;font-size:11px;color:var(--mut);text-align:right}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px 9px;min-width:0}
+.tl{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sdot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;background:var(--card);border:1.5px solid #CFC5BB;vertical-align:0}
+.s-green .sdot{background:var(--green);border-color:var(--green)}
+.s-red .sdot{background:var(--red);border-color:var(--red)}
+.tn{display:flex;align-items:baseline;gap:8px;margin:5px 0 6px;flex-wrap:wrap}
+.big{font-size:22px;font-weight:800;letter-spacing:-.01em;color:var(--ink)}
+.big .u{font-size:13px;font-weight:700;color:var(--mut)}
+.dl{font-size:10.5px;font-weight:700;color:#6E635A;background:var(--hair);border-radius:99px;padding:1px 8px;white-space:nowrap}
+.tc{height:60px}
+.tc svg{display:block}
+.tf{font-size:10px;color:var(--faint);margin-top:7px;border-top:1px solid var(--hair);padding-top:5px;line-height:1.5}
+
+#toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(8px);background:var(--ink);color:var(--bg);font-size:12px;font-weight:500;padding:9px 16px;border-radius:8px;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;max-width:90vw}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media (prefers-reduced-motion: reduce){#toast{transition:none}}
+text{font-family:'Inter',sans-serif}
+@media(max-width:1000px){
+  .tiles{grid-template-columns:repeat(2,1fr)}
+  .verdicts{grid-template-columns:repeat(2,1fr)}
+  .strip{grid-template-columns:repeat(4,1fr);margin-left:6px}
+  .strip .cell:nth-child(5){border-left:none}
+  .roadfoot{margin-left:6px}
+  .pagehead .right{margin-left:0}
+}
+@media(max-width:560px){
+  .tiles{grid-template-columns:1fr}.verdicts{grid-template-columns:1fr}
+  .strip{grid-template-columns:repeat(2,1fr)}
+  .strip .cell:nth-child(odd){border-left:none}
+  .bandrow{flex-direction:column;gap:2px}.bandrow .bstats{margin-left:0;text-align:left}
+}
+</style>
+</head>
+<body>
+<div class="caption"><strong>V12 — Roadmap Leads:</strong> the fight for the year opens the report — one bullet per month on a shared $0–1050k scale, the month strip beneath as its numeric caption, four verdicts as the so-what, then one small-multiples wall where every metric is the identical tile and color is status only.</div>
+<div class="page">
+
+  <div class="pagehead">
+    <h1>Analytics Overview</h1>
+    <span class="date">Friday, Jul 3 · month 3 of the roadmap</span>
+    <div class="right">
+      <div class="seg"><button class="on" id="g-w" onclick="setGrain('w')">Weekly</button><button id="g-m" onclick="setGrain('m')">Monthly</button></div>
+      <button class="gear" onclick="toast('Targets are monthly-set. Editing is wired to Data Entry in production — static in this mock.')">Edit targets</button>
+    </div>
+  </div>
+  <div class="subline">July target <b>$400k</b> · floor <b>$12k/day</b> · RPS path <b>$0.30 → $0.50</b> · book goal <b>2.0M by Dec</b> · targets are editable, monthly-set</div>
+
+  <!-- ═══ HERO: revenue roadmap + month strip, one composed unit ═══ -->
+  <div class="road">
+    <div class="roadhead">
+      <h2>Revenue roadmap — one bullet per month</h2>
+      <span class="sub">shared scale $0–1050k · tick = monthly target · ink bar = actual · terracotta = July projection · Aug–Dec ghosted</span>
+    </div>
+    <div id="roadmap"></div>
+
+    <div class="strip">
+      <div class="cell"><div class="m">May</div><div class="v">$211k</div><div class="s">of 205 · <span class="beat">+6 beat</span></div></div>
+      <div class="cell"><div class="m">Jun</div><div class="v">$286k</div><div class="s">of 290 · <span class="miss">−4 short</span></div></div>
+      <div class="cell"><div class="m">Jul</div><div class="v">$386k*</div><div class="s">of 400 · <span class="miss">−14 pace</span></div></div>
+      <div class="cell"><div class="m">Aug</div><div class="v future">$500k</div><div class="s">target</div></div>
+      <div class="cell"><div class="m">Sep</div><div class="v future">$700k</div><div class="s">target</div></div>
+      <div class="cell"><div class="m">Oct</div><div class="v future">$800k</div><div class="s">target</div></div>
+      <div class="cell"><div class="m">Nov</div><div class="v future">$900k</div><div class="s">target</div></div>
+      <div class="cell"><div class="m">Dec</div><div class="v future">$1,000k</div><div class="s">the goal</div></div>
+    </div>
+    <div class="roadfoot">
+      <span><b>Reading the bullets:</b> band shades run dark → light for behind → near → on-target · $37.4k banked July 1–3, needs $12.9k/day from here</span>
+      <span>*projected · targets are monthly-set — Edit targets to amend</span>
+    </div>
+  </div>
+
+  <!-- ═══ VERDICTS: the so-what before the detail ═══ -->
+  <div class="verdicts">
+    <div class="vq"><span class="pill p-amber">CLOSE — $386k pace</span>
+      <div class="qq">Will we hit $400k this month?</div>
+      <div class="aa">Needs $12.9k/day; best recent day $13.8k. The Jul 20 jump to 22 emails/wk is the closing lever.</div></div>
+    <div class="vq"><span class="pill p-amber">MOVING — $0.34</span>
+      <div class="qq">Is RPS on the path to $0.50?</div>
+      <div class="aa">+$0.03 vs June; needs ~+$0.04/mo from offers and welcome yield. Reassess if Aug lands under $0.45.</div></div>
+    <div class="vq"><span class="pill p-red">NO — 146k vs 200k</span>
+      <div class="qq">Are subscribers growing fast enough?</div>
+      <div class="aa">Needs 6.5k net/day, currently 4.7k. This is the distance between $386k and $1M.</div></div>
+    <div class="vq"><span class="pill p-green">YES</span>
+      <div class="qq">Is the audience healthy at scale?</div>
+      <div class="aa">Churn 19.4% vs 22% cap, spam 0.027% vs 0.05% cap, opens rising. Unsubs up with volume — expected, watching.</div></div>
+  </div>
+  <div class="legend">In the wall below, color is status only:<i style="background:var(--green)"></i>on target<i style="background:var(--red)"></i>behind<i style="background:var(--card);border:1.5px solid #CFC5BB"></i>no target. Guardrail tiles lead each band.</div>
+
+  <!-- ═══ REVENUE ═══ -->
+  <div class="bandrow"><h2>Revenue</h2><span class="bstats">RPC $1.86 · 34 active offers · 3 of 10 June winners solidified · 15 emails/wk → 22 Jul 20 → 25 Aug</span></div>
+  <div class="tiles">
+    <div class="tile s-green">
+      <div class="tl"><span class="sdot"></span>Daily revenue vs floor</div>
+      <div class="tn"><span class="big">$12.5k</span><span class="dl">▲ $0.1k avg vs prior 7d</span></div>
+      <div class="tc" id="t-daily"></div>
+      <div class="tf">avg/day MTD · daily, last 21d · 1 floor dip in last 7d</div>
+    </div>
+    <div class="tile s-red">
+      <div class="tl"><span class="sdot"></span>Revenue — total</div>
+      <div class="tn"><span class="big">$286k</span><span class="dl">▲ 35.5% vs May</span></div>
+      <div class="tc" id="t-rev"></div>
+      <div class="tf">Jun actual · Jul: $37.4k in, proj $386k vs $400k · needs $12.9k/day</div>
+    </div>
+    <div class="tile s-green">
+      <div class="tl"><span class="sdot"></span>RPS</div>
+      <div class="tn"><span class="big">$0.34</span><span class="dl">▲ $0.03 vs Jun</span></div>
+      <div class="tc" id="t-rps"></div>
+      <div class="tf">Jul-to-date · weekly, May→Jul · target $0.50 Dec · Aug guardrail $0.45</div>
+    </div>
+    <div class="tile s-green">
+      <div class="tl"><span class="sdot"></span>Welcome $ / gross sub</div>
+      <div class="tn"><span class="big">$0.11</span><span class="dl">▲ $0.02 vs Jun</span></div>
+      <div class="tc" id="t-wel"></div>
+      <div class="tf">Jul-to-date · monthly · ramping to $0.15 target</div>
+    </div>
+    <div class="tile">
+      <div class="tl"><span class="sdot"></span>Revenue by source</div>
+      <div class="tn"><span class="big">58%</span><span class="dl">Morning Roundup</span></div>
+      <div class="tc" id="t-mix"></div>
+      <div class="tf">July mix · Roundup 58 · Daily News 22 · Welcome 9 · Bridge 6 · Other 5</div>
+    </div>
+  </div>
+
+  <!-- ═══ ENGAGEMENT ═══ -->
+  <div class="bandrow"><h2>Engagement</h2><span class="bstats">existing Engaged Audience definition · window May W1 → Jul W1 · watch through the Jul 20 send expansion</span></div>
+  <div class="tiles">
+    <div class="tile s-green">
+      <div class="tl"><span class="sdot"></span>Spam rate vs guardrail</div>
+      <div class="tn"><span class="big">0.027%</span><span class="dl">▲ 0.001pt vs Jun</span></div>
+      <div class="tc" id="t-spam"></div>
+      <div class="tf">latest · guardrail 0.05% · rising with volume — expected, watching</div>
+    </div>
+    <div class="tile s-green">
+      <div class="tl"><span class="sdot"></span>Churn vs guardrail</div>
+      <div class="tn"><span class="big">19.4%</span><span class="dl">▲ 0.6pt vs Jun</span></div>
+      <div class="tc" id="t-churn"></div>
+      <div class="tf">Jul-to-date · monthly · guardrail 22%</div>
+    </div>
+    <div class="tile">
+      <div class="tl"><span class="sdot"></span>Open rate</div>
+      <div class="tn"><span class="big">41.2%</span><span class="dl">▲ 1.2pt vs May W1</span></div>
+      <div class="tc" id="t-opens"></div>
+      <div class="tf">latest week · weekly, May→Jul · % of delivered</div>
+    </div>
+    <div class="tile">
+      <div class="tl"><span class="sdot"></span>CTR (delivered)</div>
+      <div class="tn"><span class="big">2.1%</span><span class="dl">▲ 0.15pt vs May W1</span></div>
+      <div class="tc" id="t-ctr"></div>
+      <div class="tf">latest week · weekly, May→Jul</div>
+    </div>
+    <div class="tile">
+      <div class="tl"><span class="sdot"></span>CTOR</div>
+      <div class="tn"><span class="big">5.10%</span><span class="dl">▲ 0.07pt vs Jun</span></div>
+      <div class="tc" id="t-ctor"></div>
+      <div class="tf">clicks per open · latest · May 4.96 → Jun 5.03 → Jul-td 5.10</div>
+    </div>
+    <div class="tile s-green">
+      <div class="tl"><span class="sdot"></span>Engaged share</div>
+      <div class="tn"><span class="big">52.6%</span><span class="dl">▲ 0.7pt vs May</span></div>
+      <div class="tc" id="t-eng"></div>
+      <div class="tf">Jun · Jul-to-date 54.0% · May→Jul</div>
+    </div>
+  </div>
+
+  <!-- ═══ ACQUISITION ═══ -->
+  <div class="bandrow"><h2>Acquisition</h2><span class="bstats">200k/mo net new needed for 2M by Dec · 2M × $0.50 RPS = $1M/mo</span></div>
+  <div class="tiles">
+    <div class="tile s-red">
+      <div class="tl"><span class="sdot"></span>Net new subs</div>
+      <div class="tn"><span class="big">+118k</span><span class="dl">▲ 15.7% vs May</span></div>
+      <div class="tc" id="t-net"></div>
+      <div class="tf">Jun · Jul pace +146k vs 200k target · +4.7k/day, needs 6.5k</div>
+    </div>
+    <div class="tile">
+      <div class="tl"><span class="sdot"></span>Gross adds</div>
+      <div class="tn"><span class="big">42k</span><span class="dl">▲ 4k vs prior wk</span></div>
+      <div class="tc" id="t-gross"></div>
+      <div class="tf">last full week · weekly, May→Jul · 18.6k MTD (partial faded)</div>
+    </div>
+    <div class="tile s-red">
+      <div class="tl"><span class="sdot"></span>Book vs target path</div>
+      <div class="tn"><span class="big">985k</span><span class="dl">▲ 73k vs Jun</span></div>
+      <div class="tc" id="t-book"></div>
+      <div class="tf">subscribers now · monthly, May→Dec path · Dec goal 2.0M</div>
+    </div>
+    <div class="tile">
+      <div class="tl"><span class="sdot"></span>CAC payback</div>
+      <div class="tn"><span class="big">41<span class="u">d</span></span><span class="dl">▼ 2d vs Jun</span></div>
+      <div class="tc" id="t-cac"></div>
+      <div class="tf">days to recover acquisition cost · monthly · lower is better</div>
+    </div>
+  </div>
+
+</div>
+<div id="toast" role="status"></div>
+
+<script>
+"use strict";
+/* ═══ shared dataset (identical across explorations) + V12 extensions ═══ */
+const DATA = {
+  months:["May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
+  revTargets:[205,290,400,500,700,800,900,1000],
+  revActuals:[211,286,37.4],            /* Jul = MTD as of Jul 3 */
+  revProjJul:386, revNeedPerDay:12.9,
+  revWeekly:[44,48,52,55,62,68,74,82,37.4],   /* last = partial */
+  daily21:[11.8,12.6,13.1,12.2,12.9,13.4,12.7,13.0,12.4,11.1,12.8,13.2,12.6,13.8,12.9,13.1,12.5,13.3,11.9,13.2,12.5],
+  dailyFloor:12,
+  rpsWeekly:[0.27,0.28,0.29,0.30,0.30,0.31,0.31,0.32,0.34],
+  rpsMonthly:[0.29,0.31,0.34], rpsTarget:0.50, rpsAugGuardrail:0.45,
+  subsNow:985,
+  bookActuals:[852,912,985],
+  bookTargetPath:[985,1090,1290,1490,1640,1790,1930,2000],
+  netNewWeekly:[24,26,25,27,27,29,30,32,14.2],
+  netNewMonthly:[102,118,14.2], netNewJulyPace:146, netNewTarget:200,
+  grossWeekly:[31,33,32,35,35,37,38,42,18.6],
+  lossWeekly:[7,7,7,8,8,8,8,10,4.4],
+  churnMonthly:[18.1,18.8,19.4], churnGuardrail:22,
+  opensWeekly:[40.0,40.2,40.1,40.4,40.5,40.7,40.8,41.0,41.2],
+  ctrWeekly:[1.95,2.0,2.0,2.02,2.02,2.05,2.05,2.08,2.1],
+  engagedWeekly:[51.2,51.6,51.9,52.0,52.1,52.3,52.6,53.1,54.0],
+  engagedMonthly:[51.9,52.6,54.0],
+  unsubsMonthly:[0.27,0.29,0.31],
+  mixJuly:[["Morning Roundup",58],["Daily News",22],["Welcome",9],["Bridge",6],["Other",5]],
+  welcomeYield:[0.06,0.09,0.11], welcomeYieldTarget:0.15,
+  rpc:1.86, offers:34, winners:"3 of 10", cacPaybackDays:41,
+  /* ── V12 extensions ── */
+  ctorWeekly:[4.88,4.91,4.93,4.96,4.98,5.01,5.03,5.06,5.10],
+  ctorMonthly:[4.96,5.03,5.10],
+  spamWeekly:[0.021,0.021,0.022,0.023,0.023,0.024,0.025,0.026,0.027],
+  spamMonthly:[0.022,0.026,0.027], spamGuardrail:0.05,
+  cacMonthly:[46,43,41],
+  weekLabels:["M1","","","M4","J1","","","J4","Jul"]
+};
+
+/* ═══ helpers ═══ */
+const $=id=>document.getElementById(id);
+const NS="http://www.w3.org/2000/svg";
+function E(t,at){const e=document.createElementNS(NS,t);for(const k in at)e.setAttribute(k,at[k]);return e;}
+function toast(msg){const t=$("toast");t.textContent=msg;t.classList.add("show");clearTimeout(toast._t);toast._t=setTimeout(function(){t.classList.remove("show");},3200);}
+
+/* ═══ HERO — one tall bullet per month (from V7 Cockpit) ═══ */
+const draws=new Map();
+function reg(id,f){draws.set(id,f);f();}
+let raf=null;
+window.addEventListener("resize",function(){cancelAnimationFrame(raf);raf=requestAnimationFrame(function(){draws.forEach(function(f){f();});});});
+
+function txt(parent,x,y,str,at){const a=Object.assign({x:x,y:y,"font-size":9,fill:"#A79A8B"},at||{});const t=E("text",a);t.textContent=str;parent.appendChild(t);return t;}
+
+reg("roadmap",function(){
+  const m=$("roadmap"); const W=Math.max(m.clientWidth,600), H=236;
+  const svg=E("svg",{width:W,height:H,viewBox:"0 0 "+W+" "+H});
+  m.replaceChildren(svg);
+  const padL=42,padR=6,padT=24,padB=36,MAX=1050;
+  const y=v=>padT+(1-v/MAX)*(H-padT-padB);
+  [0,250,500,750,1000].forEach(function(v){
+    svg.appendChild(E("line",{x1:padL,y1:y(v),x2:W-padR,y2:y(v),stroke:"#F1EAE6"}));
+    if(v%500===0)txt(svg,padL-6,y(v)+3,"$"+v+"k",{"text-anchor":"end","font-size":8.5});
+  });
+  const targets=DATA.revTargets, n=targets.length, colW=(W-padL-padR)/n;
+  targets.forEach(function(T,i){
+    const cx=padL+colW*(i+0.5), bw=Math.min(34,colW*0.5);
+    const future=i>2;
+    const g=E("g",{opacity:future?0.55:1,"shape-rendering":"crispEdges"}); svg.appendChild(g);
+    g.appendChild(E("rect",{x:cx-bw/2,y:y(0.6*T),width:bw,height:y(0)-y(0.6*T),fill:"#E5D7C7"}));
+    g.appendChild(E("rect",{x:cx-bw/2,y:y(0.9*T),width:bw,height:y(0.6*T)-y(0.9*T),fill:"#EFE5D8"}));
+    g.appendChild(E("rect",{x:cx-bw/2,y:y(MAX),width:bw,height:y(0.9*T)-y(MAX),fill:"#F8F2E9"}));
+    svg.appendChild(E("rect",{x:cx-bw/2-5,y:y(T)-1,width:bw+10,height:2,fill:"#2C2421",opacity:future?0.75:1,"shape-rendering":"crispEdges"}));
+    if(i===2){
+      svg.appendChild(E("rect",{x:cx-2,y:y(DATA.revProjJul),width:4,height:y(0)-y(DATA.revProjJul),fill:"#D89B7F"}));
+      svg.appendChild(E("rect",{x:cx-bw/2-2,y:y(DATA.revProjJul)-1,width:bw+4,height:2,fill:"#B8593A"}));
+    }
+    const a=DATA.revActuals[i];
+    if(a!=null){
+      svg.appendChild(E("rect",{x:cx-5,y:y(a),width:10,height:y(0)-y(a),fill:"#2C2421"}));
+      txt(svg,cx,y(i===2?DATA.revProjJul:a)-6,(i===2?"37.4 ▸ "+DATA.revProjJul:String(a)),
+        {"text-anchor":"middle",fill:i===2?"#8A3F2A":"#2C2421","font-weight":700,"font-size":9.5});
+    }
+    txt(svg,cx,H-22,DATA.months[i],{"text-anchor":"middle","font-size":10,fill:"#7C7166","font-weight":600});
+    txt(svg,cx,H-9,"t "+T,{"text-anchor":"middle","font-size":8.5});
+  });
+});
+
+/* ═══ WALL — the one tile chart template (from V10), warm inks ═══ */
+const W=240, H=60, PT=11, PB=8, PL=2, PR=36;
+const INK_BAR="#CFC2B5", INK_LINE="#8A7D70", GRAY="#A79A8B";
+function frame(id){
+  const s=E("svg",{viewBox:`0 0 ${W} ${H}`,width:"100%",height:"60",preserveAspectRatio:"none"});
+  $(id).replaceChildren(s);
+  s.appendChild(E("line",{x1:0,y1:H-PB,x2:W,y2:H-PB,stroke:"#E8E0DC"}));
+  return s;
+}
+function label(s,x,y,str,anchor,fill){
+  const t=E("text",{x,y,"text-anchor":anchor||"start","font-size":8,fill:fill||"#7C7166"});
+  t.textContent=str; s.appendChild(t); return t;
+}
+function targetLine(s,y,str,color){
+  s.appendChild(E("line",{x1:0,y1:y,x2:W-PR,y2:y,stroke:color||GRAY,"stroke-dasharray":"3 3","stroke-width":1}));
+  label(s,W-PR+3,y+3,str,"start",color||GRAY);
+}
+function tchart(id,cfg){
+  const s=frame(id);
+  const min=cfg.min||0, max=cfg.max;
+  const y=v=>PT+(1-(v-min)/(max-min))*(H-PT-PB);
+  if(cfg.target!=null)targetLine(s,y(cfg.target),cfg.tlabel,cfg.tcolor);
+  if(cfg.target2!=null)targetLine(s,y(cfg.target2),cfg.t2label,cfg.t2color);
+  const data=cfg.data, n=data.length, span=W-PL-PR;
+  const fmt=cfg.fmt||(v=>v);
+  if(cfg.type==="bars"){
+    const iw=span/n;
+    data.forEach((v,i)=>{
+      const bh=Math.max((v-min)/(max-min)*(H-PT-PB),1);
+      s.appendChild(E("rect",{x:PL+i*iw+iw*0.18,y:H-PB-bh,width:iw*0.64,height:bh,rx:1.5,
+        fill:cfg.color?cfg.color(v,i):INK_BAR,opacity:cfg.partial===i?0.45:1}));
+    });
+    label(s,PL+iw*0.5,Math.max(y(data[0])-3,7),fmt(data[0]),"start");
+    label(s,PL+(n-0.5)*iw,Math.max(y(data[n-1])-3,7),fmt(data[n-1]),"end");
+  } else if(cfg.type==="line"){
+    if(cfg.path){
+      const m=cfg.path.length, px=span/(m-1);
+      s.appendChild(E("polyline",{points:cfg.path.map((v,i)=>`${PL+i*px},${y(v)}`).join(" "),
+        fill:"none",stroke:"#DDD3C9","stroke-width":1.5,"stroke-dasharray":"3 3"}));
+    }
+    const step=span/((cfg.xspan||n)-1);
+    const pts=data.map((v,i)=>[PL+i*step,y(v)]);
+    s.appendChild(E("polyline",{points:pts.map(p=>p.join(",")).join(" "),
+      fill:"none",stroke:INK_LINE,"stroke-width":1.8,"stroke-linejoin":"round","stroke-linecap":"round"}));
+    const last=pts[pts.length-1];
+    s.appendChild(E("circle",{cx:last[0],cy:last[1],r:2.5,fill:"#2C2421"}));
+    label(s,pts[0][0],Math.max(pts[0][1]-4,7),fmt(data[0]),"start");
+    label(s,Math.min(last[0],W-PR),Math.max(last[1]-5,7),fmt(data[n-1]),"end");
+  }
+}
+/* by-source mini-bar: single stacked bar, warm-neutral ramp (color = status only) */
+function mixChart(id){
+  const s=frame(id);
+  const ramp=["#6B5A4E","#94806F","#B5A493","#D1C4B6","#E7DED4"];
+  const total=DATA.mixJuly.reduce((a,seg)=>a+seg[1],0);
+  let x=PL;
+  DATA.mixJuly.forEach((seg,i)=>{
+    const wseg=(seg[1]/total)*(W-PL-PR);
+    s.appendChild(E("rect",{x,y:20,width:Math.max(wseg-1,1),height:16,fill:ramp[i]}));
+    label(s,x+wseg/2,47,seg[1]+"%","middle");
+    x+=wseg;
+  });
+}
+
+/* ── static tiles ── */
+tchart("t-daily",{type:"bars",data:DATA.daily21,max:16,target:DATA.dailyFloor,tlabel:"$12k floor",
+  color:v=>v<DATA.dailyFloor?"#C0392B":INK_BAR,fmt:v=>"$"+v.toFixed(1)+"k"});
+tchart("t-rps",{type:"line",data:DATA.rpsWeekly,min:0.2,max:0.55,
+  target:DATA.rpsTarget,tlabel:"$0.50",tcolor:"#2D7A2D",
+  target2:DATA.rpsAugGuardrail,t2label:"$0.45 Aug",fmt:v=>"$"+v.toFixed(2)});
+tchart("t-wel",{type:"bars",data:DATA.welcomeYield,max:0.18,target:DATA.welcomeYieldTarget,tlabel:"$0.15",fmt:v=>"$"+v.toFixed(2)});
+mixChart("t-mix");
+tchart("t-churn",{type:"bars",data:DATA.churnMonthly,max:26,target:DATA.churnGuardrail,tlabel:"22% cap",fmt:v=>v.toFixed(1)+"%"});
+tchart("t-opens",{type:"line",data:DATA.opensWeekly,min:38,max:44,fmt:v=>v.toFixed(1)+"%"});
+tchart("t-ctr",{type:"line",data:DATA.ctrWeekly,min:1.5,max:2.5,fmt:v=>v.toFixed(2)+"%"});
+tchart("t-gross",{type:"bars",data:DATA.grossWeekly,max:50,partial:8,fmt:v=>v+"k"});
+tchart("t-book",{type:"line",data:DATA.bookActuals,min:700,max:2100,xspan:8,path:DATA.bookTargetPath,
+  target:2000,tlabel:"2.0M Dec",fmt:v=>v+"k"});
+tchart("t-cac",{type:"bars",data:DATA.cacMonthly,max:60,fmt:v=>v+"d"});
+
+/* ── grain-aware tiles (Weekly ⇄ Monthly) ── */
+let grain="w";
+function drawGrain(){
+  const w=grain==="w";
+  tchart("t-rev",w
+    ?{type:"bars",data:DATA.revWeekly,max:100,partial:8,fmt:v=>"$"+v+"k"}
+    :{type:"bars",data:DATA.revActuals,max:450,partial:2,target:400,tlabel:"$400k",fmt:v=>"$"+v+"k"});
+  tchart("t-spam",w
+    ?{type:"line",data:DATA.spamWeekly,min:0,max:0.06,target:DATA.spamGuardrail,tlabel:"0.05 cap",tcolor:"#C0392B",fmt:v=>v.toFixed(3)+"%"}
+    :{type:"bars",data:DATA.spamMonthly,max:0.06,target:DATA.spamGuardrail,tlabel:"0.05 cap",tcolor:"#C0392B",fmt:v=>v.toFixed(3)+"%"});
+  tchart("t-ctor",w
+    ?{type:"line",data:DATA.ctorWeekly,min:4.6,max:5.4,fmt:v=>v.toFixed(2)+"%"}
+    :{type:"line",data:DATA.ctorMonthly,min:4.6,max:5.4,fmt:v=>v.toFixed(2)+"%"});
+  tchart("t-eng",w
+    ?{type:"line",data:DATA.engagedWeekly,min:48,max:58,fmt:v=>v.toFixed(1)+"%"}
+    :{type:"line",data:DATA.engagedMonthly,min:48,max:58,fmt:v=>v.toFixed(1)+"%"});
+  tchart("t-net",w
+    ?{type:"bars",data:DATA.netNewWeekly,max:50,partial:8,target:46,tlabel:"46k pace",fmt:v=>"+"+v+"k"}
+    :{type:"bars",data:DATA.netNewMonthly,max:220,partial:2,target:DATA.netNewTarget,tlabel:"200k",fmt:v=>"+"+v+"k"});
+}
+function setGrain(g){
+  grain=g;
+  $("g-w").classList.toggle("on",g==="w");
+  $("g-m").classList.toggle("on",g==="m");
+  drawGrain();
+}
+drawGrain();
+</script>
+</body>
+</html>

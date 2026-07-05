@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Overview A — Roadmap Rail</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',ui-sans-serif,system-ui,sans-serif;background:#f9fafb;color:#111827;font-size:13px;padding-bottom:60px}
+.caption{background:#111827;color:#fff;padding:10px 16px;font-size:13px}
+.caption strong{color:#f7cfc2}
+.page{max-width:1180px;margin:0 auto;padding:18px 16px}
+h1{font-size:19px;font-weight:700}
+.sub{color:#6b7280;font-size:12.5px;margin-top:2px}
+/* roadmap rail */
+.rail{display:flex;gap:6px;margin:18px 0 6px}
+.mo{flex:1;background:#fff;border:1px solid #E8E0DC;border-radius:10px;padding:10px 10px 8px;position:relative}
+.mo .m{font-size:11px;font-weight:600;color:#797979;text-transform:uppercase;letter-spacing:.04em}
+.mo .t{font-size:15px;font-weight:700;margin-top:2px;font-variant-numeric:tabular-nums}
+.mo .a{font-size:11.5px;margin-top:2px;font-variant-numeric:tabular-nums}
+.mo.done{background:#FCFAF8}
+.mo.done .a{color:#2D7A2D;font-weight:600}
+.mo.now{border-color:#B8593A;box-shadow:0 2px 10px rgba(184,89,58,.12)}
+.mo.now .a{color:#8a3f2a;font-weight:600}
+.mo.fut .t{color:#9ca3af}
+.mo .bar{height:4px;background:#f3f4f6;border-radius:99px;margin-top:7px;overflow:hidden}
+.mo .bar i{display:block;height:100%;background:#2D7A2D;border-radius:99px}
+.mo.now .bar i{background:#B8593A}
+.phase{display:flex;gap:6px;font-size:10.5px;color:#9ca3af;margin-bottom:16px}
+.phase span{flex:4;text-align:center}
+.phase span:last-child{flex:4}
+/* cores */
+.cores{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:6px}
+.core{background:#fff;border:1px solid #E8E0DC;border-radius:12px;overflow:hidden}
+.core h2{font-size:13px;font-weight:700;padding:10px 14px;background:#F5EEE9;border-bottom:1px solid #E8E0DC}
+.hero{padding:12px 14px 8px;display:flex;align-items:baseline;gap:8px}
+.hero .v{font-size:26px;font-weight:800;font-variant-numeric:tabular-nums}
+.hero .k{font-size:11px;color:#797979;font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.hero .d{margin-left:auto;font-size:11.5px;font-weight:600}
+.good{color:#2D7A2D}.warn{color:#b45309}.bad{color:#C0392B}
+svg.spark{display:block;margin:0 14px 6px}
+.kpis{border-top:1px solid #f3f4f6}
+.kpi{display:flex;align-items:center;gap:8px;padding:7px 14px;border-bottom:1px solid #f3f4f6;cursor:pointer}
+.kpi:hover{background:#FCFAF8}
+.kpi .n{color:#444;flex:1}
+.kpi .val{font-weight:700;font-variant-numeric:tabular-nums}
+.kpi .tgt{color:#9ca3af;font-size:11.5px;width:86px;text-align:right;font-variant-numeric:tabular-nums}
+.kpi .go{color:#B8593A;font-size:11px;opacity:0;transition:opacity .12s}
+.kpi:hover .go{opacity:1}
+.core .foot{padding:8px 14px;font-size:11.5px}
+.core .foot a{color:#8a3f2a;font-weight:600;text-decoration:none}
+/* levers strip */
+.levers{display:flex;gap:12px;margin-top:14px}
+.lever{flex:1;background:#fff;border:1px solid #E8E0DC;border-radius:10px;padding:10px 14px;font-size:12px;color:#444}
+.lever b{display:block;color:#111827;font-size:12.5px;margin-bottom:2px}
+.lever .st{float:right;font-size:11px;font-weight:600}
+</style>
+</head>
+<body>
+<div class="caption"><strong>Option A — Roadmap Rail.</strong> The plan is the spine: the $1M rail runs across the top with actuals filling each month, then the three cores each carry a hero number, sub-KPIs with targets, and click-through into the working reports.</div>
+<div class="page">
+  <h1>Analytics Overview</h1>
+  <div class="sub">Roadmap to $1M · $0.50 RPS · Thursday, Jul 3</div>
+
+  <div class="rail">
+    <div class="mo done"><div class="m">May</div><div class="t">$205k</div><div class="a">$211k ✓</div><div class="bar"><i style="width:100%"></i></div></div>
+    <div class="mo done"><div class="m">Jun</div><div class="t">$290k</div><div class="a">$286k · 99%</div><div class="bar"><i style="width:99%"></i></div></div>
+    <div class="mo now"><div class="m">Jul</div><div class="t">$400k</div><div class="a">$37.4k · pace $386k</div><div class="bar"><i style="width:9%"></i></div></div>
+    <div class="mo fut"><div class="m">Aug</div><div class="t">$500k</div><div class="a">&nbsp;</div><div class="bar"></div></div>
+    <div class="mo fut"><div class="m">Sep</div><div class="t">$700k</div><div class="a">&nbsp;</div><div class="bar"></div></div>
+    <div class="mo fut"><div class="m">Oct</div><div class="t">$800k</div><div class="a">&nbsp;</div><div class="bar"></div></div>
+    <div class="mo fut"><div class="m">Nov</div><div class="t">$900k</div><div class="a">&nbsp;</div><div class="bar"></div></div>
+    <div class="mo fut"><div class="m">Dec</div><div class="t">$1M</div><div class="a">&nbsp;</div><div class="bar"></div></div>
+  </div>
+  <div class="phase"><span>◂ RPS $0.30 → $0.50 ▸</span><span>◂ Rapid subscriber growth ▸</span></div>
+
+  <div class="cores">
+    <div class="core">
+      <h2>Revenue</h2>
+      <div class="hero"><span class="v">$12.5k</span><span class="k">/day MTD</span><span class="d good">▲ floor $12k</span></div>
+      <svg class="spark" width="92%" height="30" viewBox="0 0 300 30" preserveAspectRatio="none"><polyline fill="none" stroke="#B8593A" stroke-width="2" points="0,24 40,20 80,22 120,14 160,18 200,10 240,12 280,6"/><line x1="0" y1="16" x2="300" y2="16" stroke="#E8E0DC" stroke-dasharray="3 3"/></svg>
+      <div class="kpis">
+        <div class="kpi"><span class="n">RPS</span><span class="val warn">$0.34</span><span class="tgt">→ $0.50</span><span class="go">Campaigns →</span></div>
+        <div class="kpi"><span class="n">Emails / week</span><span class="val good">15</span><span class="tgt">22 by Jul 20</span><span class="go">Schedule →</span></div>
+        <div class="kpi"><span class="n">RPC</span><span class="val">$1.86</span><span class="tgt">—</span><span class="go">Campaigns →</span></div>
+        <div class="kpi"><span class="n">Winning offers solidified</span><span class="val warn">3</span><span class="tgt">of 10 pipeline</span><span class="go">Campaigns →</span></div>
+        <div class="kpi"><span class="n">Welcome page $/new sub</span><span class="val warn">$0.11</span><span class="tgt">→ $0.15</span><span class="go">Welcome →</span></div>
+      </div>
+      <div class="foot"><a href="#">Data Entry →</a> · <a href="#">Performance →</a></div>
+    </div>
+
+    <div class="core">
+      <h2>Engagement</h2>
+      <div class="hero"><span class="v">54%</span><span class="k">engaged share</span><span class="d good">▲ 2.1pt vs Jun</span></div>
+      <svg class="spark" width="92%" height="30" viewBox="0 0 300 30" preserveAspectRatio="none"><polyline fill="none" stroke="#2D7A2D" stroke-width="2" points="0,20 60,19 120,17 180,15 240,12 300,10"/></svg>
+      <div class="kpis">
+        <div class="kpi"><span class="n">Open rate</span><span class="val good">41.2%</span><span class="tgt">≥ 40%</span><span class="go">Emails →</span></div>
+        <div class="kpi"><span class="n">CTR (delivered)</span><span class="val">2.1%</span><span class="tgt">—</span><span class="go">Emails →</span></div>
+        <div class="kpi"><span class="n">Churn</span><span class="val good">19.4%</span><span class="tgt">guardrail 22%</span><span class="go">Engaged →</span></div>
+        <div class="kpi"><span class="n">Unsubs / send</span><span class="val">0.31%</span><span class="tgt">—</span><span class="go">Emails →</span></div>
+      </div>
+      <div class="foot"><a href="#">Engaged Audience →</a></div>
+    </div>
+
+    <div class="core">
+      <h2>Acquisition</h2>
+      <div class="hero"><span class="v">+4.7k</span><span class="k">net / day MTD</span><span class="d bad">▼ needs 6.5k</span></div>
+      <svg class="spark" width="92%" height="30" viewBox="0 0 300 30" preserveAspectRatio="none"><polyline fill="none" stroke="#b45309" stroke-width="2" points="0,10 60,13 120,11 180,16 240,15 300,18"/></svg>
+      <div class="kpis">
+        <div class="kpi"><span class="n">Subscribers</span><span class="val">985k</span><span class="tgt">2M @ $0.50 = $1M</span><span class="go">Acquisition →</span></div>
+        <div class="kpi"><span class="n">Net new (June)</span><span class="val bad">+118k</span><span class="tgt">→ 200k/mo</span><span class="go">Acquisition →</span></div>
+        <div class="kpi"><span class="n">Net new (July pace)</span><span class="val bad">+146k</span><span class="tgt">→ 200k/mo</span><span class="go">Acquisition →</span></div>
+        <div class="kpi"><span class="n">CAC payback</span><span class="val">41 days</span><span class="tgt">—</span><span class="go">Economics →</span></div>
+      </div>
+      <div class="foot"><a href="#">Subscriber Acquisition →</a> · <a href="#">Acquisition Economics →</a></div>
+    </div>
+  </div>
+
+  <div class="levers">
+    <div class="lever"><b>Lever 1 · More emails <span class="st good">on track</span></b>8 → 15 done Jul 1. Next: 22 via State Publications by Jul 20.</div>
+    <div class="lever"><b>Lever 2 · More offers → optimized <span class="st warn">in progress</span></b>3 of 10 June tests solidified. New-offer meetings not yet booked.</div>
+    <div class="lever"><b>Lever 3 · More subscribers → engaged <span class="st bad">behind</span></b>June +118k vs 200k target. Growth must 2–3× to reach $1M.</div>
+  </div>
+</div>
+</body>
+</html>

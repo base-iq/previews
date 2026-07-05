@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Analytics Overview — V2 Broadsheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,500;0,700;0,800;0,900;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FAF7F1; --ink:#211D18; --mut:#6E675D; --faint:#9B937F;
+  --rule:#DAD2C6; --rule-dark:#211D18; --claret:#8C2F1B; --olive:#4A6236; --amber:#8A6414;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--paper)}
+body{
+  font-family:'Inter',system-ui,sans-serif; color:var(--ink);
+  font-size:13px; line-height:1.55; font-variant-numeric:tabular-nums;
+  padding-bottom:64px;
+}
+svg text{font-variant-numeric:tabular-nums;font-family:'Inter',sans-serif}
+[hidden]{display:none !important}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+
+.caption{background:#1B1712;color:#EFE8DB;padding:10px 20px;font-size:12.5px;font-family:'Inter',sans-serif}
+.caption strong{color:#E0B48A;font-weight:600}
+
+.sheet{max-width:1150px;margin:0 auto;padding:0 30px}
+
+/* ── masthead ── */
+.masthead{padding-top:20px}
+.mastrow{display:flex;justify-content:space-between;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);border-top:1px solid var(--ink);padding:8px 0 2px}
+.nameplate{text-align:center;font-family:'Bitter',serif;font-weight:900;font-size:46px;letter-spacing:-.015em;line-height:1.1;padding:10px 0 12px}
+.nameplate .the{font-weight:400;font-style:italic;font-size:.55em;vertical-align:.28em;margin-right:.25em;color:var(--mut)}
+.dblrule{border-top:3px solid var(--ink);border-bottom:1px solid var(--ink);height:6px;margin-bottom:10px}
+.kickrow{display:flex;align-items:baseline;gap:18px;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);padding-bottom:12px;border-bottom:1px solid var(--rule)}
+.kickrow .grainnote{margin-left:auto;letter-spacing:0;text-transform:none;font-style:italic;font-family:'Bitter',serif;font-size:12px;color:var(--faint)}
+.kickrow .editlink{letter-spacing:.1em;text-transform:uppercase;font-weight:600;color:var(--claret);border-bottom:1px solid var(--claret);padding-bottom:1px}
+
+/* targets desk panel */
+.desk{border:1px solid var(--ink);margin-top:14px;padding:16px 20px;background:#F5F0E6}
+.desk h3{font-family:'Bitter',serif;font-weight:800;font-size:15px;margin-bottom:8px}
+.desk table{width:100%;border-collapse:collapse;font-size:11.5px}
+.desk td{padding:4px 14px 4px 0;border-bottom:1px dotted var(--rule)}
+.desk td:last-child{text-align:right;font-weight:600}
+.desk .note{font-size:11px;color:var(--mut);margin-top:10px;font-style:italic;font-family:'Bitter',serif}
+.desk .close{margin-top:8px;font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--claret)}
+
+/* ── headline block ── */
+.headblock{padding:26px 0 6px;max-width:900px}
+h1.headline{font-family:'Bitter',serif;font-weight:800;font-size:44px;line-height:1.12;letter-spacing:-.012em}
+.standfirst{font-family:'Bitter',serif;font-size:18.5px;line-height:1.5;color:#4A443B;margin-top:14px;max-width:820px}
+.byline{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);margin-top:14px}
+
+/* ── data deck: three cores ── */
+.deck{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--ink);border-bottom:1px solid var(--rule);margin-top:18px}
+.deck .d{padding:16px 24px 14px}
+.deck .d+.d{border-left:1px solid var(--rule)}
+.deck .lbl{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--mut)}
+.deck .numline{display:flex;align-items:baseline;gap:12px;margin-top:6px}
+.deck .num{font-family:'Bitter',serif;font-weight:800;font-size:40px;letter-spacing:-.01em;line-height:1}
+.deck .dl{font-size:11px;font-weight:600}
+.deck .ctx{font-size:11px;color:var(--mut);margin-top:6px;line-height:1.5}
+.deck .mark{font-size:10px;color:var(--faint);font-style:italic;font-family:'Bitter',serif}
+
+/* ── main grid ── */
+.main{display:grid;grid-template-columns:1fr 336px;margin-top:22px}
+.lead{padding-right:30px;border-right:1px solid var(--rule)}
+.rail{padding-left:28px}
+
+.figtitle{font-size:11px;font-weight:700;letter-spacing:.04em;margin-bottom:2px}
+.figcap{font-size:10px;color:var(--faint);margin-top:4px;line-height:1.5}
+.figcap .fno{color:var(--claret);font-weight:700;font-style:normal;letter-spacing:.06em}
+figure{margin:0}
+
+.bodytext{columns:2;column-gap:30px;column-rule:1px solid var(--rule);margin-top:18px;font-size:13px;line-height:1.65;color:#3A352C}
+.bodytext p{margin-bottom:12px}
+.bodytext p:first-child::first-letter{font-family:'Bitter',serif;font-weight:800;font-size:44px;line-height:.8;float:left;padding:6px 8px 0 0;color:var(--ink)}
+.singletext{font-size:13px;line-height:1.65;color:#3A352C;max-width:640px}
+
+/* small multiples */
+.smrow{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:22px;padding-top:16px;border-top:1px solid var(--rule)}
+.smrow5{display:grid;grid-template-columns:repeat(5,1fr);gap:20px;margin-top:18px}
+
+/* mix bars */
+.mixrows{margin-top:8px}
+.mixrow{display:flex;align-items:center;gap:10px;padding:3.5px 0;font-size:11px}
+.mixrow .ml{width:118px;color:var(--mut)}
+.mixrow .mb{flex:1;height:9px;background:transparent;position:relative}
+.mixrow .mb i{display:block;height:100%;background:var(--ink)}
+.mixrow .mv{width:34px;text-align:right;font-weight:600}
+
+/* ── four questions ── */
+.qbox{border-top:3px double var(--ink);padding-top:12px}
+.qbox h2{font-family:'Bitter',serif;font-weight:800;font-size:19px;margin-bottom:4px}
+.qbox .sub{font-size:10.5px;color:var(--faint);font-style:italic;font-family:'Bitter',serif;margin-bottom:10px}
+.qitem{padding:12px 0;border-top:1px solid var(--rule)}
+.qitem .verdict{font-size:9.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase}
+.v-good{color:var(--olive)} .v-bad{color:var(--claret)} .v-watch{color:var(--amber)}
+.qitem .qq{font-family:'Bitter',serif;font-weight:700;font-size:15px;line-height:1.35;margin:5px 0 4px}
+.qitem .aa{font-size:11.5px;color:var(--mut);line-height:1.6}
+
+/* in brief */
+.briefs{margin-top:26px;border-top:3px double var(--ink);padding-top:12px}
+.briefs h2{font-family:'Bitter',serif;font-weight:800;font-size:19px;margin-bottom:10px}
+.brief{padding:9px 0;border-top:1px dotted var(--rule);font-size:11.5px;line-height:1.6;color:#3A352C}
+.brief b{font-weight:700}
+
+/* ── sections ── */
+.section{margin-top:34px;border-top:1px solid var(--ink);padding-top:10px}
+.sechead{display:flex;align-items:baseline;gap:16px}
+.sechead h2{font-family:'Bitter',serif;font-weight:800;font-size:23px}
+.sechead .dek{font-size:11px;color:var(--mut);font-style:italic;font-family:'Bitter',serif;font-size:12.5px}
+.secgrid{display:grid;grid-template-columns:300px 1fr;gap:30px;margin-top:14px}
+.secgrid .txt{border-right:1px solid var(--rule);padding-right:28px}
+.figrow{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+
+/* ── agate table ── */
+.record{margin-top:34px;border-top:3px double var(--ink);padding-top:12px}
+.record h2{font-family:'Bitter',serif;font-weight:800;font-size:23px}
+.record .sub{font-size:11px;color:var(--faint);font-style:italic;font-family:'Bitter',serif;margin:2px 0 12px}
+.tblwrap{overflow-x:auto}
+table.agate{width:100%;border-collapse:collapse;font-size:11.5px}
+.agate th{font-size:9.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);text-align:right;padding:6px 10px;border-bottom:1px solid var(--ink)}
+.agate th:first-child{text-align:left;padding-left:0}
+.agate td{padding:6.5px 10px;border-bottom:1px solid var(--rule);text-align:right;white-space:nowrap}
+.agate td:first-child{text-align:left;font-weight:700;padding-left:0}
+.agate tr.future td{color:var(--faint);font-style:italic;font-weight:400}
+.agate tr.future td:first-child{font-weight:400}
+.agate .neg{color:var(--claret);font-weight:600}
+.agate .pos{color:var(--olive);font-weight:600}
+
+footer.colophon{margin-top:30px;border-top:1px solid var(--ink);padding-top:10px;font-size:10.5px;color:var(--faint);display:flex;gap:20px;font-style:italic;font-family:'Bitter',serif}
+footer.colophon span:last-child{margin-left:auto}
+
+@media(prefers-reduced-motion:reduce){*{transition:none !important}}
+@media(max-width:980px){
+  .main{grid-template-columns:1fr}
+  .lead{padding-right:0;border-right:none}
+  .rail{padding-left:0;margin-top:26px}
+  .deck{grid-template-columns:1fr}
+  .deck .d+.d{border-left:none;border-top:1px solid var(--rule)}
+  .smrow,.figrow{grid-template-columns:1fr 1fr}
+  .smrow5{grid-template-columns:repeat(2,1fr)}
+  .secgrid{grid-template-columns:1fr}
+  .secgrid .txt{border-right:none;padding-right:0}
+  .bodytext{columns:1}
+  h1.headline{font-size:32px}
+  .nameplate{font-size:32px}
+}
+</style>
+</head>
+<body>
+
+<div class="caption"><strong>V2 — Broadsheet:</strong> the month as a financial front page — a headline that states the story, a standfirst, ruled columns, and FT-style small multiples with direct labels instead of legends.</div>
+
+<div class="sheet">
+
+  <!-- ═══ MASTHEAD ═══ -->
+  <div class="masthead">
+    <div class="mastrow">
+      <span>BaseLocal · Analytics Desk</span>
+      <span>Vol. II — No. 27</span>
+      <span>Thursday, 3 July 2026</span>
+    </div>
+    <div class="nameplate"><span class="the">The</span>Analytics Overview</div>
+    <div class="dblrule"></div>
+    <div class="kickrow">
+      <span>Revenue · Engagement · Acquisition</span>
+      <button class="editlink" onclick="toggleDesk()">Edit targets</button>
+      <span class="grainnote">A broadsheet doesn&rsquo;t toggle — charts print the weekly grain; bold marks and the record below carry the monthly grain.</span>
+    </div>
+    <div class="desk" id="desk" hidden>
+      <h3>The targets desk — set monthly</h3>
+      <table>
+        <tr><td>July revenue</td><td>$400k</td></tr>
+        <tr><td>Revenue roadmap, May → Dec ($k)</td><td>205 · 290 · 400 · 500 · 700 · 800 · 900 · 1,000</td></tr>
+        <tr><td>RPS by December</td><td>$0.50</td></tr>
+        <tr><td>RPS guardrail, August</td><td>$0.45</td></tr>
+        <tr><td>Book by December</td><td>2.0M subscribers</td></tr>
+        <tr><td>Net new per month</td><td>200k</td></tr>
+        <tr><td>Daily revenue floor</td><td>$12k</td></tr>
+        <tr><td>Churn cap</td><td>22%</td></tr>
+      </table>
+      <div class="note">Amendments print in the next edition. Read-only in this mock — in production this desk writes to the roadmap.</div>
+      <button class="close" onclick="toggleDesk()">Fold away</button>
+    </div>
+  </div>
+
+  <!-- ═══ HEADLINE ═══ -->
+  <div class="headblock">
+    <h1 class="headline">July pace lands $14k short; subscribers are the gap</h1>
+    <p class="standfirst">Revenue is projecting $386,000 against a $400,000 July target — closable at $12,900 a day. The deeper risk is upstream: net subscriber growth is pacing 146,000 a month against the 200,000 the $1M December plan assumes.</p>
+    <div class="byline">By the Analytics Desk · data through July 3 · Jul W1 covers three days and prints dashed</div>
+  </div>
+
+  <!-- ═══ DATA DECK: THREE CORES ═══ -->
+  <div class="deck">
+    <div class="d">
+      <div class="lbl">Revenue</div>
+      <div class="numline"><span class="num">$286k</span><span class="dl">▲ 35.5% vs May</span></div>
+      <div class="mark">June, marked monthly</div>
+      <div class="ctx">July: $37.4k banked, projecting $386k of the $400k target.</div>
+    </div>
+    <div class="d">
+      <div class="lbl">Engagement</div>
+      <div class="numline"><span class="num">52.6%</span><span class="dl">▲ 0.7pt vs May</span></div>
+      <div class="mark">June engaged share, marked monthly</div>
+      <div class="ctx">July to date 54.0% · churn 19.4% against the 22% cap.</div>
+    </div>
+    <div class="d">
+      <div class="lbl">Acquisition</div>
+      <div class="numline"><span class="num">+118k</span><span class="dl">▲ 15.7% vs May</span></div>
+      <div class="mark">June net new, marked monthly</div>
+      <div class="ctx">July pacing +146k of 200k needed · the book stands at 985k.</div>
+    </div>
+  </div>
+
+  <!-- ═══ MAIN: LEAD + RAIL ═══ -->
+  <div class="main">
+    <div class="lead">
+
+      <figure>
+        <div class="figtitle">The road to $1M a month</div>
+        <div id="f-road"></div>
+        <div class="figcap"><span class="fno">Fig. 1</span> · Monthly revenue, $k. Roadmap targets in claret; actuals in ink. July prints as an open point — a projection, not a result.</div>
+      </figure>
+
+      <div class="bodytext">
+        <p>Three days into July, $37,400 is on the books. The month needs $12,900 a day from here to reach its $400,000 target; the best day of the last three weeks brought $13,800, so the target is within reach but leaves no slack. The $12,000 daily floor has held on all but one of the last seven days.</p>
+        <p>June closed at $286,000 — up 35.5 per cent on May, but $4,000 under its own target and the roadmap&rsquo;s first miss. The lever for July is volume: sends rise from 15 a week to 22 on July 20, and to 25 in August. Rate is doing its part. Revenue per subscriber printed $0.34 for the month to date, up three cents on June and on schedule for the $0.50 the December plan requires — provided August clears its $0.45 guardrail. The offer desk holds $1.86 per click across 34 active offers, though only three of June&rsquo;s ten test winners have been solidified.</p>
+        <p>Concentration remains the quiet caveat: Morning Roundup carries 58 per cent of July&rsquo;s revenue, and the top two products carry four-fifths of it.</p>
+      </div>
+
+      <div class="smrow">
+        <figure>
+          <div class="figtitle">Daily takings</div>
+          <div id="f-daily"></div>
+          <div class="figcap"><span class="fno">Fig. 2</span> · $k per day, last 21 days. Days under the $12k floor print in claret.</div>
+        </figure>
+        <figure>
+          <div class="figtitle">Weekly revenue</div>
+          <div id="f-weekly"></div>
+          <div class="figcap"><span class="fno">Fig. 3</span> · $k per week, May W1 → Jul W1. The final bar is three days, printed hollow.</div>
+        </figure>
+        <figure>
+          <div class="figtitle">Revenue per subscriber</div>
+          <div id="f-rps"></div>
+          <div class="figcap"><span class="fno">Fig. 4</span> · $ per subscriber, weekly; monthly marks as points. Target $0.50 by December.</div>
+        </figure>
+      </div>
+
+      <figure style="margin-top:22px;padding-top:16px;border-top:1px solid var(--rule)">
+        <div class="figtitle">Where July&rsquo;s revenue comes from</div>
+        <div class="mixrows">
+          <div class="mixrow"><span class="ml">Morning Roundup</span><span class="mb"><i style="width:58%"></i></span><span class="mv">58%</span></div>
+          <div class="mixrow"><span class="ml">Daily News</span><span class="mb"><i style="width:22%;opacity:.72"></i></span><span class="mv">22%</span></div>
+          <div class="mixrow"><span class="ml">Welcome</span><span class="mb"><i style="width:9%;opacity:.55"></i></span><span class="mv">9%</span></div>
+          <div class="mixrow"><span class="ml">Bridge</span><span class="mb"><i style="width:6%;opacity:.4"></i></span><span class="mv">6%</span></div>
+          <div class="mixrow"><span class="ml">Other</span><span class="mb"><i style="width:5%;opacity:.25"></i></span><span class="mv">5%</span></div>
+        </div>
+        <div class="figcap"><span class="fno">Fig. 5</span> · Share of July revenue by product line.</div>
+      </figure>
+
+    </div>
+
+    <!-- rail -->
+    <div class="rail">
+      <div class="qbox">
+        <h2>The four questions</h2>
+        <div class="sub">The month, answered in one column.</div>
+        <div class="qitem">
+          <div class="verdict v-watch">Close — $386k pace</div>
+          <div class="qq">Will we hit $400k this month?</div>
+          <div class="aa">Needs $12.9k a day; the best recent day brought $13.8k. The July 20 jump to 22 sends is the closing lever.</div>
+        </div>
+        <div class="qitem">
+          <div class="verdict v-watch">Moving — $0.34</div>
+          <div class="qq">Is RPS on the path to $0.50?</div>
+          <div class="aa">Up $0.03 on June. The path needs about $0.04 a month; reassess if August prints under the $0.45 guardrail.</div>
+        </div>
+        <div class="qitem">
+          <div class="verdict v-bad">No — 146k vs 200k</div>
+          <div class="qq">Are subscribers growing fast enough?</div>
+          <div class="aa">Needs 6.5k net a day; July is producing 4.7k. This is the distance between $386k and $1M.</div>
+        </div>
+        <div class="qitem">
+          <div class="verdict v-good">Yes</div>
+          <div class="qq">Is the audience healthy while we scale?</div>
+          <div class="aa">Churn 19.4% against the 22% cap; opens 41.2% and rising. Unsubs per send crept up with volume — expected, watched.</div>
+        </div>
+      </div>
+
+      <div class="briefs">
+        <h2>In brief</h2>
+        <div class="brief"><b>Offer desk.</b> $1.86 revenue per click across 34 active offers; 3 of June&rsquo;s 10 test winners solidified.</div>
+        <div class="brief"><b>Send schedule.</b> 15 a week today; 22 from July 20; 25 in August.</div>
+        <div class="brief"><b>Welcome yield.</b> $0.11 per gross new subscriber, nearly double May&rsquo;s $0.06; target $0.15.</div>
+        <div class="brief"><b>CAC payback.</b> 41 days at current welcome yield.</div>
+        <div class="brief"><b>Floor watch.</b> One sub-$12k day in the last seven; three in the last 21.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ ACQUISITION ═══ -->
+  <div class="section">
+    <div class="sechead"><h2>Acquisition</h2><span class="dek">The gap between here and $1M is measured in subscribers.</span></div>
+    <div class="secgrid">
+      <div class="txt singletext">
+        <p>The book stands at 985,000 against a path that calls for 1,290,000 by the end of July. Net growth is pacing 146,000 a month; the plan assumes 200,000 — that is 6,500 a day, against the 4,700 a day July is producing.</p>
+        <p style="margin-top:10px">The economics are sound: gross adds hit 42,000 in the last full week, welcome revenue per new subscriber has nearly doubled since May to $0.11, and CAC pays back in 41 days. The shortfall is scale, not efficiency — losses ticked to 10,000 a week as volume rose, worth watching through the send expansion.</p>
+      </div>
+      <div class="figrow">
+        <figure>
+          <div class="figtitle">The book vs the 2M path</div>
+          <div id="f-book"></div>
+          <div class="figcap"><span class="fno">Fig. 6</span> · Subscribers, thousands. 2.0M × $0.50 RPS = $1M a month.</div>
+        </figure>
+        <figure>
+          <div class="figtitle">Gross adds, net, losses</div>
+          <div id="f-flow"></div>
+          <div class="figcap"><span class="fno">Fig. 7</span> · Thousands per week, direct-labelled. Jul W1 is three days, dashed.</div>
+        </figure>
+        <figure>
+          <div class="figtitle">Welcome yield</div>
+          <div id="f-welcome"></div>
+          <div class="figcap"><span class="fno">Fig. 8</span> · $ per gross new subscriber, monthly. Target $0.15.</div>
+        </figure>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ ENGAGEMENT ═══ -->
+  <div class="section">
+    <div class="sechead"><h2>Engagement</h2><span class="dek">The audience is absorbing more volume without complaint.</span></div>
+    <div class="secgrid">
+      <div class="txt singletext">
+        <p>Opens have climbed a point since May to 41.2 per cent, click-through sits at 2.1 per cent, and the engaged share reached 54.0 for July to date. Unsubscribes per send crept from 0.27 to 0.31 per cent — the expected cost of volume, watched closely.</p>
+        <p style="margin-top:10px">Churn at 19.4 per cent leaves headroom under the 22 per cent guardrail. The July 20 send expansion is the real test of that headroom; these five panels are the ones to reread in three weeks.</p>
+      </div>
+      <div>
+        <div class="smrow5">
+          <figure>
+            <div class="figtitle">Opens</div>
+            <div id="f-opens"></div>
+            <div class="figcap"><span class="fno">Fig. 9</span> · % of delivered, weekly.</div>
+          </figure>
+          <figure>
+            <div class="figtitle">Click-through</div>
+            <div id="f-ctr"></div>
+            <div class="figcap"><span class="fno">Fig. 10</span> · % of delivered, weekly.</div>
+          </figure>
+          <figure>
+            <div class="figtitle">Engaged share</div>
+            <div id="f-eng"></div>
+            <div class="figcap"><span class="fno">Fig. 11</span> · % of book, weekly.</div>
+          </figure>
+          <figure>
+            <div class="figtitle">Unsubs per send</div>
+            <div id="f-unsub"></div>
+            <div class="figcap"><span class="fno">Fig. 12</span> · %, monthly.</div>
+          </figure>
+          <figure>
+            <div class="figtitle">Churn</div>
+            <div id="f-churn"></div>
+            <div class="figcap"><span class="fno">Fig. 13</span> · % monthly, vs the 22% cap.</div>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ THE MONTHLY RECORD ═══ -->
+  <div class="record">
+    <h2>The monthly record</h2>
+    <div class="sub">Actuals in roman; the roadmap ahead in italic. Targets are set monthly — amend them at the targets desk above.</div>
+    <div class="tblwrap">
+      <table class="agate">
+        <thead>
+          <tr><th>Month</th><th>Revenue</th><th>Target</th><th>vs target</th><th>RPS</th><th>Net new</th><th>Engaged</th><th>Churn</th><th>Book (k)</th><th>Path (k)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>May</td><td>$211k</td><td>$205k</td><td class="pos">+$6k</td><td>$0.29</td><td>+102k</td><td>51.9%</td><td>18.1%</td><td>852</td><td>985</td></tr>
+          <tr><td>June</td><td>$286k</td><td>$290k</td><td class="neg">−$4k</td><td>$0.31</td><td>+118k</td><td>52.6%</td><td>18.8%</td><td>912</td><td>1,090</td></tr>
+          <tr><td>July td</td><td>$37.4k → $386k proj</td><td>$400k</td><td class="neg">−$14k proj</td><td>$0.34</td><td>+14.2k → +146k pace</td><td>54.0%</td><td>19.4%</td><td>985</td><td>1,290</td></tr>
+          <tr class="future"><td>August</td><td>—</td><td>$500k</td><td>—</td><td>≥ $0.45</td><td>+200k needed</td><td>—</td><td>cap 22%</td><td>—</td><td>1,490</td></tr>
+          <tr class="future"><td>September</td><td>—</td><td>$700k</td><td>—</td><td>·</td><td>·</td><td>—</td><td>·</td><td>—</td><td>1,640</td></tr>
+          <tr class="future"><td>October</td><td>—</td><td>$800k</td><td>—</td><td>·</td><td>·</td><td>—</td><td>·</td><td>—</td><td>1,790</td></tr>
+          <tr class="future"><td>November</td><td>—</td><td>$900k</td><td>—</td><td>·</td><td>·</td><td>—</td><td>·</td><td>—</td><td>1,930</td></tr>
+          <tr class="future"><td>December</td><td>—</td><td>$1,000k</td><td>—</td><td>$0.50</td><td>·</td><td>—</td><td>·</td><td>—</td><td>2,000</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <footer class="colophon">
+    <span>Printed weekly by the Analytics Desk · data through Thursday, 3 July 2026</span>
+    <span>Charts: weekly grain · The record: monthly grain</span>
+  </footer>
+
+</div>
+
+<script>
+/* ── Shared dataset — identical across exploration variants ── */
+const DATA = {
+  asOf: "Jul 3, 2026",
+  months: ["May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
+  revTargets: [205,290,400,500,700,800,900,1000],
+  revActuals: [211,286],
+  julMTD: 37.4, julProjected: 386, julNeedPerDay: 12.9,
+  revWeekly: [44,48,52,55,62,68,74,82,37.4],
+  daily21: [11.8,12.6,13.1,12.2,12.9,13.4,12.7,13.0,12.4,11.1,12.8,13.2,12.6,13.8,12.9,13.1,12.5,13.3,11.9,13.2,12.5],
+  dailyFloor: 12,
+  rpsWeekly: [0.27,0.28,0.29,0.30,0.30,0.31,0.31,0.32,0.34],
+  rpsMonthly: [0.29,0.31,0.34],
+  rpsTarget: 0.50, rpsAugGuardrail: 0.45,
+  subscribers: 985,
+  bookActuals: [852,912,985],
+  bookTargetPath: [985,1090,1290,1490,1640,1790,1930,2000],
+  netNewWeekly: [24,26,25,27,27,29,30,32,14.2],
+  netNewMonthly: [102,118],
+  julNetPace: 146, netTarget: 200,
+  grossWeekly: [31,33,32,35,35,37,38,42,18.6],
+  lossWeekly: [7,7,7,8,8,8,8,10,4.4],
+  churnMonthly: [18.1,18.8,19.4], churnGuardrail: 22,
+  opensWeekly: [40.0,40.2,40.1,40.4,40.5,40.7,40.8,41.0,41.2],
+  ctrWeekly: [1.95,1.97,1.99,2.00,2.02,2.04,2.06,2.08,2.10],
+  engagedWeekly: [51.2,51.6,51.9,52.0,52.1,52.3,52.6,53.1,54.0],
+  engagedMonthly: [51.9,52.6,54.0],
+  unsubsMonthly: [0.27,0.29,0.31],
+  mix: [["Morning Roundup",58],["Daily News",22],["Welcome",9],["Bridge",6],["Other",5]],
+  welcomeYield: [0.06,0.09,0.11], welcomeTarget: 0.15,
+  rpc: 1.86, activeOffers: 34, winners: [3,10], cacPaybackDays: 41,
+  emailsPerWeek: 15, emailsJul20: 22, emailsAug: 25,
+  weekLabels: ["May W1","May W2","May W3","May W4","Jun W1","Jun W2","Jun W3","Jun W4","Jul W1*"]
+};
+
+/* ── broadsheet chart kit: hairline grids, thin strokes, direct labels ── */
+const INK="#211D18", MUT="#6E675D", RULE="#DAD2C6", CLARET="#8C2F1B", PAPER="#FAF7F1";
+const NSVG="http://www.w3.org/2000/svg";
+function E(t,a){const e=document.createElementNS(NSVG,t);for(const k in a)e.setAttribute(k,a[k]);return e;}
+function T(s,x,y,str,a){
+  const t=E("text",Object.assign({x:x,y:y,"font-size":9,fill:MUT},a||{}));
+  t.textContent=str; s.appendChild(t); return t;
+}
+function mount(id,w,h){
+  const s=E("svg",{viewBox:"0 0 "+w+" "+h});
+  s.style.width="100%"; s.style.display="block";
+  document.getElementById(id).replaceChildren(s);
+  return s;
+}
+function gline(id,o){
+  const w=o.w||250,h=o.h||130,pad=o.pad||{t:14,r:46,b:18,l:28};
+  const s=mount(id,w,h);
+  const n=Math.max.apply(null,o.series.map(function(sr){return sr.data.length}));
+  const X=function(i){return pad.l+i*(w-pad.l-pad.r)/(n-1)};
+  const Y=function(v){return pad.t+(1-(v-o.min)/(o.max-o.min))*(h-pad.t-pad.b)};
+  const fmt=o.fmt||function(v){return v};
+  (o.ticks||[]).forEach(function(tv){
+    const y=Y(tv);
+    s.appendChild(E("line",{x1:pad.l,y1:y,x2:w-pad.r,y2:y,stroke:RULE,"stroke-width":0.75}));
+    T(s,pad.l-5,y+3,fmt(tv),{"text-anchor":"end","font-size":8.5,fill:"#9B937F"});
+  });
+  s.appendChild(E("line",{x1:pad.l,y1:h-pad.b,x2:w-pad.r,y2:h-pad.b,stroke:"#B9B1A4","stroke-width":0.75}));
+  (o.refs||[]).forEach(function(r){
+    const y=Y(r.v);
+    s.appendChild(E("line",{x1:pad.l,y1:y,x2:w-pad.r,y2:y,stroke:r.color||CLARET,"stroke-width":1,"stroke-dasharray":"2 3",opacity:r.soft?0.55:0.9}));
+    T(s,w-pad.r+4,y+3,r.label,{fill:r.color||CLARET,"font-size":8,opacity:r.soft?0.8:1});
+  });
+  o.series.forEach(function(sr){
+    const col=sr.color||INK, wd=sr.width||1.4, op=(sr.op!=null)?sr.op:1;
+    const m=sr.data.length;
+    const pts=sr.data.map(function(v,i){return [X(i),Y(v)]});
+    const str=function(a){return a.map(function(p){return p[0]+","+p[1]}).join(" ")};
+    if(sr.partial && m>1){
+      if(m>2) s.appendChild(E("polyline",{points:str(pts.slice(0,m-1)),fill:"none",stroke:col,"stroke-width":wd,opacity:op,"stroke-linejoin":"round","stroke-linecap":"round"}));
+      s.appendChild(E("line",{x1:pts[m-2][0],y1:pts[m-2][1],x2:pts[m-1][0],y2:pts[m-1][1],stroke:col,"stroke-width":wd,opacity:op,"stroke-dasharray":"2 3","stroke-linecap":"round"}));
+    } else if(sr.dashed){
+      s.appendChild(E("polyline",{points:str(pts),fill:"none",stroke:col,"stroke-width":wd,opacity:op,"stroke-dasharray":"4 3","stroke-linejoin":"round"}));
+    } else {
+      s.appendChild(E("polyline",{points:str(pts),fill:"none",stroke:col,"stroke-width":wd,opacity:op,"stroke-linejoin":"round","stroke-linecap":"round"}));
+    }
+    (sr.dots||[]).forEach(function(i){ s.appendChild(E("circle",{cx:pts[i][0],cy:pts[i][1],r:2.4,fill:col,opacity:op})); });
+    const last=pts[m-1];
+    if(sr.endDot!==false) s.appendChild(E("circle",{cx:last[0],cy:last[1],r:2.6,fill:sr.open?PAPER:col,stroke:col,"stroke-width":sr.open?1.4:0,opacity:op}));
+    if(sr.endLabel!==false) T(s,last[0]+5,last[1]+3+(sr.endDy||0),(sr.endLabel!=null)?sr.endLabel:fmt(sr.data[m-1]),{fill:col,"font-weight":700,"font-size":8.5,opacity:Math.min(op+0.2,1)});
+    if(sr.name!=null){
+      const ni=(sr.nameAt!=null)?sr.nameAt:Math.floor(m/2);
+      T(s,pts[ni][0],pts[ni][1]+(sr.nameDy!=null?sr.nameDy:-7),sr.name,{fill:col,"font-size":8.5,"font-weight":600,"text-anchor":"middle","font-style":"italic",opacity:Math.min(op+0.2,1)});
+    }
+    if(sr.startLabel) T(s,pts[0][0],pts[0][1]-6,fmt(sr.data[0]),{"font-size":8,"text-anchor":"start"});
+  });
+  (o.xlabels||[]).forEach(function(lb,i){ if(lb) T(s,X(i),h-5,lb,{"text-anchor":"middle","font-size":8}); });
+}
+function gbars(id,o){
+  const w=o.w||250,h=o.h||130,pad=o.pad||{t:14,r:46,b:18,l:28};
+  const s=mount(id,w,h);
+  const data=o.data,n=data.length,iw=(w-pad.l-pad.r)/n,min=o.min||0;
+  const Y=function(v){return pad.t+(1-(v-min)/(o.max-min))*(h-pad.t-pad.b)};
+  const fmt=o.fmt||function(v){return v};
+  (o.ticks||[]).forEach(function(tv){
+    const y=Y(tv);
+    s.appendChild(E("line",{x1:pad.l,y1:y,x2:w-pad.r,y2:y,stroke:RULE,"stroke-width":0.75}));
+    T(s,pad.l-5,y+3,fmt(tv),{"text-anchor":"end","font-size":8.5,fill:"#9B937F"});
+  });
+  s.appendChild(E("line",{x1:pad.l,y1:h-pad.b,x2:w-pad.r,y2:h-pad.b,stroke:"#B9B1A4","stroke-width":0.75}));
+  data.forEach(function(v,i){
+    const y=Y(v), bh=Math.max(h-pad.b-y,1);
+    const hollow=(o.hollow||[]).indexOf(i)>=0;
+    const below=(o.belowRef!=null)&&v<o.belowRef;
+    if(hollow){
+      s.appendChild(E("rect",{x:pad.l+i*iw+iw*0.22,y:y,width:iw*0.56,height:bh,fill:PAPER,stroke:INK,"stroke-width":1,"stroke-dasharray":"2 2"}));
+    } else {
+      s.appendChild(E("rect",{x:pad.l+i*iw+iw*0.22,y:y,width:iw*0.56,height:bh,fill:below?CLARET:INK,opacity:below?1:0.85}));
+    }
+  });
+  (o.refs||[]).forEach(function(r){
+    const y=Y(r.v);
+    s.appendChild(E("line",{x1:pad.l,y1:y,x2:w-pad.r,y2:y,stroke:r.color||CLARET,"stroke-width":1,"stroke-dasharray":"2 3"}));
+    T(s,w-pad.r+4,y+3,r.label,{fill:r.color||CLARET,"font-size":8});
+  });
+  (o.marks||[]).forEach(function(m){
+    T(s,pad.l+m.i*iw+iw/2,Y(data[m.i])-4,(m.label!=null)?m.label:fmt(data[m.i]),{"text-anchor":"middle","font-weight":700,fill:m.color||INK,"font-size":8.5});
+  });
+  (o.xlabels||[]).forEach(function(lb,i){ if(lb) T(s,pad.l+i*iw+iw/2,h-5,lb,{"text-anchor":"middle","font-size":8}); });
+}
+
+const WL=["M1","","","M4","J1","","","J4","J*"];
+
+/* Fig. 1 — the road to $1M */
+gline("f-road",{w:760,h:270,pad:{t:20,r:96,b:22,l:40},min:0,max:1050,
+  ticks:[0,250,500,750,1000],fmt:function(v){return "$"+v+"k"},
+  series:[
+    {data:DATA.revTargets,color:CLARET,width:1.3,dashed:true,dots:[0,1,2,3,4,5,6,7],endLabel:"target $1,000k",name:"Roadmap target",nameAt:5,nameDy:-9},
+    {data:[211,286,386],color:INK,width:2,partial:true,open:true,endLabel:"July proj $386k",name:"Actual",nameAt:1,nameDy:14,startLabel:true}
+  ],
+  xlabels:DATA.months});
+
+/* Fig. 2 — daily takings */
+gbars("f-daily",{w:250,h:140,pad:{t:14,r:44,b:18,l:26},data:DATA.daily21,max:16,belowRef:12,
+  ticks:[8,16],refs:[{v:12,label:"floor"}],
+  marks:[{i:13,label:"13.8"}],
+  xlabels:DATA.daily21.map(function(_,i){return (i%10===0)?("-"+(21-i)+"d"):""}),
+  fmt:function(v){return v}});
+
+/* Fig. 3 — weekly revenue */
+gbars("f-weekly",{w:250,h:140,pad:{t:14,r:44,b:18,l:26},data:DATA.revWeekly,max:90,hollow:[8],
+  ticks:[40,80],marks:[{i:7,label:"82"}],xlabels:WL,fmt:function(v){return v}});
+
+/* Fig. 4 — RPS */
+gline("f-rps",{w:250,h:140,pad:{t:14,r:52,b:18,l:30},min:0.2,max:0.55,
+  ticks:[0.3,0.4,0.5],fmt:function(v){return "$"+v.toFixed(2)},
+  refs:[{v:0.5,label:"$0.50"},{v:0.45,label:"Aug g'rail",soft:true,color:"#8A6414"}],
+  series:[{data:DATA.rpsWeekly,width:1.5,dots:[3,7],endLabel:"$0.34",startLabel:true}],
+  xlabels:WL});
+
+/* Fig. 6 — book vs path */
+gline("f-book",{w:250,h:150,pad:{t:16,r:50,b:18,l:34},min:700,max:2150,
+  ticks:[1000,1500,2000],fmt:function(v){return (v/1000).toFixed(1)+"M"},
+  series:[
+    {data:DATA.bookTargetPath,color:CLARET,width:1.2,dashed:true,endLabel:"2.0M",name:"the path",nameAt:4,nameDy:-8},
+    {data:DATA.bookActuals,color:INK,width:2,endLabel:"985k",name:"the book",nameAt:1,nameDy:14,startLabel:true}
+  ],
+  xlabels:["May","","Jul","","Sep","","Nov",""]});
+
+/* Fig. 7 — flows */
+gline("f-flow",{w:250,h:150,pad:{t:14,r:56,b:18,l:26},min:0,max:46,
+  ticks:[10,25,40],fmt:function(v){return v+"k"},
+  series:[
+    {data:DATA.grossWeekly,color:INK,op:0.45,width:1.3,partial:true,endLabel:"gross",endDy:-3},
+    {data:DATA.netNewWeekly,color:INK,width:1.8,partial:true,endLabel:"net",endDy:4},
+    {data:DATA.lossWeekly,color:CLARET,width:1.2,partial:true,endLabel:"lost"}
+  ],
+  xlabels:WL});
+
+/* Fig. 8 — welcome yield */
+gline("f-welcome",{w:250,h:150,pad:{t:16,r:52,b:18,l:32},min:0,max:0.18,
+  ticks:[0.05,0.10,0.15],fmt:function(v){return "$"+v.toFixed(2)},
+  refs:[{v:0.15,label:"target"}],
+  series:[{data:DATA.welcomeYield,width:1.8,dots:[0,1],endLabel:"$0.11",startLabel:true}],
+  xlabels:["May","Jun","Jul td"]});
+
+/* Figs. 9–12 — engagement small multiples */
+gline("f-opens",{w:210,h:120,pad:{t:14,r:40,b:16,l:28},min:38.5,max:42.5,
+  ticks:[39,41],fmt:function(v){return v+"%"},
+  series:[{data:DATA.opensWeekly,width:1.5,endLabel:"41.2",startLabel:true}],
+  xlabels:["M1","","","","","","","","J*"]});
+gline("f-ctr",{w:210,h:120,pad:{t:14,r:40,b:16,l:28},min:1.8,max:2.3,
+  ticks:[1.9,2.1],fmt:function(v){return v.toFixed(1)+"%"},
+  series:[{data:DATA.ctrWeekly,width:1.5,endLabel:"2.10",startLabel:true}],
+  xlabels:["M1","","","","","","","","J*"]});
+gline("f-eng",{w:210,h:120,pad:{t:14,r:40,b:16,l:28},min:50,max:56,
+  ticks:[51,54],fmt:function(v){return v+"%"},
+  series:[{data:DATA.engagedWeekly,width:1.5,endLabel:"54.0",startLabel:true}],
+  xlabels:["M1","","","","","","","","J*"]});
+gline("f-unsub",{w:210,h:120,pad:{t:14,r:40,b:16,l:30},min:0.2,max:0.4,
+  ticks:[0.25,0.35],fmt:function(v){return v.toFixed(2)},
+  series:[{data:DATA.unsubsMonthly,width:1.5,dots:[0,1],endLabel:"0.31",startLabel:true}],
+  xlabels:["May","Jun","Jul"]});
+gbars("f-churn",{w:210,h:120,pad:{t:14,r:42,b:16,l:28},data:DATA.churnMonthly,max:26,
+  ticks:[10,20],refs:[{v:22,label:"cap"}],
+  marks:[{i:2,label:"19.4"}],xlabels:["May","Jun","Jul"],fmt:function(v){return v+"%"}});
+
+/* targets desk */
+function toggleDesk(){ document.getElementById("desk").toggleAttribute("hidden"); }
+</script>
+</body>
+</html>

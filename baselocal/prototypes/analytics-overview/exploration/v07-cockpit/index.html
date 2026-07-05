@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Analytics Overview — V7 Cockpit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F3EEE7; --card:#FCFAF6; --ink:#26201C; --mut:#7C7166; --faint:#A79A8B;
+  --line:#E2D8CB; --hair:#EFE8DE;
+  --terra:#B8593A; --terra-d:#8A3F2A; --terra-l:#D89B7F;
+  --green:#2D7A2D; --green-bg:#EDF5EC; --amber:#B45309; --amber-bg:#FCF4E4; --red:#C0392B; --red-bg:#F9EAE6;
+  --b0:#E5D7C7; --b1:#EFE5D8; --b2:#F8F2E9;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'IBM Plex Sans',ui-sans-serif,system-ui,sans-serif;background:var(--paper);color:var(--ink);font-size:13px;font-variant-numeric:tabular-nums;padding-bottom:70px}
+.caption{background:#1C1713;color:#F3EEE7;padding:10px 16px;font-size:13px;line-height:1.5}
+.caption strong{color:#EFB9A2}
+.page{max-width:1220px;margin:0 auto;padding:22px 20px}
+
+.pagehead{display:flex;align-items:baseline;gap:14px;margin-bottom:3px;flex-wrap:wrap}
+h1{font-size:20px;font-weight:700;letter-spacing:-.01em}
+.pagehead .date{color:var(--mut);font-size:12.5px}
+.pagehead .right{margin-left:auto;display:flex;gap:8px;align-items:center}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--card)}
+.seg button{border:none;background:none;padding:6px 14px;font:inherit;font-size:12px;font-weight:600;color:var(--mut);cursor:pointer}
+.seg button.on{background:var(--ink);color:var(--card)}
+.gear{border:1px solid var(--line);background:var(--card);border-radius:8px;padding:6px 12px;font-size:12px;font-weight:600;color:var(--mut);cursor:pointer}
+.gear:hover{color:var(--terra-d);border-color:var(--terra-l)}
+.subline{color:var(--mut);font-size:12.5px;margin-bottom:16px}
+.subline b{color:var(--ink);font-family:var(--mono);font-weight:600}
+
+/* ── annunciator: key questions ── */
+.ann{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+.lamp{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:11px 13px}
+.lrow{display:flex;align-items:center;gap:7px;margin-bottom:5px}
+.dot{width:9px;height:9px;border-radius:50%;display:inline-block;flex:none}
+.dot.g{background:var(--green);box-shadow:0 0 0 3px var(--green-bg)}
+.dot.a{background:var(--amber);box-shadow:0 0 0 3px var(--amber-bg)}
+.dot.r{background:var(--red);box-shadow:0 0 0 3px var(--red-bg)}
+.verdict{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.06em}
+.verdict.g{color:var(--green)}.verdict.a{color:var(--amber)}.verdict.r{color:var(--red)}
+.lq{font-size:12.5px;font-weight:700;line-height:1.35;margin-bottom:4px}
+.la{font-size:11px;color:var(--mut);line-height:1.5}
+
+/* ── bullet reading key ── */
+.key{display:flex;gap:18px;align-items:center;flex-wrap:wrap;font-size:11px;color:var(--mut);margin-bottom:12px;padding:0 2px}
+.key .ki{display:inline-flex;align-items:center;gap:6px}
+.kband{width:36px;height:12px;border-radius:2px;background:linear-gradient(90deg,var(--b0) 33%,var(--b1) 33% 66%,var(--b2) 66%)}
+.kbar{width:16px;height:6px;background:var(--ink)}
+.ktick{width:2px;height:14px;background:var(--ink)}
+.kdiam{width:7px;height:7px;border:1.4px solid #8A7D70;background:var(--card);transform:rotate(45deg)}
+.kproj{width:2px;height:12px;background:var(--terra)}
+.kguard{width:2px;height:12px;background:var(--red)}
+
+/* ── three core columns ── */
+.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:18px}
+.col{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 16px 12px;box-shadow:0 1px 2px rgba(38,32,28,.05)}
+.klabel{font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--mut)}
+.heroline{display:flex;align-items:baseline;gap:9px;margin:6px 0 2px;flex-wrap:wrap}
+.hero{font-family:var(--mono);font-size:27px;font-weight:600;letter-spacing:-.03em}
+.unit{font-size:11.5px;color:var(--mut);font-weight:600}
+.delta{font-family:var(--mono);font-size:11px;font-weight:600;padding:2px 8px;border-radius:99px}
+.delta.up{background:var(--green-bg);color:var(--green)}
+.delta.down{background:var(--red-bg);color:var(--red)}
+.versus{font-size:11.5px;color:var(--faint);margin-bottom:12px}
+.versus b{color:var(--terra-d);font-weight:600}
+
+.brow{display:grid;grid-template-columns:96px 1fr 76px;gap:9px;align-items:center;padding:4px 0}
+.brow+.brow{border-top:1px dashed var(--hair)}
+.bl{font-size:11px;font-weight:600;color:var(--ink);line-height:1.3}
+.bl span{display:block;font-size:9.5px;color:var(--faint);font-weight:500;margin-top:1px}
+.bviz{height:44px;min-width:0}
+.bv{text-align:right}
+.bv b{font-family:var(--mono);font-size:13.5px;font-weight:600;display:block}
+.bv small{display:block;font-size:9.5px;color:var(--faint);margin-top:1px;line-height:1.3}
+
+/* floor watch */
+.fw{border-top:1px dashed var(--hair);margin-top:6px;padding-top:9px}
+.fwhead{display:flex;align-items:baseline;gap:8px;font-size:11px;font-weight:600;margin-bottom:6px}
+.fwhead em{font-style:normal;color:var(--faint);font-weight:500;font-size:10px;margin-left:auto;font-family:var(--mono)}
+.fwcells{display:flex;gap:3px}
+.fcell{flex:1;height:15px;border-radius:3px;background:#E7DBC9;cursor:default}
+.fcell.dip{background:var(--red)}
+.fcell:hover{outline:1.5px solid var(--terra-d)}
+
+.chartbox{border-top:1px solid var(--hair);margin-top:12px;padding-top:10px}
+.charttitle{font-size:11px;font-weight:600;color:var(--mut);margin-bottom:4px}
+.cmount{height:140px}
+
+.micro{display:flex;border-top:1px solid var(--hair);margin-top:10px;padding-top:9px;gap:12px}
+.mi{flex:1;min-width:0}
+.mi b{font-family:var(--mono);font-size:12.5px;font-weight:600;display:block}
+.mi span{font-size:9.5px;color:var(--mut);line-height:1.3;display:block;margin-top:1px}
+
+.mix{display:flex;height:14px;border-radius:4px;overflow:hidden;margin:8px 0 5px}
+.mixleg{display:flex;gap:10px;flex-wrap:wrap;font-size:10px;color:var(--mut)}
+.mixleg i{display:inline-block;width:7px;height:7px;border-radius:2px;margin-right:3px}
+
+/* ── roadmap ── */
+.road{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;box-shadow:0 1px 2px rgba(38,32,28,.05)}
+.roadhead{display:flex;align-items:baseline;gap:12px;margin-bottom:4px;flex-wrap:wrap}
+.roadhead h2{font-size:14.5px;font-weight:700}
+.roadhead .sub{font-size:11px;color:var(--faint)}
+.roadhead a{margin-left:auto;font-size:11.5px;font-weight:600;color:var(--terra-d);text-decoration:none;cursor:pointer}
+.roadhead a:hover{text-decoration:underline}
+#roadmap{height:232px}
+
+.footnote{font-size:10.5px;color:var(--faint);margin-top:14px;padding:0 2px}
+.footnote b{color:var(--mut)}
+
+#toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(8px);background:var(--ink);color:var(--paper);font-size:12px;font-weight:500;padding:9px 16px;border-radius:8px;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;max-width:90vw}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media (prefers-reduced-motion: reduce){#toast{transition:none}}
+text{font-family:'IBM Plex Sans',sans-serif}
+@media(max-width:1080px){.cols{grid-template-columns:1fr}.ann{grid-template-columns:repeat(2,1fr)}.pagehead .right{margin-left:0}}
+@media(max-width:640px){.ann{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="caption"><strong>V7 · Cockpit.</strong> Every KPI is a Stephen Few bullet graph — quiet qualitative bands (behind / near / on‑target), an ink measure bar, a crisp target tick, a diamond for last period — three aligned instrument columns plus a month‑by‑month roadmap of tall bullets.</div>
+<div class="page">
+  <div class="pagehead">
+    <h1>Analytics Overview</h1>
+    <span class="date">Friday, Jul 3 · month 3 of the roadmap</span>
+    <div class="right">
+      <div class="seg"><button class="on" id="g-w" onclick="setGrain('w')">Weekly</button><button id="g-m" onclick="setGrain('m')">Monthly</button></div>
+      <button class="gear" onclick="toast('Targets are monthly-set. Editing is wired to Data Entry in production — static in this mock.')">Edit targets</button>
+    </div>
+  </div>
+  <div class="subline">July target <b>$400k</b> · floor <b>$12k/day</b> · RPS path <b>$0.30 → $0.50</b> · book goal <b>2.0M by Dec</b> · targets monthly-set, editable</div>
+
+  <!-- annunciator panel: the four questions -->
+  <div class="ann">
+    <div class="lamp"><div class="lrow"><span class="dot a"></span><span class="verdict a">CLOSE — $386K PACE</span></div>
+      <div class="lq">Will we hit $400k this month?</div>
+      <div class="la">Needs $12.9k/day from here; best recent day $13.8k. The Jul 20 expansion to 22 emails/wk is the closing lever.</div></div>
+    <div class="lamp"><div class="lrow"><span class="dot a"></span><span class="verdict a">MOVING — $0.34</span></div>
+      <div class="lq">Is RPS on the path to $0.50?</div>
+      <div class="la">+$0.03 vs June; the path needs ~+$0.04/mo from offers and welcome yield ($0.11 → $0.15). Reassess if Aug lands under $0.45.</div></div>
+    <div class="lamp"><div class="lrow"><span class="dot r"></span><span class="verdict r">NO — 146K VS 200K</span></div>
+      <div class="lq">Are subscribers growing fast enough?</div>
+      <div class="la">Growth must reach 6.5k net/day (currently 4.7k). At $0.50 RPS the December book needs 2M; we're at 985k.</div></div>
+    <div class="lamp"><div class="lrow"><span class="dot g"></span><span class="verdict g">YES</span></div>
+      <div class="lq">Is the audience healthy at scale?</div>
+      <div class="la">Churn 19.4% vs 22% guardrail, opens 41.2%, engaged share rising. Unsubs/send up with volume — expected, watching.</div></div>
+  </div>
+
+  <!-- how to read a bullet -->
+  <div class="key">
+    <span class="ki"><span class="kband"></span> behind / near / on-target</span>
+    <span class="ki"><span class="kbar"></span> actual</span>
+    <span class="ki"><span class="ktick"></span> target</span>
+    <span class="ki"><span class="kdiam"></span> last period</span>
+    <span class="ki"><span class="kproj"></span> projection</span>
+    <span class="ki"><span class="kguard"></span> guardrail</span>
+  </div>
+
+  <!-- three instrument columns -->
+  <div class="cols">
+
+    <div class="col">
+      <div class="klabel">Revenue</div>
+      <div class="heroline"><span class="hero">$286k</span><span class="unit">June, monthly</span><span class="delta up">+35.5% vs May</span></div>
+      <div class="versus">July: $37.4k in · projecting <b>$386k</b> against $400k</div>
+
+      <div class="brow"><div class="bl">July revenue<span>target $400k</span></div><div class="bviz" id="b-jul"></div>
+        <div class="bv"><b>$386k</b><small>proj · $37.4k in</small></div></div>
+      <div class="brow"><div class="bl">Pace, $/day<span>MTD avg</span></div><div class="bviz" id="b-pace"></div>
+        <div class="bv"><b>$12.5k</b><small>needs $12.9k</small></div></div>
+      <div class="brow"><div class="bl">Last full week<span>Jun W4</span></div><div class="bviz" id="b-week"></div>
+        <div class="bv"><b>$82k</b><small>pace ≈ $92k/wk</small></div></div>
+      <div class="brow"><div class="bl">RPS · July<span>Aug guardrail $0.45</span></div><div class="bviz" id="b-rps"></div>
+        <div class="bv"><b>$0.34</b><small>target $0.50</small></div></div>
+
+      <div class="fw">
+        <div class="fwhead">Floor watch — last 21 days vs $12k <em id="fwsum"></em></div>
+        <div class="fwcells" id="floorwatch"></div>
+      </div>
+
+      <div class="chartbox"><div class="charttitle" id="t-rev"></div><div class="cmount" id="c-rev"></div></div>
+
+      <div style="border-top:1px solid var(--hair);margin-top:10px;padding-top:9px">
+        <div class="charttitle">July revenue mix</div>
+        <div class="mix">
+          <div style="flex:58;background:#B8593A"></div><div style="flex:22;background:#D89B7F"></div>
+          <div style="flex:9;background:#2D7A2D"></div><div style="flex:6;background:#B45309"></div><div style="flex:5;background:#A79A8B"></div>
+        </div>
+        <div class="mixleg">
+          <span><i style="background:#B8593A"></i>Morning Roundup 58%</span><span><i style="background:#D89B7F"></i>Daily News 22%</span>
+          <span><i style="background:#2D7A2D"></i>Welcome 9%</span><span><i style="background:#B45309"></i>Bridge 6%</span><span><i style="background:#A79A8B"></i>Other 5%</span>
+        </div>
+      </div>
+
+      <div class="micro">
+        <div class="mi"><b>$1.86</b><span>RPC</span></div>
+        <div class="mi"><b>34</b><span>active offers</span></div>
+        <div class="mi"><b>3 / 10</b><span>June winners solidified</span></div>
+        <div class="mi"><b>15/wk</b><span>emails → 22 Jul 20 → 25 Aug</span></div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="klabel">Engagement</div>
+      <div class="heroline"><span class="hero">52.6%</span><span class="unit">June engaged share</span><span class="delta up">+0.7pt vs May</span></div>
+      <div class="versus">July-to-date <b>54.0%</b> · churn 19.4% vs 22% guardrail</div>
+
+      <div class="brow"><div class="bl">Engaged share<span>July-to-date</span></div><div class="bviz" id="b-eng"></div>
+        <div class="bv"><b>54.0%</b><small>+1.4pt MTD</small></div></div>
+      <div class="brow"><div class="bl">Open rate<span>weekly</span></div><div class="bviz" id="b-open"></div>
+        <div class="bv"><b>41.2%</b><small>40.0% in May</small></div></div>
+      <div class="brow"><div class="bl">CTR<span>of delivered</span></div><div class="bviz" id="b-ctr"></div>
+        <div class="bv"><b>2.1%</b><small>1.95% in May</small></div></div>
+      <div class="brow"><div class="bl">Churn<span>monthly · lower is better</span></div><div class="bviz" id="b-churn"></div>
+        <div class="bv"><b>19.4%</b><small>cap 22%</small></div></div>
+      <div class="brow"><div class="bl">Unsubs / send<span>lower is better</span></div><div class="bviz" id="b-unsub"></div>
+        <div class="bv"><b>0.31%</b><small>up with volume</small></div></div>
+
+      <div class="chartbox"><div class="charttitle" id="t-eng"></div><div class="cmount" id="c-eng"></div></div>
+
+      <div class="micro">
+        <div class="mi"><b>18.1 → 19.4</b><span>churn % by month, cap 22</span></div>
+        <div class="mi"><b>.27 → .31</b><span>unsubs/send % by month</span></div>
+        <div class="mi"><b>51.9 → 54.0</b><span>engaged share % by month</span></div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="klabel">Acquisition</div>
+      <div class="heroline"><span class="hero">+118k</span><span class="unit">June net new</span><span class="delta up">+15.7% vs May</span></div>
+      <div class="versus">July pacing <b>+146k</b> vs 200k/mo needed · book at 985k</div>
+
+      <div class="brow"><div class="bl">July net new<span>target 200k</span></div><div class="bviz" id="b-net"></div>
+        <div class="bv"><b>+146k</b><small>pace · 14.2k in</small></div></div>
+      <div class="brow"><div class="bl">Net per day<span>needs 6.5k</span></div><div class="bviz" id="b-netday"></div>
+        <div class="bv"><b>4.7k</b><small>Jun avg 3.9k</small></div></div>
+      <div class="brow"><div class="bl">Book size<span>Jul milestone 1.09M</span></div><div class="bviz" id="b-book"></div>
+        <div class="bv"><b>985k</b><small>Dec goal 2.0M</small></div></div>
+      <div class="brow"><div class="bl">Welcome $/sub<span>per gross new</span></div><div class="bviz" id="b-wel"></div>
+        <div class="bv"><b>$0.11</b><small>target $0.15</small></div></div>
+
+      <div class="chartbox"><div class="charttitle" id="t-acq"></div><div class="cmount" id="c-acq"></div></div>
+
+      <div class="micro">
+        <div class="mi"><b>18.6k</b><span>gross adds MTD</span></div>
+        <div class="mi"><b>10k</b><span>losses, last full wk</span></div>
+        <div class="mi"><b>.06 → .11</b><span>welcome $ by month</span></div>
+        <div class="mi"><b>41d</b><span>CAC payback</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- roadmap: one tall bullet per month -->
+  <div class="road">
+    <div class="roadhead">
+      <h2>Revenue roadmap — one bullet per month</h2>
+      <span class="sub">shared scale $0–1050k · tick = monthly target · ink bar = actual · terracotta = July projection · Aug–Dec ghosted</span>
+      <a onclick="toast('Targets are monthly-set. Editing is wired to Data Entry in production — static in this mock.')">Edit targets</a>
+    </div>
+    <div id="roadmap"></div>
+  </div>
+
+  <div class="footnote"><b>Reading the panel:</b> band shades run dark → light for behind → near → on-target (reversed where lower is better). Week labels M1–M4 = May, J1–J4 = June; “Jul” is the partial week ending Jul 3. Hollow dots mark partial periods.</div>
+</div>
+<div id="toast" role="status"></div>
+
+<script>
+"use strict";
+/* ═══ shared dataset ═══ */
+const DATA = {
+  asOf: "Jul 3",
+  roadmap: { months:["May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
+    targets:[205,290,400,500,700,800,900,1000], actuals:[211,286,37.4], julProj:386, needPerDay:12.9 },
+  revenue: {
+    weekly:[44,48,52,55,62,68,74,82,37.4], monthly:[211,286,37.4],
+    daily21:[11.8,12.6,13.1,12.2,12.9,13.4,12.7,13.0,12.4,11.1,12.8,13.2,12.6,13.8,12.9,13.1,12.5,13.3,11.9,13.2,12.5],
+    floor:12,
+    mix:[["Morning Roundup",58],["Daily News",22],["Welcome",9],["Bridge",6],["Other",5]],
+    rpsWeekly:[0.27,0.28,0.29,0.30,0.30,0.31,0.31,0.32,0.34], rpsMonthly:[0.29,0.31,0.34],
+    rpsTarget:0.50, rpsAugGuardrail:0.45,
+    rpc:1.86, offers:34, winners:[3,10], emailsPerWeek:15, emailsJul20:22, emailsAug:25 },
+  subs: {
+    book:985, bookActuals:[852,912,985], bookTargetPath:[1090,1290,1490,1640,1790,1930], bookGoal:2000,
+    netNewWeekly:[24,26,25,27,27,29,30,32,14.2], netNewMonthly:[102,118], julyPace:146, julyTarget:200,
+    grossWeekly:[31,33,32,35,35,37,38,42,18.6], lossWeekly:[7,7,7,8,8,8,8,10,4.4],
+    churnMonthly:[18.1,18.8,19.4], churnGuardrail:22,
+    welcomePerGross:[0.06,0.09,0.11], welcomeTarget:0.15, cacPaybackDays:41 },
+  engagement: {
+    opensWeekly:[40.0,40.2,40.1,40.4,40.5,40.7,40.8,41.0,41.2],
+    ctrWeekly:[1.95,2.0,2.0,2.02,2.02,2.05,2.05,2.08,2.1],
+    engagedWeekly:[51.2,51.6,51.9,52.0,52.1,52.3,52.6,53.1,54.0], engagedMonthly:[51.9,52.6,54.0],
+    unsubsPerSendMonthly:[0.27,0.29,0.31] },
+  weekLabels:["M1","M2","M3","M4","J1","J2","J3","J4","Jul"]
+};
+
+/* ═══ svg + registry helpers ═══ */
+const $=id=>document.getElementById(id);
+const NS="http://www.w3.org/2000/svg";
+const MONO="'IBM Plex Mono',monospace";
+function S(tag,at,parent){const e=document.createElementNS(NS,tag);for(const k in at)e.setAttribute(k,at[k]);if(parent)parent.appendChild(e);return e;}
+function txt(parent,x,y,str,at){const a=Object.assign({x:x,y:y,"font-size":9,fill:"#A79A8B"},at||{});const t=S("text",a,parent);t.textContent=str;return t;}
+
+const draws=new Map();
+function reg(id,f){draws.set(id,f);f();}
+let raf=null;
+window.addEventListener("resize",function(){cancelAnimationFrame(raf);raf=requestAnimationFrame(function(){draws.forEach(function(f){f();});});});
+
+function toast(msg){const t=$("toast");t.textContent=msg;t.classList.add("show");clearTimeout(toast._t);toast._t=setTimeout(function(){t.classList.remove("show");},3200);}
+
+/* ═══ bullet graph ═══ */
+function bullet(id,cfg){
+  reg(id,function(){
+    const m=$(id); const W=Math.max(m.clientWidth,110), H=44;
+    const min=cfg.min||0, max=cfg.max;
+    const x=v=>((v-min)/(max-min))*(W-2)+1;
+    const svg=S("svg",{width:W,height:H,viewBox:"0 0 "+W+" "+H});
+    m.replaceChildren(svg);
+    const g=S("g",{"shape-rendering":"crispEdges"},svg);
+    const cols=cfg.invert?["#F8F2E9","#EFE5D8","#E5D7C7"]:["#E5D7C7","#EFE5D8","#F8F2E9"];
+    const stops=[min,cfg.bands[0],cfg.bands[1],max];
+    for(let i=0;i<3;i++)S("rect",{x:x(stops[i]),y:8,width:Math.max(x(stops[i+1])-x(stops[i]),0),height:18,fill:cols[i]},g);
+    if(cfg.proj!=null){
+      S("rect",{x:x(min),y:15,width:x(cfg.proj)-x(min),height:4,fill:"#D89B7F"},g);
+      S("rect",{x:x(cfg.proj)-1,y:10,width:2,height:14,fill:"#B8593A"},g);
+    }
+    S("rect",{x:x(min),y:13.5,width:Math.max(x(cfg.value)-x(min),1.5),height:7,fill:"#26201C"},g);
+    if(cfg.guard!=null)S("rect",{x:x(cfg.guard)-1,y:8,width:2,height:18,fill:"#C0392B"},g);
+    if(cfg.target!=null)S("rect",{x:x(cfg.target)-1,y:5,width:2,height:24,fill:"#26201C"},g);
+    if(cfg.prev!=null){
+      const px=x(cfg.prev);
+      S("path",{d:"M "+px+" 12.2 L "+(px+4)+" 17 L "+px+" 21.8 L "+(px-4)+" 17 Z",fill:"#FCFAF6",stroke:"#8A7D70","stroke-width":1.2},svg);
+    }
+    const f=cfg.fmt||(v=>String(v));
+    txt(svg,1,41,f(min),{"text-anchor":"start","font-size":8.5,"font-family":MONO});
+    txt(svg,W-1,41,f(max),{"text-anchor":"end","font-size":8.5,"font-family":MONO});
+  });
+}
+
+/* ═══ line chart (dual-axis capable) ═══ */
+function linechart(id,cfg){
+  reg(id,function(){
+    const m=$(id); const W=Math.max(m.clientWidth,160), H=cfg.h||140;
+    const pad={t:12,r:cfg.right?42:10,b:20,l:40};
+    const svg=S("svg",{width:W,height:H,viewBox:"0 0 "+W+" "+H});
+    m.replaceChildren(svg);
+    const iw=W-pad.l-pad.r;
+    const yOf=(v,ax)=>pad.t+(1-(v-ax.min)/(ax.max-ax.min))*(H-pad.t-pad.b);
+    [0,0.5,1].forEach(function(fr){
+      const v=cfg.left.min+fr*(cfg.left.max-cfg.left.min);
+      const y=yOf(v,cfg.left);
+      S("line",{x1:pad.l,y1:y,x2:W-pad.r,y2:y,stroke:"#EFE8DE"},svg);
+      txt(svg,pad.l-6,y+3,cfg.left.fmt(v),{"text-anchor":"end","font-family":MONO,"font-size":8.5});
+      if(cfg.right){
+        const rv=cfg.right.min+fr*(cfg.right.max-cfg.right.min);
+        txt(svg,W-pad.r+6,y+3,cfg.right.fmt(rv),{"text-anchor":"start","font-family":MONO,"font-size":8.5,fill:"#C08F77"});
+      }
+    });
+    (cfg.hlines||[]).forEach(function(h){
+      const y=yOf(h.v,cfg.left);
+      S("line",{x1:pad.l,y1:y,x2:W-pad.r,y2:y,stroke:h.color,"stroke-dasharray":"4 3","stroke-width":1.3},svg);
+      if(h.label)txt(svg,W-pad.r-2,y-4,h.label,{"text-anchor":"end",fill:h.color,"font-size":8.5,"font-weight":600});
+    });
+    const n=cfg.labels.length;
+    const xOf=i=>pad.l+(n===1?0:(i/(n-1))*iw);
+    cfg.series.forEach(function(sr){
+      const ax=sr.axis==="r"?cfg.right:cfg.left;
+      const x0=sr.x0||0;
+      const pts=sr.data.map(function(v,j){return [xOf(j+x0),yOf(v,ax)];});
+      S("polyline",{points:pts.map(p=>p.join(",")).join(" "),fill:"none",stroke:sr.color,"stroke-width":sr.width||2,"stroke-linejoin":"round","stroke-linecap":"round","stroke-dasharray":sr.dash||"none"},svg);
+      (sr.dots||[]).forEach(function(i){S("circle",{cx:pts[i][0],cy:pts[i][1],r:3.5,fill:sr.color},svg);});
+      (sr.hollow||[]).forEach(function(i){S("circle",{cx:pts[i][0],cy:pts[i][1],r:3.5,fill:"#FCFAF6",stroke:sr.color,"stroke-width":1.8},svg);});
+    });
+    cfg.labels.forEach(function(lb,i){if(lb)txt(svg,xOf(i),H-6,lb,{"text-anchor":"middle","font-size":8.5});});
+  });
+}
+
+/* ═══ instrument bullets ═══ */
+const kf=v=>"$"+v+"k";
+bullet("b-jul",  {max:450, bands:[290,380], value:37.4, proj:386, target:400, prev:286, fmt:kf});
+bullet("b-pace", {max:16,  bands:[10,12],  value:12.5, target:12.9, prev:9.5, fmt:kf});
+bullet("b-week", {max:100, bands:[62,85],  value:82,   target:92,  prev:74,  fmt:kf});
+bullet("b-rps",  {max:0.55,bands:[0.30,0.45],value:0.34,target:0.50,guard:0.45,prev:0.31,fmt:v=>"$"+v.toFixed(2)});
+
+bullet("b-eng",  {min:40,max:60,bands:[48,52],value:54.0,prev:52.6,fmt:v=>v+"%"});
+bullet("b-open", {max:50, bands:[30,38],value:41.2,prev:40.5,fmt:v=>v+"%"});
+bullet("b-ctr",  {max:3,  bands:[1.5,2.0],value:2.1,prev:2.02,fmt:v=>v+"%"});
+bullet("b-churn",{max:26, bands:[17,22],value:19.4,guard:22,prev:18.8,invert:true,fmt:v=>v+"%"});
+bullet("b-unsub",{max:0.5,bands:[0.30,0.40],value:0.31,prev:0.29,invert:true,fmt:v=>v+"%"});
+
+bullet("b-net",  {max:220,bands:[130,180],value:14.2,proj:146,target:200,prev:118,fmt:v=>"+"+v+"k"});
+bullet("b-netday",{max:8, bands:[4.5,6],value:4.7,target:6.5,prev:3.9,fmt:v=>v+"k"});
+bullet("b-book", {max:1200,bands:[950,1050],value:985,target:1090,prev:912,fmt:v=>v>=1000?(v/1000)+"M":v+"k"});
+bullet("b-wel",  {max:0.18,bands:[0.09,0.13],value:0.11,target:0.15,prev:0.09,fmt:v=>"$"+v});
+
+/* ═══ floor watch strip ═══ */
+(function(){
+  const fw=$("floorwatch");
+  let dips=0, sum=0;
+  DATA.revenue.daily21.forEach(function(v,i){
+    const d=new Date(2026,5,13+i);
+    const c=document.createElement("i");
+    c.className="fcell"+(v<DATA.revenue.floor?" dip":"");
+    c.title=(d.getMonth()===5?"Jun ":"Jul ")+d.getDate()+" · $"+v.toFixed(1)+"k"+(v<12?" — below floor":"");
+    fw.appendChild(c);
+    if(v<12)dips++; sum+=v;
+  });
+  $("fwsum").textContent=dips+" dips · avg $"+(sum/21).toFixed(1)+"k";
+})();
+
+/* ═══ supporting charts (grain-aware; exactly one per core) ═══ */
+let grain="w";
+function drawCharts(){
+  const wl=DATA.weekLabels;
+  if(grain==="w"){
+    linechart("c-rev",{labels:wl,left:{min:0,max:100,fmt:v=>"$"+Math.round(v)+"k"},
+      series:[{data:DATA.revenue.weekly,color:"#B8593A",dots:[7],hollow:[8]}],
+      hlines:[{v:92,color:"#8A7D70",label:"≈$92k/wk pace"}]});
+    $("t-rev").textContent="Weekly revenue, $k — hollow = partial week";
+    linechart("c-eng",{labels:wl,left:{min:38,max:43,fmt:v=>v.toFixed(1)+"%"},right:{min:1.8,max:2.3,fmt:v=>v.toFixed(1)+"%"},
+      series:[{data:DATA.engagement.opensWeekly,color:"#26201C",dots:[8]},
+              {data:DATA.engagement.ctrWeekly,axis:"r",color:"#C08F77",width:1.6,dots:[8]}]});
+    $("t-eng").textContent="Opens (left, ink) & CTR (right, clay) — weekly";
+    linechart("c-acq",{labels:wl,left:{min:0,max:50,fmt:v=>Math.round(v)+"k"},
+      series:[{data:DATA.subs.grossWeekly,color:"#2D7A2D",width:1.6},
+              {data:DATA.subs.lossWeekly,color:"#C0392B",width:1.6},
+              {data:DATA.subs.netNewWeekly,color:"#26201C",dots:[7],hollow:[8]}],
+      hlines:[{v:46,color:"#8A7D70",label:"46k net/wk for 200k/mo"}]});
+    $("t-acq").textContent="Gross adds (green) · losses (red) · net (ink) — weekly";
+  } else {
+    linechart("c-rev",{labels:["May","Jun","Jul"],left:{min:0,max:450,fmt:v=>"$"+Math.round(v)+"k"},
+      series:[{data:[205,290,400],color:"#C9BBA9",dash:"4 3",width:1.6},
+              {data:[211,286,386],color:"#B8593A",dots:[0,1],hollow:[2]}]});
+    $("t-rev").textContent="Monthly vs roadmap target — hollow Jul = projection";
+    linechart("c-eng",{labels:["May","Jun","Jul td"],left:{min:50,max:56,fmt:v=>v.toFixed(1)+"%"},right:{min:0.2,max:0.35,fmt:v=>v.toFixed(2)+"%"},
+      series:[{data:DATA.engagement.engagedMonthly,color:"#26201C",dots:[2]},
+              {data:DATA.engagement.unsubsPerSendMonthly,axis:"r",color:"#C08F77",width:1.6}]});
+    $("t-eng").textContent="Engaged share (left) & unsubs/send (right) — monthly";
+    linechart("c-acq",{labels:["May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],left:{min:700,max:2100,fmt:v=>(v/1000).toFixed(1)+"M"},
+      series:[{data:DATA.subs.bookTargetPath,x0:2,color:"#C9BBA9",dash:"4 3",width:1.6},
+              {data:DATA.subs.bookActuals,color:"#B8593A",dots:[2]}],
+      hlines:[{v:DATA.subs.bookGoal,color:"#2D7A2D",label:"2M goal"}]});
+    $("t-acq").textContent="Book vs target path — to 2M by December";
+  }
+}
+function setGrain(g){
+  grain=g;
+  $("g-w").classList.toggle("on",g==="w");
+  $("g-m").classList.toggle("on",g==="m");
+  drawCharts();
+}
+drawCharts();
+
+/* ═══ roadmap: one tall bullet per month ═══ */
+reg("roadmap",function(){
+  const m=$("roadmap"); const W=Math.max(m.clientWidth,600), H=232;
+  const svg=S("svg",{width:W,height:H,viewBox:"0 0 "+W+" "+H});
+  m.replaceChildren(svg);
+  const padL=42,padR=6,padT=24,padB=36,MAX=1050;
+  const y=v=>padT+(1-v/MAX)*(H-padT-padB);
+  [0,250,500,750,1000].forEach(function(v){
+    S("line",{x1:padL,y1:y(v),x2:W-padR,y2:y(v),stroke:"#EFE8DE"},svg);
+    if(v%500===0)txt(svg,padL-6,y(v)+3,"$"+v+"k",{"text-anchor":"end","font-family":MONO,"font-size":8.5});
+  });
+  const R=DATA.roadmap, n=R.targets.length, colW=(W-padL-padR)/n;
+  R.targets.forEach(function(T,i){
+    const cx=padL+colW*(i+0.5), bw=Math.min(34,colW*0.5);
+    const future=i>2;
+    const g=S("g",{opacity:future?0.55:1,"shape-rendering":"crispEdges"},svg);
+    S("rect",{x:cx-bw/2,y:y(0.6*T),width:bw,height:y(0)-y(0.6*T),fill:"#E5D7C7"},g);
+    S("rect",{x:cx-bw/2,y:y(0.9*T),width:bw,height:y(0.6*T)-y(0.9*T),fill:"#EFE5D8"},g);
+    S("rect",{x:cx-bw/2,y:y(MAX),width:bw,height:y(0.9*T)-y(MAX),fill:"#F8F2E9"},g);
+    S("rect",{x:cx-bw/2-5,y:y(T)-1,width:bw+10,height:2,fill:"#26201C",opacity:future?0.75:1,"shape-rendering":"crispEdges"},svg);
+    if(i===2){
+      S("rect",{x:cx-2,y:y(R.julProj),width:4,height:y(0)-y(R.julProj),fill:"#D89B7F"},svg);
+      S("rect",{x:cx-bw/2-2,y:y(R.julProj)-1,width:bw+4,height:2,fill:"#B8593A"},svg);
+    }
+    const a=R.actuals[i];
+    if(a!=null){
+      S("rect",{x:cx-5,y:y(a),width:10,height:y(0)-y(a),fill:"#26201C"},svg);
+      txt(svg,cx,y(i===2?R.julProj:a)-6,(i===2?"37.4 ▸ "+R.julProj:String(a)),
+        {"text-anchor":"middle",fill:i===2?"#8A3F2A":"#26201C","font-weight":600,"font-family":MONO,"font-size":9.5});
+    }
+    txt(svg,cx,H-22,R.months[i],{"text-anchor":"middle","font-size":10,fill:"#7C7166","font-weight":600});
+    txt(svg,cx,H-9,"t "+T,{"text-anchor":"middle","font-family":MONO,"font-size":8.5});
+  });
+});
+</script>
+</body>
+</html>

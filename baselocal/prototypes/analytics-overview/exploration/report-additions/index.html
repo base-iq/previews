@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Report additions — for consideration</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,700;0,800;1,400&family=Lato:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#2C2421;--body:#444;--mut:#797979;--faint:#9ca3af;
+  --line:#E8E0DC;--hair:#f3f4f6;--band:#F5EEE9;--tint:#FCFAF8;
+  --brand:#B8593A;--brand-d:#8a3f2a;--green:#2D7A2D;--green-bg:#EEF7ED;--amber:#b45309;--amber-bg:#fffbeb;--red:#C0392B;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Lato',sans-serif;background:#F3F0ED;color:var(--ink);padding:36px 28px 100px;font-size:14px}
+.wrap{max-width:1040px;margin:0 auto}
+h1{font-family:'Bitter',Georgia,serif;font-size:26px;font-weight:800;letter-spacing:-.01em}
+p.sub{color:var(--mut);font-size:13.5px;margin:8px 0 8px;line-height:1.6;max-width:80ch}
+.tag{display:flex;align-items:baseline;gap:10px;margin:50px 0 6px;flex-wrap:wrap}
+.tag .n{width:28px;height:28px;border-radius:9px;background:var(--ink);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex:none;align-self:center}
+.tag .t{font-size:16px;font-weight:800;font-family:'Bitter',Georgia,serif}
+.tag .d{font-size:12.5px;color:var(--mut);line-height:1.5}
+.slot{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--brand-d);background:#FBF1EC;border:1px solid #e2b8a6;border-radius:99px;padding:3px 11px;align-self:center}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 1px 4px rgba(44,36,33,.05);overflow:hidden;margin-top:12px}
+.bt{font-family:'Bitter',Georgia,serif;font-weight:800;letter-spacing:-.01em}
+.tnum{font-variant-numeric:tabular-nums}
+svg{display:block;width:100%}
+/* toolbar (matches report) */
+.secttb{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:14px 22px;border-bottom:1px solid var(--hair)}
+.secttb .bt2{font-size:20px}
+.tabbar{display:flex;background:var(--band);border-radius:99px;padding:3px;justify-self:center}
+.tabbar button{border:none;background:none;font:inherit;font-size:12.5px;font-weight:600;color:var(--mut);padding:7px 15px;border-radius:99px;cursor:pointer;white-space:nowrap}
+.tabbar button.on{background:#fff;color:var(--brand-d);font-weight:700;box-shadow:0 1px 3px rgba(44,36,33,.14)}
+.body{padding:20px 26px 22px}
+.ct{font-size:13px;font-weight:700;color:var(--body)}
+.cs{font-size:11.5px;color:var(--faint);margin-bottom:12px}
+.tt{width:100%;border-collapse:collapse;font-size:12.5px}
+.tt th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);padding:7px 10px;border-bottom:1px solid var(--line)}
+.tt td{padding:8px 10px;border-bottom:1px solid #f6f3f0}
+.tt tr.lag td{color:var(--amber)}
+/* LTV:CAC layout */
+.ltv{display:grid;grid-template-columns:230px 1fr;gap:0}
+.ltv .hero{padding:24px;border-right:1px solid var(--hair);display:flex;flex-direction:column;justify-content:center}
+.ltv .ratio{font-family:'Bitter',Georgia,serif;font-size:46px;font-weight:800;letter-spacing:-.02em;line-height:1}
+.ltv .rlab{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);margin-top:6px}
+.ltv .verdict{font-size:12.5px;color:var(--green);font-weight:700;margin-top:10px}
+.ltv .right{padding:20px 24px}
+.ltv .kv{display:grid;grid-template-columns:1fr auto;gap:6px;font-size:13px;padding:9px 0;border-bottom:1px solid #f6f3f0}
+.ltv .kv:last-child{border-bottom:0}
+.ltv .kv b{font-weight:800}
+.ltv .kv small{color:var(--mut);font-weight:400}
+.legend{display:flex;gap:16px;font-size:11.5px;color:var(--body);margin-top:10px;flex-wrap:wrap}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:11px;height:11px;border-radius:3px;display:inline-block}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Report additions — for consideration</h1>
+  <p class="sub">Three things the current report doesn't track, mocked in its own design language so you can judge them. Nothing here is in the live report yet — pick what earns a place. Numbers are illustrative.</p>
+  <div id="stage"></div>
+</div>
+<script>
+function el(t,a){const e=document.createElementNS("http://www.w3.org/2000/svg",t);for(const k in a)e.setAttribute(k,a[k]);return e}
+function mount(id,W,h){const s=el("svg",{viewBox:`0 0 ${W} ${h}`,width:"100%",height:h});document.getElementById(id).replaceChildren(s);return s}
+function grid(s,W,h,p,ticks,f){ticks.forEach(fr=>{const y=p.t+(1-fr)*(h-p.t-p.b);
+  s.appendChild(el("line",{x1:p.l,y1:y,x2:W-p.r,y2:y,stroke:"#f3f4f6"}));
+  const t=el("text",{x:p.l-8,y:y+4,"text-anchor":"end","font-size":11,fill:"#9ca3af"});t.textContent=f(fr);s.appendChild(t)})}
+function xlab(s,W,h,p,X,labels){labels.forEach((lb,i)=>{const t=el("text",{x:X(i),y:h-7,"text-anchor":"middle","font-size":11,fill:"#9ca3af"});t.textContent=lb;s.appendChild(t)})}
+const ML=["May","Jun","Jul"];
+function lineChart(id,{data,min,max,fmt,target,targetLab,proj,W=940,h=250}){
+  const p={t:18,r:14,b:26,l:52},s=mount(id,W,h),n=data.length;
+  const X=i=>p.l+i*(W-p.l-p.r)/(n-1+(proj?1:0)),Y=v=>p.t+(1-(v-min)/(max-min))*(h-p.t-p.b);
+  grid(s,W,h,p,[0,.25,.5,.75,1],fr=>fmt(min+fr*(max-min)));
+  if(target!=null){const y=Y(target);s.appendChild(el("line",{x1:p.l,y1:y,x2:W-p.r,y2:y,stroke:"#2D7A2D","stroke-dasharray":"5 4","stroke-width":1.5}));
+    const t=el("text",{x:W-p.r,y:y-6,"text-anchor":"end","font-size":11,fill:"#2D7A2D"});t.textContent=targetLab;s.appendChild(t)}
+  const pts=data.map((v,i)=>[X(i),Y(v)]);
+  s.appendChild(el("path",{d:"M"+pts.map(q=>q.join(",")).join(" L ")+` L ${pts[n-1][0]},${h-p.b} L ${pts[0][0]},${h-p.b} Z`,fill:"#B8593A",opacity:.07}));
+  if(proj){s.appendChild(el("polyline",{points:`${X(n-1)},${Y(data[n-1])} ${X(n)},${Y(proj)}`,fill:"none",stroke:"#d98a6d","stroke-width":2.5,"stroke-dasharray":"3 5"}));
+    s.appendChild(el("circle",{cx:X(n),cy:Y(proj),r:5,fill:"#fff",stroke:"#d98a6d","stroke-width":2.5}))}
+  s.appendChild(el("polyline",{points:pts.map(q=>q.join(",")).join(" "),fill:"none",stroke:"#B8593A","stroke-width":3.5,"stroke-linejoin":"round","stroke-linecap":"round"}));
+  s.appendChild(el("circle",{cx:pts[n-1][0],cy:pts[n-1][1],r:5,fill:"#B8593A"}));
+  xlab(s,W,h,p,X,proj?[...ML,"Aug"]:ML);
+}
+function stacked(id,{rows,cats,colors,max,fmt,W=940,h=250}){
+  const p={t:18,r:14,b:26,l:52},s=mount(id,W,h),n=rows.length,iw=(W-p.l-p.r)/n;
+  grid(s,W,h,p,[0,.25,.5,.75,1],fr=>fmt(fr*max));
+  rows.forEach((row,i)=>{let y=h-p.b;
+    row.forEach((v,si)=>{const bh=(v/max)*(h-p.t-p.b);y-=bh;
+      s.appendChild(el("rect",{x:p.l+i*iw+iw*.2,y,width:iw*.6,height:Math.max(bh,.5),fill:colors[si]}))});
+    const tot=row.reduce((a,b)=>a+b,0),ty=h-p.b-(tot/max)*(h-p.t-p.b);
+    const t=el("text",{x:p.l+i*iw+iw/2,y:ty-6,"text-anchor":"middle","font-size":11.5,"font-weight":"700",fill:"#2C2421"});t.textContent=fmt(tot);s.appendChild(t)});
+  xlab(s,W,h,p,i=>p.l+i*iw+iw/2,cats);
+}
+
+/* ---------- 1. LOCATIONS ---------- */
+const LOC={
+  rpl:{data:[1407,1702,2121],proj:2200,min:1000,max:2500,fmt:v=>"$"+(v/1000).toFixed(1)+"k",cs:"total revenue ÷ active locations — the network is maturing"},
+  count:{data:[150,168,182],proj:198,min:120,max:220,fmt:v=>Math.round(v),cs:"active locations sending email each month — the growth axis beneath the base"},
+  spl:{data:[5680,5804,5412],proj:5300,min:4500,max:6500,fmt:v=>(v/1000).toFixed(1)+"k",cs:"active subscribers ÷ locations — dips as new locations ramp, then climbs"},
+};
+const LOCTABS=[["Revenue / location","rpl"],["Locations","count"],["Subs / location","spl"],["Leaderboard","lead"]];
+let locTab="rpl";
+function renderLoc(){
+  const bar=document.getElementById("loc-tabs");
+  bar.innerHTML=LOCTABS.map(([n,k])=>`<button class="${k===locTab?'on':''}" onclick="locSet('${k}')">${n}</button>`).join("");
+  if(locTab==="lead"){document.getElementById("loc-body").innerHTML=leaderTable();return}
+  const d=LOC[locTab];
+  document.getElementById("loc-body").innerHTML=`<div class="ct">${LOCTABS.find(t=>t[1]===locTab)[0]}</div><div class="cs">${d.cs}</div><div id="loc-chart"></div>`;
+  lineChart("loc-chart",{data:d.data,min:d.min,max:d.max,fmt:d.fmt,proj:d.proj});
+}
+function leaderTable(){
+  const top=[["Austin, TX",42.1,6.82,0.162],["Denver, CO",38.4,5.91,0.154],["Nashville, TN",34.0,5.22,0.154],["Portland, OR",31.6,4.83,0.153],["Raleigh, NC",29.2,4.41,0.151]];
+  const lag=[["Toledo, OH",7.2,0.94,0.131],["Boise, ID",5.1,0.68,0.133]];
+  const row=(r,c)=>`<tr class="${c}"><td>${r[0]}</td><td class="tnum">${r[1]}k</td><td class="tnum">$${r[2].toFixed(2)}k</td><td class="tnum">$${r[3].toFixed(3)}</td></tr>`;
+  return `<div class="ct">Location leaderboard</div><div class="cs">top earners and the laggards dragging the network average · July</div>
+   <table class="tt"><thead><tr><th>Location</th><th>Active subs</th><th>Revenue</th><th>RPS</th></tr></thead><tbody>
+   ${top.map(r=>row(r,"")).join("")}<tr><td colspan="4" style="color:#9ca3af;font-size:11px;padding:6px 10px">… 174 more …</td></tr>${lag.map(r=>row(r,"lag")).join("")}</tbody></table>`;
+}
+function locSet(k){locTab=k;renderLoc()}
+
+/* ---------- 2. LTV:CAC ---------- */
+function renderLTV(){
+  lineChart("ltv-chart",{data:[18,20,21],min:0,max:30,fmt:v=>Math.round(v)+":1",target:3,targetLab:"3:1 healthy floor",W:640,h:210});
+}
+
+/* ---------- 3. LOSS COMPOSITION ---------- */
+function renderLoss(){
+  stacked("loss-chart",{rows:[[12,14,2,1],[13,16,3,2],[14,10,4,2]],cats:ML,
+    colors:["#B8593A","#d98a6d","#8a3f2a","#c7bdb6"],max:40,fmt:v=>Math.round(v)+"k"});
+}
+
+/* ---------- build page ---------- */
+const stage=document.getElementById("stage");
+stage.innerHTML=`
+ <div class="tag"><span class="n">1</span><span class="t">Locations</span><span class="slot">could be a 4th driver, or a tab inside Acquisition</span></div>
+ <p class="sub" style="margin:2px 0 0">BaseLocal is a local network — but the report has no location view. This shows revenue and subscribers <b>per location</b>, the active-location count as its own growth axis, and a leaderboard of who's carrying the network vs dragging it.</p>
+ <div class="card"><div class="secttb"><span class="bt bt2">Locations</span><div class="tabbar" id="loc-tabs"></div><span></span></div>
+   <div class="body" id="loc-body"></div></div>
+
+ <div class="tag" style="margin-top:52px"><span class="n">2</span><span class="t">LTV : CAC</span><span class="slot">slots into Acquisition → Economics</span></div>
+ <p class="sub" style="margin:2px 0 0">You track RPS and CAC separately but never the ratio — the single best read on whether acquisition spend pays off. LTV = RPS × subscriber lifetime.</p>
+ <div class="card"><div class="ltv">
+   <div class="hero"><div class="ratio">21<span style="color:#9ca3af">:1</span></div><div class="rlab">LTV : CAC</div><div class="verdict">Highly efficient — well above 3:1</div></div>
+   <div class="right">
+     <div class="kv"><span>LTV per subscriber <small>RPS $0.34 × 25mo lifetime</small></span><b class="tnum">$8.50</b></div>
+     <div class="kv"><span>Blended CAC <small>Meta spend ÷ total new</small></span><b class="tnum">$0.40</b></div>
+     <div class="kv"><span>CAC payback</span><b class="tnum">42 days</b></div>
+     <div class="kv"><span>Ratio trend (May → Jul)</span><b class="tnum">18:1 → 21:1</b></div>
+     <div id="ltv-chart" style="margin-top:8px"></div>
+   </div></div></div>
+
+ <div class="tag" style="margin-top:52px"><span class="n">3</span><span class="t">Loss composition</span><span class="slot">enriches Acquisition → Gross vs losses</span></div>
+ <p class="sub" style="margin:2px 0 0">Gross-vs-losses shows losses as one line. This breaks the monthly loss into your four kinds — so you can see <b>why</b> a month was heavy (a cleanup batch vs real voluntary churn behave very differently).</p>
+ <div class="card"><div class="body"><div class="ct">Subscribers lost by type — monthly</div><div class="cs">Manual unsubs are voluntary; cleanups are lumpy Beehiiv batches; location cuts are our operational choice; other is the residual</div>
+   <div id="loss-chart"></div>
+   <div class="legend">
+     <span><i style="background:#B8593A"></i>Manual unsubscribes</span>
+     <span><i style="background:#d98a6d"></i>Inactivity cleanups</span>
+     <span><i style="background:#8a3f2a"></i>Location cuts</span>
+     <span><i style="background:#c7bdb6"></i>Other lost</span>
+   </div></div></div>
+`;
+renderLoc();renderLTV();renderLoss();
+</script>
+</body>
+</html>

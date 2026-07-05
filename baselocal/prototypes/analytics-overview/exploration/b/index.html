@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Overview B — Command Deck</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',ui-sans-serif,system-ui,sans-serif;background:#f9fafb;color:#111827;font-size:13px;padding-bottom:60px}
+.caption{background:#111827;color:#fff;padding:10px 16px;font-size:13px}
+.caption strong{color:#f7cfc2}
+.page{max-width:1180px;margin:0 auto;padding:18px 16px}
+h1{font-size:19px;font-weight:700}
+.sub{color:#6b7280;font-size:12.5px;margin-top:2px}
+/* guardrail dials */
+.dials{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0}
+.dial{background:#fff;border:1px solid #E8E0DC;border-radius:12px;padding:14px;border-top:4px solid #d1d5db;cursor:pointer}
+.dial:hover{box-shadow:0 3px 12px rgba(0,0,0,.06)}
+.dial.ok{border-top-color:#2D7A2D}.dial.watch{border-top-color:#b45309}.dial.off{border-top-color:#C0392B}
+.dial .q{font-size:12px;font-weight:600;color:#797979}
+.dial .v{font-size:28px;font-weight:800;margin-top:4px;font-variant-numeric:tabular-nums}
+.dial .c{font-size:11.5px;margin-top:3px;color:#6b7280}
+.dial .s{float:right;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px}
+.ok .s{background:#EEF7ED;color:#2D7A2D}.watch .s{background:#fffbeb;color:#b45309}.off .s{background:#FBEAE7;color:#C0392B}
+/* pace chart */
+.chartcard{background:#fff;border:1px solid #E8E0DC;border-radius:12px;padding:14px;margin-bottom:14px}
+.chartcard h2{font-size:13px;font-weight:700;margin-bottom:2px}
+.chartcard .m{font-size:11.5px;color:#797979;margin-bottom:8px}
+/* month grid below */
+.row2{display:grid;grid-template-columns:2fr 1fr;gap:12px}
+.tbl{background:#fff;border:1px solid #E8E0DC;border-radius:12px;overflow:hidden}
+.tbl h2{font-size:13px;font-weight:700;padding:10px 14px;background:#F5EEE9;border-bottom:1px solid #E8E0DC}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+th{font-size:10.5px;text-transform:uppercase;letter-spacing:.04em;color:#797979;font-weight:600;padding:7px 14px;text-align:right;border-bottom:1px solid #E8E0DC}
+th:first-child{text-align:left}
+td{padding:7px 14px;text-align:right;font-size:12.5px;border-bottom:1px solid #f3f4f6}
+td:first-child{text-align:left;font-weight:600}
+tr:hover td{background:#FCFAF8;cursor:pointer}
+.good{color:#2D7A2D}.warn{color:#b45309}.bad{color:#C0392B}
+.milelist{background:#fff;border:1px solid #E8E0DC;border-radius:12px;overflow:hidden}
+.milelist h2{font-size:13px;font-weight:700;padding:10px 14px;background:#F5EEE9;border-bottom:1px solid #E8E0DC}
+.mile{padding:9px 14px;border-bottom:1px solid #f3f4f6;font-size:12.5px;display:flex;gap:8px}
+.mile .dt{color:#797979;width:52px;flex-shrink:0}
+.mile .tick{width:16px}
+</style>
+</head>
+<body>
+<div class="caption"><strong>Option B — Command Deck.</strong> Guardrails first: four dials answer "are we on plan today?" before anything else. Then the month's pace against target, KPI table with drill-through, and the roadmap's milestone checklist.</div>
+<div class="page">
+  <h1>Analytics Overview</h1>
+  <div class="sub">July: $400k · $12k/day floor · RPS → $0.50 · Thursday, Jul 3</div>
+
+  <div class="dials">
+    <div class="dial ok"><span class="s">ON PLAN</span><div class="q">Revenue floor</div><div class="v">$13.2k</div><div class="c">yesterday · floor $12k · 1 dip in last 7d</div></div>
+    <div class="dial watch"><span class="s">WATCH</span><div class="q">RPS</div><div class="v">$0.34</div><div class="c">July to date · path $0.30 → $0.50 · Aug guardrail $0.45</div></div>
+    <div class="dial off"><span class="s">BEHIND</span><div class="q">Net new subs</div><div class="v">146k</div><div class="c">July pace · target 200k/mo · needs 6.5k/day</div></div>
+    <div class="dial ok"><span class="s">SAFE</span><div class="q">Churn</div><div class="v">19.4%</div><div class="c">guardrail 22% · reassess above</div></div>
+  </div>
+
+  <div class="chartcard">
+    <h2>July revenue vs target pace</h2>
+    <div class="m">$37.4k of $400k · projecting $386k at current pace · needs $12.9k/day from here</div>
+    <svg width="100%" height="120" viewBox="0 0 800 120" preserveAspectRatio="none">
+      <line x1="0" y1="110" x2="800" y2="8" stroke="#E8E0DC" stroke-width="2" stroke-dasharray="5 4"/>
+      <polyline fill="none" stroke="#B8593A" stroke-width="3" points="0,110 26,100 52,91 78,80"/>
+      <circle cx="78" cy="80" r="4" fill="#B8593A"/>
+      <polyline fill="none" stroke="#d98a6d" stroke-width="2" stroke-dasharray="2 4" points="78,80 800,16"/>
+      <text x="700" y="30" font-size="11" fill="#9ca3af">target $400k</text>
+      <text x="88" y="76" font-size="11" fill="#8a3f2a" font-weight="700">$37.4k</text>
+    </svg>
+  </div>
+
+  <div class="row2">
+    <div class="tbl">
+      <h2>Core KPIs — July vs plan (click any row to drill)</h2>
+      <table>
+        <thead><tr><th>KPI</th><th>Now</th><th>Target</th><th>Status</th><th>Report</th></tr></thead>
+        <tbody>
+          <tr><td>Revenue / day</td><td>$12.5k</td><td>$12k floor → $15k</td><td class="good">on plan</td><td>Performance</td></tr>
+          <tr><td>RPS</td><td>$0.34</td><td>$0.50</td><td class="warn">watch</td><td>Campaigns</td></tr>
+          <tr><td>Emails / week</td><td>15</td><td>22 by Jul 20</td><td class="good">on track</td><td>Schedule</td></tr>
+          <tr><td>Winners solidified</td><td>3</td><td>June pipeline (10)</td><td class="warn">in progress</td><td>Campaigns</td></tr>
+          <tr><td>Welcome $/new sub</td><td>$0.11</td><td>$0.15</td><td class="warn">watch</td><td>Welcome Page</td></tr>
+          <tr><td>Net new subs / mo</td><td>146k pace</td><td>200k</td><td class="bad">behind</td><td>Acquisition</td></tr>
+          <tr><td>Open rate</td><td>41.2%</td><td>≥40%</td><td class="good">healthy</td><td>Emails</td></tr>
+          <tr><td>Engaged share</td><td>54%</td><td>—</td><td class="good">▲ 2.1pt</td><td>Engaged Audience</td></tr>
+          <tr><td>Churn</td><td>19.4%</td><td>&lt;22%</td><td class="good">safe</td><td>Engaged Audience</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="milelist">
+      <h2>Roadmap milestones</h2>
+      <div class="mile"><span class="dt">Jul 1</span><span class="tick good">✓</span><span>8 → 15 emails weekly (daily news)</span></div>
+      <div class="mile"><span class="dt">Jul 20</span><span class="tick">◻</span><span>Solidify winning offers from June pipeline</span></div>
+      <div class="mile"><span class="dt">Jul 20</span><span class="tick">◻</span><span>15 → 22 emails weekly (State Publications)</span></div>
+      <div class="mile"><span class="dt">Jul 20</span><span class="tick">◻</span><span>Welcome page at $0.15 / new subscriber</span></div>
+      <div class="mile"><span class="dt">Jul 20</span><span class="tick">◻</span><span>New-offer meetings on the books</span></div>
+      <div class="mile"><span class="dt">Aug</span><span class="tick">◻</span><span>22 → 25 emails weekly (Special Editions)</span></div>
+      <div class="mile"><span class="dt">Aug</span><span class="tick">◻</span><span>200k net new subscribers / month minimum</span></div>
+      <div class="mile"><span class="dt">Sep+</span><span class="tick">◻</span><span>Hold $0.50 RPS · grow volume aggressively</span></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
