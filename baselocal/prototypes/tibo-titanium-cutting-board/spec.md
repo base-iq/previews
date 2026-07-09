@@ -1,8 +1,8 @@
-# Titanium Cutting Board Bridge Page (Buy-once / value-led variant) — Implementation Spec
+# TIBO Titanium Cutting Board Bridge Page — Implementation Spec
 
 **Brand:** BaseLocal
-**Feature slug:** `titanium-cutting-board-buy-once`
-**Prototype:** [https://base-iq.github.io/previews/baselocal/prototypes/titanium-cutting-board-buy-once/](https://base-iq.github.io/previews/baselocal/prototypes/titanium-cutting-board-buy-once/)
+**Feature slug:** `tibo-titanium-cutting-board` (production URL: `/tibo-titanium-cutting-board/`)
+**Prototype:** [https://base-iq.github.io/previews/baselocal/prototypes/tibo-titanium-cutting-board/](https://base-iq.github.io/previews/baselocal/prototypes/tibo-titanium-cutting-board/)
 **A/B test:** The **value-angle challenger against the control** (the six-rounds page); it **replaces the earlier `-value` variant**, which was retired. The page is built on a value/price argument rather than a feature scorecard.
 
 > **Attribution:** handled **upstream at the ad platform** (per-bridge click IDs), so the arms intentionally share the same offer URL — no per-page `sub_id`/`utm_term` is added here.
@@ -136,3 +136,4 @@ None on this page. Checkout, payment, and fulfillment live on the gettibo.com of
 8. **Analytics** — no pixel/event wiring in the prototype; production likely wants view + CTA-click events (out of scope here).
 9. **Image rights** — the six product/comparison images are reused from the Hoom/myhoom advertorial CDN (`boards-compared`, `microplastics-shedding`, `wood-grooves`, `dual-sides`, `sharpener`, `garlic-grater`). Confirm the affiliate network permits reuse on our domain before launch.
 10. **Social-proof number (standardized)** — the page now uses the advertiser's 50,000+ figure everywhere (H1, meta description, trust strip); the unproven first-party 22,504 was removed. Verify the 50,000+ figure with the advertiser before launch, and keep the ad and the page showing the same number.
+11. **Footer rollout to the Welcome Pages (client instruction, blocks the jeff-env deploy)** — the site footer built here (`.site-footer` markup in `index.html` + its CSS block in `styles.css`, incl. the commission disclaimer under the wordmark) should also be added to the production Welcome Pages (e.g. `baselocal.com/{state}/{city}/welcome/`) before this page moves to the jeff environment. The component is self-contained and lift-ready; production Welcome Page code is out of this prototype's scope, so this is a handoff item for the production implementer. Wire the real nav/legal URLs when lifting.
