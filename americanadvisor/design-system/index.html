@@ -240,6 +240,40 @@
   table.doc tr:last-child td{border-bottom:none}
   table.doc code{font-family:var(--font-mono);font-size:12.5px;color:var(--crimson)}
 
+  /* ---- forms ---- */
+  .field-label{display:block;font-family:var(--font-ui);font-size:14px;font-weight:600;color:var(--ink);margin-bottom:6px}
+  .field-label .req{color:var(--crimson);font-weight:700}
+  .helper-text{font-family:var(--font-ui);font-size:13px;color:var(--slate);line-height:1.5;margin-top:6px}
+  .text-input{display:block;width:100%;max-width:340px;background:#fff;border:1px solid var(--hairline);border-radius:var(--r-sm);padding:12px 14px;min-height:44px;font-family:var(--font-ui);font-size:16px;color:var(--byline);transition:border-color var(--duration-micro)}
+  .text-input::placeholder{color:var(--pewter)}
+  .text-input:hover{border-color:var(--slate)}
+  .text-input.is-hover{border-color:var(--slate)}
+  .text-input:focus,.text-input.is-focus{border-color:var(--crimson);outline:2px solid var(--crimson);outline-offset:2px}
+  .text-input.is-error{border-color:var(--crimson)}
+  .text-input.is-disabled,.text-input:disabled{background:var(--newsprint);color:var(--pewter);cursor:not-allowed}
+  textarea.text-input{min-height:120px;resize:vertical;max-width:520px}
+  .char-counter{font-family:var(--font-ui);font-size:13px;font-weight:500;color:var(--slate);text-align:right;margin-top:6px;max-width:520px}
+  .char-counter.near{color:var(--crimson)}
+  select.text-input{appearance:none;-webkit-appearance:none;padding-right:40px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%230E1A2B' stroke-width='1.5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
+  .form-section-header{font-family:var(--font-display);font-weight:700;font-size:20px;color:var(--ink);border-bottom:1px solid var(--hairline);padding-bottom:8px;margin:0 0 20px}
+  .check-row{display:flex;align-items:flex-start;gap:10px;font-family:var(--font-ui);font-size:15px;color:var(--byline);padding:6px 0;cursor:pointer}
+  .cbox{width:20px;height:20px;border:1.5px solid var(--heavy-rule);border-radius:var(--r-xs);background:#fff;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;font-size:13px;font-weight:700;color:transparent}
+  .cbox.checked{background:var(--sage);border-color:var(--sage);color:#fff}
+  .radio{width:20px;height:20px;border:1.5px solid var(--heavy-rule);border-radius:50%;background:#fff;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+  .radio.checked{border-color:var(--crimson)}
+  .radio.checked::after{content:"";width:10px;height:10px;border-radius:50%;background:var(--crimson)}
+  .tag-select{display:flex;flex-wrap:wrap;gap:8px}
+  .tag-option{font-family:var(--font-ui);font-size:15px;font-weight:500;color:var(--byline);background:#fff;border:1px solid var(--hairline);border-radius:var(--r-xs);padding:10px 16px;min-height:44px;display:inline-flex;align-items:center;cursor:pointer;transition:background-color var(--duration-micro),border-color var(--duration-micro),color var(--duration-micro)}
+  .tag-option:hover,.tag-option.is-hover{background:var(--cream)}
+  .tag-option.selected{background:var(--crimson);border-color:var(--crimson);color:#fff;font-weight:600}
+  .subscribe-bar{display:flex;border:2px solid var(--ink);border-radius:var(--r-sm);overflow:hidden;background:#fff;max-width:480px}
+  .subscribe-bar input{flex:1;border:none;padding:12px 16px;min-height:48px;font-family:var(--font-ui);font-size:16px;color:var(--byline);background:transparent;min-width:0}
+  .subscribe-bar input::placeholder{color:var(--pewter)}
+  .subscribe-bar input:focus{outline:none}
+  .subscribe-bar button{border:none;background:var(--crimson);color:#fff;font-family:var(--font-ui);font-weight:600;font-size:15px;padding:0 20px;cursor:pointer;white-space:nowrap}
+  .subscribe-bar button:hover{background:var(--deep-crimson)}
+  .subscribe-bar:focus-within{border-color:var(--crimson);outline:2px solid var(--crimson);outline-offset:2px}
+
   /* motion demo */
   .motion-demo-item{opacity:0;background:#fff;border:1px solid var(--hairline);padding:14px 18px;font-family:var(--font-ui);font-size:15px;margin-bottom:8px}
   .motion-demo.play .motion-demo-item{animation:fadeIn var(--duration-entrance) var(--ease-settle) both}
@@ -698,9 +732,106 @@
 
   <hr class="rule">
 
-  <!-- ============ 13 EMAIL TYPOGRAPHY (approved) ============ -->
+  <!-- ============ 13 FORMS ============ -->
   <section>
-    <p class="kicker">13 · Email Typography</p>
+    <p class="kicker">13 · Forms</p>
+    <h2 class="sec">The subscription coupon, modernized</h2>
+    <p class="sec-note">Fields are Inter (functional furniture), 4px radius, 44px minimum height. Focus is the global crimson ring; errors reuse the one red with fix-it copy. Affirmative checks are Sage; selection highlights are Crimson. No pills — the tag selector is square-cornered, and the subscribe bar takes the 2px Ink frame as the page's main instrument.</p>
+
+    <div class="demo">
+      <p class="demo-caption">Text input — states</p>
+      <div class="state-grid" style="align-items:flex-start">
+        <span><input class="text-input" style="min-width:200px" placeholder="Springfield, OH" aria-label="Demo default"><span class="state-label">Default</span></span>
+        <span><input class="text-input is-hover" style="min-width:200px" placeholder="Springfield, OH" aria-label="Demo hover"><span class="state-label">Hover — slate border</span></span>
+        <span><input class="text-input is-focus" style="min-width:200px" value="Springf" aria-label="Demo focus"><span class="state-label">Focus — crimson ring</span></span>
+        <span><input class="text-input is-error" style="min-width:200px" value="Sprngfld" aria-invalid="true" aria-label="Demo error"><span class="state-label">Error</span></span>
+        <span><input class="text-input is-disabled" style="min-width:200px" value="Springfield, OH" disabled aria-label="Demo disabled"><span class="state-label">Disabled</span></span>
+      </div>
+    </div>
+
+    <div class="demo">
+      <p class="demo-caption">Field anatomy — label, helper, error</p>
+      <div style="max-width:340px;margin-bottom:22px">
+        <label class="field-label" for="f-email">Email <span class="req">*</span></label>
+        <input class="text-input" id="f-email" type="email" placeholder="name@example.com">
+        <p class="helper-text">We send one edition each morning. No spam, ever.</p>
+      </div>
+      <div style="max-width:340px">
+        <label class="field-label" for="f-email-err">Email <span class="req">*</span></label>
+        <input class="text-input is-error" id="f-email-err" type="email" value="corry@braving" aria-invalid="true">
+        <p class="error-msg">⚠ That address is missing its ending — try something like name@example.com.</p>
+      </div>
+      <p style="font-family:var(--font-ui);font-size:13px;color:var(--slate);margin-top:16px">Error text replaces helper text — never both. Required marker is a crimson asterisk.</p>
+    </div>
+
+    <div class="demo">
+      <p class="demo-caption">Textarea — with character counter (crimson at ≤10% remaining)</p>
+      <label class="field-label" for="f-note">Tell us about your town</label>
+      <textarea class="text-input" id="f-note">The riverfront plan finally passed last night, and the farmers market keeps its corner — biggest local story in years.</textarea>
+      <p class="char-counter near">462 / 500</p>
+    </div>
+
+    <div class="demo">
+      <p class="demo-caption">Select — native, ink chevron</p>
+      <div style="max-width:340px">
+        <label class="field-label" for="f-state">Your state</label>
+        <select class="text-input" id="f-state"><option>Ohio</option><option>Pennsylvania</option><option>Michigan</option></select>
+      </div>
+      <p style="font-family:var(--font-ui);font-size:13px;color:var(--slate);margin-top:12px">Date and time use native inputs styled to match. The chevron is Ink — furniture, not action.</p>
+    </div>
+
+    <div class="demo">
+      <p class="demo-caption">Checkbox (affirmative — sage) · Radio (selection — crimson)</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px">
+        <div>
+          <label class="check-row"><span class="cbox checked">✓</span>Send me the Sunday edition too</label>
+          <label class="check-row"><span class="cbox"></span>Include national obituaries</label>
+        </div>
+        <div>
+          <label class="check-row"><span class="radio checked"></span>Every morning</label>
+          <label class="check-row"><span class="radio"></span>Weekdays only</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo">
+      <p class="demo-caption">Category tag selector — square tags, crimson when selected</p>
+      <div class="tag-select">
+        <span class="tag-option selected">Money</span>
+        <span class="tag-option">Health</span>
+        <span class="tag-option is-hover">Home</span>
+        <span class="tag-option">Tech</span>
+        <span class="tag-option">Travel</span>
+      </div>
+      <p style="font-family:var(--font-ui);font-size:13px;color:var(--slate);margin-top:12px">Single- or multi-select taxonomies. Hover fills cream; 44px minimum height.</p>
+    </div>
+
+    <div class="demo">
+      <p class="demo-caption">Subscribe bar — the brand's hero form control (2px ink frame)</p>
+      <div class="subscribe-bar">
+        <input type="email" placeholder="name@example.com" aria-label="Email address">
+        <button type="button">Get the morning edition</button>
+      </div>
+    </div>
+
+    <div class="demo">
+      <p class="demo-caption">Composed pattern — form section header grouping fields</p>
+      <h4 class="form-section-header">Your route</h4>
+      <div style="max-width:340px;margin-bottom:16px">
+        <label class="field-label" for="f-zip">ZIP code <span class="req">*</span></label>
+        <input class="text-input" id="f-zip" inputmode="numeric" placeholder="45501">
+        <p class="helper-text">Sets your town and state sections.</p>
+      </div>
+      <label class="check-row" style="margin-bottom:18px"><span class="cbox checked">✓</span>Send me the Sunday edition too</label>
+      <a class="btn btn-primary btn-default" href="#">Start my subscription →</a>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- ============ 14 EMAIL TYPOGRAPHY (approved) ============ -->
+  <section>
+    <p class="kicker">14 · Email Typography</p>
     <h2 class="sec">One fallback, chosen on purpose: Georgia</h2>
     <p class="sec-note">Approved. Email serif is Georgia (headlines + body), UI furniture Helvetica/Arial, masthead always the PNG. Below, the same story in both tiers — the right panel is real Georgia, what a Gmail reader gets.</p>
     <div class="logo-panels">
@@ -721,9 +852,9 @@
 
   <hr class="rule">
 
-  <!-- ============ 14 LAYOUT & ACCESSIBILITY ============ -->
+  <!-- ============ 15 LAYOUT & ACCESSIBILITY ============ -->
   <section>
-    <p class="kicker">14 · Layout &amp; Accessibility</p>
+    <p class="kicker">15 · Layout &amp; Accessibility</p>
     <h2 class="sec">The grid and the floor</h2>
     <p class="sec-note">Content widths, breakpoints, and the non-negotiables. The audience is the oldest in the portfolio: the floors below are brand traits, not compliance minimums.</p>
     <div class="demo" style="overflow-x:auto">
@@ -754,9 +885,9 @@
 
   <hr class="rule">
 
-  <!-- ============ 15 PHOTOGRAPHY (approved) ============ -->
+  <!-- ============ 16 PHOTOGRAPHY (approved) ============ -->
   <section>
-    <p class="kicker">15 · Photography</p>
+    <p class="kicker">16 · Photography</p>
     <h2 class="sec">Wire-photo sensibility, not stock gloss</h2>
     <p class="sec-note">Approved. Documentary imagery, natural light, muted warm tones. People 50+ as capable subjects. Every editorial photo takes a cutline (§ 08). No illustration systems, no 3D renders, no emoji in editorial surfaces.</p>
   </section>
