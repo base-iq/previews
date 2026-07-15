@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>LocalUpdate — Design System Showcase</title>
+<link rel="icon" href="../assets/logos/localupdate-icon-cobalt.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,400;0,500;0,600;0,700;0,900;1,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* color tokens */
+    --black:#111411; --body:#33362F; --gray:#5E625A; --muted:#7F837B;
+    --rule:#D8D8D2; --tint:#F1F1EE; --paper:#FCFCFA; --white:#FFFFFF;
+    --cobalt:#2036B1; --deep-cobalt:#16277F; --cobalt-light:#93A8FF;
+    --press-green:#1F7A38; --signal-red:#A8231C;
+    /* type */
+    --franklin:"Libre Franklin",Helvetica,Arial,sans-serif;
+    --stamp-face:"Courier Prime","Courier New",monospace;
+    /* spacing (4px base) */
+    --s-4:4px; --s-8:8px; --s-12:12px; --s-16:16px; --s-24:24px; --s-32:32px; --s-48:48px; --s-64:64px; --s-96:96px;
+    /* radius: none. corners are square, full stop. */
+    /* shadow policy: none; overlay exception only */
+    --shadow-overlay:0 2px 10px rgba(17,20,17,.14);
+    /* motion */
+    --duration-micro:.12s;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--paper);color:var(--body);font-family:var(--franklin);font-size:17px;line-height:1.65}
+  .wrap{max-width:940px;margin:0 auto;padding:0 20px}
+  :focus-visible{outline:2px solid var(--cobalt);outline-offset:2px}
+
+  /* ---- canonical masthead: the tape stack ---- */
+  .tape{border-top:5px solid var(--black)}
+  .mast-zone{text-align:center;padding:30px 16px 0}
+  .mast-zone img{height:44px;width:auto;display:inline-block}
+  @media(max-width:700px){.mast-zone img{height:32px}}
+  .date-row{margin-top:22px;border-top:1px solid var(--black);border-bottom:1px solid var(--black);padding:8px 0;font-family:var(--stamp-face);font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--body);display:flex;justify-content:center;gap:26px;flex-wrap:wrap}
+  .date-row .flag{color:var(--cobalt);font-weight:700}
+
+  /* ---- section chrome ---- */
+  section{padding:54px 0 6px}
+  .sec-slug{display:inline-block;background:var(--black);color:var(--paper);font-weight:700;font-size:12px;letter-spacing:.16em;text-transform:uppercase;padding:6px 14px}
+  h2.sec{font-weight:900;font-size:28px;letter-spacing:-.015em;color:var(--black);line-height:1.15;margin:14px 0 8px}
+  .sec-note{font-size:15.5px;color:var(--gray);max-width:660px;margin-bottom:26px}
+  .subhead{font-weight:700;font-size:19px;color:var(--black);margin:32px 0 12px;letter-spacing:-.01em}
+  .demo{background:var(--white);border:1px solid var(--rule);padding:26px;margin-bottom:18px}
+  .demo-caption{font-family:var(--stamp-face);font-size:12px;color:var(--gray);letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px}
+  .state-label{font-family:var(--stamp-face);font-size:11px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;display:block;margin-top:8px;text-align:center}
+  .state-grid{display:flex;gap:20px;flex-wrap:wrap;align-items:flex-end}
+  .cols2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:700px){.cols2{grid-template-columns:1fr}}
+
+  /* ---- swatches ---- */
+  .swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:12px;margin-bottom:10px}
+  .swatch{border:1px solid var(--rule);background:var(--white)}
+  .swatch .chip{height:70px;border-bottom:1px solid var(--rule)}
+  .swatch .meta{padding:9px 11px}
+  .swatch .name{font-size:12.5px;font-weight:700;color:var(--black)}
+  .swatch .hex,.swatch .ratio{font-family:var(--stamp-face);font-size:11.5px;color:var(--gray)}
+
+  /* ---- type specimens ---- */
+  .spec{border-top:1px solid var(--rule);padding:16px 0;display:grid;grid-template-columns:1fr;gap:6px}
+  @media(min-width:700px){.spec{grid-template-columns:225px 1fr;align-items:baseline}}
+  .spec .lab{font-family:var(--stamp-face);font-size:11.5px;color:var(--gray);letter-spacing:.05em;text-transform:uppercase}
+  .t-h1{font-weight:900;font-size:36px;line-height:1.1;letter-spacing:-.015em;color:var(--black)}
+  .t-h2{font-weight:900;font-size:26px;line-height:1.2;letter-spacing:-.015em;color:var(--black)}
+  .t-h3{font-weight:700;font-size:20px;line-height:1.3;letter-spacing:-.01em;color:var(--black)}
+  .t-body{font-size:17px;line-height:1.65;color:var(--body);max-width:560px}
+  .t-lede{font-size:19px;line-height:1.55;color:var(--body);max-width:600px}
+  .t-kicker{font-weight:700;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--cobalt)}
+  .t-stamp{font-family:var(--stamp-face);font-weight:700;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--gray)}
+  .t-fine{font-size:13px;color:var(--gray)}
+
+  /* ---- logo chips ---- */
+  .chipbox{padding:34px 22px;display:flex;align-items:center;justify-content:center;min-height:120px}
+  .chip-light{background:var(--white);border:1px solid var(--rule)}
+  .chip-dark{background:var(--black)}
+  .chipbox img{max-width:min(320px,80%);height:auto}
+  .chipbox img.icon{width:84px}
+
+  /* ---- spacing / rules demos ---- */
+  .space-row{display:flex;align-items:center;gap:14px;padding:5px 0;font-family:var(--stamp-face);font-size:12px;color:var(--gray)}
+  .space-row .bar{background:var(--cobalt);height:14px}
+  .space-row code{min-width:56px;color:var(--black)}
+  .rule-demo{margin:12px 0 4px}
+  .rule-5{border-top:5px solid var(--black)}
+  .rule-b1{border-top:1px solid var(--black)}
+  .rule-g1{border-top:1px solid var(--rule)}
+  .rule-lab{font-family:var(--stamp-face);font-size:11.5px;color:var(--gray);margin-bottom:16px;text-transform:uppercase;letter-spacing:.05em}
+
+  /* ---- buttons & links ---- */
+  .btn{display:inline-flex;align-items:center;justify-content:center;font-family:var(--franklin);font-weight:700;letter-spacing:.02em;border-radius:0;text-decoration:none;cursor:pointer;border:2px solid transparent;transition:background-color var(--duration-micro),color var(--duration-micro),border-color var(--duration-micro)}
+  .btn-sm{font-size:14px;padding:9px 20px;min-height:38px}
+  .btn-default{font-size:15px;padding:13px 30px;min-height:46px}
+  .btn-lg{font-size:17px;padding:15px 36px;min-height:50px}
+  .btn-primary{background:var(--cobalt);color:#fff}
+  .btn-primary:hover,.btn-primary.is-hover{background:var(--deep-cobalt)}
+  .btn-primary.is-disabled{background:var(--rule);color:var(--muted);cursor:not-allowed}
+  .btn-secondary{background:transparent;color:var(--black);border-color:var(--black)}
+  .btn-secondary:hover,.btn-secondary.is-hover{background:var(--tint)}
+  .btn-secondary.is-disabled{border-color:var(--rule);color:var(--muted);cursor:not-allowed}
+  a.ed-link{color:var(--cobalt);text-decoration:underline;text-underline-offset:3px;font-weight:600}
+  a.ed-link:hover{color:var(--deep-cobalt)}
+  a.ui-link{font-weight:700;color:var(--cobalt);text-decoration:none}
+  a.ui-link:hover{text-decoration:underline;text-underline-offset:3px}
+  a.muted-link{font-weight:500;color:var(--gray);text-decoration:none}
+  a.muted-link:hover{color:var(--cobalt)}
+
+  /* ---- header / footer demos ---- */
+  .header-demo{border:1px solid var(--rule);background:var(--paper)}
+  .header-demo .tape{border-top-width:5px}
+  .header-demo .hd-mast{text-align:center;padding:22px 16px 0}
+  .header-demo .hd-mast img{height:38px}
+  .header-demo .date-row{margin-top:18px;font-size:12px}
+  .header-demo nav{display:flex;justify-content:center;gap:26px;padding:13px;font-size:14px;font-weight:600;flex-wrap:wrap}
+  .header-demo nav a{color:var(--body);text-decoration:none}
+  .header-demo nav a:hover{color:var(--cobalt);text-decoration:underline;text-underline-offset:3px}
+  .footer-demo{background:var(--black);padding:34px 28px 20px;color:#B9BCB4;font-size:14px}
+  .footer-demo img{height:22px;margin-bottom:16px}
+  .footer-demo .cols{display:flex;gap:48px;flex-wrap:wrap;padding-bottom:20px;border-bottom:1px solid rgba(255,255,255,.14);margin-bottom:14px}
+  .footer-demo .col h4{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#fff;margin-bottom:10px}
+  .footer-demo .col a{display:block;color:#B9BCB4;text-decoration:none;padding:3px 0;font-weight:500}
+  .footer-demo .col a:hover{color:var(--cobalt-light)}
+  .footer-demo .fine{font-size:12px;color:rgba(255,255,255,.55)}
+
+  /* ---- furniture ---- */
+  .new-flag{color:var(--cobalt);font-weight:900;font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+  .stamp-box{display:inline-block;font-family:var(--stamp-face);font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--body);border:1.5px solid var(--body);padding:3px 9px}
+  .stamp-line{font-family:var(--stamp-face);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--gray)}
+  .qlist{list-style:none}
+  .qlist li{padding:6px 0 6px 22px;position:relative;font-size:16px}
+  .qlist li::before{content:"■";color:var(--cobalt);font-size:10px;position:absolute;left:2px;top:11px}
+  .b-item{padding:14px 0 16px;border-bottom:1px solid var(--rule)}
+  .b-item:last-child{border-bottom:none}
+  .b-item h4{font-weight:700;font-size:19px;line-height:1.25;letter-spacing:-.01em;color:var(--black);display:inline}
+  .b-item .hedrow{margin-bottom:5px}
+  .b-item p{font-size:15px;line-height:1.55}
+  .b-item .meta{margin-top:6px}
+
+  /* ---- editorial ---- */
+  .byline-row{font-size:13px;color:var(--gray);border-top:1px solid var(--black);border-bottom:1px solid var(--black);padding:9px 0;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .byline-row .author{font-weight:700;color:var(--black)}
+  .pull-quote{border-top:1px solid var(--black);border-bottom:1px solid var(--black);padding:20px 0;margin:8px 0}
+  .pull-quote p{font-weight:900;font-size:22px;line-height:1.3;letter-spacing:-.01em;color:var(--black)}
+  .pull-quote cite{display:block;font-style:normal;margin-top:12px}
+  .pull-quote cite .stamp-line{color:var(--gray)}
+  .pull-quote cite::before{content:"■ ";color:var(--cobalt);font-size:10px}
+  .stat-callout{background:var(--tint);border-left:3px solid var(--cobalt);padding:18px 22px;font-size:16px;line-height:1.6}
+  .stat-callout strong{font-weight:900;color:var(--black)}
+
+  /* ---- CTAs ---- */
+  .inline-cta{background:var(--tint);padding:16px 20px;font-size:16px;line-height:1.6}
+  .midpage-cta{background:var(--tint);text-align:center;padding:26px 24px}
+  .midpage-cta .lead{font-size:17px;color:var(--body);margin:6px 0 18px}
+  .bottom-cta{text-align:center;padding:0}
+  .bottom-cta .tape{margin-bottom:26px}
+  .bottom-cta h4{font-weight:900;font-size:24px;letter-spacing:-.015em;color:var(--black);margin:0 0 6px}
+  .bottom-cta .sub{font-size:15px;color:var(--gray);margin-bottom:20px}
+  .btn-row{display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+  .alt-link{display:block;margin-top:16px;font-size:14px;color:var(--gray)}
+
+  /* ---- feedback ---- */
+  .alert{background:var(--tint);padding:15px 20px;font-size:15px;line-height:1.5;display:flex;gap:12px;margin-bottom:12px}
+  .alert .ic{font-weight:700;flex-shrink:0}
+  .alert-info{border-left:3px solid var(--black)}
+  .alert-info .ic{color:var(--black)}
+  .alert-error{border-left:3px solid var(--signal-red)}
+  .alert-error .ic{color:var(--signal-red)}
+  .alert-success{border-left:3px solid var(--press-green)}
+  .alert-success .ic{color:var(--press-green)}
+  .confirm{text-align:center;padding:34px 24px}
+  .confirm .sq{width:64px;height:64px;background:var(--press-green);color:#fff;font-weight:700;font-size:30px;display:inline-flex;align-items:center;justify-content:center;margin-bottom:16px}
+  .confirm h4{font-weight:900;font-size:26px;letter-spacing:-.015em;color:var(--black);margin-bottom:8px}
+  .confirm p{font-size:16px;max-width:480px;margin:0 auto}
+
+  /* ---- forms ---- */
+  .field{margin-bottom:20px;max-width:440px}
+  .field label{display:block;font-weight:700;font-size:14px;color:var(--black);margin-bottom:6px}
+  .field label .req{color:var(--cobalt);font-weight:900}
+  .input,.select,.textarea{width:100%;background:var(--white);border:1px solid var(--rule);border-radius:0;padding:12px 14px;min-height:44px;font-family:var(--franklin);font-size:16px;color:var(--body);transition:border-color var(--duration-micro)}
+  .input::placeholder,.textarea::placeholder{color:var(--muted)}
+  .input:hover,.select:hover,.textarea:hover{border-color:var(--gray)}
+  .input:focus,.select:focus,.textarea:focus{border-color:var(--cobalt)}
+  .input.is-error{border-color:var(--signal-red)}
+  .input.is-disabled{background:var(--tint);color:var(--muted);cursor:not-allowed}
+  .textarea{min-height:110px;resize:vertical}
+  .select{appearance:none;background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="8" viewBox="0 0 12 8"><path d="M1 1l5 5 5-5" fill="none" stroke="%23111411" stroke-width="2"/></svg>');background-repeat:no-repeat;background-position:right 14px center;padding-right:40px}
+  .helper{font-size:13px;color:var(--gray);line-height:1.5;margin-top:6px}
+  .error-text{font-size:14px;font-weight:600;color:var(--signal-red);line-height:1.5;margin-top:6px}
+  .counter{font-family:var(--stamp-face);font-size:12px;color:var(--gray);text-align:right;margin-top:5px}
+  .counter.near{color:var(--signal-red)}
+  .form-sec{font-weight:900;font-size:19px;letter-spacing:-.01em;color:var(--black);border-bottom:1px solid var(--black);padding-bottom:8px;margin:30px 0 18px}
+  .check-row{display:flex;align-items:center;gap:10px;padding:6px 0;font-size:15px}
+  .cbox{width:20px;height:20px;border:1.5px solid var(--gray);background:var(--white);display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+  .cbox.checked{background:var(--press-green);border-color:var(--press-green);color:#fff;font-weight:700;font-size:13px}
+  .radio{width:20px;height:20px;border:1.5px solid var(--gray);border-radius:50%;background:var(--white);display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+  .radio.selected{border-color:var(--cobalt)}
+  .radio.selected::after{content:"";width:10px;height:10px;border-radius:50%;background:var(--cobalt)}
+  .tags{display:flex;flex-wrap:wrap;gap:8px}
+  .tag{background:var(--white);border:1px solid var(--rule);border-radius:0;padding:10px 16px;min-height:44px;font-family:var(--franklin);font-weight:500;font-size:15px;color:var(--body);cursor:pointer;transition:background-color var(--duration-micro)}
+  .tag:hover{background:var(--tint)}
+  .tag.selected{background:var(--cobalt);border-color:var(--cobalt);color:#fff;font-weight:700}
+  .subscribe-bar{display:flex;border:2px solid var(--black);background:var(--white);max-width:460px}
+  .subscribe-bar input{flex:1;border:none;outline:none;padding:12px 16px;min-height:48px;font-family:var(--franklin);font-size:16px;color:var(--body);background:transparent;min-width:0}
+  .subscribe-bar input::placeholder{color:var(--muted)}
+  .subscribe-bar button{background:var(--cobalt);color:#fff;border:none;font-family:var(--franklin);font-weight:700;font-size:15px;padding:0 20px;cursor:pointer;transition:background-color var(--duration-micro)}
+  .subscribe-bar button:hover{background:var(--deep-cobalt)}
+  .subscribe-bar:focus-within{border-color:var(--cobalt)}
+
+  /* ---- email proof ---- */
+  .email-pane{border:1px solid var(--rule);background:var(--white);padding:22px}
+  .email-pane .lab{font-family:var(--stamp-face);font-size:11.5px;color:var(--gray);text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px}
+  .em-hed{font-weight:900;font-size:22px;line-height:1.2;letter-spacing:-.01em;color:var(--black);margin-bottom:8px}
+  .em-body{font-size:16px;line-height:1.6;color:var(--body);margin-bottom:8px}
+  .em-stamp{font-family:var(--stamp-face);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--gray)}
+  .fb .em-hed,.fb .em-body{font-family:Helvetica,Arial,sans-serif}
+  .fb .em-stamp{font-family:"Courier New",Courier,monospace}
+
+  /* ---- layout table ---- */
+  table.plain{border-collapse:collapse;width:100%;font-size:14.5px}
+  table.plain th{text-align:left;font-weight:700;color:var(--black);border-bottom:1px solid var(--black);padding:8px 12px 8px 0}
+  table.plain td{border-bottom:1px solid var(--rule);padding:8px 12px 8px 0;vertical-align:top}
+  table.plain code{font-family:var(--stamp-face);font-size:13px}
+
+  .photo-ph{background:var(--tint);border:1px solid var(--rule);height:170px;display:flex;align-items:center;justify-content:center;font-family:var(--stamp-face);font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+  .cutline{border-top:1px solid var(--rule);margin-top:10px;padding-top:8px}
+
+  footer.colophon{padding:48px 0 80px}
+</style>
+</head>
+<body>
+
+<div class="tape"></div>
+<div class="mast-zone wrap">
+  <img src="../assets/logos/localupdate-full-black.svg" alt="LocalUpdate">
+  <div class="date-row"><span>Design System Showcase</span><span class="flag">■ Identity approved Jul 15, 2026</span></div>
+</div>
+
+<section class="wrap" style="padding-top:34px">
+  <h2 class="sec">The bulletin: black, white, and one electric interruption</h2>
+  <p class="sec-note">Living visual reference for <code style="font-family:var(--stamp-face);font-size:14px">brain/brands/localupdate/design-system.md</code>. Three governing rules: <strong>90% of any surface is black on white</strong> (cobalt is rationed to the masthead slug, links, NEW flags, and one primary button per viewport); <strong>flat and square</strong> (radius 0, no shadows — depth comes from black rules and reversed blocks); <strong>it arrives, it doesn't animate</strong> (motion is a 120ms color change, nothing moves).</p>
+</section>
+
+<!-- 01 COLOR -->
+<section class="wrap">
+  <span class="sec-slug">01 · Color tokens</span>
+  <h2 class="sec">Ratios measured on Print White</h2>
+  <div class="subhead">Core</div>
+  <div class="swatches">
+    <div class="swatch"><div class="chip" style="background:#111411"></div><div class="meta"><div class="name">Bulletin Black</div><div class="hex">#111411</div><div class="ratio">18.1:1 · AAA</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#33362F"></div><div class="meta"><div class="name">Body</div><div class="hex">#33362F</div><div class="ratio">12.0:1 · AAA</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#5E625A"></div><div class="meta"><div class="name">Gray</div><div class="hex">#5E625A</div><div class="ratio">6.1:1 · AA+</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#7F837B"></div><div class="meta"><div class="name">Muted</div><div class="hex">#7F837B</div><div class="ratio">3.8:1 · decorative only</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#FCFCFA;border-bottom:1px solid #D8D8D2"></div><div class="meta"><div class="name">Print White</div><div class="hex">#FCFCFA</div><div class="ratio">page bg</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#F1F1EE"></div><div class="meta"><div class="name">Gray Tint</div><div class="hex">#F1F1EE</div><div class="ratio">panel bg · body 10.9:1</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#D8D8D2"></div><div class="meta"><div class="name">Rule</div><div class="hex">#D8D8D2</div><div class="ratio">borders only</div></div></div>
+  </div>
+  <div class="subhead">The interruption</div>
+  <div class="swatches">
+    <div class="swatch"><div class="chip" style="background:#2036B1"></div><div class="meta"><div class="name">Wire Cobalt</div><div class="hex">#2036B1</div><div class="ratio">9.2:1 · white-on 9.4:1</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#16277F"></div><div class="meta"><div class="name">Deep Cobalt</div><div class="hex">#16277F</div><div class="ratio">12.5:1 · hover</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#93A8FF"></div><div class="meta"><div class="name">Cobalt Light</div><div class="hex">#93A8FF</div><div class="ratio">8.2:1 on Black</div></div></div>
+  </div>
+  <div class="subhead">Semantic</div>
+  <div class="swatches">
+    <div class="swatch"><div class="chip" style="background:#1F7A38"></div><div class="meta"><div class="name">Press Green</div><div class="hex">#1F7A38</div><div class="ratio">5.2:1 · success only</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#A8231C"></div><div class="meta"><div class="name">Signal Red</div><div class="hex">#A8231C</div><div class="ratio">7.0:1 · errors only</div></div></div>
+  </div>
+</section>
+
+<!-- 02 TYPE -->
+<section class="wrap">
+  <span class="sec-slug">02 · Typography</span>
+  <h2 class="sec">One family, weight does the talking</h2>
+  <p class="sec-note">Libre Franklin 400–900 is the entire voice; Courier Prime appears only as the stamp. Sentence case everywhere except slugs, kickers, stamps, flags, and the masthead. Headlines never exclaim — the weight is the volume.</p>
+  <div class="spec"><span class="lab">H1 · Franklin 900 · 36/28px · −.015em</span><span class="t-h1">Council approves the Riverside rezoning, 6–1</span></div>
+  <div class="spec"><span class="lab">H2 · Franklin 900 · 26/22px</span><span class="t-h2">Three intersections get all-way stops</span></div>
+  <div class="spec"><span class="lab">H3 · Franklin 700 · 20px</span><span class="t-h3">What it means for your commute</span></div>
+  <div class="spec"><span class="lab">Lede · Franklin 400 · 19px · 1.55</span><span class="t-lede">The first paragraph after an H1 runs one size up, then body settles in at seventeen.</span></div>
+  <div class="spec"><span class="lab">Body · Franklin 400 · 17px · 1.65</span><span class="t-body">Bulletin energy comes from headlines and furniture, never from squeezing the reading size. The audience is 50+; seventeen pixels is the floor on the web, sixteen in email.</span></div>
+  <div class="spec"><span class="lab">Kicker · Franklin 700 · 12px · +.16em</span><span class="t-kicker">Your Town · Roads</span></div>
+  <div class="spec"><span class="lab">Stamp · Courier Prime 700 · 13px</span><span class="t-stamp">Updated 7:02 AM · Jul 15</span></div>
+  <div class="spec"><span class="lab">Fine print · Franklin 400 · 13px</span><span class="t-fine">Gray, never Muted — the contrast floor holds for legalese too.</span></div>
+</section>
+
+<!-- 03 LOGOS -->
+<section class="wrap">
+  <span class="sec-slug">03 · Logos</span>
+  <h2 class="sec">The wordmark and the U-block</h2>
+  <p class="sec-note">Vector-path SVGs (no font dependency) + 2x PNGs at <code style="font-family:var(--stamp-face);font-size:14px">previews/localupdate/assets/logos/</code>. The slug carries the brand: UPDATE is the word stamped in ink. Clear space = the wordmark's cap height on all sides. Full mark never below 140px wide; icon never below 32px.</p>
+  <div class="cols2">
+    <div>
+      <div class="chipbox chip-light"><img src="../assets/logos/localupdate-full-black.svg" alt="LocalUpdate wordmark, black variant"></div>
+      <span class="state-label">full · black — default on light</span>
+    </div>
+    <div>
+      <div class="chipbox chip-dark"><img src="../assets/logos/localupdate-full-white.svg" alt="LocalUpdate wordmark, white variant"></div>
+      <span class="state-label">full · white — dark surfaces, footers</span>
+    </div>
+    <div>
+      <div class="chipbox chip-light"><img class="icon" src="../assets/logos/localupdate-icon-cobalt.svg" alt="LocalUpdate icon, cobalt"></div>
+      <span class="state-label">icon · cobalt — default avatar/favicon</span>
+    </div>
+    <div>
+      <div class="chipbox chip-dark"><img class="icon" src="../assets/logos/localupdate-icon-black.svg" alt="LocalUpdate icon, black"></div>
+      <span class="state-label">icon · black — when the field clashes</span>
+    </div>
+  </div>
+</section>
+
+<!-- 04 SPACING / RULES -->
+<section class="wrap">
+  <span class="sec-slug">04 · Spacing · Rules · Depth</span>
+  <h2 class="sec">Flat and square</h2>
+  <p class="sec-note">4px base scale. Radius is 0 everywhere — no exceptions, not even buttons. No shadows except <code style="font-family:var(--stamp-face);font-size:13px">shadow-overlay</code> for elements genuinely floating (sticky bars, dropdowns). Depth comes from rules and reversed blocks.</p>
+  <div class="demo">
+    <p class="demo-caption">Spacing scale</p>
+    <div class="space-row"><code>s-4</code><span class="bar" style="width:4px"></span></div>
+    <div class="space-row"><code>s-8</code><span class="bar" style="width:8px"></span></div>
+    <div class="space-row"><code>s-12</code><span class="bar" style="width:12px"></span></div>
+    <div class="space-row"><code>s-16</code><span class="bar" style="width:16px"></span></div>
+    <div class="space-row"><code>s-24</code><span class="bar" style="width:24px"></span></div>
+    <div class="space-row"><code>s-32</code><span class="bar" style="width:32px"></span></div>
+    <div class="space-row"><code>s-48</code><span class="bar" style="width:48px"></span></div>
+    <div class="space-row"><code>s-64</code><span class="bar" style="width:64px"></span></div>
+    <div class="space-row"><code>s-96</code><span class="bar" style="width:96px"></span></div>
+    <p class="demo-caption" style="margin-top:22px">The rule system</p>
+    <div class="rule-demo rule-5"></div><p class="rule-lab">The tape — 5px Black. Opens every surface: top of page, top of email, above the bottom CTA.</p>
+    <div class="rule-demo rule-b1"></div><p class="rule-lab">1px Black — emphasis: date rows, byline rows, pull quotes, form section headers.</p>
+    <div class="rule-demo rule-g1"></div><p class="rule-lab">1px Rule gray — separation: list items, cards, table rows.</p>
+  </div>
+</section>
+
+<!-- 05 MOTION -->
+<section class="wrap">
+  <span class="sec-slug">05 · Motion</span>
+  <h2 class="sec">It arrives, it doesn't animate</h2>
+  <p class="sec-note">No entrances, no fades, no transforms, no parallax, no hover lifts. The single permitted transition: color (background, text, border, underline) at 120ms. A <code style="font-family:var(--stamp-face);font-size:13px">prefers-reduced-motion</code> guard zeroes even that. This is the stillest system in the portfolio — stiller than AmericanAdvisor, which at least fades in.</p>
+</section>
+
+<!-- 06 BUTTONS & LINKS -->
+<section class="wrap">
+  <span class="sec-slug">06 · Buttons &amp; Links</span>
+  <h2 class="sec">Actions, set square</h2>
+  <div class="demo">
+    <p class="demo-caption">Primary — one per viewport · Franklin 700 · radius 0</p>
+    <div class="state-grid">
+      <div><a class="btn btn-primary btn-default" href="#">Get the briefing</a><span class="state-label">default</span></div>
+      <div><a class="btn btn-primary btn-default is-hover" href="#">Get the briefing</a><span class="state-label">hover</span></div>
+      <div><a class="btn btn-primary btn-default is-disabled" href="#">Get the briefing</a><span class="state-label">disabled</span></div>
+      <div><a class="btn btn-primary btn-sm" href="#">Get the briefing</a><span class="state-label">small</span></div>
+      <div><a class="btn btn-primary btn-lg" href="#">Get the briefing</a><span class="state-label">large</span></div>
+    </div>
+  </div>
+  <div class="demo">
+    <p class="demo-caption">Secondary — 2px black frame</p>
+    <div class="state-grid">
+      <div><a class="btn btn-secondary btn-default" href="#">See all editions</a><span class="state-label">default</span></div>
+      <div><a class="btn btn-secondary btn-default is-hover" href="#">See all editions</a><span class="state-label">hover</span></div>
+      <div><a class="btn btn-secondary btn-default is-disabled" href="#">See all editions</a><span class="state-label">disabled</span></div>
+    </div>
+  </div>
+  <div class="demo">
+    <p class="demo-caption">Link registers</p>
+    <p style="margin-bottom:10px">Editorial, inside prose: the council <a class="ed-link" href="#">approved the rezoning</a> on Tuesday.</p>
+    <p style="margin-bottom:10px">UI, standalone: <a class="ui-link" href="#">Every detail we have →</a></p>
+    <p>Muted, footer nav: <a class="muted-link" href="#">Archive</a></p>
+  </div>
+</section>
+
+<!-- 07 HEADER / FOOTER -->
+<section class="wrap">
+  <span class="sec-slug">07 · Site header &amp; Footer</span>
+  <h2 class="sec">The tape stack and the colophon</h2>
+  <p class="sec-note">The canonical presentation — tape, masthead, date row — is the brand's most recognizable moment. Don't decompose it casually.</p>
+  <div class="header-demo">
+    <div class="tape"></div>
+    <div class="hd-mast"><img src="../assets/logos/localupdate-full-black.svg" alt="LocalUpdate"></div>
+    <div class="date-row"><span>Tuesday · Jul 15</span><span class="flag">■ Springfield</span><span>Nº 212</span></div>
+    <nav><a href="#">Today</a><a href="#">Your town</a><a href="#">Your state</a><a href="#">Happenings</a><a href="#">Archive</a></nav>
+  </div>
+  <div style="height:18px"></div>
+  <div class="footer-demo">
+    <img src="../assets/logos/localupdate-full-white.svg" alt="LocalUpdate">
+    <div class="cols">
+      <div class="col"><h4>Editions</h4><a href="#">Morning briefing</a><a href="#">Evening briefing</a><a href="#">Archive</a></div>
+      <div class="col"><h4>Company</h4><a href="#">About</a><a href="#">Advertise</a><a href="#">Contact</a></div>
+    </div>
+    <p class="fine">© 2026 LocalUpdate · Know what changed. · Privacy · Terms</p>
+  </div>
+</section>
+
+<!-- 08 FURNITURE -->
+<section class="wrap">
+  <span class="sec-slug">08 · Bulletin furniture</span>
+  <h2 class="sec">The devices that make it ours</h2>
+  <div class="demo">
+    <p class="demo-caption">The slug — reversed section header. Black only; the cobalt slug belongs to the masthead alone.</p>
+    <span class="sec-slug">Your Town</span>
+    <p class="demo-caption" style="margin-top:24px">The NEW flag — marks items new since the last edition. Ration it: if everything is new, nothing is.</p>
+    <div class="b-item" style="border-bottom:none;padding-bottom:0">
+      <div class="hedrow"><span class="new-flag">New&nbsp;&nbsp;</span><h4>Trader Joe's signs the Elm Street lease</h4></div>
+      <p>The chain confirmed a late-fall opening in the old Rexall building. <a class="ed-link" href="#">Every detail we have</a></p>
+      <p class="meta stamp-line">7:02 AM · Retail</p>
+    </div>
+    <p class="demo-caption" style="margin-top:24px">The stamp — boxed for provenance moments, unboxed for meta lines</p>
+    <span class="stamp-box">Updated 7:02 AM</span>&nbsp;&nbsp;<span class="stamp-line">6:48 AM · City Hall</span>
+    <p class="demo-caption" style="margin-top:24px">The block bullet</p>
+    <ul class="qlist">
+      <li>Square, cobalt, small — the bulletin's only list marker.</li>
+      <li>Used for quick lists and edition indexes.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 09 EDITORIAL -->
+<section class="wrap">
+  <span class="sec-slug">09 · Editorial components</span>
+  <h2 class="sec">The story's working parts</h2>
+  <div class="demo">
+    <p class="demo-caption">Byline row — 1px black rules</p>
+    <div class="byline-row"><span class="author">The LocalUpdate Desk</span><span class="stamp-line">Jul 15, 2026 · 3 min read</span></div>
+    <p class="demo-caption" style="margin-top:24px">Pull quote — weight, not decoration</p>
+    <div class="pull-quote">
+      <p>"Nobody asked for a slower answer. They asked for a straight one."</p>
+      <cite><span class="stamp-line">Marta Delgado · Council President</span></cite>
+    </div>
+    <p class="demo-caption" style="margin-top:24px">Stat callout — gray tint, cobalt rule</p>
+    <div class="stat-callout">The detour adds <strong>six minutes</strong> to the average east-side commute — <strong>240 apartments</strong> ride on the rezoning.</div>
+    <p class="demo-caption" style="margin-top:24px">Photo + stamp cutline — every editorial photo takes one</p>
+    <div class="photo-ph">Photo</div>
+    <div class="cutline"><span class="stamp-line">Elm Street, Tuesday morning · Staff photo</span></div>
+  </div>
+</section>
+
+<!-- 10 CTAs -->
+<section class="wrap">
+  <span class="sec-slug">10 · CTAs</span>
+  <h2 class="sec">Asking for the click, flatly</h2>
+  <div class="demo">
+    <p class="demo-caption">Inline CTA — tint strip, editorial link</p>
+    <div class="inline-cta">Reading a forward? <a class="ed-link" href="#">Get your own morning briefing</a> — it's free.</div>
+    <p class="demo-caption" style="margin-top:24px">Mid-page CTA</p>
+    <div class="midpage-cta">
+      <span class="t-kicker">The Morning Briefing</span>
+      <p class="lead">Every weekday, what changed in your town — in five minutes.</p>
+      <a class="btn btn-primary btn-default" href="#">Get the briefing</a>
+    </div>
+    <p class="demo-caption" style="margin-top:24px">Bottom CTA — closes the page under the tape</p>
+    <div class="bottom-cta">
+      <div class="tape"></div>
+      <h4>Know what changed</h4>
+      <p class="sub">Free, five minutes, every weekday morning.</p>
+      <div class="btn-row"><a class="btn btn-primary btn-default" href="#">Get the briefing</a><a class="btn btn-secondary btn-default" href="#">See a sample</a></div>
+      <span class="alt-link">Prefer evenings? <a class="ui-link" href="#">Get the evening edition</a></span>
+    </div>
+  </div>
+</section>
+
+<!-- 11 FEEDBACK -->
+<section class="wrap">
+  <span class="sec-slug">11 · Feedback</span>
+  <h2 class="sec">Alerts and the done-state</h2>
+  <p class="sec-note">Semantic color speaks only here: green confirms, red corrects. Alerts sit on Gray Tint — no colored fills; the 3px rule and icon carry it.</p>
+  <div class="demo">
+    <div class="alert alert-info"><span class="ic">ⓘ</span><span>Road closures update at 6 AM and noon; times shown are local.</span></div>
+    <div class="alert alert-error"><span class="ic">⚠</span><span>That address is missing its ending — try something like name@example.com.</span></div>
+    <div class="alert alert-success"><span class="ic">✓</span><span>You're on the list. First briefing lands tomorrow at 7 AM.</span></div>
+    <div class="confirm">
+      <div class="sq">✓</div>
+      <h4>You're on the list</h4>
+      <p>First briefing lands tomorrow at 7 AM. Add us to your contacts so we don't get filed under promotions.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 12 FORMS -->
+<section class="wrap">
+  <span class="sec-slug">12 · Forms</span>
+  <h2 class="sec">Square fields, straight answers</h2>
+  <p class="sec-note">Fields are Franklin, white on Print White, radius 0, 44px minimum. Checks (affirmative) are Press Green; selections (chosen option) are Cobalt; the required asterisk is Cobalt — red is reserved for errors, which always say the fix.</p>
+  <div class="demo">
+    <p class="demo-caption">Subscribe bar — the hero control, 2px black frame, once per page</p>
+    <div class="subscribe-bar"><input type="email" aria-label="Email address" placeholder="you@example.com"><button type="button">Get the briefing</button></div>
+    <div class="form-sec">Text fields</div>
+    <div class="field"><label>Email <span class="req">*</span></label><input class="input" type="email" placeholder="you@example.com"><p class="helper">One briefing each weekday morning. No spam, ever.</p></div>
+    <div class="field"><label>Email <span class="req">*</span></label><input class="input is-error" type="email" value="corry@braving"><p class="error-text">⚠ That address is missing its ending — try something like name@example.com.</p></div>
+    <div class="field"><label>Tip the desk</label><textarea class="textarea" placeholder="What changed? Where? When did you notice?"></textarea><p class="counter near">468 / 500</p></div>
+    <div class="field"><label>Neighborhood</label><select class="select"><option>East side</option></select></div>
+    <div class="form-sec">Choices</div>
+    <div class="check-row"><span class="cbox checked">✓</span><span>Also send the evening briefing</span></div>
+    <div class="check-row"><span class="cbox"></span><span>Weekend happenings roundup</span></div>
+    <div class="check-row" style="margin-top:8px"><span class="radio selected"></span><span>Every weekday</span></div>
+    <div class="check-row"><span class="radio"></span><span>Monday, Wednesday, Friday</span></div>
+    <div style="margin-top:16px" class="tags"><button class="tag selected" type="button">Roads</button><button class="tag" type="button">Schools</button><button class="tag selected" type="button">Openings</button><button class="tag" type="button">City Hall</button></div>
+  </div>
+</section>
+
+<!-- 13 EMAIL -->
+<section class="wrap">
+  <span class="sec-slug">13 · Email typography</span>
+  <h2 class="sec">Designed on the fallback: Helvetica &amp; Courier</h2>
+  <p class="sec-note">Gmail and Outlook render no web fonts. The email stack is Helvetica/Arial for everything, Courier New for stamps — the whole system degrades in one move. Franklin and Courier Prime ride along as progressive enhancement for Apple Mail. The masthead is always a PNG in email. Email body floor: 16px; nothing below 13px.</p>
+  <div class="cols2">
+    <div class="email-pane">
+      <p class="lab">Web · Franklin + Courier Prime</p>
+      <p class="em-stamp">7:02 AM · Your Town</p>
+      <p class="em-hed">Trader Joe's signs the Elm Street lease</p>
+      <p class="em-body">The chain confirmed a late-fall opening in the old Rexall building — its first store on the east side.</p>
+    </div>
+    <div class="email-pane fb">
+      <p class="lab">Email · Helvetica + Courier New</p>
+      <p class="em-stamp">7:02 AM · Your Town</p>
+      <p class="em-hed">Trader Joe's signs the Elm Street lease</p>
+      <p class="em-body">The chain confirmed a late-fall opening in the old Rexall building — its first store on the east side.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 14 LAYOUT & A11Y -->
+<section class="wrap">
+  <span class="sec-slug">14 · Layout &amp; Accessibility</span>
+  <h2 class="sec">The grid and the floor</h2>
+  <div class="demo">
+    <table class="plain">
+      <tr><th>Context</th><th>Spec</th></tr>
+      <tr><td>Site sections</td><td>max-width 1080px</td></tr>
+      <tr><td>Articles / narrow content</td><td>max-width 680px</td></tr>
+      <tr><td>Page padding</td><td>40px top · 20px sides · 80px bottom</td></tr>
+      <tr><td>≤ 700px</td><td>H1 → 28px, H2 → 22px, panel padding → 20px, masthead → 32px tall</td></tr>
+      <tr><td>≤ 560px</td><td>Two-column modules stack</td></tr>
+      <tr><td>Body text</td><td>17px web · 16px email — the floor, not a suggestion</td></tr>
+      <tr><td>Touch targets</td><td>≥ 44×44px on mobile</td></tr>
+      <tr><td>Focus</td><td>2px Cobalt outline, 2px offset, every interactive element</td></tr>
+      <tr><td>Motion</td><td>None to reduce — color transitions collapse under <code>prefers-reduced-motion</code></td></tr>
+      <tr><td>Muted #7F837B</td><td>Never for readable text (3.8:1)</td></tr>
+      <tr><td>Images</td><td>Every editorial photo has alt text and a stamp cutline</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- 15 PHOTOGRAPHY -->
+<section class="wrap">
+  <span class="sec-slug">15 · Photography</span>
+  <h2 class="sec">News photos, not lifestyle stock</h2>
+  <p class="sec-note">Candid, documentary, shot-on-the-scene register: the storefront that's opening, the road that's closed, the room where it was decided. Neutral color, higher contrast than the siblings' warm palettes — never filtered warm, never glossy. People 50+ appear as the capable subjects of the change, not as clip art. Every photo takes a stamp cutline. No illustration systems, no 3D renders, no emoji in editorial surfaces.</p>
+</section>
+
+<footer class="colophon wrap">
+  <div class="tape" style="margin-bottom:22px"></div>
+  <p class="stamp-line">LocalUpdate design system · seeded Jul 15, 2026 · source of truth: brain/brands/localupdate/design-system.md</p>
+</footer>
+
+</body>
+</html>
