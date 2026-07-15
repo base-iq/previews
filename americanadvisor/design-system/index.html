@@ -4,34 +4,42 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex">
-<title>AmericanAdvisor — Visual Identity Proposal</title>
+<title>AmericanAdvisor — Design System Showcase</title>
+<link rel="icon" href="../assets/logos/americanadvisor-icon-white.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Spectral:ital,wght@0,400;0,500;0,600;1,400;1,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
+    /* color tokens */
     --ink:#0E1A2B; --byline:#27324A; --slate:#5B6478; --pewter:#9AA0AE;
     --newsprint:#FBFAF7; --cream:#F3EEDE; --hairline:#E3DED2; --heavy-rule:#CFC8B7;
     --crimson:#8A2331; --deep-crimson:#6E1B27; --gilt:#B88A2E;
     --sage:#547563; --light-sage:#EEF1EC;
+    /* type */
     --font-display:"Libre Caslon Text", Georgia, serif;
     --font-body:"Spectral", Georgia, serif;
     --font-ui:"Inter", system-ui, -apple-system, sans-serif;
     --font-mono:"JetBrains Mono", ui-monospace, Menlo, monospace;
+    /* spacing (4px base) */
+    --s-4:4px; --s-8:8px; --s-12:12px; --s-16:16px; --s-24:24px; --s-32:32px; --s-48:48px; --s-64:64px; --s-96:96px;
+    /* radius — 6px is the ceiling */
+    --r-none:0; --r-xs:2px; --r-sm:4px; --r-md:6px;
+    /* shadow policy: none by default; overlay only */
+    --shadow-overlay:0 2px 12px rgba(14,26,43,.12);
+    /* motion */
+    --ease-settle:cubic-bezier(.25,1,.5,1);
+    --duration-entrance:.5s; --duration-micro:.15s; --stagger:60ms;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   body{background:var(--newsprint);color:var(--byline);font-family:var(--font-body);font-size:18px;line-height:1.7}
   .wrap{max-width:960px;margin:0 auto;padding:0 20px}
-
-  /* ---- proposal banner ---- */
-  .proposal-banner{background:var(--ink);color:#fff;font-family:var(--font-ui);font-size:13px;letter-spacing:.08em;text-transform:uppercase;text-align:center;padding:10px 16px}
-  .proposal-banner strong{color:var(--gilt);font-weight:600}
+  :focus-visible{outline:2px solid var(--crimson);outline-offset:2px}
 
   /* ---- masthead (canonical presentation) ---- */
   .masthead-band{background:var(--cream);padding:28px 16px 0;text-align:center}
   .dateline{font-family:var(--font-ui);font-size:12px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--slate)}
-  .masthead{font-family:var(--font-display);font-weight:700;font-size:clamp(34px,8vw,56px);color:var(--ink);letter-spacing:-0.01em;margin:10px 0 22px;line-height:1.1}
-  .masthead .star{color:var(--crimson);font-size:.62em;vertical-align:.12em;padding:0 .18em}
+  .masthead-band img{display:block;margin:14px auto 22px;width:min(480px,86%);height:auto}
   .double-rule{border-top:3px solid var(--ink);border-bottom:1px solid var(--ink);height:6px}
   .double-rule.soft{border-top-color:var(--heavy-rule);border-bottom-color:var(--hairline)}
 
@@ -39,10 +47,15 @@
   section{padding:56px 0 8px}
   .kicker{font-family:var(--font-ui);font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--crimson)}
   h2.sec{font-family:var(--font-display);font-weight:700;font-size:26px;color:var(--ink);line-height:1.35;margin:6px 0 8px}
-  .sec-note{font-size:16px;color:var(--slate);max-width:640px;margin-bottom:28px}
+  .sec-note{font-size:16px;color:var(--slate);max-width:680px;margin-bottom:28px}
   .rule{border:none;border-top:1px solid var(--hairline);margin:48px 0 0}
+  .subhead{font-family:var(--font-body);font-weight:600;font-size:20px;color:var(--ink);margin:34px 0 12px}
 
-  /* ---- swatches ---- */
+  /* proposed banner */
+  .proposed{position:relative;border-top:3px solid var(--crimson);padding-top:12px}
+  .proposed::before{content:"Proposed — pending approval";display:inline-block;font-family:var(--font-ui);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:var(--crimson);padding:4px 10px;border-radius:0 0 var(--r-xs) var(--r-xs);margin-bottom:18px}
+
+  /* ---- swatches / token viz ---- */
   .swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;margin-bottom:28px}
   .swatch{border:1px solid var(--hairline);background:#fff}
   .swatch .chip{height:84px;border-bottom:1px solid var(--hairline)}
@@ -51,90 +64,271 @@
   .swatch .hex{font-family:var(--font-mono);font-size:12px;color:var(--slate)}
   .swatch .use{font-size:12px;color:var(--slate);line-height:1.45;margin-top:4px}
 
-  /* ---- type specimens ---- */
   .spec{border-top:1px solid var(--hairline);padding:20px 0;display:grid;grid-template-columns:1fr;gap:6px}
   .spec .label{font-family:var(--font-ui);font-size:12px;color:var(--slate);letter-spacing:.06em;text-transform:uppercase}
   @media(min-width:700px){.spec{grid-template-columns:220px 1fr;align-items:baseline}}
 
+  .space-row{display:flex;align-items:center;gap:14px;padding:6px 0;font-family:var(--font-ui);font-size:13px;color:var(--slate)}
+  .space-row .bar{background:var(--crimson);height:16px}
+  .space-row code{font-family:var(--font-mono);font-size:12px;min-width:64px;color:var(--ink)}
+
+  .radius-demos{display:flex;gap:16px;flex-wrap:wrap}
+  .radius-demo{width:110px;height:72px;border:1px solid var(--heavy-rule);background:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:12px;color:var(--slate)}
+
   /* ---- demo panels ---- */
   .demo{background:#fff;border:1px solid var(--hairline);padding:28px;margin-bottom:20px}
   .demo-caption{font-family:var(--font-ui);font-size:12px;color:var(--slate);letter-spacing:.06em;text-transform:uppercase;margin-bottom:18px}
+  .state-label{font-family:var(--font-ui);font-size:11px;color:var(--pewter);letter-spacing:.06em;text-transform:uppercase;display:block;margin-top:8px;text-align:center}
+  .state-grid{display:flex;gap:22px;flex-wrap:wrap;align-items:flex-end}
 
-  /* index list demo */
+  /* ---- buttons ---- */
+  .btn{display:inline-flex;align-items:center;justify-content:center;font-family:var(--font-ui);font-weight:600;border-radius:var(--r-sm);text-decoration:none;cursor:pointer;border:1px solid transparent;transition:background-color var(--duration-micro),color var(--duration-micro);min-height:44px}
+  .btn-sm{font-size:14px;padding:10px 20px;min-height:36px}
+  .btn-default{font-size:16px;padding:14px 32px}
+  .btn-lg{font-size:18px;padding:16px 40px}
+  .btn-primary{background:var(--crimson);color:#fff}
+  .btn-primary:hover{background:var(--deep-crimson)}
+  .btn-primary:active{background:var(--deep-crimson);transform:translateY(1px)}
+  .btn-primary.is-hover{background:var(--deep-crimson)}
+  .btn-primary.is-active{background:var(--deep-crimson);transform:translateY(1px)}
+  .btn-primary.is-disabled{background:var(--hairline);color:var(--pewter);cursor:not-allowed}
+  .btn-secondary{background:transparent;color:var(--ink);border-color:var(--ink)}
+  .btn-secondary:hover,.btn-secondary.is-hover{background:var(--cream)}
+  .btn-secondary:active{transform:translateY(1px)}
+  .btn-secondary.is-disabled{border-color:var(--hairline);color:var(--pewter);cursor:not-allowed}
+  a.editorial-link{color:var(--crimson);text-decoration:underline;text-underline-offset:3px}
+  a.editorial-link:hover{color:var(--deep-crimson)}
+  a.ui-link{font-family:var(--font-ui);font-weight:600;color:var(--crimson);text-decoration:none}
+  a.ui-link:hover{text-decoration:underline;text-underline-offset:3px}
+  a.muted-link{font-family:var(--font-ui);font-weight:500;color:var(--slate);text-decoration:none}
+  a.muted-link:hover{color:var(--crimson)}
+
+  /* ---- header/footer demos ---- */
+  .header-demo{border:1px solid var(--hairline);background:var(--newsprint)}
+  .header-demo .band{background:var(--cream);text-align:center;padding:20px 16px 0}
+  .header-demo .band img{width:min(300px,70%);height:auto;display:block;margin:10px auto 16px}
+  .header-demo nav{display:flex;justify-content:center;gap:28px;padding:14px;font-family:var(--font-ui);font-size:14px;font-weight:500}
+  .header-demo nav a{color:var(--byline);text-decoration:none}
+  .header-demo nav a:hover{color:var(--crimson);text-decoration:underline;text-underline-offset:3px}
+  .footer-demo{background:var(--ink);padding:36px 28px 20px;color:var(--pewter);font-family:var(--font-ui);font-size:14px}
+  .footer-demo img{height:26px;margin-bottom:14px}
+  .footer-demo .cols{display:flex;gap:48px;flex-wrap:wrap;padding-bottom:22px;border-bottom:1px solid rgba(255,255,255,.12);margin-bottom:14px}
+  .footer-demo .col h4{font-family:var(--font-ui);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#fff;margin-bottom:10px}
+  .footer-demo .col a{display:block;color:var(--pewter);text-decoration:none;padding:3px 0;font-weight:500}
+  .footer-demo .col a:hover{color:var(--gilt)}
+  .footer-demo .fine{font-size:12px;color:rgba(255,255,255,.55)}
+
+  /* ---- furniture ---- */
   .index-item{display:flex;gap:18px;padding:16px 0;border-bottom:1px solid var(--hairline);align-items:baseline}
   .index-item:last-child{border-bottom:none}
   .index-num{font-family:var(--font-display);font-weight:700;font-size:22px;color:var(--crimson);min-width:38px}
   .index-hed{font-family:var(--font-body);font-weight:600;font-size:20px;color:var(--ink);line-height:1.35}
   .index-kicker{font-family:var(--font-ui);font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--slate);margin-top:4px}
-
-  /* story demo */
-  .story-hed{font-family:var(--font-display);font-weight:700;font-size:32px;color:var(--ink);line-height:1.2;margin:6px 0 10px}
-  .story-dek{font-size:19px;color:var(--slate);line-height:1.5;margin-bottom:16px;font-style:italic}
-  .byline-row{font-family:var(--font-ui);font-size:13px;color:var(--slate);border-top:1px solid var(--hairline);border-bottom:1px solid var(--hairline);padding:8px 0;margin-bottom:18px}
   .dropcap::first-letter{font-family:var(--font-display);font-weight:700;color:var(--ink);float:left;font-size:64px;line-height:.85;padding:6px 10px 0 0}
   .endmark{color:var(--crimson);font-size:14px}
+  .cutline{font-family:var(--font-body);font-style:italic;font-size:15px;color:var(--slate);line-height:1.5;padding-top:8px;border-top:1px solid var(--hairline);margin-top:10px}
+  .cutline .credit{font-family:var(--font-ui);font-style:normal;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--pewter);white-space:nowrap}
+  .photo-ph{background:var(--cream);border:1px solid var(--hairline);height:180px;display:flex;align-items:center;justify-content:center;font-family:var(--font-ui);font-size:13px;color:var(--pewter)}
 
-  /* buttons */
-  .btn{display:inline-block;font-family:var(--font-ui);font-size:16px;font-weight:600;padding:14px 32px;border-radius:4px;text-decoration:none;cursor:pointer;border:1px solid transparent;min-height:44px}
-  .btn-primary{background:var(--crimson);color:#fff}
-  .btn-primary:hover{background:var(--deep-crimson)}
-  .btn-secondary{background:transparent;color:var(--ink);border-color:var(--ink)}
-  .btn-row{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
-  a.textlink{color:var(--crimson);text-decoration:underline;text-underline-offset:3px}
+  /* ---- editorial ---- */
+  .editorial-lede{font-family:var(--font-body);font-size:20px;line-height:1.6;color:var(--byline);max-width:600px}
+  .byline-row{font-family:var(--font-ui);font-size:13px;color:var(--slate);border-top:1px solid var(--hairline);border-bottom:1px solid var(--hairline);padding:9px 0;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .byline-row .author{font-weight:600;color:var(--ink)}
+  .article-meta{font-family:var(--font-ui);font-size:13px;color:var(--slate)}
+  .pull-quote{border-top:1px solid var(--hairline);border-bottom:1px solid var(--hairline);padding:22px 0;margin:8px 0}
+  .pull-quote p{font-family:var(--font-display);font-size:24px;line-height:1.4;color:var(--ink)}
+  .pull-quote cite{display:block;font-family:var(--font-ui);font-style:normal;font-size:13px;font-weight:600;color:var(--slate);margin-top:12px}
+  .pull-quote cite::before{content:"★ ";color:var(--crimson);font-size:11px}
+  .stat-callout{background:var(--cream);border-left:3px solid var(--crimson);padding:20px 24px;font-size:17px;line-height:1.7}
+  .stat-callout strong{font-weight:600;color:var(--ink)}
 
-  /* logo variant panels */
+  /* ---- CTAs ---- */
+  .inline-cta{background:var(--cream);padding:16px 20px;font-size:16px;line-height:1.6}
+  .midpage-cta{background:var(--cream);text-align:center;padding:28px 24px}
+  .midpage-cta .lead{font-family:var(--font-body);font-size:17px;color:var(--byline);margin:6px 0 18px}
+  .bottom-cta{text-align:center;padding:32px 24px 36px;border-top:3px solid var(--ink);box-shadow:inset 0 4px 0 -3px var(--ink), inset 0 6px 0 -5px var(--ink)}
+  .bottom-cta-inner{border-top:1px solid var(--ink);padding-top:28px;margin-top:-32px}
+  .bottom-cta h4{font-family:var(--font-display);font-weight:700;font-size:24px;color:var(--ink);margin:26px 0 6px}
+  .bottom-cta .sub{font-family:var(--font-ui);font-size:15px;color:var(--slate);margin-bottom:22px}
+  .btn-row{display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+  .alt-link{display:block;margin-top:16px;font-family:var(--font-ui);font-size:14px;color:var(--slate)}
+  .disclosure{font-family:var(--font-ui);font-size:12px;color:var(--slate);line-height:1.6;border-top:1px solid var(--hairline);padding-top:14px}
+
+  /* ---- pick card ---- */
+  .pick-card{background:#fff;border:1px solid var(--hairline);padding:28px;margin-bottom:20px}
+  .pick-card.featured{border-top:3px solid var(--ink);position:relative}
+  .pick-card.featured::after{content:"";position:absolute;top:2px;left:0;right:0;border-top:1px solid var(--ink)}
+  .pick-rank{font-family:var(--font-ui);font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--slate);margin-bottom:10px}
+  .pick-card.featured .pick-rank{color:var(--crimson)}
+  .pick-name{font-family:var(--font-display);font-weight:700;font-size:22px;color:var(--ink)}
+  .pick-tagline{font-family:var(--font-body);font-style:italic;font-size:15px;color:var(--slate);margin:2px 0 14px}
+  .pick-features{list-style:none;margin:0 0 16px}
+  .pick-features li{font-family:var(--font-ui);font-size:15px;line-height:1.5;padding:4px 0;display:flex;gap:10px}
+  .pick-features .check{color:var(--sage);font-weight:700;flex-shrink:0}
+  .offer-badge{display:inline-block;background:var(--light-sage);color:var(--sage);font-family:var(--font-ui);font-size:13px;font-weight:600;padding:4px 12px;border-radius:var(--r-xs);margin-bottom:14px}
+  .pick-price{font-family:var(--font-ui);font-size:14px;color:var(--slate);margin-bottom:16px}
+  .pick-price strong{font-family:var(--font-display);font-weight:700;font-size:20px;color:var(--ink)}
+  .pick-footer{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;border-top:1px solid var(--hairline);padding-top:16px}
+  .best-for{font-family:var(--font-ui);font-style:italic;font-size:13px;color:var(--slate)}
+
+  /* ---- comparison table ---- */
+  .fc-scroll{overflow-x:auto;border:1px solid var(--hairline);background:#fff}
+  .fc-table{border-collapse:collapse;width:100%;min-width:560px;font-family:var(--font-ui)}
+  .fc-table th,.fc-table td{padding:13px 16px;font-size:15px;line-height:1.45;text-align:center;border-bottom:1px solid var(--hairline);color:var(--byline)}
+  .fc-table thead th{font-family:var(--font-display);font-size:17px;font-weight:700;color:var(--ink);border-bottom:2px solid var(--ink);vertical-align:bottom;background:#fff}
+  .fc-corner{font-family:var(--font-ui) !important;font-size:11px !important;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--slate) !important;text-align:left !important}
+  .fc-table th[scope=row]{font-weight:600;color:var(--ink);text-align:left;position:sticky;left:0;background:#fff;min-width:150px}
+  .fc-featured{background:var(--cream) !important}
+  thead .fc-featured{box-shadow:inset 0 3px 0 var(--crimson);border-bottom-color:var(--crimson) !important}
+  .fc-pick{display:inline-block;background:var(--crimson);color:#fff;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;border-radius:var(--r-xs);margin-bottom:8px}
+  .fc-yes{color:var(--sage);font-weight:700;font-size:17px}
+  .fc-no{color:var(--pewter);font-weight:700;font-size:15px}
+  .fc-table tbody tr:last-child th,.fc-table tbody tr:last-child td{border-bottom:none}
+  .fc-hint{display:none;font-family:var(--font-ui);font-size:13px;font-style:italic;color:var(--slate);margin-top:8px}
+  @media(max-width:600px){.fc-hint{display:block}}
+
+  /* ---- price comparison ---- */
+  .price-comparison{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:600px){.price-comparison{grid-template-columns:1fr}}
+  .price-card{border:1px solid var(--hairline);padding:24px 22px;background:#fff;display:flex;flex-direction:column}
+  .price-card-old{background:var(--newsprint)}
+  .price-card-new{border:2px solid var(--ink)}
+  .price-tag{font-family:var(--font-ui);font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--slate);margin-bottom:8px}
+  .price-card-new .price-tag{color:var(--crimson)}
+  .price-name{font-family:var(--font-ui);font-weight:600;font-size:18px;color:var(--ink);margin-bottom:14px}
+  .price-fig{font-family:var(--font-display);font-weight:700;font-size:36px;line-height:1;margin-bottom:4px}
+  .price-card-old .price-fig{color:var(--slate)}
+  .price-card-new .price-fig{color:var(--crimson)}
+  .price-detail{font-family:var(--font-ui);font-size:13px;color:var(--slate);margin-bottom:16px}
+  .price-list{list-style:none;flex:1;margin-bottom:16px}
+  .price-list li{font-family:var(--font-ui);font-size:14px;line-height:1.5;padding:5px 0;display:flex;gap:8px}
+  .price-list .x{color:var(--crimson);font-weight:700}
+  .price-list .check{color:var(--sage);font-weight:700}
+
+  /* ---- VS box ---- */
+  .vs-box{border:1px solid var(--hairline);display:grid;grid-template-columns:1fr 1fr;background:#fff}
+  @media(max-width:560px){.vs-box{grid-template-columns:1fr}}
+  .vs-col{padding:24px}
+  .vs-col.neg{background:var(--newsprint);border-right:1px solid var(--hairline)}
+  @media(max-width:560px){.vs-col.neg{border-right:none;border-bottom:1px solid var(--hairline)}}
+  .vs-label{font-family:var(--font-ui);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px}
+  .vs-col.neg .vs-label{color:var(--slate)}
+  .vs-col.pos .vs-label{color:var(--crimson)}
+  .vs-box ul{list-style:none}
+  .vs-box li{font-family:var(--font-ui);font-size:15px;font-weight:500;line-height:1.5;padding:5px 0 5px 24px;position:relative}
+  .vs-box li::before{position:absolute;left:0;font-weight:700}
+  .vs-col.neg li::before{content:"✗";color:var(--crimson)}
+  .vs-col.pos li::before{content:"✓";color:var(--sage)}
+
+  /* ---- alerts / confirmation ---- */
+  .alert{padding:16px 20px;font-family:var(--font-ui);font-size:15px;line-height:1.5;display:flex;gap:12px;margin-bottom:14px;background:var(--cream)}
+  .alert .ic{font-weight:700;flex-shrink:0}
+  .alert-info{border-left:3px solid var(--ink)} .alert-info .ic{color:var(--ink)}
+  .alert-error{border-left:3px solid var(--crimson);color:var(--byline)} .alert-error .ic{color:var(--crimson)}
+  .alert-success{background:var(--light-sage);border-left:3px solid var(--sage);color:var(--byline)} .alert-success .ic{color:var(--sage)}
+  .confirm{text-align:center;padding:36px 24px 24px}
+  .confirm .circle{width:64px;height:64px;border-radius:50%;background:var(--light-sage);display:inline-flex;align-items:center;justify-content:center;color:var(--sage);font-family:var(--font-ui);font-weight:700;font-size:30px;margin-bottom:20px}
+  .confirm h4{font-family:var(--font-display);font-weight:700;font-size:28px;color:var(--ink);margin-bottom:10px}
+  .confirm p{max-width:520px;margin:0 auto;font-size:17px}
+  .error-field{border:1px solid var(--crimson);background:#fff;padding:11px 12px;font-family:var(--font-ui);font-size:16px;color:var(--byline);width:100%;max-width:340px;border-radius:var(--r-sm)}
+  .error-msg{font-family:var(--font-ui);font-size:14px;color:var(--crimson);margin-top:6px}
+
+  /* ---- data tables (layout/a11y sections) ---- */
+  table.doc{border-collapse:collapse;width:100%;font-family:var(--font-ui);font-size:14px;background:#fff;border:1px solid var(--hairline)}
+  table.doc th,table.doc td{padding:10px 14px;border-bottom:1px solid var(--hairline);text-align:left;line-height:1.5}
+  table.doc th{font-weight:600;color:var(--ink);background:var(--cream)}
+  table.doc tr:last-child td{border-bottom:none}
+  table.doc code{font-family:var(--font-mono);font-size:12.5px;color:var(--crimson)}
+
+  /* motion demo */
+  .motion-demo-item{opacity:0;background:#fff;border:1px solid var(--hairline);padding:14px 18px;font-family:var(--font-ui);font-size:15px;margin-bottom:8px}
+  .motion-demo.play .motion-demo-item{animation:fadeIn var(--duration-entrance) var(--ease-settle) both}
+  .motion-demo.play .motion-demo-item:nth-child(2){animation-delay:var(--stagger)}
+  .motion-demo.play .motion-demo-item:nth-child(3){animation-delay:calc(var(--stagger)*2)}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
   .logo-panels{display:grid;grid-template-columns:1fr;gap:14px}
   @media(min-width:700px){.logo-panels{grid-template-columns:1fr 1fr}}
   .logo-panel{border:1px solid var(--hairline);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:44px 20px;gap:6px}
-  .logo-panel .lm{font-family:var(--font-display);font-weight:700;font-size:clamp(24px,4.5vw,34px);letter-spacing:-0.01em}
   .logo-panel .variant-label{font-family:var(--font-ui);font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin-top:14px}
-  .on-light{background:var(--newsprint)}
-  .on-light .lm{color:var(--ink)} .on-light .star{color:var(--crimson)}
-  .on-light .variant-label{color:var(--slate)}
-  .on-dark{background:var(--ink)}
-  .on-dark .lm{color:#fff} .on-dark .star{color:var(--gilt)}
-  .on-dark .variant-label{color:var(--pewter)}
-  .icon-demos{display:flex;gap:16px;margin-top:20px;flex-wrap:wrap}
-  .icon-sq{width:64px;height:64px;display:flex;align-items:center;justify-content:center;font-size:30px;border:1px solid var(--hairline)}
+  .on-light{background:var(--newsprint)} .on-light .variant-label{color:var(--slate)}
+  .on-dark{background:var(--ink)} .on-dark .variant-label{color:var(--pewter)}
+  .icon-demos{display:flex;gap:16px;margin-top:20px;flex-wrap:wrap;align-items:center}
 
-  /* semantic demo */
-  .callout-success{background:var(--light-sage);border:1px solid var(--sage);padding:14px 18px;font-size:16px;color:var(--ink);margin-bottom:14px}
-  .callout-success .lead{color:var(--sage);font-weight:600}
-  .error-msg{font-family:var(--font-ui);font-size:14px;color:var(--crimson)}
-  .error-field{border:1px solid var(--crimson);background:#fff;padding:10px 12px;font-family:var(--font-ui);font-size:16px;color:var(--byline);width:100%;max-width:340px;margin-bottom:6px}
+  footer.page-foot{margin-top:64px;padding:28px 0 48px;background:var(--cream)}
+  footer.page-foot p{font-family:var(--font-ui);font-size:13px;color:var(--slate)}
 
-  footer{margin-top:64px;padding:28px 0 48px;background:var(--cream)}
-  footer p{font-family:var(--font-ui);font-size:13px;color:var(--slate)}
-
-  @media (prefers-reduced-motion: no-preference){
-    section{animation:rise .5s cubic-bezier(.16,1,.3,1) both}
-    @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  @media(max-width:700px){
+    h2.sec{font-size:22px}
+    .demo{padding:20px}
+  }
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important}
+    .motion-demo-item{opacity:1}
   }
 </style>
 </head>
 <body>
 
-<div class="proposal-banner"><strong>Identity proposal</strong> — pending approval · not yet in Brain</div>
-
 <!-- Canonical masthead presentation -->
 <header class="masthead-band">
   <p class="dateline">Wednesday, July 15, 2026</p>
-  <h1 class="masthead">American<span class="star">★</span>Advisor</h1>
+  <img src="../assets/logos/americanadvisor-full-ink.svg" alt="AmericanAdvisor">
   <div class="double-rule" role="presentation"></div>
 </header>
 
 <main class="wrap">
 
   <section>
-    <p class="kicker">The Direction</p>
+    <p class="kicker">Design System Showcase</p>
     <h2 class="sec">A 1965 broadsheet, printed yesterday</h2>
-    <p class="sec-note">The identity formalizes what's already live on americanadvisor.org — the set-type masthead, ink-and-newsprint palette, and serif body were built in the broadsheet register during the bridge-page era, and they fit the newspaper positioning exactly. Everything below comes from print tradition: hairline rules instead of shadows, one working red, type that's read rather than scanned. Structured on BaseLocal's brand-guide template.</p>
+    <p class="sec-note">The living visual reference for <code style="font-family:var(--font-mono);font-size:14px">brain/brands/americanadvisor/design-system.md</code>. Seeded and approved July 15, 2026. Governing rules: hairline rules instead of shadows, square corners (6px ceiling), one working red, fade-only motion.</p>
   </section>
 
+  <!-- ============ 01 COLOR ============ -->
   <section>
-    <p class="kicker">Masthead &amp; Logo</p>
-    <h2 class="sec">The logo is a masthead, not a mark</h2>
-    <p class="sec-note">Libre Caslon Text Bold with a five-pointed star — the only pictorial element in the identity. Canonical presentation (above): dateline, masthead, double rule. On dark backgrounds the star switches to Gilt; Crimson disappears against Ink.</p>
+    <p class="kicker">01 · Color Tokens</p>
+    <h2 class="sec">Ink on newsprint, one working red</h2>
+    <p class="sec-note">Approved. Crimson is the single accent; Gilt appears only on dark surfaces. Contrast measured against Newsprint.</p>
+    <div class="swatches">
+      <div class="swatch"><div class="chip" style="background:var(--ink)"></div><div class="meta"><div class="name">Ink</div><div class="hex">#0E1A2B · 16.7:1 AAA</div><div class="use">Headlines, masthead, footers</div></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--byline)"></div><div class="meta"><div class="name">Byline</div><div class="hex">#27324A · 12.3:1 AAA</div><div class="use">Body copy</div></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--slate)"></div><div class="meta"><div class="name">Slate</div><div class="hex">#5B6478 · 5.7:1 AA</div><div class="use">Captions, bylines, metadata, fine print</div></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--pewter)"></div><div class="meta"><div class="name">Pewter</div><div class="hex">#9AA0AE · 2.5:1</div><div class="use">Decorative / disabled only — never readable text</div></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--crimson)"></div><div class="meta"><div class="name">Crimson</div><div class="hex">#8A2331 · 8.5:1 AAA</div><div class="use">Star, links, CTAs, kickers, numerals, errors</div></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--deep-crimson)"></div><div class="meta"><div class="name">Deep Crimson</div><div class="hex">#6E1B27</div><div class="use">Hover / active states</div></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--gilt)"></div><div class="meta"><div class="name">Gilt</div><div class="hex">#B88A2E · 5.6:1 on Ink</div><div class="use">Accent on dark only</div></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--newsprint)"></div><div class="meta"><div class="name">Newsprint</div><div class="hex">#FBFAF7</div><div class="use">Page background — never pure white</div></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--cream)"></div><div class="meta"><div class="name">Cream</div><div class="hex">#F3EEDE</div><div class="use">Masthead band, callouts, section backgrounds</div></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--hairline)"></div><div class="meta"><div class="name">Hairline</div><div class="hex">#E3DED2</div><div class="use">Rules, borders, dividers</div></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--heavy-rule)"></div><div class="meta"><div class="name">Heavy Rule</div><div class="hex">#CFC8B7</div><div class="use">Emphasized rules</div></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--sage)"></div><div class="meta"><div class="name">Sage</div><div class="hex">#547563</div><div class="use">Success · Light Sage #EEF1EC backgrounds</div></div></div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- ============ 02 TYPOGRAPHY ============ -->
+  <section>
+    <p class="kicker">02 · Typography</p>
+    <h2 class="sec">A paper is read, not scanned</h2>
+    <p class="sec-note">Approved. Libre Caslon Text display, Spectral body at 18px, Inter for furniture, JetBrains Mono sparingly for data. Email designs on Georgia (see § 12).</p>
+    <div class="spec"><span class="label">H1 · Libre Caslon 700 · 40px</span><span style="font-family:var(--font-display);font-weight:700;font-size:40px;line-height:1.15;color:var(--ink);letter-spacing:-0.01em">The Whole Picture, National to Neighborhood</span></div>
+    <div class="spec"><span class="label">H2 · Libre Caslon 700 · 26px</span><span style="font-family:var(--font-display);font-weight:700;font-size:26px;line-height:1.35;color:var(--ink)">Your state, this morning</span></div>
+    <div class="spec"><span class="label">H3 · Spectral 600 · 22px</span><span style="font-family:var(--font-body);font-weight:600;font-size:22px;line-height:1.35;color:var(--ink)">Council approves the riverfront plan</span></div>
+    <div class="spec"><span class="label">Body · Spectral 400 · 18px</span><span>The morning paper earned its place at the table by being worth the time it asked for. Every section of this brand works the same way.</span></div>
+    <div class="spec"><span class="label">Caption · Spectral italic · 15px</span><span style="font-size:15px;font-style:italic;color:var(--slate)">Shoppers at the Ridgewood farmers market, Saturday morning.</span></div>
+    <div class="spec"><span class="label">Kicker · Inter 600 · 12px</span><span class="kicker">Your Town</span></div>
+    <div class="spec"><span class="label">Dateline · mono 500 · 12px</span><span style="font-family:var(--font-mono);font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--slate)">Wednesday, July 15, 2026</span></div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- ============ 03 LOGOS ============ -->
+  <section>
+    <p class="kicker">03 · Logos</p>
+    <h2 class="sec">The masthead and the star</h2>
+    <p class="sec-note">Approved; production files live in <code style="font-family:var(--font-mono);font-size:14px">previews/americanadvisor/assets/logos/</code>. Sizing precedents: site header 40px tall (30px mobile), newsletter header PNG ~48px tall, footer 26px.</p>
     <div class="logo-panels">
       <div class="logo-panel on-light">
         <img src="../assets/logos/americanadvisor-full-ink.svg" alt="AmericanAdvisor masthead, Ink variant" style="width:min(320px,80%);height:auto">
@@ -148,127 +342,442 @@
     <div class="icon-demos">
       <img src="../assets/logos/americanadvisor-icon-white.svg" alt="Star icon, Gilt on Ink" width="64" height="64" style="border:1px solid var(--hairline)">
       <img src="../assets/logos/americanadvisor-icon-ink.svg" alt="Star icon, Crimson on Newsprint" width="64" height="64" style="border:1px solid var(--hairline)">
-      <p style="font-family:var(--font-ui);font-size:13px;color:var(--slate);align-self:center;max-width:400px">Star icon for favicons and social avatars — Gilt on Ink, or Crimson on Newsprint. These panels render the production SVG files.</p>
+      <p style="font-family:var(--font-ui);font-size:13px;color:var(--slate);max-width:400px">Star icon for favicons and social avatars. These panels render the production SVG files.</p>
     </div>
   </section>
 
   <hr class="rule">
 
+  <!-- ============ 04 SPACING / RADIUS / RULES ============ -->
   <section>
-    <p class="kicker">Color</p>
-    <h2 class="sec">Ink on newsprint, one working red</h2>
-    <p class="sec-note">The restraint of a press that stocked two inks. Crimson is the single accent — star, links, kickers, numerals. Gilt appears only on dark surfaces. Contrast measured against Newsprint.</p>
-    <div class="swatches">
-      <div class="swatch"><div class="chip" style="background:var(--ink)"></div><div class="meta"><div class="name">Ink</div><div class="hex">#0E1A2B · 16.7:1 AAA</div><div class="use">Headlines, masthead, footers</div></div></div>
-      <div class="swatch"><div class="chip" style="background:var(--byline)"></div><div class="meta"><div class="name">Byline</div><div class="hex">#27324A · 12.3:1 AAA</div><div class="use">Body copy</div></div></div>
-      <div class="swatch"><div class="chip" style="background:var(--slate)"></div><div class="meta"><div class="name">Slate</div><div class="hex">#5B6478 · 5.7:1 AA</div><div class="use">Captions, bylines, metadata</div></div></div>
-      <div class="swatch"><div class="chip" style="background:var(--pewter)"></div><div class="meta"><div class="name">Pewter</div><div class="hex">#9AA0AE · 2.5:1</div><div class="use">Decorative / disabled only — never readable text</div></div></div>
-      <div class="swatch"><div class="chip" style="background:var(--crimson)"></div><div class="meta"><div class="name">Crimson</div><div class="hex">#8A2331 · 8.5:1 AAA</div><div class="use">Star, links, CTAs, kickers, numerals, errors</div></div></div>
-      <div class="swatch"><div class="chip" style="background:var(--deep-crimson)"></div><div class="meta"><div class="name">Deep Crimson</div><div class="hex">#6E1B27</div><div class="use">Hover / active states</div></div></div>
-      <div class="swatch"><div class="chip" style="background:var(--gilt)"></div><div class="meta"><div class="name">Gilt</div><div class="hex">#B88A2E · 5.6:1 on Ink</div><div class="use">Accent on dark only — 3.0:1 on light, decorative there</div></div></div>
-      <div class="swatch"><div class="chip" style="background:var(--newsprint)"></div><div class="meta"><div class="name">Newsprint</div><div class="hex">#FBFAF7</div><div class="use">Page background — never pure white</div></div></div>
-      <div class="swatch"><div class="chip" style="background:var(--cream)"></div><div class="meta"><div class="name">Cream</div><div class="hex">#F3EEDE</div><div class="use">Masthead band, callouts, section backgrounds</div></div></div>
-      <div class="swatch"><div class="chip" style="background:var(--hairline)"></div><div class="meta"><div class="name">Hairline</div><div class="hex">#E3DED2</div><div class="use">Rules, borders, dividers</div></div></div>
-      <div class="swatch"><div class="chip" style="background:var(--heavy-rule)"></div><div class="meta"><div class="name">Heavy Rule</div><div class="hex">#CFC8B7</div><div class="use">Emphasized rules</div></div></div>
-      <div class="swatch"><div class="chip" style="background:var(--sage)"></div><div class="meta"><div class="name">Sage</div><div class="hex">#547563</div><div class="use">Success, positive callouts</div></div></div>
+    <p class="kicker">04 · Spacing · Radius · Rules &amp; Shadows</p>
+    <h2 class="sec">Depth comes from rules, not shadows</h2>
+    <p class="sec-note">4px base scale. Radius ceiling is 6px — cards and callouts are square; only buttons, inputs (4px) and standalone images (6px) round at all. Shadows are banned except one overlay token for elements genuinely floating above the page (sticky bars, dropdowns) — never on cards, never on hover.</p>
+    <div class="demo">
+      <p class="demo-caption">Spacing scale — 4px base</p>
+      <div class="space-row"><code>--s-4</code><div class="bar" style="width:4px"></div>tight inline gaps</div>
+      <div class="space-row"><code>--s-8</code><div class="bar" style="width:8px"></div>between small elements</div>
+      <div class="space-row"><code>--s-12</code><div class="bar" style="width:12px"></div>label-to-content</div>
+      <div class="space-row"><code>--s-16</code><div class="bar" style="width:16px"></div>paragraph spacing, standard gaps</div>
+      <div class="space-row"><code>--s-24</code><div class="bar" style="width:24px"></div>card padding (mobile), section gaps</div>
+      <div class="space-row"><code>--s-32</code><div class="bar" style="width:32px"></div>card padding (desktop)</div>
+      <div class="space-row"><code>--s-48</code><div class="bar" style="width:48px"></div>section separators, page top</div>
+      <div class="space-row"><code>--s-64</code><div class="bar" style="width:64px"></div>major section breaks</div>
+      <div class="space-row"><code>--s-96</code><div class="bar" style="width:96px"></div>page bottom</div>
     </div>
-  </section>
-
-  <hr class="rule">
-
-  <section>
-    <p class="kicker">Typography</p>
-    <h2 class="sec">A paper is read, not scanned</h2>
-    <p class="sec-note">Libre Caslon Text for display, Spectral for body — a deliberate serif-body departure from BaseLocal's Lato, carrying the sit-down-read positioning. Inter appears only in functional furniture. Georgia fallback holds the register in email. Body runs 18px for the oldest-skewing audience in the portfolio.</p>
-
-    <div class="spec"><span class="label">H1 · Libre Caslon 700 · 40px</span><span style="font-family:var(--font-display);font-weight:700;font-size:40px;line-height:1.15;color:var(--ink);letter-spacing:-0.01em">The Whole Picture, National to Neighborhood</span></div>
-    <div class="spec"><span class="label">H2 · Libre Caslon 700 · 26px</span><span style="font-family:var(--font-display);font-weight:700;font-size:26px;line-height:1.35;color:var(--ink)">Your state, this morning</span></div>
-    <div class="spec"><span class="label">H3 · Spectral 600 · 22px</span><span style="font-family:var(--font-body);font-weight:600;font-size:22px;line-height:1.35;color:var(--ink)">Council approves the riverfront plan</span></div>
-    <div class="spec"><span class="label">Body · Spectral 400 · 18px</span><span>The morning paper earned its place at the table by being worth the time it asked for. Every section of this brand works the same way — it states plainly, backs it with facts, and lets the reader decide.</span></div>
-    <div class="spec"><span class="label">Caption · Spectral italic · 15px</span><span style="font-size:15px;font-style:italic;color:var(--slate)">Shoppers at the Ridgewood farmers market, Saturday morning. — staff photo</span></div>
-    <div class="spec"><span class="label">Kicker · Inter 600 · 12px</span><span class="kicker">Your Town</span></div>
-    <div class="spec"><span class="label">Dateline · mono 500 · 12px</span><span style="font-family:var(--font-mono);font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--slate)">Wednesday, July 15, 2026</span></div>
-  </section>
-
-  <hr class="rule">
-
-  <section>
-    <p class="kicker">Email Typography</p>
-    <h2 class="sec">One fallback, chosen on purpose: Georgia</h2>
-    <p class="sec-note">Gmail and Outlook don't render web fonts from any sender — only Apple Mail does. So email typography is designed <em>on</em> the fallback, not hoping to avoid it: serif type falls to Georgia (a newspaper-genre screen serif, installed on every device), UI furniture falls to Helvetica/Arial. Below, the same story in both tiers — the right panel is real Georgia, exactly what a Gmail reader gets. The masthead itself ships as an image in email, so it renders identically everywhere.</p>
-    <div class="logo-panels">
-      <div class="demo" style="margin-bottom:0">
-        <p class="demo-caption">Web + Apple Mail — brand faces</p>
-        <p class="kicker">Your Town</p>
-        <h3 style="font-family:var(--font-display);font-weight:700;font-size:24px;color:var(--ink);line-height:1.25;margin:6px 0 10px">Council approves the riverfront plan after a decade of debate</h3>
-        <p style="font-size:16px;line-height:1.65">The vote came just before midnight, 6–1, ending a fight that outlasted three mayors. Construction starts in the spring; the farmers market keeps its corner.</p>
-      </div>
-      <div class="demo" style="margin-bottom:0">
-        <p class="demo-caption" style="font-family:Helvetica,Arial,sans-serif">Gmail + Outlook — Georgia fallback</p>
-        <p class="kicker" style="font-family:Helvetica,Arial,sans-serif">Your Town</p>
-        <h3 style="font-family:Georgia,serif;font-weight:700;font-size:24px;color:var(--ink);line-height:1.25;margin:6px 0 10px">Council approves the riverfront plan after a decade of debate</h3>
-        <p style="font-family:Georgia,serif;font-size:16px;line-height:1.65">The vote came just before midnight, 6–1, ending a fight that outlasted three mayors. Construction starts in the spring; the farmers market keeps its corner.</p>
+    <div class="demo">
+      <p class="demo-caption">Radius — 6px ceiling</p>
+      <div class="radius-demos">
+        <div class="radius-demo" style="border-radius:0">0 · cards, callouts, tables</div>
+        <div class="radius-demo" style="border-radius:2px">2px · badges, tags</div>
+        <div class="radius-demo" style="border-radius:4px">4px · buttons, inputs</div>
+        <div class="radius-demo" style="border-radius:6px">6px · images only</div>
       </div>
     </div>
-    <p style="font-family:var(--font-ui);font-size:13px;color:var(--slate);margin-top:14px;max-width:640px">Email stack: headlines + body <span style="font-family:var(--font-mono);font-size:12px">Georgia, serif</span> (optionally Spectral/Libre Caslon first, for Apple Mail) · labels + buttons <span style="font-family:var(--font-mono);font-size:12px">Helvetica, Arial, sans-serif</span> · masthead as PNG.</p>
+    <div class="demo">
+      <p class="demo-caption">Rules — the depth system</p>
+      <p style="font-family:var(--font-ui);font-size:13px;color:var(--slate);margin-bottom:6px">Double rule (3px Ink + 1px Ink) — masthead, major breaks, featured marks</p>
+      <div class="double-rule" style="margin-bottom:18px"></div>
+      <p style="font-family:var(--font-ui);font-size:13px;color:var(--slate);margin-bottom:6px">Soft double rule (Heavy Rule + Hairline) — closing furniture, footers</p>
+      <div class="double-rule soft" style="margin-bottom:18px"></div>
+      <p style="font-family:var(--font-ui);font-size:13px;color:var(--slate);margin-bottom:6px">Hairline (1px #E3DED2) — every list, card and section boundary</p>
+      <hr style="border:none;border-top:1px solid var(--hairline);margin-bottom:18px">
+      <p style="font-family:var(--font-ui);font-size:13px;color:var(--slate);margin-bottom:6px">Front-matter divider — 64px centered hairline, once per article, between hero and body</p>
+      <hr style="border:none;border-top:1px solid var(--heavy-rule);width:64px;margin:10px auto 0">
+    </div>
   </section>
 
   <hr class="rule">
 
+  <!-- ============ 05 MOTION ============ -->
   <section>
-    <p class="kicker">Newspaper Furniture</p>
+    <p class="kicker">05 · Motion</p>
+    <h2 class="sec">Ink dries. It doesn't leap.</h2>
+    <p class="sec-note">Entrances are fade-only — opacity, no translate, no scale, no lifts. <code style="font-family:var(--font-mono);font-size:14px">ease-settle</code> cubic-bezier(.25,1,.5,1) at 0.5s, with a modest 60ms stagger allowed on lists. Micro-transitions (0.15s) apply to color and underline only — nothing moves on hover. The one permitted transform: buttons press down 1px when active, like type hitting paper. All of it collapses under <code style="font-family:var(--font-mono);font-size:14px">prefers-reduced-motion</code>.</p>
+    <div class="demo">
+      <p class="demo-caption">Entrance demo — fade + 60ms stagger</p>
+      <div class="motion-demo" id="motionDemo">
+        <div class="motion-demo-item">01 — Every 11 seconds, an older adult ends up in the ER from a fall</div>
+        <div class="motion-demo-item">02 — Most homeowners over 50 are sitting on six figures</div>
+        <div class="motion-demo-item">03 — The 3,000 strangers who know your address</div>
+      </div>
+      <button class="btn btn-secondary btn-sm" style="margin-top:14px" onclick="const d=document.getElementById('motionDemo');d.classList.remove('play');void d.offsetWidth;d.classList.add('play')">Replay entrance</button>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- ============ 06 BUTTONS & LINKS ============ -->
+  <section>
+    <p class="kicker">06 · Buttons &amp; Links</p>
+    <h2 class="sec">Actions in Inter, set square</h2>
+    <p class="sec-note">Primary is the only solid Crimson element in a viewport. Hover darkens (no glow); active presses 1px. Arrow → on CTAs that navigate away. Never all-caps. Focus everywhere: 2px Crimson outline, 2px offset.</p>
+    <div class="demo">
+      <p class="demo-caption">Primary — default size · states</p>
+      <div class="state-grid">
+        <span><a class="btn btn-primary btn-default" href="#">Get the morning edition</a><span class="state-label">Default</span></span>
+        <span><a class="btn btn-primary btn-default is-hover" href="#">Get the morning edition</a><span class="state-label">Hover</span></span>
+        <span><a class="btn btn-primary btn-default is-active" href="#">Get the morning edition</a><span class="state-label">Active (1px press)</span></span>
+        <span><a class="btn btn-primary btn-default is-disabled" aria-disabled="true">Get the morning edition</a><span class="state-label">Disabled</span></span>
+      </div>
+    </div>
+    <div class="demo">
+      <p class="demo-caption">Secondary + sizes</p>
+      <div class="state-grid">
+        <span><a class="btn btn-secondary btn-sm" href="#">Small</a><span class="state-label">sm 14px</span></span>
+        <span><a class="btn btn-secondary btn-default" href="#">Browse past editions</a><span class="state-label">default 16px</span></span>
+        <span><a class="btn btn-secondary btn-lg" href="#">Large</a><span class="state-label">lg 18px</span></span>
+        <span><a class="btn btn-secondary btn-default is-hover" href="#">Browse past editions</a><span class="state-label">Hover (cream fill)</span></span>
+      </div>
+    </div>
+    <div class="demo">
+      <p class="demo-caption">Links — three registers</p>
+      <p style="margin-bottom:10px">Editorial link, inside body text: the council <a class="editorial-link" href="#">approved the riverfront plan</a> after a decade of debate — always underlined, the newspaper convention.</p>
+      <p style="font-family:var(--font-ui);font-size:15px;margin-bottom:10px">UI link: <a class="ui-link" href="#">Read the full report →</a> — Inter 600, underline on hover.</p>
+      <p style="font-family:var(--font-ui);font-size:15px">Muted link: <a class="muted-link" href="#">Manage preferences</a> — Slate, hover Crimson.</p>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- ============ 07 SITE HEADER & FOOTER ============ -->
+  <section>
+    <p class="kicker">07 · Site Header &amp; Footer</p>
+    <h2 class="sec">The paper's front door and colophon</h2>
+    <p class="sec-note">The header is the canonical masthead presentation (dateline → masthead SVG → double rule) on the Cream band, with a section nav below. The footer is an Ink band: white masthead, Pewter body, White links that hover Gilt.</p>
+    <div class="demo" style="padding:0;overflow:hidden">
+      <div class="header-demo">
+        <div class="band">
+          <p class="dateline">Wednesday, July 15, 2026</p>
+          <img src="../assets/logos/americanadvisor-full-ink.svg" alt="AmericanAdvisor">
+          <div class="double-rule"></div>
+        </div>
+        <nav aria-label="Sections demo">
+          <a href="#">Nation</a><a href="#">Your State</a><a href="#">Your Town</a><a href="#">Happenings</a><a href="#">Reports</a>
+        </nav>
+      </div>
+    </div>
+    <div class="demo" style="padding:0;overflow:hidden">
+      <div class="footer-demo">
+        <img src="../assets/logos/americanadvisor-full-white.svg" alt="AmericanAdvisor">
+        <div class="cols">
+          <div class="col" style="max-width:280px">The whole picture — national to neighborhood. Your morning paper, reborn.</div>
+          <div class="col"><h4>Sections</h4><a href="#">Nation</a><a href="#">Your State</a><a href="#">Your Town</a></div>
+          <div class="col"><h4>The Paper</h4><a href="#">About</a><a href="#">Advertise</a><a href="#">Contact</a></div>
+        </div>
+        <p class="fine">© 2026 AmericanAdvisor · americanadvisor.org</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- ============ 08 NEWSPAPER FURNITURE ============ -->
+  <section>
+    <p class="kicker">08 · Newspaper Furniture</p>
     <h2 class="sec">The devices that make it ours</h2>
-    <p class="sec-note">What separates this from a generic serif site: double rules, hairlines instead of shadows, crimson index numerals, kickers on every story, drop caps on features, square corners.</p>
-
+    <p class="sec-note">Ranked index, kickers, drop cap and end-mark are approved identity. The cutline is newly proposed below.</p>
     <div class="demo">
       <p class="demo-caption">Ranked index — crimson numerals</p>
       <div class="index-item"><span class="index-num">01</span><div><div class="index-hed">Every 11 seconds, an older adult ends up in the ER from a fall</div><div class="index-kicker">Health</div></div></div>
       <div class="index-item"><span class="index-num">02</span><div><div class="index-hed">Most homeowners over 50 are sitting on six figures they'll never use</div><div class="index-kicker">Money</div></div></div>
       <div class="index-item"><span class="index-num">03</span><div><div class="index-hed">The 3,000 strangers who know your address</div><div class="index-kicker">Tech</div></div></div>
     </div>
-
     <div class="demo">
       <p class="demo-caption">Feature story — kicker, headline, dek, byline row, drop cap, end-mark</p>
       <p class="kicker">Front Page</p>
-      <h3 class="story-hed">The morning paper, reborn for the town you actually live in</h3>
-      <p class="story-dek">National headlines down to the community section — the classic hierarchy, delivered before your coffee cools.</p>
-      <p class="byline-row">By The AmericanAdvisor Desk &nbsp;·&nbsp; July 15, 2026</p>
+      <h3 style="font-family:var(--font-display);font-weight:700;font-size:32px;color:var(--ink);line-height:1.2;margin:6px 0 10px">The morning paper, reborn for the town you actually live in</h3>
+      <p style="font-size:19px;color:var(--slate);line-height:1.5;margin-bottom:16px;font-style:italic">National headlines down to the community section — the classic hierarchy, delivered before your coffee cools.</p>
+      <p class="byline-row" style="margin-bottom:18px"><span class="author">By The AmericanAdvisor Desk</span><span>July 15, 2026 · 6 min read</span></p>
       <p class="dropcap">For seventy years, the front porch thump of a rolled newspaper meant the day could begin. The habit didn't die because readers stopped caring — the paper stopped arriving. This brand picks the route back up: the big national story first, then your state, then your town, in that order, every morning. <span class="endmark">★</span></p>
     </div>
-
     <div class="demo">
-      <p class="demo-caption">Actions &amp; links</p>
-      <div class="btn-row">
-        <a class="btn btn-primary" href="#">Get the morning edition</a>
-        <a class="btn btn-secondary" href="#">Browse past editions</a>
-        <a class="textlink" href="#">Read the full report</a>
-      </div>
-    </div>
-
-    <div class="demo">
-      <p class="demo-caption">Semantic states — one red in the shop</p>
-      <div class="callout-success"><span class="lead">You're on the route.</span> Your first edition arrives tomorrow before 7 a.m.</div>
-      <input class="error-field" type="email" value="corry@braving" aria-label="Email address" aria-invalid="true">
-      <p class="error-msg">That address is missing its ending — try something like name@example.com.</p>
+      <p class="demo-caption">Cutline — every editorial photo takes one</p>
+      <div class="photo-ph">[ photograph ]</div>
+      <p class="cutline">Retirees at the Maple Street community center, where the new schedule takes effect Monday. <span class="credit">— Staff photo</span></p>
     </div>
   </section>
 
   <hr class="rule">
 
+  <!-- ============ 09 EDITORIAL COMPONENTS ============ -->
   <section>
-    <p class="kicker">Photography</p>
+    <p class="kicker">09 · Editorial Components</p>
+    <h2 class="sec">The article's working parts</h2>
+    <p class="sec-note">Lede, byline row, article meta, pull quote, stat callout. Pull quotes sit between rules (prose with personality); stat callouts take the Cream box with a Crimson rule (data). Drop cap is Ink — the red stays reserved.</p>
+    <div class="demo">
+      <p class="demo-caption">Editorial lede — Spectral 20px, first paragraph after the H1</p>
+      <p class="editorial-lede">Two out of three advisors aren't required to put your interests first. The one-word credential that changes it costs nothing to ask about — and most people never do.</p>
+    </div>
+    <div class="demo">
+      <p class="demo-caption">Article meta — lighter alternative to the byline row</p>
+      <p class="article-meta">Updated July 2026 · 5 min read</p>
+    </div>
+    <div class="demo">
+      <p class="demo-caption">Pull quote — between rules, with attribution</p>
+      <blockquote class="pull-quote">
+        <p>"I asked one question — are you a fiduciary? — and the room went quiet."</p>
+        <cite>Margaret H., 64, Columbus</cite>
+      </blockquote>
+    </div>
+    <div class="demo">
+      <p class="demo-caption">Stat callout — data in the cream box</p>
+      <div class="stat-callout">Falls send an older adult to the emergency room <strong>every 11 seconds</strong> — and the majority happen in homes that were never assessed for the five most common hazards.</div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- ============ 10 CTAs & CONVERSION ============ -->
+  <section>
+    <p class="kicker">10 · CTAs &amp; Conversion</p>
+    <h2 class="sec">Asking for the click, calmly</h2>
+    <p class="sec-note">Inline CTA (soft, mid-article), mid-page CTA (cream box), bottom CTA (under a double rule — the paper's closing furniture), and the disclosure block. Fine print is Slate, never Pewter — the contrast floor holds even for legalese.</p>
+    <div class="demo">
+      <p class="demo-caption">Inline CTA</p>
+      <p class="inline-cta">Ready to check an advisor's credentials now? <a class="editorial-link" href="#">The free fiduciary lookup takes two minutes</a>.</p>
+    </div>
+    <div class="demo">
+      <p class="demo-caption">Mid-page CTA</p>
+      <div class="midpage-cta">
+        <p class="kicker">The Morning Edition</p>
+        <p class="lead">The whole picture, in your inbox before 7 a.m.</p>
+        <a class="btn btn-primary btn-default" href="#">Get the morning edition</a>
+      </div>
+    </div>
+    <div class="demo">
+      <p class="demo-caption">Bottom CTA — closes the page under a double rule</p>
+      <div>
+        <div class="double-rule"></div>
+        <div style="text-align:center;padding:28px 24px 8px">
+          <h4 style="font-family:var(--font-display);font-weight:700;font-size:24px;color:var(--ink);margin-bottom:6px">Don't lose the morning paper twice</h4>
+          <p style="font-family:var(--font-ui);font-size:15px;color:var(--slate);margin-bottom:22px">Free, daily, national to neighborhood.</p>
+          <div class="btn-row">
+            <a class="btn btn-primary btn-default" href="#">Get the morning edition</a>
+            <a class="btn btn-secondary btn-default" href="#">See a sample issue</a>
+          </div>
+          <span class="alt-link">Prefer weekly? <a class="ui-link" href="#">Get the Sunday edition only</a></span>
+        </div>
+      </div>
+    </div>
+    <div class="demo">
+      <p class="demo-caption">Disclosure block</p>
+      <p class="disclosure">AmericanAdvisor may earn a commission when you sign up through links on this page. Every recommendation is researched and written by our editors first; partners never see a story before you do. Individual results vary.</p>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- ============ 11 RECOMMENDATION & COMPARISON ============ -->
+  <section>
+    <p class="kicker">11 · Recommendation &amp; Comparison</p>
+    <h2 class="sec">The reports machinery</h2>
+    <p class="sec-note">Pick cards, the feature comparison table, price comparison, and the VS box. The featured pick is marked by a double rule and a crimson rank — never a colored glow. Table semantics: Sage ✓ for included, Pewter ✗ for absence (absence isn't an error).</p>
+    <div class="demo">
+      <p class="demo-caption">Pick card — featured (double-rule top) + regular</p>
+      <article class="pick-card featured">
+        <p class="pick-rank">Our pick · No. 1</p>
+        <h4 class="pick-name">Meridian Advisor Match</h4>
+        <p class="pick-tagline">Fiduciary-only network with free matching</p>
+        <span class="offer-badge">Free consultation through July</span>
+        <ul class="pick-features">
+          <li><span class="check">✓</span>Every advisor is a registered fiduciary</li>
+          <li><span class="check">✓</span>Matches in 5 minutes, no obligation</li>
+          <li><span class="check">✓</span>No fees to you — ever</li>
+        </ul>
+        <p class="pick-price"><span style="font-family:var(--font-ui);font-size:13px">From</span> <strong>$0</strong> · matching is free</p>
+        <div class="pick-footer">
+          <span class="best-for">Best for: first-time advisor seekers</span>
+          <a class="btn btn-primary btn-sm" href="#">Find your advisor →</a>
+        </div>
+      </article>
+      <article class="pick-card">
+        <p class="pick-rank">No. 2</p>
+        <h4 class="pick-name">Harbor Financial Planning</h4>
+        <p class="pick-tagline">Flat-fee plans, no assets minimum</p>
+        <ul class="pick-features">
+          <li><span class="check">✓</span>One flat annual fee, stated up front</li>
+          <li><span class="check">✓</span>Works with portfolios under $100k</li>
+        </ul>
+        <p class="pick-price"><span style="font-family:var(--font-ui);font-size:13px">From</span> <strong>$900/yr</strong></p>
+        <div class="pick-footer">
+          <span class="best-for">Best for: smaller portfolios</span>
+          <a class="btn btn-secondary btn-sm" href="#">See plans →</a>
+        </div>
+      </article>
+    </div>
+    <div class="demo">
+      <p class="demo-caption">Feature comparison table — featured column in cream, crimson top bar</p>
+      <div class="fc-scroll" tabindex="0" role="region" aria-label="Compare advisor services">
+        <table class="fc-table">
+          <thead>
+            <tr>
+              <th class="fc-corner">Compare</th>
+              <th class="fc-featured"><span class="fc-pick">Our pick</span><br>Meridian</th>
+              <th>Harbor</th>
+              <th>Beacon</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Fiduciary-only</th><td class="fc-featured"><span class="fc-yes" role="img" aria-label="Yes">✓</span></td><td><span class="fc-yes" role="img" aria-label="Yes">✓</span></td><td><span class="fc-no" role="img" aria-label="Not offered">✗</span></td></tr>
+            <tr><th scope="row">Free to use</th><td class="fc-featured"><span class="fc-yes" role="img" aria-label="Yes">✓</span></td><td><span class="fc-no" role="img" aria-label="Not offered">✗</span></td><td><span class="fc-yes" role="img" aria-label="Yes">✓</span></td></tr>
+            <tr><th scope="row">Minimum assets</th><td class="fc-featured">None</td><td>None</td><td>$250k</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="fc-hint">Swipe the table sideways to compare →</p>
+    </div>
+    <div class="demo">
+      <p class="demo-caption">Price comparison — muted before, ink-framed after</p>
+      <div class="price-comparison">
+        <div class="price-card price-card-old">
+          <p class="price-tag">Typical advisor</p>
+          <p class="price-name">1% of assets, every year</p>
+          <p class="price-fig"><s>$4,000</s></p>
+          <p class="price-detail">per year on a $400k portfolio</p>
+          <ul class="price-list">
+            <li><span class="x">✗</span>Fee grows with your savings</li>
+            <li><span class="x">✗</span>Often not a fiduciary</li>
+          </ul>
+        </div>
+        <div class="price-card price-card-new">
+          <p class="price-tag">Through AmericanAdvisor</p>
+          <p class="price-name">Flat-fee fiduciary plan</p>
+          <p class="price-fig">$900</p>
+          <p class="price-detail">per year, stated up front</p>
+          <ul class="price-list">
+            <li><span class="check">✓</span>Same fee at any portfolio size</li>
+            <li><span class="check">✓</span>Fiduciary, in writing</li>
+          </ul>
+          <a class="btn btn-primary btn-default" href="#" style="width:100%">See the flat-fee plan →</a>
+        </div>
+      </div>
+    </div>
+    <div class="demo">
+      <p class="demo-caption">VS box — two-column text comparison</p>
+      <div class="vs-box">
+        <div class="vs-col neg">
+          <p class="vs-label">Guessing</p>
+          <ul><li>Picking an advisor from a billboard</li><li>Assuming "advisor" means fiduciary</li></ul>
+        </div>
+        <div class="vs-col pos">
+          <p class="vs-label">Checking</p>
+          <ul><li>One-question credential test</li><li>Fee structure in writing first</li></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- ============ 12 FEEDBACK ============ -->
+  <section>
+    <p class="kicker">12 · Feedback</p>
+    <h2 class="sec">Alerts and the done-state</h2>
+    <p class="sec-note">All alerts are square boxes with a 3px left rule — Ink for info, Crimson for errors, Sage for success. One red in the shop: errors distinguish themselves with the icon and message, and helpful error copy tells the reader what to do.</p>
+    <div class="demo">
+      <p class="demo-caption">Inline alerts — info / error / success</p>
+      <div class="alert alert-info"><span class="ic">ⓘ</span>Editions pause on federal holidays — your next paper arrives Tuesday.</div>
+      <div class="alert alert-error"><span class="ic">⚠</span>We couldn't find that ZIP code. Check the five digits and try again.</div>
+      <div class="alert alert-success"><span class="ic">✓</span>You're on the route. Your first edition arrives tomorrow before 7 a.m.</div>
+    </div>
+    <div class="demo">
+      <p class="demo-caption">Field error — crimson border + fix-it message</p>
+      <input class="error-field" type="email" value="corry@braving" aria-label="Email address" aria-invalid="true">
+      <p class="error-msg">That address is missing its ending — try something like name@example.com.</p>
+    </div>
+    <div class="demo">
+      <p class="demo-caption">Confirmation block</p>
+      <div class="confirm">
+        <span class="circle">✓</span>
+        <h4>You're on tomorrow's route</h4>
+        <p>The morning edition lands in your inbox before 7 a.m. — national headlines first, then your state, then your town.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- ============ 13 EMAIL TYPOGRAPHY (approved) ============ -->
+  <section>
+    <p class="kicker">13 · Email Typography</p>
+    <h2 class="sec">One fallback, chosen on purpose: Georgia</h2>
+    <p class="sec-note">Approved. Email serif is Georgia (headlines + body), UI furniture Helvetica/Arial, masthead always the PNG. Below, the same story in both tiers — the right panel is real Georgia, what a Gmail reader gets.</p>
+    <div class="logo-panels">
+      <div class="demo" style="margin-bottom:0">
+        <p class="demo-caption">Web + Apple Mail — brand faces</p>
+        <p class="kicker">Your Town</p>
+        <h3 style="font-family:var(--font-display);font-weight:700;font-size:24px;color:var(--ink);line-height:1.25;margin:6px 0 10px">Council approves the riverfront plan after a decade of debate</h3>
+        <p style="font-size:16px;line-height:1.65">The vote came just before midnight, 6–1, ending a fight that outlasted three mayors.</p>
+      </div>
+      <div class="demo" style="margin-bottom:0">
+        <p class="demo-caption" style="font-family:Helvetica,Arial,sans-serif">Gmail + Outlook — Georgia fallback</p>
+        <p class="kicker" style="font-family:Helvetica,Arial,sans-serif">Your Town</p>
+        <h3 style="font-family:Georgia,serif;font-weight:700;font-size:24px;color:var(--ink);line-height:1.25;margin:6px 0 10px">Council approves the riverfront plan after a decade of debate</h3>
+        <p style="font-family:Georgia,serif;font-size:16px;line-height:1.65">The vote came just before midnight, 6–1, ending a fight that outlasted three mayors.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- ============ 14 LAYOUT & ACCESSIBILITY ============ -->
+  <section>
+    <p class="kicker">14 · Layout &amp; Accessibility</p>
+    <h2 class="sec">The grid and the floor</h2>
+    <p class="sec-note">Content widths, breakpoints, and the non-negotiables. The audience is the oldest in the portfolio: the floors below are brand traits, not compliance minimums.</p>
+    <div class="demo" style="overflow-x:auto">
+      <p class="demo-caption">Layout</p>
+      <table class="doc">
+        <tr><th>Context</th><th>Spec</th></tr>
+        <tr><td>Site sections</td><td>max-width <code>1120px</code></td></tr>
+        <tr><td>Articles / narrow content</td><td>max-width <code>720px</code></td></tr>
+        <tr><td>Page padding</td><td><code>48px</code> top · <code>24px</code> sides · <code>96px</code> bottom</td></tr>
+        <tr><td>≤ 700px</td><td>H1 → 30px, H2 → 22px, card padding → 20px</td></tr>
+        <tr><td>≤ 560px</td><td>Two-column modules (VS box, price comparison) stack</td></tr>
+      </table>
+    </div>
+    <div class="demo" style="overflow-x:auto">
+      <p class="demo-caption">Accessibility floors</p>
+      <table class="doc">
+        <tr><th>Requirement</th><th>Spec</th></tr>
+        <tr><td>Body text</td><td>18px default, 17px absolute minimum (web) · 16px (email)</td></tr>
+        <tr><td>Body contrast</td><td>Byline on Newsprint = 12.3:1 (AAA). When in doubt, step up a tier.</td></tr>
+        <tr><td>Fine print</td><td>Slate (5.7:1) — Pewter is never used for readable text</td></tr>
+        <tr><td>Touch targets</td><td>≥ 44×44px on mobile</td></tr>
+        <tr><td>Focus indicator</td><td>2px Crimson outline, 2px offset, on every interactive element</td></tr>
+        <tr><td>Motion</td><td>Fade-only; all animation collapses under <code>prefers-reduced-motion</code></td></tr>
+        <tr><td>Comparison tables</td><td>Scroll region with <code>tabindex</code> + <code>aria-label</code>; glyphs carry <code>role="img"</code> labels</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- ============ 15 PHOTOGRAPHY (approved) ============ -->
+  <section>
+    <p class="kicker">15 · Photography</p>
     <h2 class="sec">Wire-photo sensibility, not stock gloss</h2>
-    <p class="sec-note">Documentary, photojournalistic imagery — real Americans in real places, natural light, muted warm tones that sit on the Newsprint palette. People 50+ appear as capable subjects of the story, never as "elderly" clip art. Every editorial photo takes a cutline: Spectral italic, Slate, with credit. No illustration systems, no 3D renders, no emoji in editorial surfaces.</p>
+    <p class="sec-note">Approved. Documentary imagery, natural light, muted warm tones. People 50+ as capable subjects. Every editorial photo takes a cutline (§ 08). No illustration systems, no 3D renders, no emoji in editorial surfaces.</p>
   </section>
 
 </main>
 
-<footer>
+<footer class="page-foot">
   <div class="wrap">
     <div class="double-rule soft" role="presentation" style="margin-bottom:20px"></div>
-    <p>AmericanAdvisor visual identity proposal · structured on BaseLocal's brand-guide template · pending approval before writing to Brain.</p>
+    <p>AmericanAdvisor design system showcase · pairs with <code style="font-family:var(--font-mono)">brain/brands/americanadvisor/design-system.md</code>. Components added via <code style="font-family:var(--font-mono)">extend-design-system</code> render here; sections marked Proposed are pending approval.</p>
   </div>
 </footer>
+
+<script>
+  // one-shot entrance for the motion demo on first scroll into view
+  (function(){
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const d = document.getElementById('motionDemo');
+    new IntersectionObserver((es,o)=>{ if(es[0].isIntersecting){ d.classList.add('play'); o.disconnect(); } },{threshold:.3}).observe(d);
+  })();
+</script>
 
 </body>
 </html>
