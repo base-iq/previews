@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Updates — Above-the-Fold Explorations | BaseLocal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,700;1,400&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/newsletter.css">
+    <style>
+        /* ---- Exploration scaffolding (working doc only, not email) ---- */
+        .exploration-note {
+            max-width: 670px;
+            margin: 0 auto;
+            padding: 24px 16px 0;
+        }
+        .exploration-note h1 {
+            font-family: 'Bitter', Georgia, serif;
+            font-size: 26px;
+            font-weight: 700;
+            color: #2C2421;
+            margin: 0 0 10px;
+            line-height: 1.25;
+        }
+        .exploration-note p {
+            font-family: 'Bitter', Georgia, serif;
+            font-size: 15px;
+            line-height: 1.55;
+            color: #6B6258;
+            margin: 0 0 8px;
+        }
+        .variant-label {
+            max-width: 670px;
+            margin: 40px auto 0;
+            padding: 0 16px;
+        }
+        .variant-label .vl-kicker {
+            font-family: 'Lato', Helvetica, Arial, sans-serif;
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: #C2604A;
+            display: block;
+            margin-bottom: 4px;
+        }
+        .variant-label h2 {
+            font-family: 'Bitter', Georgia, serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: #2C2421;
+            margin: 0 0 6px;
+        }
+        .variant-label p {
+            font-family: 'Bitter', Georgia, serif;
+            font-style: italic;
+            font-size: 14px;
+            line-height: 1.55;
+            color: #6B6258;
+            margin: 0;
+        }
+        .fold-line {
+            max-width: 670px;
+            margin: 0 auto;
+            padding: 0 16px 8px;
+            font-family: 'Lato', Helvetica, Arial, sans-serif;
+            font-size: 10px;
+            font-weight: 900;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: #C9BEB7;
+            text-align: center;
+            border-bottom: 2px dashed #C9BEB7;
+        }
+
+        /* ---- PROPOSED components (pending extend-design-system) ---- */
+
+        /* Direction A: format nameplate — newspaper-style flag between
+           top-links and masthead meta */
+        .format-flag {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 14px;
+        }
+        .format-flag::before,
+        .format-flag::after {
+            content: "";
+            flex: 1;
+            border-top: 1px solid #EDE6E1;
+        }
+        .format-flag span {
+            font-family: 'Lato', Helvetica, Arial, sans-serif;
+            font-size: 12px;
+            font-weight: 900;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: #C2604A;
+            white-space: nowrap;
+        }
+
+        /* Proposed: upgrade bar — replaces the top-links nav in the
+           News Updates send */
+        .upgrade-bar {
+            font-family: 'Bitter', Georgia, serif;
+            font-size: 14px;
+            line-height: 21px;
+            color: #2C2421;
+            border-bottom: 1px solid #EDE6E1;
+            padding-bottom: 16px;
+            margin-bottom: 18px;
+        }
+        .upgrade-bar a {
+            color: #C2604A;
+            font-weight: 700;
+            text-decoration: underline;
+            white-space: nowrap;
+        }
+
+        /* Proposed v2: typographic nameplate — text-only masthead, no
+           per-location images. Replaces the cover photo in the news send. */
+        .card-accent-top {
+            border-top: 4px solid #C2604A;
+        }
+        .nameplate {
+            text-align: center;
+            padding: 24px 0 22px;
+            border-bottom: 1px solid #EDE6E1;
+            margin-bottom: 24px;
+        }
+        .nameplate .np-brand {
+            display: block;
+            font-family: 'Lato', Helvetica, Arial, sans-serif;
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: #6B6258;
+            margin-bottom: 10px;
+        }
+        .nameplate .np-title {
+            font-family: 'Bitter', Georgia, serif;
+            font-size: 36px;
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.5px;
+            color: #2C2421;
+        }
+        .nameplate .np-loc {
+            display: block;
+            margin-top: 10px;
+            font-family: 'Bitter', Georgia, serif;
+            font-style: italic;
+            font-size: 15px;
+            color: #6B6258;
+        }
+
+        /* Direction B: ink masthead — dark band replaces the cover photo */
+        .masthead-ink {
+            background: #2C2421;
+            border-top: 4px solid #C2604A;
+            border-radius: 5px;
+            text-align: center;
+            padding: 34px 24px 30px;
+        }
+        .masthead-ink img {
+            height: 44px;
+            width: auto;
+            display: inline-block;
+        }
+        .masthead-ink .ink-sub {
+            display: block;
+            margin-top: 12px;
+            font-family: 'Lato', Helvetica, Arial, sans-serif;
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: #B5A89C;
+        }
+        .masthead-ink .ink-sub em {
+            font-style: normal;
+            color: #C2604A;
+        }
+
+        /* Direction C: headline ledger — numbered scan list up top */
+        .headline-ledger {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            counter-reset: headline;
+        }
+        .headline-ledger li {
+            counter-increment: headline;
+            position: relative;
+            padding: 14px 0 14px 40px;
+            font-family: 'Bitter', Georgia, serif;
+            font-size: 16px;
+            line-height: 24px;
+            color: #2C2421;
+        }
+        .headline-ledger li + li {
+            border-top: 1px solid #EDE6E1;
+        }
+        .headline-ledger li::before {
+            content: counter(headline, decimal-leading-zero);
+            position: absolute;
+            left: 0;
+            top: 14px;
+            font-family: 'Bitter', Georgia, serif;
+            font-weight: 700;
+            font-size: 18px;
+            letter-spacing: -0.5px;
+            color: #C2604A;
+        }
+        .headline-ledger a {
+            color: #2C2421;
+            font-weight: 700;
+            text-decoration: none;
+            border-bottom: 2px solid #EDE6E1;
+        }
+        .headline-ledger .ledger-meta {
+            display: block;
+            font-style: italic;
+            font-size: 14px;
+            color: #6B6258;
+        }
+        .masthead-strip {
+            width: 100%;
+            height: 72px;
+            object-fit: cover;
+            border-radius: 5px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<div class="exploration-note">
+    <h1>News Updates — above-the-fold explorations</h1>
+    <p>Working doc for differentiating the second daily send from the morning roundup. The current shared header first, then the proposed "News Updates" header (typographic nameplate, no images, no weather) and a bolder pairing with the headline ledger. The three original directions follow for reference. Constraint driving v2: the cover banner is a per-location image (500+ locations), so the news header must be pure text and CSS. Everything uses existing newsletter tokens; the new components (nameplate, headline ledger, card accent rule) are proposals and would go through extend-design-system before production.</p>
+    <p>Cover photo is the Glendale placeholder from the 7xv1 template — swap per location as usual.</p>
+</div>
+
+<!-- ================================================================
+     CONTROL — what both emails look like today
+     ================================================================ -->
+<div class="variant-label">
+    <span class="vl-kicker">Control</span>
+    <h2>Today: both sends share this header</h2>
+    <p>Same nav, same meta line, same photo banner, same greeting structure. The only signal it's a different email is the intro wording and the edition number — which the two sends currently share (No. 263 and No. 264 on the same day).</p>
+</div>
+<div class="newsletter">
+    <div class="section-card">
+        <div class="top-links">
+            <a href="#">Insiders' Club</a>
+            <span class="sep">|</span>
+            <a href="#">Advertise</a>
+            <span class="sep">|</span>
+            <a href="#">Submit Event</a>
+        </div>
+        <div class="masthead">
+            <div class="masthead-meta">
+                <span class="masthead-date">Wednesday, July 1 &middot; Chance showers, 92&deg;</span>
+                <span class="masthead-edition">Traverse City Edition &middot; No. 263</span>
+            </div>
+            <img src="../7xv1/glendale-cover.jpg" alt="BaseLocal Traverse City cover photo" class="masthead-banner">
+        </div>
+        <div class="intro">
+            <p><strong>Hello Traverse City!</strong> Hope your coffee tastes especially good this morning. In today's bring-the-kiddos edition: Parking rate hike, milk carton boat regatta, and 100th National Cherry Festival + excuses to get the fam out and about this week.</p>
+        </div>
+    </div>
+    <div class="fold-line">~ preview-pane fold ~</div>
+</div>
+
+<!-- ================================================================
+     PROPOSED — Combined A+B, weather removed
+     ================================================================ -->
+<div class="variant-label">
+    <span class="vl-kicker">Proposed</span>
+    <h2>"News Updates" typographic nameplate — no images</h2>
+    <p>The photo banner goes entirely; a big Bitter nameplate takes its place, with a terracotta rule across the top of the card. Everything here is live text and CSS — nothing to regenerate per location. No weather, own edition counter.</p>
+</div>
+<div class="newsletter">
+    <div class="section-card card-accent-top">
+        <div class="upgrade-bar">
+            Customize your email schedule and go ad free. <a href="#">Upgrade Today</a>
+        </div>
+        <div class="masthead">
+            <div class="masthead-meta">
+                <span class="masthead-date">Wednesday, July 1</span>
+                <span class="masthead-edition">Update No. 12</span>
+            </div>
+            <div class="nameplate">
+                <span class="np-brand">Traverse City</span>
+                <div class="np-title">News Updates</div>
+                <span class="np-loc">All the news we can't fit in the morning roundup</span>
+            </div>
+        </div>
+        <div class="intro">
+            <p><strong>Today in four stories.</strong> Water line work on Eighth, a new community hub, fireworks rules for the Fourth, and a downtown parking change worth knowing before Monday.</p>
+        </div>
+    </div>
+    <div class="fold-line">~ preview-pane fold ~</div>
+</div>
+
+<!-- ================================================================
+     PROPOSED + LEDGER — bolder pairing
+     ================================================================ -->
+<div class="variant-label">
+    <span class="vl-kicker">Bolder pairing</span>
+    <h2>Nameplate + headline ledger</h2>
+    <p>Same nameplate, but the conversational intro goes too — the numbered ledger from Direction C fills the fold instead. The structure does the differentiating: the morning talks to you, News Updates briefs you. Still zero images.</p>
+</div>
+<div class="newsletter">
+    <div class="section-card card-accent-top">
+        <div class="upgrade-bar">
+            Customize your email schedule and go ad free. <a href="#">Upgrade Today</a>
+        </div>
+        <div class="masthead">
+            <div class="masthead-meta">
+                <span class="masthead-date">Wednesday, July 1</span>
+                <span class="masthead-edition">Update No. 12</span>
+            </div>
+            <div class="nameplate">
+                <span class="np-brand">Traverse City</span>
+                <div class="np-title">News Updates</div>
+                <span class="np-loc">All the news we can't fit in the morning roundup</span>
+            </div>
+        </div>
+        <ul class="headline-ledger">
+            <li><a href="#">Water line work closes part of Eighth Street</a> through Friday <span class="ledger-meta">Detours posted at Union and Cass</span></li>
+            <li><a href="#">The Commons building becomes a community hub</a> this fall <span class="ledger-meta">City council approved the lease Tuesday night</span></li>
+            <li><a href="#">Fire chief sets fireworks rules</a> ahead of the Fourth <span class="ledger-meta">What's legal inside city limits, what isn't</span></li>
+            <li><a href="#">Downtown parking rates rise Monday</a> <span class="ledger-meta">First hour stays free in city garages</span></li>
+        </ul>
+    </div>
+    <div class="fold-line">~ preview-pane fold ~</div>
+</div>
+
+<!-- ================================================================
+     DIRECTION A — Name it and flag it
+     ================================================================ -->
+<div class="variant-label">
+    <span class="vl-kicker">Direction A (reference)</span>
+    <h2>Name it and flag it</h2>
+    <p>Smallest change: each send gets a named nameplate flag and its own edition counter. Photo banner stays. The morning would carry its own flag ("Morning Roundup") so the pair reads as siblings, not duplicates.</p>
+</div>
+<div class="newsletter">
+    <div class="section-card">
+        <div class="top-links">
+            <a href="#">Insiders' Club</a>
+            <span class="sep">|</span>
+            <a href="#">Advertise</a>
+            <span class="sep">|</span>
+            <a href="#">Submit Event</a>
+        </div>
+        <div class="format-flag"><span>News Update</span></div>
+        <div class="masthead">
+            <div class="masthead-meta">
+                <span class="masthead-date">Wednesday, July 1 &middot; Chance showers, 92&deg;</span>
+                <span class="masthead-edition">Traverse City &middot; Update No. 12</span>
+            </div>
+            <img src="../7xv1/glendale-cover.jpg" alt="BaseLocal Traverse City cover photo" class="masthead-banner">
+        </div>
+        <div class="intro">
+            <p><strong>Back again, Traverse City.</strong> Four stories that broke since this morning's roundup: water line work on Eighth, a new community hub, and the fire chief's fireworks rules before the holiday weekend.</p>
+        </div>
+    </div>
+    <div class="fold-line">~ preview-pane fold ~</div>
+</div>
+
+<!-- ================================================================
+     DIRECTION B — Ink masthead
+     ================================================================ -->
+<div class="variant-label">
+    <span class="vl-kicker">Direction B (reference)</span>
+    <h2>The newsroom flip</h2>
+    <p>The news send trades the photo banner for a dark ink band — the footer treatment, promoted. Photo header means the morning magazine; ink header means the news bulletin. Note: this needs no per-location images either (one shared white-logo SVG + live text for the city) — but it does require beehiiv to render a raw HTML block with a background color. Parked until that's confirmed.</p>
+</div>
+<div class="newsletter">
+    <div class="section-card">
+        <div class="top-links">
+            <a href="#">Insiders' Club</a>
+            <span class="sep">|</span>
+            <a href="#">Advertise</a>
+            <span class="sep">|</span>
+            <a href="#">Submit Event</a>
+        </div>
+        <div class="masthead">
+            <div class="masthead-meta">
+                <span class="masthead-date">Wednesday, July 1 &middot; Chance showers, 92&deg;</span>
+                <span class="masthead-edition">Update No. 12</span>
+            </div>
+            <div class="masthead-ink">
+                <img src="../../assets/logos/baselocal-full-white.svg" alt="BaseLocal">
+                <span class="ink-sub">Traverse City &middot; <em>News Update</em></span>
+            </div>
+        </div>
+        <div class="intro">
+            <p><strong>The afternoon in four stories.</strong> Water line work, a new community hub, fireworks rules for the Fourth, and a downtown parking change worth knowing before Monday.</p>
+        </div>
+    </div>
+    <div class="fold-line">~ preview-pane fold ~</div>
+</div>
+
+<!-- ================================================================
+     DIRECTION C — Headlines first
+     ================================================================ -->
+<div class="variant-label">
+    <span class="vl-kicker">Direction C (reference)</span>
+    <h2>Headlines first</h2>
+    <p>Restructures the IA instead of the chrome: photo shrinks to a strip, the greeting goes, and a numbered headline ledger fills the fold. Dense and scannable where the morning is warm and conversational — the pacing itself is the differentiator. Sponsor copy moves below the ledger.</p>
+</div>
+<div class="newsletter">
+    <div class="section-card">
+        <div class="top-links">
+            <a href="#">Insiders' Club</a>
+            <span class="sep">|</span>
+            <a href="#">Advertise</a>
+            <span class="sep">|</span>
+            <a href="#">Submit Event</a>
+        </div>
+        <div class="masthead">
+            <div class="masthead-meta">
+                <span class="masthead-date">Wednesday, July 1 &middot; Chance showers, 92&deg;</span>
+                <span class="masthead-edition">Traverse City &middot; Update No. 12</span>
+            </div>
+            <img src="../7xv1/glendale-cover.jpg" alt="BaseLocal Traverse City cover photo" class="masthead-strip">
+        </div>
+        <span class="kicker" style="display:block; margin-top:18px;"><span class="kicker-num">01</span> &mdash; Since this morning</span>
+        <div class="section-heading">The headlines</div>
+        <ul class="headline-ledger">
+            <li><a href="#">Water line work closes part of Eighth Street</a> through Friday <span class="ledger-meta">Detours posted at Union and Cass</span></li>
+            <li><a href="#">The Commons building becomes a community hub</a> this fall <span class="ledger-meta">City council approved the lease Tuesday night</span></li>
+            <li><a href="#">Fire chief sets fireworks rules</a> ahead of the Fourth <span class="ledger-meta">What's legal inside city limits, what isn't</span></li>
+            <li><a href="#">Downtown parking rates rise Monday</a> <span class="ledger-meta">First hour stays free in city garages</span></li>
+        </ul>
+    </div>
+    <div class="fold-line">~ preview-pane fold ~</div>
+</div>
+
+<div class="exploration-note" style="padding-bottom: 64px;">
+    <p><strong>Composable:</strong> A is naming, B is visual identity, C is structure — they stack. A+B or A+C are natural pairings if one lever isn't enough.</p>
+</div>
+
+</body>
+</html>

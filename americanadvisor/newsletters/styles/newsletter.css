@@ -1,0 +1,428 @@
+/* ============================================
+   AmericanAdvisor Newsletter — single canonical stylesheet
+   ============================================
+   Implements brain/brands/americanadvisor/design-system.md
+   § Newsletter Components. Email typography is the approved
+   Georgia-first stack (brand-guide.md § Email typography) —
+   no web fonts are loaded, by design: the email is designed
+   on the fallback, not hoping to avoid it.
+
+   Tokens (design-system.md):
+     ink #0E1A2B · byline #27324A · slate #5B6478 · pewter #9AA0AE
+     newsprint #FBFAF7 · cream #F3EEDE · hairline #E3DED2
+     heavy-rule #CFC8B7 · crimson #8A2331 · deep-crimson #6E1B27
+     gilt #B88A2E
+
+   Structure: one sheet of Newsprint, no cards, no shadows.
+   Depth comes from rules; scannability comes from kickers,
+   double rules, and bold lead-ins.
+   ============================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.65;
+    color: #27324A;
+    background: #FBFAF7;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ---- NEWSLETTER PAGE (one-sheet container) ---- */
+.newsletter {
+    max-width: 660px;
+    margin: 0 auto;
+    padding: 20px 24px 64px;
+}
+
+/* ---- NEWSLETTER HEADER (the canonical stack, emailed) ----
+   On the Newsprint sheet itself: dateline → masthead PNG →
+   double rule → edition locale + folio line. */
+.nl-header {
+    padding-top: 24px;
+    text-align: center;
+}
+
+.dateline {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #5B6478;
+    line-height: 1;
+    margin-bottom: 14px;
+}
+
+.masthead-img {
+    display: block;
+    height: 48px;
+    width: auto;
+    margin: 0 auto 20px;
+}
+
+/* The double rule: 3px Ink over 1px Ink, 3px gap. */
+.double-rule {
+    height: 3px;
+    border-top: 3px solid #0E1A2B;
+    border-bottom: 1px solid #0E1A2B;
+}
+
+/* The location, promoted: the edition's own nameplate line. */
+.edition-locale {
+    padding-top: 14px;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #0E1A2B;
+    line-height: 1.3;
+}
+
+.edition-folio {
+    margin-top: 5px;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #5B6478;
+    line-height: 1.4;
+}
+
+/* ---- GREETING / INTRO ---- */
+.intro {
+    padding-top: 28px;
+}
+
+.intro p {
+    margin: 0 0 16px 0;
+}
+
+.intro strong,
+.news-item strong,
+.event-item strong,
+.biz-item strong {
+    font-weight: 700;
+    color: #0E1A2B;
+}
+
+/* ---- EDITORIAL LINKS (the newspaper convention) ---- */
+.newsletter a {
+    color: #8A2331;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.newsletter a:hover {
+    color: #6E1B27;
+}
+
+/* Furniture links opt out of the editorial register. */
+.newsletter .nl-footer a {
+    color: #9AA0AE;
+    text-decoration: underline;
+}
+
+.newsletter .nl-footer a:hover {
+    color: #B88A2E;
+}
+
+/* ---- SECTION FURNITURE ----
+   Every section opens: soft double rule → kicker → heading (→ dek).
+   48px of air above each break keeps the page scannable. */
+.section {
+    margin-top: 44px;
+}
+
+.section-rule {
+    height: 3px;
+    border-top: 2px solid #CFC8B7;
+    border-bottom: 1px solid #E3DED2;
+    margin-bottom: 18px;
+}
+
+.section-heading {
+    margin: 0 0 10px 0;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: #0E1A2B;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+}
+
+/* ---- LEAD STORY (Front Page only) ---- */
+.lead-headline {
+    margin: 0 0 8px 0;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 30px;
+    font-weight: 700;
+    color: #0E1A2B;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    text-wrap: pretty;
+}
+
+.lead-dek {
+    margin: 0 0 18px 0;
+    font-style: italic;
+    font-size: 19px;
+    line-height: 1.5;
+    color: #5B6478;
+}
+
+.lead-story p {
+    margin-bottom: 16px;
+}
+
+.lead-story p:last-child {
+    margin-bottom: 0;
+}
+
+/* Drop cap — the signature move, at most one per email. Ink, never Crimson. */
+.drop-cap {
+    float: left;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 58px;
+    font-weight: 700;
+    line-height: 0.85;
+    color: #0E1A2B;
+    padding: 5px 8px 0 0;
+}
+
+/* ---- NEWS / BUSINESS ITEMS ----
+   Bold Ink lead-in + prose. Hairline rules divide items.
+   Affiliate items render identical to organic (asterisk marks paid). */
+.news-item,
+.biz-item {
+    padding: 16px 0;
+}
+
+.news-item + .news-item,
+.biz-item + .biz-item,
+.lead-story + .news-item {
+    border-top: 1px solid #E3DED2;
+}
+
+/* Extra air between the lead story and the secondary items. */
+.lead-story + .news-item {
+    margin-top: 28px;
+    padding-top: 22px;
+}
+
+.news-item:last-child,
+.biz-item:last-child {
+    padding-bottom: 0;
+}
+
+.paywall-note {
+    font-style: italic;
+    font-size: 14px;
+    color: #5B6478;
+    margin-top: 6px;
+}
+
+/* ---- SPONSOR MODULE (Lead Sponsor variant only) ---- */
+.sponsor-tagline {
+    font-style: italic;
+    font-size: 15px;
+    line-height: 1.5;
+    color: #5B6478;
+    margin: 0 0 14px 0;
+}
+
+.sponsor-module p {
+    margin-bottom: 14px;
+}
+
+.sponsor-module p:last-child {
+    margin-bottom: 0;
+}
+
+/* ---- SERVICE SECTION (Worth a Look) ----
+   The special-section treatment: framed by full Ink double rules
+   top and bottom, centered section header. No fill — the heavier
+   furniture marks it as different stock. */
+.service-band .double-rule {
+    margin-bottom: 20px;
+}
+
+.service-band .double-rule.service-close {
+    margin-top: 26px;
+    margin-bottom: 0;
+}
+
+/* ---- EVENTS ---- */
+.event-item {
+    padding: 14px 0;
+}
+
+.event-item + .event-item {
+    border-top: 1px solid #E3DED2;
+}
+
+.event-meta {
+    display: block;
+    font-style: italic;
+    font-size: 15px;
+    color: #5B6478;
+    margin-top: 2px;
+}
+
+/* h3-level subheadings inside Happenings */
+.sub-heading {
+    margin: 30px 0 8px 0;
+    padding-top: 20px;
+    border-top: 1px solid #E3DED2;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #0E1A2B;
+    line-height: 1.3;
+}
+
+/* ---- QUICK LIST (Around town) ---- */
+.quick-list {
+    list-style: none;
+    margin: 8px 0 0 0;
+}
+
+.quick-list li {
+    position: relative;
+    padding: 4px 0 4px 20px;
+    font-size: 17px;
+    line-height: 1.6;
+}
+
+.quick-list li::before {
+    content: "\2022";
+    position: absolute;
+    left: 2px;
+    color: #8A2331;
+    font-weight: 700;
+}
+
+.browse-more {
+    margin-top: 16px;
+    font-size: 17px;
+}
+
+/* ---- SIGN-OFF ---- */
+.signoff {
+    margin-top: 44px;
+    padding-top: 18px;
+    border-top: 1px solid #E3DED2;
+}
+
+.signoff p {
+    margin-bottom: 14px;
+}
+
+.signoff-byline {
+    font-style: italic;
+    color: #5B6478;
+}
+
+/* The end mark — one Crimson star, closing the edition. */
+.end-mark {
+    color: #8A2331;
+    font-style: normal;
+    font-size: 15px;
+    margin-left: 4px;
+}
+
+.subscribe-ps {
+    font-size: 16px;
+    color: #5B6478;
+    font-style: italic;
+}
+
+/* ---- FOOTER ---- */
+.nl-footer {
+    background: #0E1A2B;
+    margin: 40px -24px 0;
+    padding: 32px 28px;
+    text-align: center;
+}
+
+.nl-footer .footer-masthead {
+    height: 26px;
+    width: auto;
+    margin-bottom: 8px;
+}
+
+.footer-tagline {
+    font-style: italic;
+    font-size: 14px;
+    color: #9AA0AE;
+    margin-bottom: 18px;
+}
+
+.footer-rule {
+    height: 2px;
+    border-top: 1px solid rgba(255, 255, 255, 0.16);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+    margin: 0 auto 18px;
+    width: 64px;
+}
+
+.nl-footer p {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    line-height: 1.6;
+    color: #9AA0AE;
+    margin-bottom: 8px;
+}
+
+.nl-footer p:last-child {
+    margin-bottom: 0;
+}
+
+.nl-footer a {
+    color: #9AA0AE;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.nl-footer a:hover {
+    color: #B88A2E;
+}
+
+/* ---- MOBILE ---- */
+@media (max-width: 600px) {
+    .newsletter {
+        padding: 16px 20px 48px;
+    }
+
+    .nl-footer {
+        margin-left: -20px;
+        margin-right: -20px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .masthead-img {
+        height: 38px;
+    }
+
+    .lead-headline {
+        font-size: 26px;
+    }
+
+    .section-heading {
+        font-size: 22px;
+    }
+
+    .edition-locale {
+        font-size: 14px;
+        letter-spacing: 0.18em;
+    }
+}

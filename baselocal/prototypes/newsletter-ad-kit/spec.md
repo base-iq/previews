@@ -49,11 +49,11 @@ Em-dash budget: zero prose em dashes in this kit (chrome dashes in "Fig. NN — 
 
 | Figure | Value | Source | Notes |
 |---|---|---|---|
-| 49% / 944K / 30.4M | Figs. 01–02 | live network figures, provided by Corry 2026-06-11 | shared with partner-media-kit; refresh both kits together |
-| 403 cities / 8× sends | Figs. 01–03 | May snapshot + cadence per Corry | confirm 403 at next refresh |
+| 49% / 1.0M / 31.9M | Figs. 01–02 | `development-newsletter-cluster` trailing 30d (data through 2026-06-24), refreshed 2026-07-14; confirmed by Corry | shared with partner-media-kit; refresh both kits together. Open rate is the 49.4% per-send average |
+| 510 cities / 15× sends | Figs. 01–03 | cities: COUNT(DISTINCT location_id) sent to in trailing 30d (methodology changed from the old all-time 403); cadence: Corry 2026-07-14 — 2 daily editions (AM + PM) + Tue Top 10 | — |
 | Bookable inventory | Lead Feature, Inline Feature 1, Combo only | Corry, this session | the other 9 paid slots are house-run and not for sale |
 | "Pairing tends to perform well" | Fig. 04 Combo card | Corry, this session | qualitative by design; the combo's click range now quantifies it |
-| Click estimates | Lead 500–1,500 · Inline 1 200–500 · Combo 700–2,000 per send | Corry, 2026-06-11 | CTRs derived as clicks ÷ ~1.01M delivered per send (30.4M / 30 days): 0.05–0.15% / 0.02–0.05% / 0.07–0.20%. Re-derive whenever the click ranges or delivered volume change |
+| Click estimates | Lead 500–1,500 · Inline 1 200–500 · Combo 700–2,000 per send | Corry, 2026-06-11; ranges reconfirmed 2026-07-14 | CTRs derived as clicks ÷ ~1.06M delivered per send (31.9M / 30 days): 0.05–0.14% / 0.02–0.05% / 0.07–0.19%. Re-derive whenever the click ranges or delivered volume change. NOTE: this per-send basis assumes the booked placement runs in the full-reach daily edition; see open question 7 on the 15×/week cadence |
 | Logo strip | 5 recognizable brands | `assets/partner-logos-media-kit/` | "Brands that have run here" — verify each actually ran before partner use |
 
 ## 6. Payment / external integrations
@@ -68,6 +68,7 @@ None. No links in the deck. Deals are flat rate or CPC, negotiated per offer; no
 4. ~~Benchmark CTRs~~ — resolved: per-option click ranges + derived CTRs now on Fig. 04 (values from Corry, 2026-06-11). Remaining: confirm the ranges hold against placement data at the next stats refresh.
 5. **Paved:** the brain mentions Paved as a marketplace channel; "Sold direct · No marketplace markup" assumes direct-only positioning for this kit. Confirm that's how sales wants it framed.
 6. **House inventory naming:** Fig. 03 calls WGYB etc. "house-run recommendations" to buyers. Confirm this is how you want the affiliate side described externally.
+7. **15×/week cadence vs. per-send delivered (added 2026-07-14):** cadence doubled (morning + evening editions) but delivered/30d rose only ~5%, so evening editions must reach a smaller list (or the change is very recent). The printed CTRs assume ~1.06M delivered for the booked send. Confirm which edition carries paid placements; if evening sends become bookable or the morning send's delivered count diverges, re-derive the Fig. 04 CTRs.
 
 ## 8. Updating this kit
 

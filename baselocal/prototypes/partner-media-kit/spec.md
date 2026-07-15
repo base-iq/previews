@@ -73,11 +73,12 @@ All figures are hand-placed (no live wiring). Sources and refresh procedure:
 
 | Figure | Value in deck | Source | Refresh before partner use |
 |---|---|---|---|
-| Active subscribers | 944K | live network figure, provided by Corry 2026-06-11 | Refreshed for June 2026; re-verify before each future send-out |
-| Avg open rate | 49% | live network figure, provided by Corry 2026-06-11 (was 42.6% in the May 14 snapshot) | Same |
-| Emails delivered / 30d | 30.4M | live network figure, provided by Corry 2026-06-11 | Same |
-| Cities & areas | 403 | COUNT(DISTINCT location_id), May snapshot — not re-verified 2026-06-11 | Yes — confirm at next refresh |
-| Sparkline shape | illustrative | — | Replace with real daily series or keep clearly illustrative |
+| Active subscribers | 1.0M (1,005,515) | `engaged_audience_daily` latest row, `development-newsletter-cluster` (data through 2026-06-24); confirmed by Corry 2026-07-14 | Refreshed for July 2026; re-verify before each future send-out |
+| Avg open rate | 49% | 49.4% per-send average, `analytics_email_metrics` trailing 30d (send_date > 2026-05-25), same cluster | Same. Weighted (unique_opens ÷ delivered) is 48.1% — deck uses the per-send average |
+| Emails delivered / 30d | 31.9M | SUM(delivered) trailing 30d, same query window | Same |
+| Cities & areas | 510 | COUNT(DISTINCT location_id) sent to in trailing 30d, `analytics_email_metrics` | Methodology changed 2026-07-14 (old 403 was an all-time snapshot count that no longer reproduces); confirmed by Corry |
+| Sends per week | 15× (7 morning editions + 7 evening editions + Tue Top 10) | Corry, 2026-07-14 (was 8× before evening editions) | Fig. 02 schedule panel + Fig. 04 stat grid |
+| Sparkline shape | illustrative (axis labels May 26 – Jun 24 match the stats window) | — | Replace with real daily series or keep clearly illustrative |
 | Scoreboard multipliers | 1.4 / 1.4 / 1.0 / 0.8 / 0.15× | `monetized_placements` per `offer_copy_id` for offer "Spot - AdsByMoney"; per-row CTR averaged per variant, indexed to pilot median | Yes — and verify variant→row mapping |
 | "Re-ran 20 more mornings" | 20 runs Feb 16 – Mar 21 | same table, copy_id 330 | Yes |
 | "Zero tracked conversions" (V5) | copy_id 397, 0 conversions | same table | Yes — confirm conversion event definition for this offer |
@@ -87,7 +88,7 @@ All figures are hand-placed (no live wiring). Sources and refresh procedure:
 | Placement map (Fig. 06–07) | 12 paid slots across 9 sections | June 2026 placement structure (per Corry, this session) | Confirm against the live format spec when `7xv1.md` is updated |
 | Audience 73% / 50+ | brand guide | `brain/brands/baselocal/brand-guide.md` | Confirm current source |
 
-**Query caveats:** numbers pulled from `corry-newsletter-cluster` (clone; data ends 2026-05-14). Production now lives at `prod-acct-newsletter-cluster` in the prod account (378131232780) — `database.md` in brain is stale on this. Do **not** sum `monetized_placements.total_delivered` across offers (known inflation issue); per-row ratios are safe. Never include internal economics (RPS, LTV, CAC, CPL, revenue, validation rates, per-location costs) in any partner-facing version.
+**Query caveats (updated 2026-07-14):** network stats now pulled from `development-newsletter-cluster` (freshest dev clone; data through 2026-06-24). `corry-newsletter-cluster` has data through 2026-06-11. The `monetized_placements` table **no longer exists in any dev clone** (schema migrated) — case-study figures are frozen as documented and can't be re-derived without the Analyst's access path. Production is `prod-acct-newsletter-cluster` in the prod account (378131232780); its Data API is enabled but the `baseiq-prod` ReadOnly role is still denied `rds-data:ExecuteStatement` (verified 2026-07-14). Never include internal economics (RPS, LTV, CAC, CPL, revenue, validation rates, per-location costs) in any partner-facing version.
 
 ## 6. Payment / external integrations
 
@@ -118,8 +119,8 @@ This folder is the whole project: `index.html` (all 15 pages, one file) + this s
 
 **Stats refresh checklist (before any partner send-out):**
 1. `aws sso login --sso-session baseiq` (12h sessions).
-2. Data lives in Aurora. **`database.md` in brain is stale on access** — there is no shared production cluster in the dev account anymore. Per-user clones exist in dev (e.g. `corry-newsletter-cluster` + secret `corry/newsletter/db-credentials`, Data API enabled, profile `baseiq-dev`), but they are point-in-time snapshots (Corry's ends 2026-05-14). True production is `prod-acct-newsletter-cluster` in the prod account (378131232780), where the `baseiq-prod` ReadOnly role **cannot** call the RDS Data API — so a current-data refresh needs either a refreshed clone or the Analyst role's access path.
-3. Re-run and update (values live on pages 04, 10, 13, 14 and in §5's table): network subscribers + engagement (`engaged_audience_daily`, `analytics_email_metrics` trailing 30d), Spot per-variant CTRs (`monetized_placements` grouped by `offer_copy_id`, offer "Spot - AdsByMoney" — recompute the median indexing), SnoreStop run count/clicks ("SnoreStop - GiddyUp"), TribeTokes (clicks ONLY — see §5 caveat).
+2. Data lives in Aurora. **`database.md` in brain is stale on access** — there is no shared production cluster in the dev account anymore. Dev clones (profile `baseiq-dev`, Data API enabled, database `newsletter`): `development-newsletter-cluster` + secret `development/newsletter/db-credentials` is the freshest shared clone (data through 2026-06-24 as of the July 2026 refresh); `corry-newsletter-cluster` + `corry/newsletter/db-credentials` runs through 2026-06-11. Clusters auto-pause — retry `DatabaseResumingException` for a minute or two. True production is `prod-acct-newsletter-cluster` in the prod account (378131232780); its Data API is enabled and a `prod-acct/newsletter/readonly-credentials` secret exists, but the `baseiq-prod` ReadOnly role is denied `rds-data:ExecuteStatement` (verified 2026-07-14) — so a truly current refresh needs either a refreshed clone or the Analyst role's access path.
+3. Re-run and update (values live on pages 04, 10, 13, 14 and in §5's table): network subscribers + engagement (`engaged_audience_daily` latest row, `analytics_email_metrics` trailing 30d). Case-study figures (Spot per-variant CTRs, SnoreStop, TribeTokes) were derived from `monetized_placements`, which **no longer exists in the clones** — those figures are frozen as documented (kept as-is in the July 2026 refresh, per Corry); re-deriving them needs the Analyst's access path. TribeTokes: clicks ONLY — see §5 caveat.
 4. Update the "Updated {Month Year}" line on the cover and the Window row on Doc. 15 isn't dated — only the cover needs the date bump.
 5. Wide-format logos: new logo files go in `previews/baselocal/assets/partner-logos-media-kit/`; the strip handles mixed aspect ratios (height 2.4cqw, max-width 8.5cqw, contain).
 
