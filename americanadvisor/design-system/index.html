@@ -346,7 +346,7 @@
   <section>
     <p class="kicker">02 · Typography</p>
     <h2 class="sec">A paper is read, not scanned</h2>
-    <p class="sec-note">Approved. Libre Caslon Text display, Spectral body at 18px, Inter for furniture, JetBrains Mono sparingly for data. Email designs on Georgia (see § 12).</p>
+    <p class="sec-note">Approved. Libre Caslon Text display, Spectral body at 18px, Inter for furniture, JetBrains Mono sparingly for data. Email designs on Georgia (see § 14).</p>
     <div class="spec"><span class="label">H1 · Libre Caslon 700 · 40px</span><span style="font-family:var(--font-display);font-weight:700;font-size:40px;line-height:1.15;color:var(--ink);letter-spacing:-0.01em">The Whole Picture, National to Neighborhood</span></div>
     <div class="spec"><span class="label">H2 · Libre Caslon 700 · 26px</span><span style="font-family:var(--font-display);font-weight:700;font-size:26px;line-height:1.35;color:var(--ink)">Your state, this morning</span></div>
     <div class="spec"><span class="label">H3 · Spectral 600 · 22px</span><span style="font-family:var(--font-body);font-weight:600;font-size:22px;line-height:1.35;color:var(--ink)">Council approves the riverfront plan</span></div>
@@ -852,9 +852,75 @@
 
   <hr class="rule">
 
-  <!-- ============ 15 LAYOUT & ACCESSIBILITY ============ -->
+  <!-- ============ 15 NEWSLETTER COMPONENTS (approved) ============ -->
   <section>
-    <p class="kicker">15 · Layout &amp; Accessibility</p>
+    <p class="kicker">15 · Newsletter Components</p>
+    <h2 class="sec">The paper, in the inbox</h2>
+    <p class="sec-note">Approved July 15, 2026 with the first email formats (<code style="font-family:var(--font-mono);font-size:14px">morning-edition-v1</code>, <code style="font-family:var(--font-mono);font-size:14px">afternoon-edition-v1</code>). Everything below is set in real Georgia and Helvetica — email renders on the fallback by design (§ 14). One sheet of Newsprint: no cards, no fills, no shadows; rules do all separation, bold Ink lead-ins carry the scan. Body runs 18px; nothing sits below 13px. Token specs live in <code style="font-family:var(--font-mono);font-size:14px">design-system.md § Newsletter Components</code>, implemented in <code style="font-family:var(--font-mono);font-size:14px">previews/americanadvisor/newsletters/styles/newsletter.css</code>. Live formats: <a href="../newsletters/morning-edition-v1/" style="color:var(--crimson)">morning edition</a> · <a href="../newsletters/afternoon-edition-v1/" style="color:var(--crimson)">afternoon edition</a>.</p>
+
+    <div class="demo">
+      <p class="demo-caption">Newsletter header — the canonical stack with the location nameplate (masthead always a PNG)</p>
+      <div style="max-width:560px;margin:0 auto;text-align:center">
+        <p style="font-family:Helvetica,Arial,sans-serif;font-size:12px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--slate);margin-bottom:14px">Wednesday, July 15, 2026</p>
+        <img src="../assets/logos/americanadvisor-full-ink.png" alt="American Advisor" style="height:44px;width:auto;margin-bottom:18px">
+        <div style="height:3px;border-top:3px solid var(--ink);border-bottom:1px solid var(--ink)"></div>
+        <p style="font-family:Helvetica,Arial,sans-serif;font-size:16px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--ink);padding-top:14px;margin:0">Dayton, Ohio</p>
+        <p style="font-family:Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--slate);margin-top:5px">Morning edition &middot; Vol. I &middot; No. 12</p>
+      </div>
+    </div>
+
+    <div class="demo">
+      <p class="demo-caption">Lead story + email news items — the one drop cap per email; affiliate items dress identically, marked with a trailing *</p>
+      <div style="max-width:560px;margin:0 auto;font-family:Georgia,serif;color:var(--byline);font-size:18px;line-height:1.65">
+        <div style="height:3px;border-top:2px solid var(--heavy-rule);border-bottom:1px solid var(--hairline);margin-bottom:18px"></div>
+        <h3 style="font-family:Georgia,serif;font-weight:700;font-size:30px;line-height:1.2;color:var(--ink);letter-spacing:-0.01em;margin:0 0 8px">The Fed signals its first rate cut of the year. Savers have a narrow window.</h3>
+        <p style="font-style:italic;font-size:19px;color:var(--slate);margin:0 0 18px">Certificate rates tend to fall before the announcement does.</p>
+        <p style="margin:0"><span style="float:left;font-family:Georgia,serif;font-weight:700;font-size:58px;line-height:.85;color:var(--ink);padding:5px 8px 0 0">F</span>ederal Reserve officials emerged from Tuesday&rsquo;s meeting pointing, for the first time this year, toward a September cut in the benchmark rate &mdash; <a href="#" style="color:var(--crimson);text-underline-offset:3px">read the full story</a>.</p>
+        <div style="clear:both;border-top:1px solid var(--hairline);margin-top:28px;padding-top:22px"><strong style="color:var(--ink)">Insulin cap clears the Senate:</strong> The $35 monthly cap heads to the House, where a floor vote is expected before the August recess &mdash; <a href="#" style="color:var(--crimson);text-underline-offset:3px">see who the bill covers</a>.</div>
+        <div style="border-top:1px solid var(--hairline);margin-top:16px;padding-top:16px"><strong style="color:var(--ink)">Six in ten American adults have no will.</strong> Online documents now take about 20 minutes, witnessed and binding in all 50 states. <a href="#" style="color:var(--crimson);text-underline-offset:3px">This service</a> is the one we found easiest to finish in one sitting.*</div>
+      </div>
+    </div>
+
+    <div class="demo">
+      <p class="demo-caption">Service section frame (full Ink double rules), event item, quick list</p>
+      <div style="max-width:560px;margin:0 auto;font-family:Georgia,serif;color:var(--byline);font-size:18px;line-height:1.65">
+        <div style="height:3px;border-top:3px solid var(--ink);border-bottom:1px solid var(--ink);margin-bottom:20px"></div>
+        <h3 style="font-family:Georgia,serif;font-weight:700;font-size:26px;color:var(--ink);margin:0 0 12px">Worth a look</h3>
+        <p style="margin:0 0 20px"><strong style="color:var(--ink)">Get your name off data-broker lists:</strong> <a href="#" style="color:var(--crimson);text-underline-offset:3px">This service</a> files removal requests with 200+ brokers automatically and re-checks monthly.*</p>
+        <div style="height:3px;border-top:3px solid var(--ink);border-bottom:1px solid var(--ink);margin-bottom:26px"></div>
+        <p style="margin:0 0 2px"><strong style="color:var(--ink)"><a href="#" style="color:var(--crimson);text-underline-offset:3px">Levitt Pavilion summer series: The Wright Brothers Big Band</a></strong></p>
+        <p style="font-style:italic;font-size:15px;color:var(--slate);margin:0 0 16px">Friday, July 17 &middot; 7 p.m. &middot; Levitt Pavilion, downtown &middot; Free, bring a chair</p>
+        <ul style="list-style:none;margin:0;padding:0">
+          <li style="position:relative;padding:4px 0 4px 20px;font-size:17px"><span style="position:absolute;left:2px;color:var(--crimson);font-weight:700">&bull;</span>Kettering&rsquo;s Fraze Pavilion posted its <a href="#" style="color:var(--crimson);text-underline-offset:3px">August lineup</a></li>
+          <li style="position:relative;padding:4px 0 4px 20px;font-size:17px"><span style="position:absolute;left:2px;color:var(--crimson);font-weight:700">&bull;</span>Two pairs of prescription glasses for $79, <a href="#" style="color:var(--crimson);text-underline-offset:3px">online here</a>*</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="demo">
+      <p class="demo-caption">Feature module, sign-off with the end mark, email footer</p>
+      <div style="max-width:560px;margin:0 auto;font-family:Georgia,serif;color:var(--byline);font-size:18px;line-height:1.65">
+        <div style="height:3px;border-top:2px solid var(--heavy-rule);border-bottom:1px solid var(--hairline);margin-bottom:18px"></div>
+        <h3 style="font-family:Georgia,serif;font-weight:700;font-size:26px;color:var(--ink);margin:0 0 10px">A retirement plan you can read on paper</h3>
+        <p style="font-style:italic;font-size:15px;color:var(--slate);margin:0 0 14px">Together with our sponsor <a href="#" style="color:var(--crimson);text-underline-offset:3px">Sterling &amp; Oak</a></p>
+        <p style="margin:0 0 14px">A written income plan first; only then a conversation about what, if anything, to buy. <a href="#" style="color:var(--crimson);text-underline-offset:3px">Schedule your session &rarr;</a>*</p>
+        <div style="border-top:1px solid var(--hairline);margin-top:24px;padding-top:18px">
+          <p style="font-style:italic;color:var(--slate);margin:0 0 20px">&mdash; The AmericanAdvisor Desk<span style="color:var(--crimson);font-style:normal;font-size:15px;margin-left:4px">&#9733;</span></p>
+        </div>
+        <div style="background:var(--ink);padding:28px 24px;text-align:center">
+          <img src="../assets/logos/americanadvisor-full-white.png" alt="American Advisor" style="height:24px;width:auto;margin-bottom:8px">
+          <p style="font-family:Georgia,serif;font-style:italic;font-size:14px;color:var(--pewter);margin:0 0 14px">The whole picture &mdash; national to neighborhood.</p>
+          <p style="font-family:Helvetica,Arial,sans-serif;font-size:13px;line-height:1.6;color:var(--pewter);margin:0">Items marked with an asterisk (*) are paid placements. <a href="#" style="color:var(--pewter)">Unsubscribe</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- ============ 16 LAYOUT & ACCESSIBILITY ============ -->
+  <section>
+    <p class="kicker">16 · Layout &amp; Accessibility</p>
     <h2 class="sec">The grid and the floor</h2>
     <p class="sec-note">Content widths, breakpoints, and the non-negotiables. The audience is the oldest in the portfolio: the floors below are brand traits, not compliance minimums.</p>
     <div class="demo" style="overflow-x:auto">
@@ -885,9 +951,9 @@
 
   <hr class="rule">
 
-  <!-- ============ 16 PHOTOGRAPHY (approved) ============ -->
+  <!-- ============ 17 PHOTOGRAPHY (approved) ============ -->
   <section>
-    <p class="kicker">16 · Photography</p>
+    <p class="kicker">17 · Photography</p>
     <h2 class="sec">Wire-photo sensibility, not stock gloss</h2>
     <p class="sec-note">Approved. Documentary imagery, natural light, muted warm tones. People 50+ as capable subjects. Every editorial photo takes a cutline (§ 08). No illustration systems, no 3D renders, no emoji in editorial surfaces.</p>
   </section>
