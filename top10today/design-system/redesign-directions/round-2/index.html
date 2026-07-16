@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Top10Today — Redesign Directions, Round 2 (July 2026)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Libre+Franklin:wght@400;500;600;700;800&family=Zilla+Slab:wght@500;600;700&family=Karla:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&family=Source+Sans+3:wght@400;600;700&family=Marcellus&family=Figtree:wght@400;600;700;800&family=Public+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#F4F2EE;color:#333;font-family:"Public Sans",Helvetica,Arial,sans-serif;font-size:16px;line-height:1.6}
+  .wrap{max-width:960px;margin:0 auto;padding:0 20px}
+
+  .board-head{background:#1B1B1B;color:#fff;padding:40px 20px 34px;text-align:center}
+  .board-head .kicker{font-weight:700;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:#B9B9B9;display:block;margin-bottom:10px}
+  .board-head h1{font-weight:800;font-size:30px;line-height:1.2;letter-spacing:-.01em;max-width:640px;margin:0 auto}
+  .board-head p{color:#CFCFCF;font-size:15px;max-width:640px;margin:14px auto 0}
+  .dir-jump{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:22px}
+  .dir-jump a{color:#fff;text-decoration:none;font-weight:700;font-size:13px;border:1.5px solid rgba(255,255,255,.4);padding:8px 18px;border-radius:999px}
+  .dir-jump a:hover{border-color:#fff}
+
+  section.dir{padding:0 0 64px}
+  .dir-head{padding:54px 20px 24px;text-align:center}
+  .dir-head .letter{font-weight:800;font-size:12px;letter-spacing:.2em;text-transform:uppercase;display:inline-block;padding:6px 16px;border-radius:999px;margin-bottom:14px}
+  .dir-head h2{font-size:33px;line-height:1.15;letter-spacing:-.01em}
+  .dir-head .thesis{font-size:16px;max-width:660px;margin:12px auto 0;color:#555}
+  .dir-head .tests{font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;margin-top:12px;color:#888}
+
+  .panel{background:#fff;border:1px solid #DDD8CF;padding:26px;margin-bottom:18px}
+  .cap{font-weight:700;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#9A958B;margin-bottom:16px;font-family:"Public Sans",sans-serif}
+  .note{font-size:13.5px;color:#6B665D;margin-top:12px;max-width:720px;font-family:"Public Sans",sans-serif;line-height:1.55}
+  .note b{color:#333}
+
+  .swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(136px,1fr));gap:12px}
+  .swatch{border:1px solid #DDD8CF;background:#fff}
+  .swatch .chip{height:56px;border-bottom:1px solid #DDD8CF}
+  .swatch .meta{padding:8px 10px}
+  .swatch .name{font-size:12.5px;font-weight:700;color:#1B1B1B;font-family:"Public Sans",sans-serif}
+  .swatch .hex{font-size:11px;color:#6B665D;font-family:ui-monospace,Menlo,monospace}
+
+  .specrow{border-top:1px solid #E4E0D8;padding:13px 0;display:grid;grid-template-columns:1fr;gap:4px}
+  @media(min-width:700px){.specrow{grid-template-columns:210px 1fr;align-items:baseline}}
+  .specrow .lab{font-size:11px;color:#9A958B;letter-spacing:.05em;text-transform:uppercase;font-weight:600;font-family:"Public Sans",sans-serif}
+
+  .btnrow{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-top:24px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;padding:12px 28px;min-height:46px;text-decoration:none;cursor:pointer;border:2px solid transparent;transition:background-color .12s,color .12s,border-color .12s}
+
+  /* ============ D — THE LEDGER (monochrome) ============ */
+  .dD{--ink:#141412;--bodyc:#33322E;--grayc:#5C5A55;--paper:#FAFAF7;--tintbg:#F0F0EB;--rulec:#DFDED7;
+      --sans:"Libre Franklin",Helvetica,Arial,sans-serif;--disp:"DM Serif Display",Georgia,serif}
+  .dD{background:var(--paper)}
+  .dD .dir-head .letter{background:var(--ink);color:#fff}
+  .dD .dir-head h2{font-family:var(--disp);font-weight:400;color:var(--ink)}
+  .dD .marquee{background:var(--paper);text-align:center;padding:34px 20px 24px;border-top:3px solid var(--ink)}
+  .dD .mast-rule{border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:4px 0;max-width:520px;margin:0 auto}
+  .dD .w{font-family:var(--sans);font-weight:800;font-size:15px;letter-spacing:.44em;text-indent:.44em;text-transform:uppercase;color:var(--ink)}
+  .dD .no10{font-family:var(--disp);font-size:88px;line-height:1;color:var(--ink);margin:10px 0 6px}
+  .dD .no10 sup{font-size:34px;vertical-align:super}
+  .dD .date-row{border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:9px 0;font-family:var(--sans);font-weight:700;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink);display:flex;justify-content:center;gap:26px;flex-wrap:wrap}
+  .dD .date-row .loc{color:var(--grayc)}
+  .dD .stamp{font-family:var(--sans);font-weight:700;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink);border-bottom:2px solid var(--ink);display:inline-block;padding-bottom:2px}
+  .dD .t-finale{font-family:var(--disp);font-size:28px;line-height:1.25;color:var(--ink)}
+  .dD .t-h1{font-family:var(--sans);font-weight:800;font-size:31px;line-height:1.15;letter-spacing:-.01em;color:var(--ink)}
+  .dD .t-item{font-family:var(--sans);font-weight:700;font-size:18px;line-height:1.3;color:var(--ink)}
+  .dD .t-body{font-family:var(--sans);font-size:16.5px;line-height:1.6;color:var(--bodyc);max-width:560px}
+  .dD .cd-row{display:grid;grid-template-columns:64px 1fr;gap:0;padding:15px 0;border-top:1px solid var(--rulec);align-items:start;font-family:var(--sans)}
+  .dD .lednum{font-family:var(--disp);font-size:36px;line-height:1;color:var(--ink);text-align:right;padding-right:16px;border-right:1px solid var(--ink);margin-right:16px;align-self:stretch}
+  .dD .cd-row>div:last-child{padding-left:16px}
+  .dD .cd-row h4{font-weight:700;font-size:18px;color:var(--ink);line-height:1.3}
+  .dD .cd-row p{font-size:15px;line-height:1.55;margin-top:4px;max-width:520px;color:var(--bodyc)}
+  .dD .ast{color:var(--ink);font-weight:800;border-bottom:2px solid var(--ink)}
+  .dD .cd-finale{border-top:1px solid var(--rulec);padding:20px 0 6px}
+  .dD .cd-finale .row{display:grid;grid-template-columns:92px 1fr;gap:20px;align-items:start;margin-top:14px}
+  .dD .ledblock{width:76px;height:76px;background:var(--ink);display:inline-flex;align-items:center;justify-content:center}
+  .dD .ledblock span{font-family:var(--disp);font-size:44px;color:var(--paper);line-height:1}
+  .dD .cd-finale h3{font-family:var(--disp);font-size:27px;line-height:1.25;color:var(--ink)}
+  .dD .cd-finale p{font-family:var(--sans);font-size:15.5px;line-height:1.6;margin-top:9px;max-width:540px;color:var(--bodyc)}
+  .dD .btn-primary{background:var(--ink);color:var(--paper);border-radius:0;font-family:var(--sans)}
+  .dD .btn-primary:hover{background:#000}
+  .dD .btn-secondary{background:transparent;color:var(--ink);border-color:var(--ink);border-radius:0;font-family:var(--sans)}
+  .dD .btn-secondary:hover{background:var(--tintbg)}
+
+  /* ============ E — THE TICKET (espresso + butterscotch) ============ */
+  .dE{--ink:#2E211A;--accent:#8B4F1D;--accent-deep:#6F3F17;--scotch:#E8C094;
+      --paper:#FAF5EE;--tintbg:#F2E8DA;--rulec:#E3D7C5;--bodyc:#3A2E24;--grayc:#6E6156;
+      --sans:"Karla",Helvetica,Arial,sans-serif;--disp:"Zilla Slab",Rockwell,Georgia,serif}
+  .dE{background:var(--paper)}
+  .dE .dir-head .letter{background:var(--ink);color:var(--scotch)}
+  .dE .dir-head h2{font-family:var(--disp);font-weight:700;color:var(--ink)}
+  .dE .marquee{background:var(--ink);text-align:center;padding:36px 20px 30px}
+  .dE .w{font-family:var(--sans);font-weight:800;font-size:16px;letter-spacing:.46em;text-indent:.46em;text-transform:uppercase;color:#fff;line-height:1}
+  .dE .stub{position:relative;display:inline-block;background:var(--scotch);color:var(--ink);padding:14px 34px 12px;margin:14px 0 12px;
+    -webkit-mask:radial-gradient(circle 9px at left center,transparent 96%,#000) left/51% 100% no-repeat,
+                 radial-gradient(circle 9px at right center,transparent 96%,#000) right/51% 100% no-repeat;
+    mask:radial-gradient(circle 9px at left center,transparent 96%,#000) left/51% 100% no-repeat,
+         radial-gradient(circle 9px at right center,transparent 96%,#000) right/51% 100% no-repeat;
+    border-radius:12px}
+  .dE .stub .admit{font-family:var(--sans);font-weight:800;font-size:10.5px;letter-spacing:.3em;text-indent:.3em;text-transform:uppercase;display:block;margin-bottom:2px}
+  .dE .stub .n{font-family:var(--disp);font-weight:700;font-size:46px;line-height:1;display:block}
+  .dE .date-row{border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:9px 0;font-family:var(--sans);font-weight:700;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);display:flex;justify-content:center;gap:26px;flex-wrap:wrap;background:var(--paper)}
+  .dE .date-row .loc{color:var(--bodyc)}
+  .dE .stamp{font-family:var(--sans);font-weight:800;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+  .dE .t-finale{font-family:var(--disp);font-weight:700;font-size:27px;line-height:1.25;color:var(--ink)}
+  .dE .t-h1{font-family:var(--sans);font-weight:800;font-size:31px;line-height:1.15;letter-spacing:-.01em;color:var(--ink)}
+  .dE .t-item{font-family:var(--sans);font-weight:700;font-size:18px;line-height:1.3;color:var(--ink)}
+  .dE .t-body{font-family:var(--sans);font-size:16.5px;line-height:1.6;color:var(--bodyc);max-width:560px}
+  .dE .chip10{width:48px;height:44px;border:2px dashed var(--ink);border-radius:8px;display:inline-flex;align-items:center;justify-content:center}
+  .dE .chip10 span{font-family:var(--disp);font-weight:700;font-size:21px;color:var(--ink)}
+  .dE .chip-finale{width:80px;height:72px;background:var(--ink);border-radius:10px;display:inline-flex;align-items:center;justify-content:center;
+    -webkit-mask:radial-gradient(circle 8px at left center,transparent 96%,#000) left/51% 100% no-repeat,
+                 radial-gradient(circle 8px at right center,transparent 96%,#000) right/51% 100% no-repeat;
+    mask:radial-gradient(circle 8px at left center,transparent 96%,#000) left/51% 100% no-repeat,
+         radial-gradient(circle 8px at right center,transparent 96%,#000) right/51% 100% no-repeat}
+  .dE .chip-finale span{font-family:var(--disp);font-weight:700;font-size:38px;color:var(--scotch)}
+  .dE .cd-row{display:grid;grid-template-columns:64px 1fr;gap:16px;padding:15px 0;border-top:1px solid var(--rulec);align-items:start;font-family:var(--sans)}
+  .dE .cd-row h4{font-weight:700;font-size:18px;color:var(--ink);line-height:1.3}
+  .dE .cd-row p{font-size:15px;line-height:1.55;margin-top:4px;max-width:540px;color:var(--bodyc)}
+  .dE .ast{color:var(--accent);font-weight:800}
+  .dE .cd-finale{border-top:1px solid var(--rulec);padding:20px 0 6px}
+  .dE .cd-finale .row{display:grid;grid-template-columns:96px 1fr;gap:20px;align-items:start;margin-top:14px}
+  .dE .cd-finale h3{font-family:var(--disp);font-weight:700;font-size:26px;line-height:1.25;color:var(--ink)}
+  .dE .cd-finale p{font-family:var(--sans);font-size:15.5px;line-height:1.6;margin-top:9px;max-width:540px;color:var(--bodyc)}
+  .dE .btn-primary{background:var(--accent);color:#fff;border-radius:999px;font-family:var(--sans)}
+  .dE .btn-primary:hover{background:var(--accent-deep)}
+  .dE .btn-secondary{background:transparent;color:var(--ink);border-color:var(--ink);border-radius:999px;font-family:var(--sans)}
+  .dE .btn-secondary:hover{background:var(--tintbg)}
+
+  /* ============ F — THE FRONT PAGE (ink + steel) ============ */
+  .dF{--ink:#16181B;--accent:#46586B;--accent-deep:#34434F;--steel-lt:#A9BCCB;
+      --paper:#FAFBFC;--tintbg:#EEF1F4;--rulec:#DCE1E6;--bodyc:#2A3138;--grayc:#5C6A75;
+      --sans:"Inter",Helvetica,Arial,sans-serif;--disp:"Space Grotesk",Helvetica,Arial,sans-serif}
+  .dF{background:var(--paper)}
+  .dF .dir-head .letter{background:var(--accent);color:#fff}
+  .dF .dir-head h2{font-family:var(--disp);font-weight:700;color:var(--ink)}
+  .dF .marquee{background:var(--ink);text-align:center;padding:36px 20px 30px}
+  .dF .fr10{width:96px;height:96px;border:2px solid var(--steel-lt);display:inline-flex;align-items:center;justify-content:center;position:relative;margin:0 0 14px}
+  .dF .fr10 span{font-family:var(--disp);font-weight:700;font-size:48px;color:#fff;line-height:1}
+  .dF .fr10 .tag{position:absolute;bottom:-2px;right:-2px;background:var(--steel-lt);color:var(--ink);font-family:var(--disp);font-weight:700;font-size:9.5px;letter-spacing:.14em;padding:3px 7px;text-transform:uppercase}
+  .dF .w{font-family:var(--disp);font-weight:700;font-size:17px;letter-spacing:.34em;text-indent:.34em;text-transform:uppercase;color:#fff;line-height:1}
+  .dF .date-row{border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:9px 0;font-family:var(--sans);font-weight:700;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);display:flex;justify-content:center;gap:26px;flex-wrap:wrap;background:var(--paper)}
+  .dF .date-row .loc{color:var(--bodyc)}
+  .dF .stamp{font-family:var(--sans);font-weight:700;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+  .dF .t-finale{font-family:var(--disp);font-weight:700;font-size:27px;line-height:1.2;letter-spacing:-.01em;color:var(--ink)}
+  .dF .t-h1{font-family:var(--sans);font-weight:800;font-size:30px;line-height:1.15;letter-spacing:-.015em;color:var(--ink)}
+  .dF .t-item{font-family:var(--sans);font-weight:700;font-size:17.5px;line-height:1.3;color:var(--ink)}
+  .dF .t-body{font-family:var(--sans);font-size:16px;line-height:1.6;color:var(--bodyc);max-width:560px}
+  .dF .gridnum{font-family:var(--disp);font-weight:600;font-size:26px;color:var(--accent);text-align:right;padding-right:14px;line-height:1.2;border-bottom:2px solid var(--accent);align-self:start;min-width:52px}
+  .dF .cd-row{display:grid;grid-template-columns:66px 1fr;gap:16px;padding:15px 0;border-top:1px solid var(--rulec);align-items:start;font-family:var(--sans)}
+  .dF .cd-row h4{font-weight:700;font-size:17.5px;color:var(--ink);line-height:1.3}
+  .dF .cd-row p{font-size:15px;line-height:1.55;margin-top:4px;max-width:540px;color:var(--bodyc)}
+  .dF .ast{color:var(--accent);font-weight:800}
+  .dF .cd-finale{border-top:1px solid var(--rulec);padding:20px 0 6px}
+  .dF .cd-finale .row{display:grid;grid-template-columns:92px 1fr;gap:20px;align-items:start;margin-top:14px}
+  .dF .frblock{width:76px;height:76px;background:var(--ink);display:inline-flex;align-items:center;justify-content:center}
+  .dF .frblock span{font-family:var(--disp);font-weight:700;font-size:42px;color:var(--steel-lt)}
+  .dF .cd-finale h3{font-family:var(--disp);font-weight:700;font-size:25px;line-height:1.25;letter-spacing:-.01em;color:var(--ink)}
+  .dF .cd-finale p{font-family:var(--sans);font-size:15.5px;line-height:1.6;margin-top:9px;max-width:540px;color:var(--bodyc)}
+  .dF .btn-primary{background:var(--accent);color:#fff;border-radius:6px;font-family:var(--sans)}
+  .dF .btn-primary:hover{background:var(--accent-deep)}
+  .dF .btn-secondary{background:transparent;color:var(--ink);border-color:var(--ink);border-radius:6px;font-family:var(--sans)}
+  .dF .btn-secondary:hover{background:var(--tintbg)}
+
+  /* ============ G — THE LATE SHOW (dark page) ============ */
+  .dG{--page:#201E1B;--panel:#2A2723;--rulec:#3B372F;--text:#F2EDE2;--secondary:#C7BFAE;--amber:#E4C87F;
+      --sans:"Source Sans 3",Helvetica,Arial,sans-serif;--disp:"Playfair Display",Georgia,serif}
+  .dG{background:var(--page)}
+  .dG .dir-head h2{font-family:var(--disp);font-weight:600;color:var(--text)}
+  .dG .dir-head .letter{background:var(--amber);color:var(--page)}
+  .dG .dir-head .thesis{color:var(--secondary)}
+  .dG .dir-head .tests{color:#8F887A}
+  .dG .marquee{text-align:center;padding:40px 20px 30px;position:relative;overflow:hidden}
+  .dG .cone{position:absolute;top:0;left:50%;transform:translateX(-50%);width:340px;height:100%;
+    background:radial-gradient(ellipse 170px 230px at center 88%, rgba(228,200,127,.28), transparent 70%);pointer-events:none}
+  .dG .w{font-family:var(--sans);font-weight:700;font-size:16px;letter-spacing:.46em;text-indent:.46em;text-transform:uppercase;color:var(--text);line-height:1;position:relative}
+  .dG .glow10{font-family:var(--disp);font-weight:600;font-size:84px;line-height:1;color:var(--amber);margin:8px 0 4px;position:relative}
+  .dG .date-row{border-top:1px solid var(--rulec);border-bottom:1px solid var(--rulec);padding:9px 0;font-family:var(--sans);font-weight:700;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);display:flex;justify-content:center;gap:26px;flex-wrap:wrap}
+  .dG .date-row .loc{color:var(--secondary)}
+  .dG .panel{background:var(--panel);border:1px solid var(--rulec)}
+  .dG .cap{color:#8F887A}
+  .dG .note{color:var(--secondary)}
+  .dG .note b{color:var(--text)}
+  .dG .swatch{border-color:var(--rulec);background:var(--panel)}
+  .dG .swatch .chip{border-color:var(--rulec)}
+  .dG .swatch .name{color:var(--text)}
+  .dG .swatch .hex{color:var(--secondary)}
+  .dG .specrow{border-top:1px solid var(--rulec)}
+  .dG .specrow .lab{color:#8F887A}
+  .dG .stamp{font-family:var(--sans);font-weight:700;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--amber)}
+  .dG .t-finale{font-family:var(--disp);font-weight:600;font-size:28px;line-height:1.25;color:var(--text)}
+  .dG .t-h1{font-family:var(--sans);font-weight:700;font-size:31px;line-height:1.15;letter-spacing:-.01em;color:var(--text)}
+  .dG .t-item{font-family:var(--sans);font-weight:700;font-size:18px;line-height:1.3;color:var(--text)}
+  .dG .t-body{font-family:var(--sans);font-size:16.5px;line-height:1.6;color:var(--secondary);max-width:560px}
+  .dG .nnum{font-family:var(--disp);font-weight:600;font-size:34px;color:var(--text);text-align:right;padding-right:16px;line-height:1.1;min-width:56px}
+  .dG .cd-row{display:grid;grid-template-columns:64px 1fr;gap:16px;padding:15px 0;border-top:1px solid var(--rulec);align-items:start;font-family:var(--sans)}
+  .dG .cd-row h4{font-weight:700;font-size:18px;color:var(--text);line-height:1.3}
+  .dG .cd-row p{font-size:15px;line-height:1.55;margin-top:4px;max-width:540px;color:var(--secondary)}
+  .dG .ast{color:var(--amber);font-weight:700}
+  .dG .cd-finale{border-top:1px solid var(--rulec);padding:20px 0 6px}
+  .dG .cd-finale .row{display:grid;grid-template-columns:100px 1fr;gap:20px;align-items:start;margin-top:14px}
+  .dG .spot1{width:84px;height:84px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;
+    background:radial-gradient(circle at center, rgba(228,200,127,.32), rgba(228,200,127,.06) 62%, transparent 72%)}
+  .dG .spot1 span{font-family:var(--disp);font-weight:600;font-size:52px;color:var(--amber);line-height:1}
+  .dG .cd-finale h3{font-family:var(--disp);font-weight:600;font-size:27px;line-height:1.25;color:var(--text)}
+  .dG .cd-finale p{font-family:var(--sans);font-size:15.5px;line-height:1.6;margin-top:9px;max-width:540px;color:var(--secondary)}
+  .dG .btn-primary{background:var(--amber);color:var(--page);border-radius:999px;font-family:var(--sans)}
+  .dG .btn-primary:hover{background:#D4B86F}
+  .dG .btn-secondary{background:transparent;color:var(--text);border-color:var(--secondary);border-radius:999px;font-family:var(--sans)}
+  .dG .btn-secondary:hover{border-color:var(--amber);color:var(--amber)}
+
+  /* ============ H — THE PODIUM (stone + gold foil) ============ */
+  .dH{--ink:#23201B;--gold:#A8842C;--gold-deep:#8C6D22;--gold-dark:#C9A54A;
+      --paper:#F5F2EB;--tintbg:#ECE7DA;--rulec:#DCD5C4;--bodyc:#3B362C;--grayc:#6B6455;
+      --sans:"Figtree",Helvetica,Arial,sans-serif;--disp:"Marcellus",Georgia,serif}
+  .dH{background:var(--paper)}
+  .dH .dir-head .letter{background:var(--ink);color:var(--gold-dark)}
+  .dH .dir-head h2{font-family:var(--disp);font-weight:400;color:var(--ink)}
+  .dH .marquee{background:var(--ink);text-align:center;padding:38px 20px 34px}
+  .dH .w{font-family:var(--disp);font-size:19px;letter-spacing:.34em;text-indent:.34em;text-transform:uppercase;color:#F5F2EB;line-height:1}
+  .dH .podium{display:inline-flex;align-items:flex-end;gap:3px;margin:64px 0 4px}
+  .dH .podium .step{background:transparent;border:2px solid var(--gold-dark);width:44px}
+  .dH .podium .s2{height:34px}
+  .dH .podium .s1{height:52px;position:relative}
+  .dH .podium .s3{height:24px}
+  .dH .podium .s1 .n{position:absolute;left:50%;transform:translateX(-50%);bottom:54px;font-family:var(--disp);font-size:46px;line-height:1;color:var(--gold-dark)}
+  .dH .date-row{border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:9px 0;font-family:var(--sans);font-weight:700;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-deep);display:flex;justify-content:center;gap:26px;flex-wrap:wrap;background:var(--paper)}
+  .dH .date-row .loc{color:var(--bodyc)}
+  .dH .stamp{font-family:var(--sans);font-weight:700;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-deep)}
+  .dH .t-finale{font-family:var(--disp);font-size:28px;line-height:1.3;color:var(--ink)}
+  .dH .t-h1{font-family:var(--sans);font-weight:800;font-size:31px;line-height:1.15;letter-spacing:-.01em;color:var(--ink)}
+  .dH .t-item{font-family:var(--sans);font-weight:700;font-size:18px;line-height:1.3;color:var(--ink)}
+  .dH .t-body{font-family:var(--sans);font-size:16.5px;line-height:1.6;color:var(--bodyc);max-width:560px}
+  .dH .goldnum{font-family:var(--disp);font-size:36px;color:var(--gold);text-align:right;padding-right:16px;line-height:1.1;min-width:56px}
+  .dH .cd-row{display:grid;grid-template-columns:64px 1fr;gap:16px;padding:15px 0;border-top:1px solid var(--rulec);align-items:start;font-family:var(--sans)}
+  .dH .cd-row h4{font-weight:700;font-size:18px;color:var(--ink);line-height:1.3}
+  .dH .cd-row p{font-size:15px;line-height:1.55;margin-top:4px;max-width:540px;color:var(--bodyc)}
+  .dH .ast{color:var(--gold-deep);font-weight:800}
+  .dH .cd-finale{border-top:1px solid var(--rulec);padding:20px 0 6px}
+  .dH .cd-finale .row{display:grid;grid-template-columns:96px 1fr;gap:20px;align-items:start;margin-top:14px}
+  .dH .plinth{width:80px;height:76px;background:var(--ink);border-top:3px solid var(--gold-dark);display:inline-flex;align-items:center;justify-content:center}
+  .dH .plinth span{font-family:var(--disp);font-size:44px;color:var(--gold-dark);line-height:1}
+  .dH .cd-finale h3{font-family:var(--disp);font-size:27px;line-height:1.3;color:var(--ink)}
+  .dH .cd-finale p{font-family:var(--sans);font-size:15.5px;line-height:1.6;margin-top:9px;max-width:540px;color:var(--bodyc)}
+  .dH .btn-primary{background:var(--ink);color:var(--gold-dark);border-radius:999px;font-family:var(--sans)}
+  .dH .btn-primary:hover{background:#000}
+  .dH .btn-secondary{background:transparent;color:var(--ink);border-color:var(--ink);border-radius:999px;font-family:var(--sans)}
+  .dH .btn-secondary:hover{background:var(--tintbg)}
+
+  .constants{background:#1B1B1B;color:#CFCFCF;padding:54px 20px 64px}
+  .constants h2{color:#fff;font-weight:800;font-size:24px;margin-bottom:14px}
+  .constants li{margin:8px 0 8px 20px;font-size:15px}
+  .constants b{color:#fff}
+  .constants .next{margin-top:26px;padding-top:22px;border-top:1px solid rgba(255,255,255,.18);font-size:15px;max-width:720px}
+  .constants a{color:#fff}
+</style>
+</head>
+<body>
+
+<div class="board-head">
+  <span class="kicker">Top10Today — Redesign directions, round 2 · July 16, 2026</span>
+  <h1>Five more looks for the countdown</h1>
+  <p>Round 1 (velvet violet / raspberry burst / tally citron) didn't land. This round spreads wider — including "maybe the answer is less color," "maybe it's warmth," and "maybe the whole page goes dark." Same rules: countdown structure untouched, every hex carries its measured contrast, siblings' territories respected or explicitly flagged.</p>
+  <div class="dir-jump">
+    <a href="#dir-d">D — The Ledger</a>
+    <a href="#dir-e">E — The Ticket</a>
+    <a href="#dir-f">F — The Front Page</a>
+    <a href="#dir-g">G — The Late Show</a>
+    <a href="#dir-h">H — The Podium</a>
+  </div>
+</div>
+
+<!-- ============ D — THE LEDGER ============ -->
+<section class="dir dD" id="dir-d">
+  <div class="dir-head">
+    <span class="letter">Direction D</span>
+    <h2>The Ledger</h2>
+    <p class="thesis">No accent color at all. Ink on paper, one serious serif for the numerals, franklin gothic for everything else — the countdown as a broadsheet ledger where scale and weight do all the talking. The mark is the numero: <b>№ 10</b>.</p>
+    <p class="tests">Tests the theory: the problem was color itself</p>
+  </div>
+
+  <div class="marquee">
+    <div class="mast-rule"><div class="w">Top Ten Today</div></div>
+    <div class="no10"><sup>№</sup>10</div>
+  </div>
+  <div class="date-row">
+    <span>Thursday, July 16, 2026</span>
+    <span class="loc">Columbus · Evening Ten</span>
+  </div>
+
+  <div class="wrap" style="padding-top:34px">
+    <div class="panel">
+      <p class="cap">Palette — ink, and that's it</p>
+      <div class="swatches">
+        <div class="swatch"><div class="chip" style="background:#141412"></div><div class="meta"><div class="name">Ink</div><div class="hex">#141412 · 17.6:1</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#33322E"></div><div class="meta"><div class="name">Body</div><div class="hex">#33322E</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#5C5A55"></div><div class="meta"><div class="name">Gray</div><div class="hex">#5C5A55 · 6.6:1</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#FAFAF7;border-bottom:1px solid #DFDED7"></div><div class="meta"><div class="name">Paper</div><div class="hex">#FAFAF7 · page</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#F0F0EB"></div><div class="meta"><div class="name">Tint</div><div class="hex">#F0F0EB · panels</div></div></div>
+      </div>
+      <p class="note"><b>The bet:</b> in a portfolio where every sibling owns a color, the brand that owns <i>no</i> color is instantly recognizable. Emphasis comes from the serif numerals, ink-block finale, underlines, and rules. Errors would use a functional red in forms only — never editorial surfaces. <b>Territory check:</b> zero collisions, by definition. Closest neighbor in spirit is AmericanAdvisor's newsprint — but that's a serif broadsheet with navy and crimson; this is colorless and franklin-gothic.</p>
+    </div>
+
+    <div class="panel">
+      <p class="cap">Type — DM Serif Display + Libre Franklin</p>
+      <div class="specrow"><span class="lab">Finale headline · DM Serif Display</span><p class="t-finale">And the number one thing in town tonight…</p></div>
+      <div class="specrow"><span class="lab">H1 · Libre Franklin 800</span><p class="t-h1">Ten things worth your Thursday</p></div>
+      <div class="specrow"><span class="lab">Item headline · Libre Franklin 700</span><p class="t-item">Council votes tonight on the Main Street parking change</p></div>
+      <div class="specrow"><span class="lab">Body · Libre Franklin 400</span><p class="t-body">DM Serif Display holds the theater — high-contrast, newspaper-masthead serious. Libre Franklin is the working text: the classic American news gothic. Both rationed exactly as before: the serif never sets a paragraph.</p></div>
+      <div class="specrow"><span class="lab">Intro stamp · Franklin 700 caps, underlined</span><p><span class="stamp">And tonight's number one —</span></p></div>
+      <p class="note"><b>Email fallback:</b> DM Serif Display → Georgia; Libre Franklin → Helvetica. The monochrome palette is the most email-proof scheme possible — no color rendering surprises anywhere.</p>
+    </div>
+
+    <div class="panel">
+      <p class="cap">The unit</p>
+      <div class="cd-row">
+        <span class="lednum">7</span>
+        <div>
+          <h4>The bridge repaint moves to night work</h4>
+          <p>Lane closures shift to 9 p.m.–5 a.m. through next week. Morning commutes go back to normal starting tomorrow.</p>
+        </div>
+      </div>
+      <div class="cd-row">
+        <span class="lednum">6</span>
+        <div>
+          <h4>A local pro checks your furnace before the fall rush <span class="ast">*</span></h4>
+          <p>Tune-ups run $89 through August. Booked slots go fast once the first cold night hits — this is the cheap month.</p>
+        </div>
+      </div>
+      <div class="cd-finale">
+        <span class="stamp">And tonight's number one —</span>
+        <div class="row">
+          <span class="ledblock"><span>1</span></span>
+          <div>
+            <h3>The Riverside Market reopens Saturday, two years after the flood</h3>
+            <p>44 stalls, a covered arcade, and the same peach lady in slot #3. Gates open at 8 a.m.; parking fills by 9. Worth the early alarm.</p>
+          </div>
+        </div>
+      </div>
+      <div class="btnrow">
+        <a class="btn btn-primary" href="#" onclick="return false">Get the evening ten</a>
+        <a class="btn btn-secondary" href="#" onclick="return false">See the full countdown</a>
+      </div>
+      <p class="note"><b>Device:</b> numerals sit against a vertical ledger rule; the finale is the one solid ink block with the numeral knocked out. Buttons go hard-cornered — this direction has no circles anywhere. The paid asterisk is ink with a heavy underline (no color available to mark it — the underline is the register).</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ E — THE TICKET ============ -->
+<section class="dir dE" id="dir-e">
+  <div class="dir-head">
+    <span class="letter">Direction E</span>
+    <h2>The Ticket</h2>
+    <p class="thesis">Warmth instead of theater-dark: espresso brown, butterscotch, and cream — the countdown as a ticket stub in your jacket pocket. The mark literally says <b>ADMIT 10</b>. Cozy, tactile, the friendliest direction on either board.</p>
+    <p class="tests">Tests the theory: the brand should feel warm, not staged</p>
+  </div>
+
+  <div class="marquee">
+    <div class="w">Top 10 Today</div>
+    <div><span class="stub"><span class="admit">Admit</span><span class="n">10</span></span></div>
+  </div>
+  <div class="date-row">
+    <span>Thursday, July 16, 2026</span>
+    <span class="loc">Columbus · Evening Ten</span>
+  </div>
+
+  <div class="wrap" style="padding-top:34px">
+    <div class="panel">
+      <p class="cap">Palette — espresso and butterscotch</p>
+      <div class="swatches">
+        <div class="swatch"><div class="chip" style="background:#2E211A"></div><div class="meta"><div class="name">Espresso</div><div class="hex">#2E211A · 14.4:1</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#8B4F1D"></div><div class="meta"><div class="name">Toffee</div><div class="hex">#8B4F1D · 6.0:1 — AA+</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#6F3F17"></div><div class="meta"><div class="name">Deep Toffee (hover)</div><div class="hex">#6F3F17 · 8.1:1</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#E8C094"></div><div class="meta"><div class="name">Butterscotch</div><div class="hex">#E8C094 · 9.2:1 on Espresso only</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#FAF5EE;border-bottom:1px solid #E3D7C5"></div><div class="meta"><div class="name">Cream</div><div class="hex">#FAF5EE · page</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#F2E8DA"></div><div class="meta"><div class="name">Latte Tint</div><div class="hex">#F2E8DA · panels</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#3A2E24"></div><div class="meta"><div class="name">Body</div><div class="hex">#3A2E24 · 12.1:1</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#6E6156"></div><div class="meta"><div class="name">Gray</div><div class="hex">#6E6156 · 5.5:1 — AA+</div></div></div>
+      </div>
+      <p class="note"><b>Same discipline:</b> Espresso frames, Butterscotch lives on dark only, Toffee is the working accent (white on Toffee 6.5:1). <b>Territory check:</b> brown is a different family from BaseLocal's red-clay terracotta <code>#C2604A</code> — chocolate vs. brick — but both are warm-on-cream, so this is the direction's flagged adjacency: the two homepages should be compared side by side at proposal stage.</p>
+    </div>
+
+    <div class="panel">
+      <p class="cap">Type — Zilla Slab + Karla</p>
+      <div class="specrow"><span class="lab">Finale headline · Zilla Slab 700</span><p class="t-finale">And the number one thing in town tonight…</p></div>
+      <div class="specrow"><span class="lab">H1 · Karla 800</span><p class="t-h1">Ten things worth your Thursday</p></div>
+      <div class="specrow"><span class="lab">Item headline · Karla 700</span><p class="t-item">Council votes tonight on the Main Street parking change</p></div>
+      <div class="specrow"><span class="lab">Body · Karla 400</span><p class="t-body">Zilla Slab is the ticket-print face — sturdy slab serifs with a friendly drawing, rationed to numerals and the finale. Karla carries the working text with a touch of humanist warmth that Public Sans never had.</p></div>
+      <div class="specrow"><span class="lab">Intro stamp · Karla 800 caps</span><p class="stamp">And tonight's number one —</p></div>
+      <p class="note"><b>Email fallback:</b> Zilla Slab → Rockwell → Georgia; Karla → Helvetica. The stub shapes ship as PNG badges in email (masks don't render in Outlook), same strategy as the old ring badge set.</p>
+    </div>
+
+    <div class="panel">
+      <p class="cap">The unit</p>
+      <div class="cd-row">
+        <span class="chip10"><span>7</span></span>
+        <div>
+          <h4>The bridge repaint moves to night work</h4>
+          <p>Lane closures shift to 9 p.m.–5 a.m. through next week. Morning commutes go back to normal starting tomorrow.</p>
+        </div>
+      </div>
+      <div class="cd-row">
+        <span class="chip10"><span>6</span></span>
+        <div>
+          <h4>A local pro checks your furnace before the fall rush <span class="ast">*</span></h4>
+          <p>Tune-ups run $89 through August. Booked slots go fast once the first cold night hits — this is the cheap month.</p>
+        </div>
+      </div>
+      <div class="cd-finale">
+        <span class="stamp">And tonight's number one —</span>
+        <div class="row">
+          <span class="chip-finale"><span>1</span></span>
+          <div>
+            <h3>The Riverside Market reopens Saturday, two years after the flood</h3>
+            <p>44 stalls, a covered arcade, and the same peach lady in slot #3. Gates open at 8 a.m.; parking fills by 9. Worth the early alarm.</p>
+          </div>
+        </div>
+      </div>
+      <div class="btnrow">
+        <a class="btn btn-primary" href="#" onclick="return false">Get the evening ten</a>
+        <a class="btn btn-secondary" href="#" onclick="return false">See the full countdown</a>
+      </div>
+      <p class="note"><b>Device:</b> rank numerals sit in perforated stubs (dashed ticket edges); the finale is the one solid stub — espresso with a butterscotch numeral and real notches. "Admit ten" becomes usable voice furniture: the subscribe CTA can read <i>"Get your ticket"</i>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ F — THE FRONT PAGE ============ -->
+<section class="dir dF" id="dir-f">
+  <div class="dir-head">
+    <span class="letter">Direction F</span>
+    <h2>The Front Page</h2>
+    <p class="thesis">Cool, modern, Swiss: near-black ink with one desaturated steel blue, grid geometry, and Space Grotesk numerals. No metaphor at all — no theater, no tickets, no seals. Just typography and the grid. The most contemporary direction on either board.</p>
+    <p class="tests">Tests the theory: the marks were gimmicks — go clean instead</p>
+  </div>
+
+  <div class="marquee">
+    <div><span class="fr10"><span>10</span><span class="tag">Today</span></span></div>
+    <div class="w">Top Ten Today</div>
+  </div>
+  <div class="date-row">
+    <span>Thursday, July 16, 2026</span>
+    <span class="loc">Columbus · Evening Ten</span>
+  </div>
+
+  <div class="wrap" style="padding-top:34px">
+    <div class="panel">
+      <p class="cap">Palette — ink and steel</p>
+      <div class="swatches">
+        <div class="swatch"><div class="chip" style="background:#16181B"></div><div class="meta"><div class="name">Ink</div><div class="hex">#16181B · 17.2:1</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#46586B"></div><div class="meta"><div class="name">Steel</div><div class="hex">#46586B · 7.1:1 — AAA</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#34434F"></div><div class="meta"><div class="name">Deep Steel (hover)</div><div class="hex">#34434F · 9.8:1</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#A9BCCB"></div><div class="meta"><div class="name">Steel Light</div><div class="hex">#A9BCCB · 9.1:1 on Ink only</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#FAFBFC;border-bottom:1px solid #DCE1E6"></div><div class="meta"><div class="name">White</div><div class="hex">#FAFBFC · page</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#EEF1F4"></div><div class="meta"><div class="name">Fog Tint</div><div class="hex">#EEF1F4 · panels</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#2A3138"></div><div class="meta"><div class="name">Body</div><div class="hex">#2A3138 · 13.5:1</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#5C6A75"></div><div class="meta"><div class="name">Gray</div><div class="hex">#5C6A75 · 5.4:1 — AA+</div></div></div>
+      </div>
+      <p class="note"><b>Territory check — the honest flag:</b> LocalUpdate owns "black + wire cobalt." Cobalt <code>#2036B1</code> is a vivid, saturated blue; Steel <code>#46586B</code> is a gray with a blue cast — different saturation universe. But this is the closest any direction comes to a sibling, and it needs the two mastheads side by side (plus Mike's read) before it could be committed. If steel is judged too close, this direction works with the steel swapped for a warm graphite <code>#4A4A45</code> — making it a second colorless option.</p>
+    </div>
+
+    <div class="panel">
+      <p class="cap">Type — Space Grotesk + Inter</p>
+      <div class="specrow"><span class="lab">Finale headline · Space Grotesk 700</span><p class="t-finale">And the number one thing in town tonight…</p></div>
+      <div class="specrow"><span class="lab">H1 · Inter 800</span><p class="t-h1">Ten things worth your Thursday</p></div>
+      <div class="specrow"><span class="lab">Item headline · Inter 700</span><p class="t-item">Council votes tonight on the Main Street parking change</p></div>
+      <div class="specrow"><span class="lab">Body · Inter 400</span><p class="t-body">Space Grotesk does the display work — a grotesk with just enough quirk in the numerals to be ownable, no serif anywhere in the system. Inter is the most neutral working text on either board. This is the only direction with no serif at all.</p></div>
+      <div class="specrow"><span class="lab">Intro stamp · Inter 700 caps</span><p class="stamp">And tonight's number one —</p></div>
+      <p class="note"><b>Email fallback:</b> Space Grotesk → Helvetica bold (the register flattens more than the serif directions — worth a proof); Inter → Helvetica. Square geometry survives Outlook without images.</p>
+    </div>
+
+    <div class="panel">
+      <p class="cap">The unit</p>
+      <div class="cd-row">
+        <span class="gridnum">07</span>
+        <div>
+          <h4>The bridge repaint moves to night work</h4>
+          <p>Lane closures shift to 9 p.m.–5 a.m. through next week. Morning commutes go back to normal starting tomorrow.</p>
+        </div>
+      </div>
+      <div class="cd-row">
+        <span class="gridnum">06</span>
+        <div>
+          <h4>A local pro checks your furnace before the fall rush <span class="ast">*</span></h4>
+          <p>Tune-ups run $89 through August. Booked slots go fast once the first cold night hits — this is the cheap month.</p>
+        </div>
+      </div>
+      <div class="cd-finale">
+        <span class="stamp">And tonight's number one —</span>
+        <div class="row">
+          <span class="frblock"><span>01</span></span>
+          <div>
+            <h3>The Riverside Market reopens Saturday, two years after the flood</h3>
+            <p>44 stalls, a covered arcade, and the same peach lady in slot #3. Gates open at 8 a.m.; parking fills by 9. Worth the early alarm.</p>
+          </div>
+        </div>
+      </div>
+      <div class="btnrow">
+        <a class="btn btn-primary" href="#" onclick="return false">Get the evening ten</a>
+        <a class="btn btn-secondary" href="#" onclick="return false">See the full countdown</a>
+      </div>
+      <p class="note"><b>Device:</b> two-digit numerals ("07", not "7") with a steel underline bar — the grid is the personality. The finale is the ink block with a steel-light "01". Buttons take a quiet 6px radius; nothing is a circle, nothing is a pill.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ G — THE LATE SHOW ============ -->
+<section class="dir dG" id="dir-g">
+  <div class="dir-head">
+    <span class="letter">Direction G</span>
+    <h2>The Late Show</h2>
+    <p class="thesis">The whole page goes dark. Warm charcoal, ivory text, and a single amber spotlight — the countdown at 11:35 p.m., the only dark-ground brand in the portfolio. The mark is the numeral standing in the beam.</p>
+    <p class="tests">Tests the theory: the countdown premise was right — round 1 didn't commit hard enough</p>
+  </div>
+
+  <div class="marquee">
+    <div class="cone"></div>
+    <div class="w">Top 10 Today</div>
+    <div class="glow10">10</div>
+  </div>
+  <div class="date-row">
+    <span>Thursday, July 16, 2026</span>
+    <span class="loc">Columbus · Evening Ten</span>
+  </div>
+
+  <div class="wrap" style="padding-top:34px">
+    <div class="panel">
+      <p class="cap">Palette — house dark, one bulb</p>
+      <div class="swatches">
+        <div class="swatch"><div class="chip" style="background:#201E1B"></div><div class="meta"><div class="name">House Charcoal</div><div class="hex">#201E1B · page</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#2A2723"></div><div class="meta"><div class="name">Stage Panel</div><div class="hex">#2A2723 · panels</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#F2EDE2"></div><div class="meta"><div class="name">Ivory Text</div><div class="hex">#F2EDE2 · 14.2:1</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#C7BFAE"></div><div class="meta"><div class="name">Secondary</div><div class="hex">#C7BFAE · 9.1:1</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#E4C87F"></div><div class="meta"><div class="name">Bulb Amber</div><div class="hex">#E4C87F · 10.2:1</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#3B372F"></div><div class="meta"><div class="name">Rule</div><div class="hex">#3B372F · borders</div></div></div>
+      </div>
+      <p class="note"><b>The inversion:</b> every sibling is a light page with a dark frame; this is the one dark page — instant portfolio recognition. The old "midnight never becomes a page background" rule flips into "the page IS the house." <b>Two honest flags:</b> ① amber sits in the warm-gold family near TodayLocal's marigold <code>#E39B18</code> — though a dim bulb on charcoal reads nothing like a sunrise band on cream, the hue adjacency needs a portfolio call; ② dark-ground email to a 50+ audience needs a real deliverability/readability proof before this direction could ship (dark bg tables render fine in major clients, but it's the highest-risk email scheme of the five).</p>
+    </div>
+
+    <div class="panel">
+      <p class="cap">Type — Playfair Display + Source Sans 3</p>
+      <div class="specrow"><span class="lab">Finale headline · Playfair 600</span><p class="t-finale">And the number one thing in town tonight…</p></div>
+      <div class="specrow"><span class="lab">H1 · Source Sans 700</span><p class="t-h1">Ten things worth your Thursday</p></div>
+      <div class="specrow"><span class="lab">Item headline · Source Sans 700</span><p class="t-item">Council votes tonight on the Main Street parking change</p></div>
+      <div class="specrow"><span class="lab">Body · Source Sans 400</span><p class="t-body">Playfair is the marquee face — a theatrical high-contrast serif that glows against the dark. Source Sans is the calm announcer underneath. Text sizes step up a notch across the board (dark grounds need it for 50+ eyes).</p></div>
+      <div class="specrow"><span class="lab">Intro stamp · Source Sans 700 caps</span><p class="stamp">And tonight's number one —</p></div>
+      <p class="note"><b>Email fallback:</b> Playfair → Georgia; Source Sans → Helvetica. The spotlight gradients ship as background PNGs in email or degrade to flat panels gracefully.</p>
+    </div>
+
+    <div class="panel">
+      <p class="cap">The unit</p>
+      <div class="cd-row">
+        <span class="nnum">7</span>
+        <div>
+          <h4>The bridge repaint moves to night work</h4>
+          <p>Lane closures shift to 9 p.m.–5 a.m. through next week. Morning commutes go back to normal starting tomorrow.</p>
+        </div>
+      </div>
+      <div class="cd-row">
+        <span class="nnum">6</span>
+        <div>
+          <h4>A local pro checks your furnace before the fall rush <span class="ast">*</span></h4>
+          <p>Tune-ups run $89 through August. Booked slots go fast once the first cold night hits — this is the cheap month.</p>
+        </div>
+      </div>
+      <div class="cd-finale">
+        <span class="stamp">And tonight's number one —</span>
+        <div class="row">
+          <span class="spot1"><span>1</span></span>
+          <div>
+            <h3>The Riverside Market reopens Saturday, two years after the flood</h3>
+            <p>44 stalls, a covered arcade, and the same peach lady in slot #3. Gates open at 8 a.m.; parking fills by 9. Worth the early alarm.</p>
+          </div>
+        </div>
+      </div>
+      <div class="btnrow">
+        <a class="btn btn-primary" href="#" onclick="return false">Get the evening ten</a>
+        <a class="btn btn-secondary" href="#" onclick="return false">See the full countdown</a>
+      </div>
+      <p class="note"><b>Device:</b> ranks are quiet ivory Playfair numerals; only the finale gets light — the amber numeral in an actual spotlight pool. The whole system is "everything waits in the dark, the beam finds #1." Amber appears exactly once per surface, same rationing as the old finale ring.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ H — THE PODIUM ============ -->
+<section class="dir dH" id="dir-h">
+  <div class="dir-head">
+    <span class="letter">Direction H</span>
+    <h2>The Podium</h2>
+    <p class="thesis">Rankings as ceremony: stone paper, engraved-inscription capitals, and gold reserved for the numerals alone — like foil stamping on a program. The mark is the podium: three steps, and the 10 stands on the top one.</p>
+    <p class="tests">Tests the theory: the brand should feel prestigious, not playful</p>
+  </div>
+
+  <div class="marquee">
+    <div class="w">Top 10 Today</div>
+    <div class="podium">
+      <div class="step s2"></div>
+      <div class="step s1"><span class="n">10</span></div>
+      <div class="step s3"></div>
+    </div>
+  </div>
+  <div class="date-row">
+    <span>Thursday, July 16, 2026</span>
+    <span class="loc">Columbus · Evening Ten</span>
+  </div>
+
+  <div class="wrap" style="padding-top:34px">
+    <div class="panel">
+      <p class="cap">Palette — stone, ink, and foil</p>
+      <div class="swatches">
+        <div class="swatch"><div class="chip" style="background:#23201B"></div><div class="meta"><div class="name">Ink</div><div class="hex">#23201B · 14.5:1</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#A8842C"></div><div class="meta"><div class="name">Foil Gold</div><div class="hex">#A8842C · 3.1:1 — large numerals only</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#8C6D22"></div><div class="meta"><div class="name">Deep Gold</div><div class="hex">#8C6D22 · 4.3:1 — links, stamps</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#C9A54A"></div><div class="meta"><div class="name">Bright Foil</div><div class="hex">#C9A54A · 6.9:1 on Ink only</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#F5F2EB;border-bottom:1px solid #DCD5C4"></div><div class="meta"><div class="name">Stone</div><div class="hex">#F5F2EB · page</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#ECE7DA"></div><div class="meta"><div class="name">Limestone Tint</div><div class="hex">#ECE7DA · panels</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#3B362C"></div><div class="meta"><div class="name">Body</div><div class="hex">#3B362C · 10.7:1</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#6B6455"></div><div class="meta"><div class="name">Gray</div><div class="hex">#6B6455 · 5.2:1 — AA+</div></div></div>
+      </div>
+      <p class="note"><b>The rationing:</b> gold touches numerals, the podium, and small stamps — never headlines, never backgrounds, never body text (Foil Gold is 3.1:1, legal only for large display numerals; working links use Deep Gold at 4.3:1). <b>Territory check — the honest flag:</b> gold is in the same warm-yellow family as TodayLocal's marigold <code>#E39B18</code>. The presentation is opposite (dull bronze foil on stone/ink vs. bright sunrise band on dawn cream), but this adjacency needs a portfolio-level OK before committing.</p>
+    </div>
+
+    <div class="panel">
+      <p class="cap">Type — Marcellus + Figtree</p>
+      <div class="specrow"><span class="lab">Finale headline · Marcellus</span><p class="t-finale">And the number one thing in town tonight…</p></div>
+      <div class="specrow"><span class="lab">H1 · Figtree 800</span><p class="t-h1">Ten things worth your Thursday</p></div>
+      <div class="specrow"><span class="lab">Item headline · Figtree 700</span><p class="t-item">Council votes tonight on the Main Street parking change</p></div>
+      <div class="specrow"><span class="lab">Body · Figtree 400</span><p class="t-body">Marcellus is an inscription face — Trajan-column capitals, the letterform of engraved plaques — rationed to numerals and the finale line. Figtree keeps the working text modern and friendly so the ceremony never turns stuffy.</p></div>
+      <div class="specrow"><span class="lab">Intro stamp · Figtree 700 caps</span><p class="stamp">And tonight's number one —</p></div>
+      <p class="note"><b>Email fallback:</b> Marcellus → Georgia; Figtree → Helvetica. Gold in email needs a slightly darkened hex on white sections (foil is the first thing cheap screens wash out) — a known, solvable production note.</p>
+    </div>
+
+    <div class="panel">
+      <p class="cap">The unit</p>
+      <div class="cd-row">
+        <span class="goldnum">7</span>
+        <div>
+          <h4>The bridge repaint moves to night work</h4>
+          <p>Lane closures shift to 9 p.m.–5 a.m. through next week. Morning commutes go back to normal starting tomorrow.</p>
+        </div>
+      </div>
+      <div class="cd-row">
+        <span class="goldnum">6</span>
+        <div>
+          <h4>A local pro checks your furnace before the fall rush <span class="ast">*</span></h4>
+          <p>Tune-ups run $89 through August. Booked slots go fast once the first cold night hits — this is the cheap month.</p>
+        </div>
+      </div>
+      <div class="cd-finale">
+        <span class="stamp">And tonight's number one —</span>
+        <div class="row">
+          <span class="plinth"><span>1</span></span>
+          <div>
+            <h3>The Riverside Market reopens Saturday, two years after the flood</h3>
+            <p>44 stalls, a covered arcade, and the same peach lady in slot #3. Gates open at 8 a.m.; parking fills by 9. Worth the early alarm.</p>
+          </div>
+        </div>
+      </div>
+      <div class="btnrow">
+        <a class="btn btn-primary" href="#" onclick="return false">Get the evening ten</a>
+        <a class="btn btn-secondary" href="#" onclick="return false">See the full countdown</a>
+      </div>
+      <p class="note"><b>Device:</b> ranks are bare gold Marcellus numerals — foil stamps in the margin. The finale stands on the plinth: an ink block with a gold top edge, the podium's top step. Buttons are ink pills with gold type — the program, not the trophy.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================== -->
+<footer class="constants">
+  <div class="wrap">
+    <h2>What every direction keeps</h2>
+    <ul>
+      <li><b>The countdown.</b> Every ranked list descends; rank 1 renders last, at every size.</li>
+      <li><b>The finale staging.</b> One marked #1 per surface — intro stamp, the system's single emphatic device, the one display-face sentence.</li>
+      <li><b>Paid placements are ranked items.</b> Asterisk register, disclosure in the fine print.</li>
+      <li><b>The broadcast voice.</b> Intro stamps, sentence case, headlines that never exclaim. Copy untouched.</li>
+      <li><b>Accessibility floor.</b> AA+ on all working text, 44px touch targets, motion stays rationed.</li>
+    </ul>
+    <p class="next"><b>Reading this round:</b> the five test different theories of what was wrong with round 1 — D says "too much color," E says "too cold," F says "the marks were gimmicks," G says "not committed enough," H says "too playful." Even a reaction like "D's restraint but E's warmth" is enough to build the consolidated proposal from. Round 1 is still up <a href="../">here</a> for side-by-side. Nothing in Brain, the logo files, or the portfolio table has been touched.</p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Top10Today — Redesign Directions (July 2026)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Archivo:wght@400;500;600;700;800&family=Alfa+Slab+One&family=Figtree:wght@400;500;600;700;800;900&family=Anton&family=Inter:wght@400;500;600;700;800&family=Public+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#F4F2EE;color:#333;font-family:"Public Sans",Helvetica,Arial,sans-serif;font-size:16px;line-height:1.6}
+  .wrap{max-width:960px;margin:0 auto;padding:0 20px}
+
+  /* ---- board chrome (neutral — not a direction) ---- */
+  .board-head{background:#1B1B1B;color:#fff;padding:40px 20px 34px;text-align:center}
+  .board-head .kicker{font-weight:700;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:#B9B9B9;display:block;margin-bottom:10px}
+  .board-head h1{font-weight:800;font-size:30px;line-height:1.2;letter-spacing:-.01em;max-width:640px;margin:0 auto}
+  .board-head p{color:#CFCFCF;font-size:15px;max-width:620px;margin:14px auto 0}
+  .brief{background:#fff;border-bottom:1px solid #DDD8CF;padding:22px 20px}
+  .brief .wrap{display:grid;gap:6px;max-width:760px}
+  .brief b{color:#1B1B1B}
+  .brief p{font-size:14.5px;color:#555}
+
+  .dir-jump{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:22px}
+  .dir-jump a{color:#fff;text-decoration:none;font-weight:700;font-size:13px;border:1.5px solid rgba(255,255,255,.4);padding:8px 18px;border-radius:999px}
+  .dir-jump a:hover{border-color:#fff}
+
+  section.dir{padding:0 0 70px}
+  .dir-head{padding:56px 20px 26px;text-align:center}
+  .dir-head .letter{font-weight:800;font-size:12px;letter-spacing:.2em;text-transform:uppercase;display:inline-block;padding:6px 16px;border-radius:999px;margin-bottom:14px}
+  .dir-head h2{font-size:34px;line-height:1.15;letter-spacing:-.01em}
+  .dir-head .thesis{font-size:16.5px;max-width:640px;margin:12px auto 0;color:#555}
+
+  .panel{background:#fff;border:1px solid #DDD8CF;padding:26px;margin-bottom:18px}
+  .cap{font-weight:700;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#9A958B;margin-bottom:16px;font-family:"Public Sans",sans-serif}
+  .note{font-size:13.5px;color:#6B665D;margin-top:12px;max-width:720px;font-family:"Public Sans",sans-serif;line-height:1.55}
+  .note b{color:#333}
+  .cols2{display:grid;grid-template-columns:1fr;gap:16px}
+  @media(min-width:780px){.cols2{grid-template-columns:1fr 1fr}}
+
+  .swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px}
+  .swatch{border:1px solid #DDD8CF;background:#fff}
+  .swatch .chip{height:62px;border-bottom:1px solid #DDD8CF}
+  .swatch .meta{padding:8px 10px}
+  .swatch .name{font-size:12.5px;font-weight:700;color:#1B1B1B;font-family:"Public Sans",sans-serif}
+  .swatch .hex{font-size:11.5px;color:#6B665D;font-family:ui-monospace,Menlo,monospace}
+
+  .specrow{border-top:1px solid #E4E0D8;padding:14px 0;display:grid;grid-template-columns:1fr;gap:4px}
+  @media(min-width:700px){.specrow{grid-template-columns:215px 1fr;align-items:baseline}}
+  .specrow .lab{font-size:11px;color:#9A958B;letter-spacing:.05em;text-transform:uppercase;font-weight:600;font-family:"Public Sans",sans-serif}
+
+  .btnrow{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+  .btn{display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;padding:12px 28px;min-height:46px;text-decoration:none;cursor:pointer;border:2px solid transparent;transition:background-color .12s,color .12s,border-color .12s}
+
+  /* ============ DIRECTION A — THE VELVET ROPE ============ */
+  .dA{--ink:#2E1A47;--accent:#5B2D8E;--accent-deep:#4A2373;--gilt:#EBCF94;
+      --paper:#FBF9F4;--tintbg:#F2EDE2;--rulec:#E2DACB;--bodyc:#3A3142;--grayc:#6A6172;
+      --sans:"Archivo",Helvetica,Arial,sans-serif;--disp:"Fraunces",Georgia,serif}
+  .dA{background:var(--paper)}
+  .dA .dir-head .letter{background:var(--ink);color:var(--gilt)}
+  .dA .dir-head h2{font-family:var(--disp);font-weight:600;color:var(--ink)}
+  .dA .marquee{background:var(--ink);text-align:center;padding:36px 20px 30px}
+  .dA .w{font-family:var(--sans);font-weight:800;font-size:16px;letter-spacing:.5em;text-indent:.5em;text-transform:uppercase;color:#fff;line-height:1}
+  .dA .arch{width:92px;height:104px;border:4px solid var(--gilt);border-radius:46px 46px 6px 6px;display:inline-flex;align-items:center;justify-content:center;margin:14px 0 12px}
+  .dA .arch span{font-family:var(--disp);font-weight:600;font-size:44px;color:var(--gilt);line-height:1;transform:translateY(2px)}
+  .dA .date-row{border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:9px 0;font-family:var(--sans);font-weight:700;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);display:flex;justify-content:center;gap:26px;flex-wrap:wrap;background:var(--paper)}
+  .dA .date-row .loc{color:var(--bodyc)}
+  .dA .stamp{font-family:var(--sans);font-weight:700;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+  .dA .t-finale{font-family:var(--disp);font-weight:600;font-size:27px;line-height:1.25;color:var(--ink)}
+  .dA .t-h1{font-family:var(--sans);font-weight:800;font-size:31px;line-height:1.15;letter-spacing:-.01em;color:var(--ink)}
+  .dA .t-item{font-family:var(--sans);font-weight:700;font-size:18px;line-height:1.3;color:var(--ink)}
+  .dA .t-body{font-family:var(--sans);font-size:16.5px;line-height:1.6;color:var(--bodyc);max-width:560px}
+  .dA .archsm{width:46px;height:52px;border:2.5px solid var(--ink);border-radius:23px 23px 4px 4px;display:inline-flex;align-items:center;justify-content:center}
+  .dA .archsm span{font-family:var(--disp);font-weight:600;font-size:21px;color:var(--ink);transform:translateY(1px)}
+  .dA .arch-finale{width:76px;height:86px;background:var(--ink);border-radius:38px 38px 5px 5px;display:inline-flex;align-items:center;justify-content:center}
+  .dA .arch-finale span{font-family:var(--disp);font-weight:600;font-size:37px;color:var(--gilt);transform:translateY(2px)}
+  .dA .cd-row{display:grid;grid-template-columns:60px 1fr;gap:16px;padding:15px 0;border-top:1px solid var(--rulec);align-items:start;font-family:var(--sans)}
+  .dA .cd-row h4{font-family:var(--sans);font-weight:700;font-size:18px;color:var(--ink);line-height:1.3}
+  .dA .cd-row p{font-size:15px;line-height:1.55;margin-top:4px;max-width:540px;color:var(--bodyc)}
+  .dA .ast{color:var(--accent);font-weight:800}
+  .dA .cd-finale{border-top:1px solid var(--rulec);padding:20px 0 6px}
+  .dA .cd-finale .row{display:grid;grid-template-columns:92px 1fr;gap:20px;align-items:start;margin-top:14px}
+  .dA .cd-finale h3{font-family:var(--disp);font-weight:600;font-size:26px;line-height:1.25;color:var(--ink)}
+  .dA .cd-finale p{font-family:var(--sans);font-size:15.5px;line-height:1.6;margin-top:9px;max-width:540px;color:var(--bodyc)}
+  .dA .btn-primary{background:var(--accent);color:#fff;border-radius:999px;font-family:var(--sans)}
+  .dA .btn-primary:hover{background:var(--accent-deep)}
+  .dA .btn-secondary{background:transparent;color:var(--ink);border-color:var(--ink);border-radius:999px;font-family:var(--sans)}
+  .dA .btn-secondary:hover{background:var(--tintbg)}
+
+  /* ============ DIRECTION B — THE HOT LIST ============ */
+  .dB{--ink:#3D0F26;--accent:#A81C4E;--accent-deep:#8A1640;--blush:#F4A9C0;
+      --paper:#FDF8F7;--tintbg:#F8EAEE;--rulec:#ECD7DD;--bodyc:#42232F;--grayc:#7A5A64;
+      --sans:"Figtree",Helvetica,Arial,sans-serif;--disp:"Alfa Slab One",Rockwell,Georgia,serif}
+  .dB{background:var(--paper)}
+  .dB .dir-head .letter{background:var(--accent);color:#fff}
+  .dB .dir-head h2{font-family:var(--sans);font-weight:900;color:var(--ink)}
+  .dB .marquee{background:var(--ink);text-align:center;padding:36px 20px 30px}
+  .dB .w{font-family:var(--sans);font-weight:900;font-size:17px;letter-spacing:.42em;text-indent:.42em;text-transform:uppercase;color:#fff;line-height:1}
+  .dB .burst{position:relative;width:118px;height:118px;display:inline-flex;align-items:center;justify-content:center;margin:12px 0 10px}
+  .dB .burst svg{position:absolute;inset:0}
+  .dB .burst span{position:relative;font-family:var(--disp);font-size:40px;color:var(--ink);line-height:1;transform:translateY(1px)}
+  .dB .date-row{border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:9px 0;font-family:var(--sans);font-weight:800;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);display:flex;justify-content:center;gap:26px;flex-wrap:wrap;background:var(--paper)}
+  .dB .date-row .loc{color:var(--bodyc)}
+  .dB .stamp{font-family:var(--sans);font-weight:800;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+  .dB .t-finale{font-family:var(--disp);font-size:25px;line-height:1.3;color:var(--ink)}
+  .dB .t-h1{font-family:var(--sans);font-weight:900;font-size:31px;line-height:1.15;letter-spacing:-.01em;color:var(--ink)}
+  .dB .t-item{font-family:var(--sans);font-weight:700;font-size:18px;line-height:1.3;color:var(--ink)}
+  .dB .t-body{font-family:var(--sans);font-size:16.5px;line-height:1.6;color:var(--bodyc);max-width:560px}
+  .dB .slabnum{font-family:var(--disp);font-size:34px;color:var(--ink);line-height:1;min-width:56px;text-align:center}
+  .dB .slabnum i{font-style:normal;color:var(--accent)}
+  .dB .cd-row{display:grid;grid-template-columns:60px 1fr;gap:16px;padding:15px 0;border-top:1px solid var(--rulec);align-items:start;font-family:var(--sans)}
+  .dB .cd-row h4{font-weight:700;font-size:18px;color:var(--ink);line-height:1.3}
+  .dB .cd-row p{font-size:15px;line-height:1.55;margin-top:4px;max-width:540px;color:var(--bodyc)}
+  .dB .ast{color:var(--accent);font-weight:800}
+  .dB .cd-finale{border-top:1px solid var(--rulec);padding:20px 0 6px}
+  .dB .cd-finale .row{display:grid;grid-template-columns:100px 1fr;gap:20px;align-items:start;margin-top:14px}
+  .dB .burst-sm{position:relative;width:88px;height:88px;display:inline-flex;align-items:center;justify-content:center}
+  .dB .burst-sm svg{position:absolute;inset:0}
+  .dB .burst-sm span{position:relative;font-family:var(--disp);font-size:34px;color:#fff;line-height:1}
+  .dB .cd-finale h3{font-family:var(--disp);font-size:24px;line-height:1.3;color:var(--ink)}
+  .dB .cd-finale p{font-family:var(--sans);font-size:15.5px;line-height:1.6;margin-top:9px;max-width:540px;color:var(--bodyc)}
+  .dB .btn-primary{background:var(--accent);color:#fff;border-radius:999px;font-family:var(--sans);font-weight:800}
+  .dB .btn-primary:hover{background:var(--accent-deep)}
+  .dB .btn-secondary{background:transparent;color:var(--ink);border-color:var(--ink);border-radius:999px;font-family:var(--sans);font-weight:800}
+  .dB .btn-secondary:hover{background:var(--tintbg)}
+
+  /* ============ DIRECTION C — THE TALLY ============ */
+  .dC{--ink:#211D16;--citron:#DCE24C;--citron-deep:#C9CF3D;
+      --paper:#FBFAF4;--tintbg:#F0EEE2;--rulec:#DEDACA;--bodyc:#38342B;--grayc:#666052;
+      --sans:"Inter",Helvetica,Arial,sans-serif;--disp:"Anton",Impact,"Arial Black",sans-serif}
+  .dC{background:var(--paper)}
+  .dC .dir-head .letter{background:var(--citron);color:var(--ink)}
+  .dC .dir-head h2{font-family:var(--disp);font-weight:400;text-transform:uppercase;letter-spacing:.02em;color:var(--ink)}
+  .dC .marquee{background:var(--ink);text-align:center;padding:36px 20px 30px}
+  .dC .w{font-family:var(--disp);font-weight:400;font-size:19px;letter-spacing:.3em;text-indent:.3em;text-transform:uppercase;color:#fff;line-height:1}
+  .dC .tally{display:inline-flex;gap:18px;margin:16px 0 14px}
+  .dC .date-row{border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:9px 0;font-family:var(--sans);font-weight:700;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--bodyc);display:flex;justify-content:center;gap:26px;flex-wrap:wrap;background:var(--paper)}
+  .dC .date-row .hl{background:var(--citron);padding:0 6px}
+  .dC .stamp{font-family:var(--sans);font-weight:700;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink)}
+  .dC .stamp .hl{background:var(--citron);padding:1px 6px}
+  .dC .t-finale{font-family:var(--disp);font-size:28px;line-height:1.2;text-transform:uppercase;letter-spacing:.01em;color:var(--ink)}
+  .dC .t-h1{font-family:var(--sans);font-weight:800;font-size:30px;line-height:1.15;letter-spacing:-.015em;color:var(--ink)}
+  .dC .t-item{font-family:var(--sans);font-weight:700;font-size:17.5px;line-height:1.3;color:var(--ink)}
+  .dC .t-body{font-family:var(--sans);font-size:16px;line-height:1.6;color:var(--bodyc);max-width:560px}
+  .dC .tab{width:46px;height:46px;border:2.5px solid var(--ink);display:inline-flex;align-items:center;justify-content:center}
+  .dC .tab span{font-family:var(--disp);font-size:23px;color:var(--ink);line-height:1;transform:translateY(1px)}
+  .dC .tab-finale{width:76px;height:76px;background:var(--ink);display:inline-flex;align-items:center;justify-content:center}
+  .dC .tab-finale span{font-family:var(--disp);font-size:40px;color:var(--citron);line-height:1;transform:translateY(1px)}
+  .dC .cd-row{display:grid;grid-template-columns:60px 1fr;gap:16px;padding:15px 0;border-top:1px solid var(--rulec);align-items:start;font-family:var(--sans)}
+  .dC .cd-row h4{font-weight:700;font-size:17.5px;color:var(--ink);line-height:1.3}
+  .dC .cd-row p{font-size:15px;line-height:1.55;margin-top:4px;max-width:540px;color:var(--bodyc)}
+  .dC .ast{background:var(--citron);font-weight:800;padding:0 5px;color:var(--ink)}
+  .dC .cd-finale{border-top:1px solid var(--rulec);padding:20px 0 6px}
+  .dC .cd-finale .row{display:grid;grid-template-columns:92px 1fr;gap:20px;align-items:start;margin-top:14px}
+  .dC .cd-finale h3{font-family:var(--disp);font-size:26px;line-height:1.25;text-transform:uppercase;color:var(--ink)}
+  .dC .cd-finale p{font-family:var(--sans);font-size:15.5px;line-height:1.6;margin-top:9px;max-width:540px;color:var(--bodyc)}
+  .dC .btn-primary{background:var(--citron);color:var(--ink);border-radius:0;font-family:var(--sans);font-weight:800}
+  .dC .btn-primary:hover{background:var(--citron-deep)}
+  .dC .btn-secondary{background:transparent;color:var(--ink);border-color:var(--ink);border-radius:0;font-family:var(--sans);font-weight:800}
+  .dC .btn-secondary:hover{background:var(--tintbg)}
+
+  /* ---- constants + next-step footer ---- */
+  .constants{background:#1B1B1B;color:#CFCFCF;padding:54px 20px 64px}
+  .constants h2{color:#fff;font-weight:800;font-size:24px;margin-bottom:14px}
+  .constants li{margin:8px 0 8px 20px;font-size:15px}
+  .constants b{color:#fff}
+  .constants .next{margin-top:26px;padding-top:22px;border-top:1px solid rgba(255,255,255,.18);font-size:15px;max-width:720px}
+</style>
+</head>
+<body>
+
+<div class="board-head">
+  <span class="kicker">Top10Today — Redesign direction board · July 16, 2026</span>
+  <h1>Three new looks for the countdown</h1>
+  <p>The brief: replace the colors, the logo, and the fonts. Everything structural stays — every list still counts down to #1, the finale still gets the staging, paid placements are still ranked items, the dark band still frames the page. Each direction below is a complete, different answer.</p>
+  <div class="dir-jump">
+    <a href="#dir-a">A — The Velvet Rope</a>
+    <a href="#dir-b">B — The Hot List</a>
+    <a href="#dir-c">C — The Tally</a>
+  </div>
+</div>
+
+<div class="brief">
+  <div class="wrap">
+    <p><b>Territory constraint:</b> the four sibling brands lock away warm terracotta (BaseLocal), ink navy + crimson (AmericanAdvisor), black + wire cobalt (LocalUpdate), and marigold sunrise (TodayLocal) — and this redesign vacates midnight teal + mint. Each direction claims a genuinely free corner of the portfolio and notes its nearest neighbor.</p>
+  </div>
+</div>
+
+<!-- ================================================== -->
+<!-- DIRECTION A — THE VELVET ROPE                       -->
+<!-- ================================================== -->
+<section class="dir dA" id="dir-a">
+  <div class="dir-head">
+    <span class="letter">Direction A</span>
+    <h2>The Velvet Rope</h2>
+    <p class="thesis">Awards night. Deep curtain violet and gilt champagne — the countdown as a black-tie ceremony, and the mark is a proscenium arch: the numeral standing on stage. Elegant where the current identity is broadcast-casual.</p>
+  </div>
+
+  <div class="marquee">
+    <div class="w">Top</div>
+    <div><span class="arch"><span>10</span></span></div>
+    <div class="w">Today</div>
+  </div>
+  <div class="date-row">
+    <span>Thursday, July 16, 2026</span>
+    <span class="loc">Columbus · Evening Ten</span>
+  </div>
+
+  <div class="wrap" style="padding-top:34px">
+    <div class="panel">
+      <p class="cap">The mark — the proscenium</p>
+      <p class="t-body">The numeral 10 in Fraunces stands inside a stage arch — rounded at the top like a theater proscenium, squared at the feet like a doorway you're ushered through. On dark: gilt arch and numeral. On light: the arch goes deep violet. Rank numerals in the countdown live in small arches; the finale is the one <b>filled</b> arch.</p>
+      <p class="note"><b>Why it's not the ring:</b> the ring said spotlight; the arch says stage. Same theater, different seat — closer to the velvet-curtain end of the register.</p>
+    </div>
+
+    <div class="panel">
+      <p class="cap">Palette — curtain and gilt</p>
+      <div class="swatches">
+        <div class="swatch"><div class="chip" style="background:#2E1A47"></div><div class="meta"><div class="name">Curtain Violet</div><div class="hex">#2E1A47 · 14.7:1 — AAA</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#5B2D8E"></div><div class="meta"><div class="name">Royal Violet</div><div class="hex">#5B2D8E · 9.0:1 — AAA</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#4A2373"></div><div class="meta"><div class="name">Deep Royal (hover)</div><div class="hex">#4A2373 · 11.2:1</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#EBCF94"></div><div class="meta"><div class="name">Gilt Champagne</div><div class="hex">#EBCF94 · 10.2:1 on Curtain only</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#FBF9F4;border-bottom:1px solid #E2DACB"></div><div class="meta"><div class="name">Ivory</div><div class="hex">#FBF9F4 · page</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#F2EDE2"></div><div class="meta"><div class="name">Parchment Tint</div><div class="hex">#F2EDE2 · panels</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#3A3142"></div><div class="meta"><div class="name">Body</div><div class="hex">#3A3142 · 11.8:1</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#6A6172"></div><div class="meta"><div class="name">Gray</div><div class="hex">#6A6172 · 5.6:1 — AA+</div></div></div>
+      </div>
+      <p class="note"><b>Same discipline, new colors:</b> Curtain Violet frames (masthead, finale, footer) and never becomes a page background; Gilt Champagne appears on dark only (1.4:1 on Ivory — decorative-invisible, exactly like mint was); Royal Violet is the one working accent on light. <b>Territory check:</b> violet is unclaimed by all four siblings — nearest neighbor is AmericanAdvisor's ink navy, and
+      Curtain Violet sits clearly warmer and redder than it.</p>
+    </div>
+
+    <div class="panel">
+      <p class="cap">Type — Fraunces + Archivo</p>
+      <div class="specrow"><span class="lab">Finale headline · Fraunces 600</span><p class="t-finale">And the number one thing in town tonight…</p></div>
+      <div class="specrow"><span class="lab">H1 · Archivo 800</span><p class="t-h1">Ten things worth your Thursday</p></div>
+      <div class="specrow"><span class="lab">Item headline · Archivo 700</span><p class="t-item">Council votes tonight on the Main Street parking change</p></div>
+      <div class="specrow"><span class="lab">Body · Archivo 400</span><p class="t-body">Fraunces takes the didone role with softer serifs — theatrical, but candlelit rather than neon. Archivo replaces Public Sans: same honest-grotesque duty, slightly warmer drawing.</p></div>
+      <div class="specrow"><span class="lab">Intro stamp · Archivo 700 caps</span><p class="stamp">And tonight's number one —</p></div>
+      <p class="note"><b>Email fallback:</b> Fraunces → Georgia (serif display survives the swap, same as today); Archivo → Helvetica. The email strategy carries over unchanged.</p>
+    </div>
+
+    <div class="panel">
+      <p class="cap">The unit — countdown rows and the finale</p>
+      <div class="cd-row">
+        <span class="archsm"><span>7</span></span>
+        <div>
+          <h4>The bridge repaint moves to night work</h4>
+          <p>Lane closures shift to 9 p.m.–5 a.m. through next week. Morning commutes go back to normal starting tomorrow.</p>
+        </div>
+      </div>
+      <div class="cd-row">
+        <span class="archsm"><span>6</span></span>
+        <div>
+          <h4>A local pro checks your furnace before the fall rush <span class="ast">*</span></h4>
+          <p>Tune-ups run $89 through August. Booked slots go fast once the first cold night hits — this is the cheap month.</p>
+        </div>
+      </div>
+      <div class="cd-finale">
+        <span class="stamp">And tonight's number one —</span>
+        <div class="row">
+          <span class="arch-finale"><span>1</span></span>
+          <div>
+            <h3>The Riverside Market reopens Saturday, two years after the flood</h3>
+            <p>44 stalls, a covered arcade, and the same peach lady in slot #3. Gates open at 8 a.m.; parking fills by 9. Worth the early alarm.</p>
+          </div>
+        </div>
+      </div>
+      <div class="btnrow" style="margin-top:24px">
+        <a class="btn btn-primary" href="#" onclick="return false">Get the evening ten</a>
+        <a class="btn btn-secondary" href="#" onclick="return false">See the full countdown</a>
+      </div>
+      <p class="note"><b>Geometry:</b> buttons stay pills, but the arch replaces the circle as the system's shape. The finale is the only filled arch — one per surface, same rule as before.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================== -->
+<!-- DIRECTION B — THE HOT LIST                          -->
+<!-- ================================================== -->
+<section class="dir dB" id="dir-b">
+  <div class="dir-head">
+    <span class="letter">Direction B</span>
+    <h2>The Hot List</h2>
+    <p class="thesis">A magazine cover, not a stage. Raspberry and ink plum with slab-serif numerals that look stamped on — the confidence of a "Best Of" issue. The mark is a burst seal: the award sticker on the storefront window. The warmest, loudest direction of the three.</p>
+  </div>
+
+  <div class="marquee">
+    <div class="w">Top</div>
+    <div class="burst">
+      <svg viewBox="0 0 118 118" aria-hidden="true"><polygon fill="#F4A9C0" points="59,2 68,15 83,8 86,24 102,22 99,38 115,42 105,54 116,66 102,73 108,88 92,89 92,105 77,100 71,115 59,104 47,115 41,100 26,105 26,89 10,88 16,73 2,66 13,54 3,42 19,38 16,22 32,24 35,8 50,15"/></svg>
+      <span>10</span>
+    </div>
+    <div class="w">Today</div>
+  </div>
+  <div class="date-row">
+    <span>Thursday, July 16, 2026</span>
+    <span class="loc">Columbus · Evening Ten</span>
+  </div>
+
+  <div class="wrap" style="padding-top:34px">
+    <div class="panel">
+      <p class="cap">The mark — the burst seal</p>
+      <p class="t-body">A twenty-point burst holding the 10 in Alfa Slab One — the sticker on the window, the seal on the winner. On dark: blush burst, ink numeral. On light: raspberry burst, white numeral. Ranked items use bare slab numerals with a raspberry period; <b>the burst itself is reserved for the finale</b> — #1 literally gets the seal of approval.</p>
+      <p class="note"><b>Why it works for this brand:</b> ranking culture already speaks in badges and seals. This direction leans in — playful-but-credible carried by the drawing being geometric and disciplined, never a clip-art starburst with an exclamation point.</p>
+    </div>
+
+    <div class="panel">
+      <p class="cap">Palette — raspberry and blush</p>
+      <div class="swatches">
+        <div class="swatch"><div class="chip" style="background:#3D0F26"></div><div class="meta"><div class="name">Ink Plum</div><div class="hex">#3D0F26 · 15.4:1 — AAA</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#A81C4E"></div><div class="meta"><div class="name">Raspberry</div><div class="hex">#A81C4E · 6.8:1 — AA+</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#8A1640"></div><div class="meta"><div class="name">Deep Raspberry (hover)</div><div class="hex">#8A1640</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#F4A9C0"></div><div class="meta"><div class="name">Blush</div><div class="hex">#F4A9C0 · 8.7:1 on Ink Plum only</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#FDF8F7;border-bottom:1px solid #ECD7DD"></div><div class="meta"><div class="name">Blush Paper</div><div class="hex">#FDF8F7 · page</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#F8EAEE"></div><div class="meta"><div class="name">Rose Tint</div><div class="hex">#F8EAEE · panels</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#42232F"></div><div class="meta"><div class="name">Body</div><div class="hex">#42232F · 13.2:1</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#7A5A64"></div><div class="meta"><div class="name">Gray</div><div class="hex">#7A5A64 · 5.7:1 — AA+</div></div></div>
+      </div>
+      <p class="note"><b>Same discipline:</b> Ink Plum frames, Blush lives on dark only, Raspberry is the working accent (white on Raspberry: 7.1:1 — button type always safe). <b>Territory check:</b> raspberry is pink-shifted and much brighter than AmericanAdvisor's crimson <code>#8A2331</code> — side by side they read as different families — but this is the direction's one adjacency to flag, and the swatch pair should be reviewed together at the proposal stage.</p>
+    </div>
+
+    <div class="panel">
+      <p class="cap">Type — Alfa Slab One + Figtree</p>
+      <div class="specrow"><span class="lab">Finale headline · Alfa Slab One</span><p class="t-finale">And the number one thing in town tonight…</p></div>
+      <div class="specrow"><span class="lab">H1 · Figtree 900</span><p class="t-h1">Ten things worth your Thursday</p></div>
+      <div class="specrow"><span class="lab">Item headline · Figtree 700</span><p class="t-item">Council votes tonight on the Main Street parking change</p></div>
+      <div class="specrow"><span class="lab">Body · Figtree 400</span><p class="t-body">Alfa Slab One is the poster face — numerals that look letterpress-stamped. It's rationed exactly like the didone was: numerals and the finale headline, never a paragraph. Figtree does everything else — rounder and friendlier than Public Sans.</p></div>
+      <div class="specrow"><span class="lab">Intro stamp · Figtree 800 caps</span><p class="stamp">And tonight's number one —</p></div>
+      <p class="note"><b>Email fallback:</b> Alfa Slab → Rockwell, then Georgia bold (the stamped register degrades to newspaper-serif — acceptable, worth a side-by-side proof at proposal stage); Figtree → Helvetica.</p>
+    </div>
+
+    <div class="panel">
+      <p class="cap">The unit — countdown rows and the finale</p>
+      <div class="cd-row">
+        <span class="slabnum">7<i>.</i></span>
+        <div>
+          <h4>The bridge repaint moves to night work</h4>
+          <p>Lane closures shift to 9 p.m.–5 a.m. through next week. Morning commutes go back to normal starting tomorrow.</p>
+        </div>
+      </div>
+      <div class="cd-row">
+        <span class="slabnum">6<i>.</i></span>
+        <div>
+          <h4>A local pro checks your furnace before the fall rush <span class="ast">*</span></h4>
+          <p>Tune-ups run $89 through August. Booked slots go fast once the first cold night hits — this is the cheap month.</p>
+        </div>
+      </div>
+      <div class="cd-finale">
+        <span class="stamp">And tonight's number one —</span>
+        <div class="row">
+          <span class="burst-sm">
+            <svg viewBox="0 0 88 88" aria-hidden="true"><polygon fill="#A81C4E" points="44,1 51,11 62,6 64,18 76,16 74,28 86,31 78,40 87,49 76,54 81,65 69,66 69,78 58,74 53,86 44,77 35,86 30,74 19,78 19,66 7,65 12,54 1,49 10,40 2,31 14,28 12,16 24,18 26,6 37,11"/></svg>
+            <span>1</span>
+          </span>
+          <div>
+            <h3>The Riverside Market reopens Saturday, two years after the flood</h3>
+            <p>44 stalls, a covered arcade, and the same peach lady in slot #3. Gates open at 8 a.m.; parking fills by 9. Worth the early alarm.</p>
+          </div>
+        </div>
+      </div>
+      <div class="btnrow" style="margin-top:24px">
+        <a class="btn btn-primary" href="#" onclick="return false">Get the evening ten</a>
+        <a class="btn btn-secondary" href="#" onclick="return false">See the full countdown</a>
+      </div>
+      <p class="note"><b>Geometry:</b> pills stay for buttons; ranks drop the container entirely — a bare stamped numeral is louder than a numeral in a box. The burst appears exactly once per surface, on the finale. Same one-seal rule as the old finale ring.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================== -->
+<!-- DIRECTION C — THE TALLY                             -->
+<!-- ================================================== -->
+<section class="dir dC" id="dir-c">
+  <div class="dir-head">
+    <span class="letter">Direction C</span>
+    <h2>The Tally</h2>
+    <p class="thesis">The scoreboard in the back room — warm press-black ink, one shot of citron, and condensed poster numerals. The mark is ten kept the way humans actually count: two tally clusters. The most graphic, least decorated direction — the constraint is "one color of ink plus one highlighter."</p>
+  </div>
+
+  <div class="marquee">
+    <div class="w">Top 10 Today</div>
+    <div class="tally">
+      <svg width="72" height="58" viewBox="0 0 72 58" aria-hidden="true">
+        <g stroke="#DCE24C" stroke-width="5" stroke-linecap="round">
+          <line x1="6" y1="8" x2="6" y2="50"/><line x1="20" y1="8" x2="20" y2="50"/>
+          <line x1="34" y1="8" x2="34" y2="50"/><line x1="48" y1="8" x2="48" y2="50"/>
+          <line x1="66" y1="4" x2="-4" y2="54"/>
+        </g>
+      </svg>
+      <svg width="72" height="58" viewBox="0 0 72 58" aria-hidden="true">
+        <g stroke="#FFFFFF" stroke-width="5" stroke-linecap="round">
+          <line x1="6" y1="8" x2="6" y2="50"/><line x1="20" y1="8" x2="20" y2="50"/>
+          <line x1="34" y1="8" x2="34" y2="50"/><line x1="48" y1="8" x2="48" y2="50"/>
+          <line x1="66" y1="4" x2="-4" y2="54"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+  <div class="date-row">
+    <span>Thursday, July 16, 2026</span>
+    <span><span class="hl">Columbus · Evening Ten</span></span>
+  </div>
+
+  <div class="wrap" style="padding-top:34px">
+    <div class="panel">
+      <p class="cap">The mark — the tally ten</p>
+      <p class="t-body">Two clusters of five — four strokes and the slash — the way a score has been kept on every chalkboard and bar napkin in history. It's a "10" you read instantly without a numeral, and no competitor list-brand has it. One cluster citron, one white: the count in progress. The wordmark is Anton, set like a poster.</p>
+      <p class="note"><b>At small sizes</b> (favicon, avatar) the mark reduces to a single citron cluster on ink — a "5" to the pedantic, a tally to everyone else; the proposal stage would test this reduction properly.</p>
+    </div>
+
+    <div class="panel">
+      <p class="cap">Palette — press black and citron</p>
+      <div class="swatches">
+        <div class="swatch"><div class="chip" style="background:#211D16"></div><div class="meta"><div class="name">Press Black</div><div class="hex">#211D16 · 16.0:1 — AAA</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#DCE24C"></div><div class="meta"><div class="name">Citron</div><div class="hex">#DCE24C · 12.0:1 on Press Black</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#C9CF3D"></div><div class="meta"><div class="name">Citron Deep (hover)</div><div class="hex">#C9CF3D</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#FBFAF4;border-bottom:1px solid #DEDACA"></div><div class="meta"><div class="name">Cream</div><div class="hex">#FBFAF4 · page</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#F0EEE2"></div><div class="meta"><div class="name">Stone Tint</div><div class="hex">#F0EEE2 · panels</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#38342B"></div><div class="meta"><div class="name">Body</div><div class="hex">#38342B · 11.9:1</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#666052"></div><div class="meta"><div class="name">Gray</div><div class="hex">#666052 · 6.0:1 — AA+</div></div></div>
+      </div>
+      <p class="note"><b>The twist:</b> this direction has no colored working accent at all. Links are ink, underlined; emphasis, selection, and the paid marker are a <span class="hl" style="background:#DCE24C;padding:0 4px">citron highlighter swipe</span>; primary buttons are citron with ink text (12.0:1 — the highest-contrast CTA in the portfolio). Citron never sets text on light (1.3:1) — same accent-on-dark discipline as ever. <b>Territory check:</b> Press Black is warm (brown-cast) where LocalUpdate's print black is neutral-cold with cobalt — but black-adjacent grounds are this direction's flagged adjacency, and the two mastheads should be compared side by side before committing.</p>
+    </div>
+
+    <div class="panel">
+      <p class="cap">Type — Anton + Inter</p>
+      <div class="specrow"><span class="lab">Finale headline · Anton caps</span><p class="t-finale">And the number one thing in town tonight…</p></div>
+      <div class="specrow"><span class="lab">H1 · Inter 800</span><p class="t-h1">Ten things worth your Thursday</p></div>
+      <div class="specrow"><span class="lab">Item headline · Inter 700</span><p class="t-item">Council votes tonight on the Main Street parking change</p></div>
+      <div class="specrow"><span class="lab">Body · Inter 400</span><p class="t-body">Anton is the poster face — tall, condensed, all-caps only, and rationed to numerals and the finale line exactly as the didone was. Inter carries everything else with newsprint plainness. This is the only direction where the display face is a sans.</p></div>
+      <div class="specrow"><span class="lab">Intro stamp · Inter 700 caps + highlight</span><p class="stamp"><span class="hl">And tonight's number one —</span></p></div>
+      <p class="note"><b>Email fallback:</b> Anton → Impact/Arial Black (the poster register survives in every client); Inter → Helvetica. Structurally the most email-proof of the three directions — square tabs don't even need border-radius.</p>
+    </div>
+
+    <div class="panel">
+      <p class="cap">The unit — countdown rows and the finale</p>
+      <div class="cd-row">
+        <span class="tab"><span>7</span></span>
+        <div>
+          <h4>The bridge repaint moves to night work</h4>
+          <p>Lane closures shift to 9 p.m.–5 a.m. through next week. Morning commutes go back to normal starting tomorrow.</p>
+        </div>
+      </div>
+      <div class="cd-row">
+        <span class="tab"><span>6</span></span>
+        <div>
+          <h4>A local pro checks your furnace before the fall rush <span class="ast">*</span></h4>
+          <p>Tune-ups run $89 through August. Booked slots go fast once the first cold night hits — this is the cheap month.</p>
+        </div>
+      </div>
+      <div class="cd-finale">
+        <span class="stamp"><span class="hl">And tonight's number one —</span></span>
+        <div class="row">
+          <span class="tab-finale"><span>1</span></span>
+          <div>
+            <h3>The Riverside Market reopens Saturday, two years after the flood</h3>
+            <p>44 stalls, a covered arcade, and the same peach lady in slot #3. Gates open at 8 a.m.; parking fills by 9. Worth the early alarm.</p>
+          </div>
+        </div>
+      </div>
+      <div class="btnrow" style="margin-top:24px">
+        <a class="btn btn-primary" href="#" onclick="return false">Get the evening ten</a>
+        <a class="btn btn-secondary" href="#" onclick="return false">See the full countdown</a>
+      </div>
+      <p class="note"><b>Geometry:</b> the circle is gone entirely — ranks sit in sharp square tabs, buttons are hard-cornered blocks. The finale is the one filled tab, ink with a citron numeral. The paid marker is a citron-highlighted asterisk rather than a colored one.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================== -->
+<footer class="constants">
+  <div class="wrap">
+    <h2>What every direction keeps</h2>
+    <ul>
+      <li><b>The countdown.</b> Every ranked list descends; rank 1 renders last, at every size.</li>
+      <li><b>The finale staging.</b> One marked #1 per surface — intro stamp, the system's single filled device, the one display-face sentence.</li>
+      <li><b>Paid placements are ranked items.</b> Asterisk register, disclosure in the fine print, never interruptions between ranks.</li>
+      <li><b>The frame discipline.</b> The dark ground frames (masthead, finale, footer) and never becomes a page background; the on-dark accent never appears on light.</li>
+      <li><b>The broadcast voice.</b> Intro stamps, sentence case, headlines that never exclaim. Copy is untouched by this redesign.</li>
+      <li><b>Accessibility floor.</b> AA+ minimum on all working text, 44px touch targets, motion rationed to one beat.</li>
+    </ul>
+    <p class="next"><b>Next step:</b> pick a direction (or a combination — e.g. A's palette with B's type). The pick becomes a consolidated proposal on this board for a second look; only after that approval do the brand guide, design system, portfolio territory table, and logo assets get rebuilt. The current identity remains untouched until then.</p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Top10Today — The Bulletin, Variations (Round 4, July 2026)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Inter:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Public+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#F4F2EE;color:#333;font-family:"Public Sans",Helvetica,Arial,sans-serif;font-size:16px;line-height:1.6}
+  .wrap{max-width:960px;margin:0 auto;padding:0 20px}
+
+  .board-head{background:#1B1B1B;color:#fff;padding:40px 20px 34px;text-align:center}
+  .board-head .kicker{font-weight:700;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:#B9B9B9;display:block;margin-bottom:10px}
+  .board-head h1{font-weight:800;font-size:30px;line-height:1.2;letter-spacing:-.01em;max-width:640px;margin:0 auto}
+  .board-head p{color:#CFCFCF;font-size:15px;max-width:640px;margin:14px auto 0}
+  .dir-jump{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:22px}
+  .dir-jump a{color:#fff;text-decoration:none;font-weight:700;font-size:13px;border:1.5px solid rgba(255,255,255,.4);padding:8px 18px;border-radius:999px}
+  .dir-jump a:hover{border-color:#fff}
+
+  /* shared Bulletin tokens */
+  .bul{--ink:#141412;--slate:#46586B;--slate-deep:#34434F;--paper:#FCFCFA;--tint:#F0F0EB;--rulec:#E0DFD8;--bodyc:#33322E;--grayc:#5C5A55;
+       --serif:"Merriweather",Georgia,serif;--sans:"Inter",Helvetica,Arial,sans-serif}
+  section.dir{padding:0 0 60px;background:var(--paper)}
+  .dir-head{padding:52px 20px 22px;text-align:center}
+  .dir-head .letter{font-weight:800;font-size:12px;letter-spacing:.2em;text-transform:uppercase;display:inline-block;padding:6px 16px;border-radius:999px;margin-bottom:14px;background:#141412;color:#fff}
+  .dir-head h2{font-size:30px;line-height:1.2;letter-spacing:-.005em;font-family:"Merriweather",Georgia,serif;font-weight:900;color:#141412}
+  .dir-head .thesis{font-size:15.5px;max-width:640px;margin:12px auto 0;color:#555}
+
+  .panel{background:#fff;border:1px solid #DDD8CF;padding:26px;margin-bottom:18px}
+  .cap{font-weight:700;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#9A958B;margin-bottom:16px;font-family:"Public Sans",sans-serif}
+  .note{font-size:13.5px;color:#6B665D;margin-top:12px;max-width:720px;font-family:"Public Sans",sans-serif;line-height:1.55}
+  .note b{color:#333}
+
+  .btnrow{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-top:24px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:15.5px;padding:13px 28px;min-height:48px;text-decoration:none;cursor:pointer;border:2px solid transparent;border-radius:10px;transition:background-color .12s,color .12s;font-family:var(--sans)}
+  .btn-primary{background:var(--ink);color:#fff}
+  .btn-primary:hover{background:#000}
+  .btn-secondary{background:transparent;color:var(--ink);border-color:var(--ink)}
+  .btn-secondary:hover{background:var(--tint)}
+
+  /* shared masthead / unit skeleton */
+  .mast{padding:34px 20px 0;text-align:center}
+  .daterow{padding:10px 0;font-size:12px;letter-spacing:.16em;text-transform:uppercase;display:flex;justify-content:center;gap:24px;flex-wrap:wrap;font-weight:700;color:var(--grayc);font-family:var(--sans)}
+  .cd-row{display:grid;grid-template-columns:58px 1fr;gap:14px;padding:16px 0;align-items:baseline;border-top:1px solid var(--rulec);font-family:var(--sans)}
+  .cd-row .num{font-family:var(--serif);font-weight:900;font-size:27px;text-align:right;line-height:1;color:var(--ink)}
+  .cd-row h4{font-family:var(--serif);font-weight:700;font-size:18px;line-height:1.4;color:var(--ink)}
+  .cd-row p{font-size:16px;line-height:1.6;margin-top:5px;max-width:560px;color:var(--bodyc)}
+  .cd-finale{padding:20px 0 6px;border-top:1px solid var(--rulec)}
+  .cd-finale .frow{display:grid;grid-template-columns:58px 1fr;gap:14px;align-items:baseline;margin-top:12px}
+  .cd-finale .num{font-family:var(--serif);font-weight:900;font-size:34px;text-align:right;line-height:1;color:var(--ink)}
+  .cd-finale h3{font-family:var(--serif);font-weight:900;font-size:21.5px;line-height:1.4;color:var(--ink)}
+  .cd-finale p{font-size:16px;line-height:1.6;margin-top:6px;max-width:560px;color:var(--bodyc)}
+  .stampline{font-size:11.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--ink);font-family:var(--sans);border-bottom:2px solid var(--ink);display:inline-block;padding-bottom:2px}
+  .ast{color:var(--ink);font-weight:800;border-bottom:2px solid var(--ink)}
+  a.slink{color:var(--slate);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+  a.slink:hover{color:var(--slate-deep)}
+
+  /* ===== N — the pick, restated ===== */
+  .vN .mast .frame{max-width:560px;margin:0 auto;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:16px 0}
+  .vN .mast .name{font-family:var(--sans);font-weight:800;font-size:30px;letter-spacing:.22em;text-indent:.22em;text-transform:uppercase;color:var(--ink)}
+
+  /* ===== O — serif masthead ===== */
+  .vO .mast .name{font-family:var(--serif);font-weight:900;font-size:42px;color:var(--ink);letter-spacing:-.005em}
+  .vO .mast .under{width:220px;margin:14px auto 0;border-top:1px solid var(--ink)}
+
+  /* ===== P — crisper serif (Source Serif) ===== */
+  .vP{--serif:"Source Serif 4",Georgia,serif}
+  .vP .mast .frame{max-width:560px;margin:0 auto;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:16px 0}
+  .vP .mast .name{font-family:var(--sans);font-weight:800;font-size:30px;letter-spacing:.22em;text-indent:.22em;text-transform:uppercase;color:var(--ink)}
+  .vP .cd-row .num,.vP .cd-finale .num{font-weight:700}
+  .vP .cd-row h4{font-weight:700}
+  .vP .cd-finale h3{font-weight:700}
+
+  /* ===== Q — all sans ===== */
+  .vQ .mast .frame{max-width:560px;margin:0 auto;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:16px 0}
+  .vQ .mast .name{font-family:var(--sans);font-weight:800;font-size:30px;letter-spacing:.22em;text-indent:.22em;text-transform:uppercase;color:var(--ink)}
+  .vQ .cd-row .num,.vQ .cd-finale .num{font-family:var(--sans);font-weight:800}
+  .vQ .cd-row h4{font-family:var(--sans);font-weight:700;font-size:17.5px;line-height:1.35}
+  .vQ .cd-finale h3{font-family:var(--sans);font-weight:800;font-size:21px;line-height:1.35}
+
+  /* ===== R — compact scan ===== */
+  .vR .cd-row{grid-template-columns:44px 1fr;padding:11px 0}
+  .vR .cd-row .num{font-size:21px}
+  .vR .cd-row h4{font-size:17px;line-height:1.35}
+  .vR .cd-row p{font-size:15px;line-height:1.55;margin-top:3px}
+  .vR .cd-finale .frow{grid-template-columns:44px 1fr}
+  .vR .cd-finale .num{font-size:27px}
+  .vR .cd-finale h3{font-size:19.5px}
+  .vR .cd-finale p{font-size:15px}
+
+  /* ===== S — pure ink ===== */
+  .vS .topband{border-top:4px solid var(--ink)}
+  .vS .mast .frame{max-width:560px;margin:0 auto;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:16px 0}
+  .vS .mast .name{font-family:var(--sans);font-weight:800;font-size:30px;letter-spacing:.22em;text-indent:.22em;text-transform:uppercase;color:var(--ink)}
+  .vS a.slink{color:var(--ink)}
+  .vS a.slink:hover{color:#000}
+
+  .constants{background:#1B1B1B;color:#CFCFCF;padding:54px 20px 64px}
+  .constants h2{color:#fff;font-weight:800;font-size:24px;margin-bottom:14px}
+  .constants li{margin:8px 0 8px 20px;font-size:15px}
+  .constants b{color:#fff}
+  .constants .next{margin-top:26px;padding-top:22px;border-top:1px solid rgba(255,255,255,.18);font-size:15px;max-width:720px}
+  .constants a{color:#fff}
+</style>
+</head>
+<body>
+
+<div class="board-head">
+  <span class="kicker">Top10Today — The Bulletin, variations · Round 4 · July 16, 2026</span>
+  <h1>The Bulletin, five ways</h1>
+  <p>Direction locked: monochrome ink on white, flat masthead, plain numerals, quiet finale. These variations settle the remaining open details — masthead style, which serif (or none), reading density, and whether the one slate link color stays. N is the pick exactly as chosen, for reference. Every variation keeps the countdown rules and the 50+ readability floor.</p>
+  <div class="dir-jump">
+    <a href="#v-n">N — As picked</a>
+    <a href="#v-o">O — Serif masthead</a>
+    <a href="#v-p">P — Crisper serif</a>
+    <a href="#v-q">Q — All sans</a>
+    <a href="#v-r">R — Compact</a>
+    <a href="#v-s">S — Pure ink</a>
+  </div>
+</div>
+
+<!-- ===== N — AS PICKED ===== -->
+<section class="dir bul vN" id="v-n">
+  <div class="dir-head">
+    <span class="letter">N — The reference</span>
+    <h2>As picked</h2>
+    <p class="thesis">The Bulletin exactly as chosen in round 3: tracked-caps masthead between hairlines, Merriweather headlines, Inter body, slate for links only.</p>
+  </div>
+  <div class="mast"><div class="frame"><div class="name">Top 10 Today</div></div></div>
+  <div class="daterow"><span>Thursday, July 16, 2026</span><span>Columbus · Evening edition</span></div>
+  <div class="wrap" style="padding-top:28px">
+    <div class="panel">
+      <p class="cap">The unit</p>
+      <div class="cd-row"><span class="num">7.</span><div><h4>The bridge repaint moves to night work</h4><p>Lane closures shift to 9 p.m.–5 a.m. through next week. Morning commutes go back to normal (<a class="slink" href="#" onclick="return false">see the detour map</a>).</p></div></div>
+      <div class="cd-row"><span class="num">6.</span><div><h4>A local pro checks your furnace before the fall rush <span class="ast">*</span></h4><p>Tune-ups run $89 through August. Booked slots go fast once the first cold night hits — this is the cheap month.</p></div></div>
+      <div class="cd-finale">
+        <span class="stampline">And tonight's number one —</span>
+        <div class="frow"><span class="num">1.</span><div><h3>The Riverside Market reopens Saturday, two years after the flood</h3><p>44 stalls, a covered arcade, and the same peach lady in slot #3. Gates open at 8 a.m.; parking fills by 9. Worth the early alarm.</p></div></div>
+      </div>
+      <div class="btnrow">
+        <a class="btn btn-primary" href="#" onclick="return false">Get the evening ten</a>
+        <a class="btn btn-secondary" href="#" onclick="return false">See the full countdown</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== O — SERIF MASTHEAD ===== -->
+<section class="dir bul vO" id="v-o">
+  <div class="dir-head">
+    <span class="letter">Variation O</span>
+    <h2>Serif masthead</h2>
+    <p class="thesis">One change: the masthead drops the tracked caps for Title Case Merriweather 900 — the classic newspaper nameplate. Warmer and more traditional at the top; everything below is identical to N.</p>
+  </div>
+  <div class="mast"><div class="name">Top 10 Today</div><div class="under"></div></div>
+  <div class="daterow"><span>Thursday, July 16, 2026</span><span>Columbus · Evening edition</span></div>
+  <div class="wrap" style="padding-top:28px">
+    <div class="panel">
+      <p class="cap">The unit — unchanged from N</p>
+      <div class="cd-row"><span class="num">7.</span><div><h4>The bridge repaint moves to night work</h4><p>Lane closures shift to 9 p.m.–5 a.m. through next week. Morning commutes go back to normal (<a class="slink" href="#" onclick="return false">see the detour map</a>).</p></div></div>
+      <div class="cd-finale">
+        <span class="stampline">And tonight's number one —</span>
+        <div class="frow"><span class="num">1.</span><div><h3>The Riverside Market reopens Saturday, two years after the flood</h3><p>44 stalls, a covered arcade, and the same peach lady in slot #3. Gates open at 8 a.m.; parking fills by 9.</p></div></div>
+      </div>
+      <p class="note"><b>The trade:</b> the serif nameplate says "established newspaper"; N's tracked caps say "modern briefing." Both are flat and quiet — this is purely a register choice.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== P — CRISPER SERIF ===== -->
+<section class="dir bul vP" id="v-p">
+  <div class="dir-head">
+    <span class="letter">Variation P</span>
+    <h2>Crisper serif</h2>
+    <p class="thesis">Same layout as N, but Source Serif 4 replaces Merriweather everywhere. Merriweather is woolly and bookish; Source Serif is lighter on its feet — sharper serifs, more air. The page feels about 10% more modern without losing the news register.</p>
+  </div>
+  <div class="mast"><div class="frame"><div class="name">Top 10 Today</div></div></div>
+  <div class="daterow"><span>Thursday, July 16, 2026</span><span>Columbus · Evening edition</span></div>
+  <div class="wrap" style="padding-top:28px">
+    <div class="panel">
+      <p class="cap">The unit — Source Serif numerals and headlines</p>
+      <div class="cd-row"><span class="num">7.</span><div><h4>The bridge repaint moves to night work</h4><p>Lane closures shift to 9 p.m.–5 a.m. through next week. Morning commutes go back to normal (<a class="slink" href="#" onclick="return false">see the detour map</a>).</p></div></div>
+      <div class="cd-row"><span class="num">6.</span><div><h4>A local pro checks your furnace before the fall rush <span class="ast">*</span></h4><p>Tune-ups run $89 through August. Booked slots go fast once the first cold night hits.</p></div></div>
+      <div class="cd-finale">
+        <span class="stampline">And tonight's number one —</span>
+        <div class="frow"><span class="num">1.</span><div><h3>The Riverside Market reopens Saturday, two years after the flood</h3><p>44 stalls, a covered arcade, and the same peach lady in slot #3. Gates open at 8 a.m.; parking fills by 9.</p></div></div>
+      </div>
+      <p class="note"><b>The trade:</b> Merriweather (N) reads sturdier at small sizes; Source Serif reads cleaner at headline sizes. Both were designed for screens — this is taste, not legibility.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Q — ALL SANS ===== -->
+<section class="dir bul vQ" id="v-q">
+  <div class="dir-head">
+    <span class="letter">Variation Q</span>
+    <h2>All sans</h2>
+    <p class="thesis">No serif anywhere — Inter for numerals, headlines, and body. The most contemporary reading of The Bulletin: a briefing, not a paper. Hierarchy comes entirely from weight and size.</p>
+  </div>
+  <div class="mast"><div class="frame"><div class="name">Top 10 Today</div></div></div>
+  <div class="daterow"><span>Thursday, July 16, 2026</span><span>Columbus · Evening edition</span></div>
+  <div class="wrap" style="padding-top:28px">
+    <div class="panel">
+      <p class="cap">The unit — Inter throughout</p>
+      <div class="cd-row"><span class="num">7.</span><div><h4>The bridge repaint moves to night work</h4><p>Lane closures shift to 9 p.m.–5 a.m. through next week. Morning commutes go back to normal (<a class="slink" href="#" onclick="return false">see the detour map</a>).</p></div></div>
+      <div class="cd-row"><span class="num">6.</span><div><h4>A local pro checks your furnace before the fall rush <span class="ast">*</span></h4><p>Tune-ups run $89 through August. Booked slots go fast once the first cold night hits.</p></div></div>
+      <div class="cd-finale">
+        <span class="stampline">And tonight's number one —</span>
+        <div class="frow"><span class="num">1.</span><div><h3>The Riverside Market reopens Saturday, two years after the flood</h3><p>44 stalls, a covered arcade, and the same peach lady in slot #3. Gates open at 8 a.m.; parking fills by 9.</p></div></div>
+      </div>
+      <p class="note"><b>The trade:</b> cleanest possible surface, but the serif was doing quiet work — separating "news" from "app." Worth seeing both in email form before deciding. In email this variant falls back to Helvetica alone, which renders the most consistently of any option.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== R — COMPACT ===== -->
+<section class="dir bul vR" id="v-r">
+  <div class="dir-head">
+    <span class="letter">Variation R</span>
+    <h2>Compact</h2>
+    <p class="thesis">N's faces, tighter rhythm: smaller numerals, closer rows, 15px blurbs. Ten items fit in roughly two-thirds the scroll. Built for the reader who scans the whole list before breakfast.</p>
+  </div>
+  <div class="mast"><div class="frame" style="max-width:560px;margin:0 auto;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:16px 0"><div class="name" style="font-family:var(--sans);font-weight:800;font-size:30px;letter-spacing:.22em;text-indent:.22em;text-transform:uppercase;color:var(--ink)">Top 10 Today</div></div></div>
+  <div class="daterow"><span>Thursday, July 16, 2026</span><span>Columbus · Evening edition</span></div>
+  <div class="wrap" style="padding-top:28px">
+    <div class="panel">
+      <p class="cap">The unit — compact rhythm</p>
+      <div class="cd-row"><span class="num">8.</span><div><h4>Little League signups close Friday</h4><p>Two leagues this year; both fill. The link takes five minutes.</p></div></div>
+      <div class="cd-row"><span class="num">7.</span><div><h4>The bridge repaint moves to night work</h4><p>Lane closures shift to 9 p.m.–5 a.m. through next week (<a class="slink" href="#" onclick="return false">detour map</a>).</p></div></div>
+      <div class="cd-row"><span class="num">6.</span><div><h4>A local pro checks your furnace before the fall rush <span class="ast">*</span></h4><p>Tune-ups run $89 through August — this is the cheap month.</p></div></div>
+      <div class="cd-finale">
+        <span class="stampline">And tonight's number one —</span>
+        <div class="frow"><span class="num">1.</span><div><h3>The Riverside Market reopens Saturday, two years after the flood</h3><p>44 stalls, a covered arcade, and the same peach lady in slot #3. Gates open at 8 a.m.</p></div></div>
+      </div>
+      <p class="note"><b>The trade:</b> more list per screen, less air per item. Blurbs at 15px still clear AA at this weight, but it's the floor — worth a real-device read with older testers before choosing this one. The airier N spacing could also remain the web default with compact reserved for email.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== S — PURE INK ===== -->
+<section class="dir bul vS" id="v-s">
+  <div class="dir-head">
+    <span class="letter">Variation S</span>
+    <h2>Pure ink</h2>
+    <p class="thesis">Even the slate goes. Links are ink, underlined — the underline alone marks them. One addition so the brand still has a signature: a 4px ink band across the very top of every surface, like a bulletin board's frame.</p>
+  </div>
+  <div class="topband"></div>
+  <div class="mast"><div class="frame"><div class="name">Top 10 Today</div></div></div>
+  <div class="daterow"><span>Thursday, July 16, 2026</span><span>Columbus · Evening edition</span></div>
+  <div class="wrap" style="padding-top:28px">
+    <div class="panel">
+      <p class="cap">The unit — ink links, top band</p>
+      <div class="cd-row"><span class="num">7.</span><div><h4>The bridge repaint moves to night work</h4><p>Lane closures shift to 9 p.m.–5 a.m. through next week. Morning commutes go back to normal (<a class="slink" href="#" onclick="return false">see the detour map</a>).</p></div></div>
+      <div class="cd-row"><span class="num">6.</span><div><h4>A local pro checks your furnace before the fall rush <span class="ast">*</span></h4><p>Tune-ups run $89 through August. Booked slots go fast once the first cold night hits.</p></div></div>
+      <div class="cd-finale">
+        <span class="stampline">And tonight's number one —</span>
+        <div class="frow"><span class="num">1.</span><div><h3>The Riverside Market reopens Saturday, two years after the flood</h3><p>44 stalls, a covered arcade, and the same peach lady in slot #3. Gates open at 8 a.m.; parking fills by 9.</p></div></div>
+      </div>
+      <p class="note"><b>The trade:</b> total monochrome is the strongest statement and the most bulletproof in email. The cost is findability — underlines have to work harder when links aren't colored, so link-heavy sections (event listings) need the underlines kept generous. The top band gives the brand one ownable visual habit without being a "device."</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================== -->
+<footer class="constants">
+  <div class="wrap">
+    <h2>Fixed across all variations</h2>
+    <ul>
+      <li><b>The Bulletin's core:</b> ink on white, flat typographic masthead, aligned numeral column, quiet weight-and-size finale, hairline rules.</li>
+      <li><b>The countdown.</b> Descending, rank 1 last, paid items ranked with the asterisk register.</li>
+      <li><b>Readability floor.</b> AA+ contrast, 44px touch targets, 1.6 line height (R's compact body is the one deliberate exception to test).</li>
+    </ul>
+    <p class="next"><b>These five compose:</b> masthead (N/O), serif (N/P/Q), density (default/R), color (slate/S) are independent choices — "O's nameplate + P's serif + S's pure ink" is a valid single answer. Name the combination and I'll build it as the consolidated proposal: full mock (web + email header), final palette and type spec, and the updated design-system draft for one approval pass before anything touches Brain. Earlier rounds: <a href="../">1</a> · <a href="../round-2/">2</a> · <a href="../round-3/">3</a>.</p>
+  </div>
+</footer>
+
+</body>
+</html>

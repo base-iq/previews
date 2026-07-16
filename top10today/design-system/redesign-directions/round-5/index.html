@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Top10Today — The Bulletin, Logo Variations (Round 5, July 2026)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Inter:wght@400;500;600;700;800&family=Public+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#F4F2EE;color:#333;font-family:"Public Sans",Helvetica,Arial,sans-serif;font-size:16px;line-height:1.6}
+  .wrap{max-width:960px;margin:0 auto;padding:0 20px}
+  :root{--ink:#141412;--paper:#FCFCFA;--tint:#F0F0EB;--rulec:#E0DFD8;--bodyc:#33322E;--grayc:#5C5A55;
+        --serif:"Merriweather",Georgia,serif;--sans:"Inter",Helvetica,Arial,sans-serif}
+
+  .board-head{background:#1B1B1B;color:#fff;padding:40px 20px 34px;text-align:center}
+  .board-head .kicker{font-weight:700;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:#B9B9B9;display:block;margin-bottom:10px}
+  .board-head h1{font-weight:800;font-size:30px;line-height:1.2;letter-spacing:-.01em;max-width:640px;margin:0 auto}
+  .board-head p{color:#CFCFCF;font-size:15px;max-width:640px;margin:14px auto 0}
+  .dir-jump{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:22px}
+  .dir-jump a{color:#fff;text-decoration:none;font-weight:700;font-size:13px;border:1.5px solid rgba(255,255,255,.4);padding:8px 18px;border-radius:999px}
+  .dir-jump a:hover{border-color:#fff}
+
+  section.dir{padding:0 0 60px;background:var(--paper)}
+  .dir-head{padding:52px 20px 22px;text-align:center}
+  .dir-head .letter{font-weight:800;font-size:12px;letter-spacing:.2em;text-transform:uppercase;display:inline-block;padding:6px 16px;border-radius:999px;margin-bottom:14px;background:var(--ink);color:#fff}
+  .dir-head h2{font-size:30px;line-height:1.2;font-family:var(--serif);font-weight:900;color:var(--ink)}
+  .dir-head .thesis{font-size:15.5px;max-width:640px;margin:12px auto 0;color:#555}
+
+  .panel{background:#fff;border:1px solid #DDD8CF;padding:26px;margin-bottom:18px}
+  .cap{font-weight:700;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#9A958B;margin-bottom:16px}
+  .note{font-size:13.5px;color:#6B665D;margin-top:12px;max-width:720px;line-height:1.55}
+  .note b{color:#333}
+  .cols2{display:grid;grid-template-columns:1fr;gap:16px}
+  @media(min-width:780px){.cols2{grid-template-columns:1fr 1fr}}
+
+  .chipbox{padding:38px 22px;display:flex;align-items:center;justify-content:center;min-height:150px;gap:34px;flex-wrap:wrap}
+  .chip-light{background:var(--paper);border:1px solid var(--rulec)}
+  .chip-dark{background:var(--ink)}
+
+  .avrow{display:flex;gap:26px;align-items:flex-end;flex-wrap:wrap;padding:10px 0 4px}
+  .avx{text-align:center}
+  .avx .lab{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#9A958B;margin-top:10px}
+
+  /* mini masthead context */
+  .ctx{border:1px solid var(--rulec);background:var(--paper);padding:26px 18px 0;text-align:center}
+  .ctx .daterow{padding:10px 0;font-size:11px;letter-spacing:.16em;text-transform:uppercase;display:flex;justify-content:center;gap:20px;flex-wrap:wrap;font-weight:700;color:var(--grayc);font-family:var(--sans)}
+  .ctx .item{display:grid;grid-template-columns:44px 1fr;gap:12px;padding:12px 16px;align-items:baseline;border-top:1px solid var(--rulec);text-align:left;font-family:var(--sans)}
+  .ctx .item .num{font-family:var(--serif);font-weight:900;font-size:21px;text-align:right;color:var(--ink)}
+  .ctx .item h4{font-family:var(--serif);font-weight:700;font-size:15.5px;color:var(--ink);line-height:1.35}
+
+  /* ---- Logo 1: hairline flag ---- */
+  .l1{display:inline-block;border-top:1px solid;border-bottom:1px solid;padding:14px 26px}
+  .l1 .name{font-family:var(--sans);font-weight:800;font-size:26px;letter-spacing:.22em;text-indent:.22em;text-transform:uppercase;line-height:1}
+  .l1.on-light{border-color:var(--ink)}.l1.on-light .name{color:var(--ink)}
+  .l1.on-dark{border-color:#fff}.l1.on-dark .name{color:#fff}
+  .l1.sm{padding:8px 16px}.l1.sm .name{font-size:15px}
+
+  /* ---- Logo 2: nameplate ---- */
+  .l2 .name{font-family:var(--serif);font-weight:900;font-size:40px;line-height:1;letter-spacing:-.005em}
+  .l2.on-light .name{color:var(--ink)}
+  .l2.on-dark .name{color:#fff}
+  .l2.sm .name{font-size:22px}
+
+  /* ---- Logo 3: placard ---- */
+  .l3{display:inline-block;padding:16px 30px}
+  .l3 .name{font-family:var(--sans);font-weight:800;font-size:24px;letter-spacing:.2em;text-indent:.2em;text-transform:uppercase;line-height:1}
+  .l3.on-light{background:var(--ink)}.l3.on-light .name{color:#fff}
+  .l3.on-dark{background:#fff}.l3.on-dark .name{color:var(--ink)}
+  .l3.sm{padding:10px 18px}.l3.sm .name{font-size:14px}
+
+  /* ---- Logo 4: the stack ---- */
+  .l4{display:inline-block;text-align:left;line-height:1}
+  .l4 .t{font-family:var(--sans);font-weight:800;font-size:20px;letter-spacing:.3em;text-transform:uppercase;display:block}
+  .l4 .n{font-family:var(--sans);font-weight:800;font-size:58px;letter-spacing:.02em;display:block;margin:2px 0}
+  .l4 .d{font-family:var(--sans);font-weight:800;font-size:13.5px;letter-spacing:.26em;text-transform:uppercase;display:block}
+  .l4.on-light{color:var(--ink)}
+  .l4.on-dark{color:#fff}
+  .l4.sm .t{font-size:11px}.l4.sm .n{font-size:30px}.l4.sm .d{font-size:7.5px}
+
+  /* ---- Logo 5: mixed set ---- */
+  .l5 .name{font-family:var(--sans);font-weight:800;font-size:27px;letter-spacing:.18em;text-indent:.18em;text-transform:uppercase;line-height:1}
+  .l5 .name .ten{font-family:var(--serif);font-weight:900;letter-spacing:0;font-size:31px;padding:0 2px}
+  .l5.on-light .name{color:var(--ink)}
+  .l5.on-dark .name{color:#fff}
+  .l5.sm .name{font-size:16px}.l5.sm .name .ten{font-size:19px}
+
+  /* avatars */
+  .av{display:inline-flex;align-items:center;justify-content:center;background:var(--ink)}
+  .av span{color:#fff;line-height:1}
+  .av.outline{background:var(--paper);border:1px solid var(--ink)}
+  .av.outline span{color:var(--ink)}
+  .av64{width:64px;height:64px}.av48{width:48px;height:48px}.av32{width:32px;height:32px}
+  .av .sans{font-family:var(--sans);font-weight:800}
+  .av .serif{font-family:var(--serif);font-weight:900}
+  .av64 span{font-size:27px}.av48 span{font-size:20px}.av32 span{font-size:13.5px}
+
+  .constants{background:#1B1B1B;color:#CFCFCF;padding:54px 20px 64px}
+  .constants h2{color:#fff;font-weight:800;font-size:24px;margin-bottom:14px}
+  .constants li{margin:8px 0 8px 20px;font-size:15px}
+  .constants b{color:#fff}
+  .constants .next{margin-top:26px;padding-top:22px;border-top:1px solid rgba(255,255,255,.18);font-size:15px;max-width:720px}
+  .constants a{color:#fff}
+</style>
+</head>
+<body>
+
+<div class="board-head">
+  <span class="kicker">Top10Today — The Bulletin, logo variations · Round 5 · July 16, 2026</span>
+  <h1>Five logos that don't perform</h1>
+  <p>All monochrome, all typographic, all in The Bulletin's two faces. Each is shown four ways: primary lockup, reversed on ink, in the masthead with real content under it, and reduced to avatar/favicon sizes — the small sizes are where wordmark-only systems usually fail, so every option here has a designed reduction, not an afterthought.</p>
+  <div class="dir-jump">
+    <a href="#l-1">1 — Hairline Flag</a>
+    <a href="#l-2">2 — Nameplate</a>
+    <a href="#l-3">3 — Placard</a>
+    <a href="#l-4">4 — The Stack</a>
+    <a href="#l-5">5 — Mixed Set</a>
+  </div>
+</div>
+
+<!-- ===== 1 — HAIRLINE FLAG ===== -->
+<section class="dir" id="l-1">
+  <div class="dir-head">
+    <span class="letter">Logo 1</span>
+    <h2>The Hairline Flag</h2>
+    <p class="thesis">The pick's masthead, formalized as the logo: tracked Inter caps between two hairlines. The rules travel with the name everywhere — they're what makes it a mark and not just text.</p>
+  </div>
+  <div class="wrap">
+    <div class="cols2">
+      <div class="panel">
+        <p class="cap">Primary</p>
+        <div class="chipbox chip-light"><span class="l1 on-light"><span class="name">Top 10 Today</span></span></div>
+      </div>
+      <div class="panel">
+        <p class="cap">Reversed — footers, dark surfaces</p>
+        <div class="chipbox chip-dark"><span class="l1 on-dark"><span class="name">Top 10 Today</span></span></div>
+      </div>
+    </div>
+    <div class="cols2">
+      <div class="panel">
+        <p class="cap">In context</p>
+        <div class="ctx">
+          <span class="l1 on-light sm"><span class="name">Top 10 Today</span></span>
+          <div class="daterow"><span>Thursday, July 16, 2026</span><span>Columbus</span></div>
+          <div class="item"><span class="num">7.</span><h4>The bridge repaint moves to night work</h4></div>
+          <div class="item"><span class="num">6.</span><h4>A local pro checks your furnace *</h4></div>
+        </div>
+      </div>
+      <div class="panel">
+        <p class="cap">Avatar / favicon — "10" in the flag's frame</p>
+        <div class="avrow">
+          <div class="avx"><span class="av outline av64" style="border-top-width:2px;border-bottom-width:2px;border-left:0;border-right:0"><span class="sans">10</span></span><p class="lab">64</p></div>
+          <div class="avx"><span class="av outline av48" style="border-top-width:2px;border-bottom-width:2px;border-left:0;border-right:0"><span class="sans">10</span></span><p class="lab">48</p></div>
+          <div class="avx"><span class="av outline av32" style="border-top-width:1.5px;border-bottom-width:1.5px;border-left:0;border-right:0"><span class="sans">10</span></span><p class="lab">32</p></div>
+          <div class="avx"><span class="av av48"><span class="sans">10</span></span><p class="lab">48 · dark</p></div>
+        </div>
+        <p class="note"><b>Reduction:</b> the numeral between the same two rules — the frame is the brand memory, the numeral is just the address. Dark square version for platforms that need a solid avatar.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 2 — NAMEPLATE ===== -->
+<section class="dir" id="l-2">
+  <div class="dir-head">
+    <span class="letter">Logo 2</span>
+    <h2>The Nameplate</h2>
+    <p class="thesis">Title Case Merriweather 900, nothing else — the hundred-year-old newspaper answer. The serif itself is the identity; there is no second element to manage.</p>
+  </div>
+  <div class="wrap">
+    <div class="cols2">
+      <div class="panel">
+        <p class="cap">Primary</p>
+        <div class="chipbox chip-light"><span class="l2 on-light"><span class="name">Top 10 Today</span></span></div>
+      </div>
+      <div class="panel">
+        <p class="cap">Reversed</p>
+        <div class="chipbox chip-dark"><span class="l2 on-dark"><span class="name">Top 10 Today</span></span></div>
+      </div>
+    </div>
+    <div class="cols2">
+      <div class="panel">
+        <p class="cap">In context</p>
+        <div class="ctx">
+          <span class="l2 on-light sm"><span class="name">Top 10 Today</span></span>
+          <div class="daterow"><span>Thursday, July 16, 2026</span><span>Columbus</span></div>
+          <div class="item"><span class="num">7.</span><h4>The bridge repaint moves to night work</h4></div>
+          <div class="item"><span class="num">6.</span><h4>A local pro checks your furnace *</h4></div>
+        </div>
+      </div>
+      <div class="panel">
+        <p class="cap">Avatar / favicon — serif "10." with the period</p>
+        <div class="avrow">
+          <div class="avx"><span class="av outline av64"><span class="serif">10.</span></span><p class="lab">64</p></div>
+          <div class="avx"><span class="av outline av48"><span class="serif">10.</span></span><p class="lab">48</p></div>
+          <div class="avx"><span class="av outline av32"><span class="serif">10.</span></span><p class="lab">32</p></div>
+          <div class="avx"><span class="av av48"><span class="serif">10.</span></span><p class="lab">48 · dark</p></div>
+        </div>
+        <p class="note"><b>Reduction:</b> "10." — the period is the list. It's the same numeral-plus-period the reader sees running down every edition, so the avatar teaches the product's habit.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 3 — PLACARD ===== -->
+<section class="dir" id="l-3">
+  <div class="dir-head">
+    <span class="letter">Logo 3</span>
+    <h2>The Placard</h2>
+    <p class="thesis">White tracked caps on a solid ink rectangle — the name as a printed placard. The most ownable shape of the five at a distance, and the strongest social-feed presence, while staying strictly monochrome.</p>
+  </div>
+  <div class="wrap">
+    <div class="cols2">
+      <div class="panel">
+        <p class="cap">Primary</p>
+        <div class="chipbox chip-light"><span class="l3 on-light"><span class="name">Top 10 Today</span></span></div>
+      </div>
+      <div class="panel">
+        <p class="cap">Reversed — the placard flips</p>
+        <div class="chipbox chip-dark"><span class="l3 on-dark"><span class="name">Top 10 Today</span></span></div>
+      </div>
+    </div>
+    <div class="cols2">
+      <div class="panel">
+        <p class="cap">In context</p>
+        <div class="ctx">
+          <span class="l3 on-light sm"><span class="name">Top 10 Today</span></span>
+          <div class="daterow"><span>Thursday, July 16, 2026</span><span>Columbus</span></div>
+          <div class="item"><span class="num">7.</span><h4>The bridge repaint moves to night work</h4></div>
+          <div class="item"><span class="num">6.</span><h4>A local pro checks your furnace *</h4></div>
+        </div>
+      </div>
+      <div class="panel">
+        <p class="cap">Avatar / favicon — the placard reduces naturally</p>
+        <div class="avrow">
+          <div class="avx"><span class="av av64"><span class="sans">10</span></span><p class="lab">64</p></div>
+          <div class="avx"><span class="av av48"><span class="sans">10</span></span><p class="lab">48</p></div>
+          <div class="avx"><span class="av av32"><span class="sans">10</span></span><p class="lab">32</p></div>
+        </div>
+        <p class="note"><b>Reduction:</b> ink square, white numeral — the placard is already an avatar. The only variation where the small mark and the full lockup are literally the same object at two sizes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 4 — THE STACK ===== -->
+<section class="dir" id="l-4">
+  <div class="dir-head">
+    <span class="letter">Logo 4</span>
+    <h2>The Stack</h2>
+    <p class="thesis">TOP / 10 / TODAY on three lines, all Inter, sized so each line is the same width — a compact typographic block. The numeral is bigger because the grid demands it, not because it's performing.</p>
+  </div>
+  <div class="wrap">
+    <div class="cols2">
+      <div class="panel">
+        <p class="cap">Primary</p>
+        <div class="chipbox chip-light"><span class="l4 on-light"><span class="t">Top</span><span class="n">10</span><span class="d">Today</span></span></div>
+      </div>
+      <div class="panel">
+        <p class="cap">Reversed</p>
+        <div class="chipbox chip-dark"><span class="l4 on-dark"><span class="t">Top</span><span class="n">10</span><span class="d">Today</span></span></div>
+      </div>
+    </div>
+    <div class="cols2">
+      <div class="panel">
+        <p class="cap">In context — the stack sits left, date right</p>
+        <div class="ctx" style="text-align:left;padding-left:16px">
+          <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:10px">
+            <span class="l4 on-light sm"><span class="t">Top</span><span class="n">10</span><span class="d">Today</span></span>
+            <span style="font-family:var(--sans);font-weight:700;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--grayc);padding-bottom:4px">Thursday, July 16, 2026 · Columbus</span>
+          </div>
+          <div class="item" style="margin-top:12px"><span class="num">7.</span><h4>The bridge repaint moves to night work</h4></div>
+          <div class="item"><span class="num">6.</span><h4>A local pro checks your furnace *</h4></div>
+        </div>
+      </div>
+      <div class="panel">
+        <p class="cap">Avatar / favicon — the stack IS the avatar</p>
+        <div class="avrow">
+          <div class="avx"><span class="av av64" style="flex-direction:column"><span class="sans" style="font-size:8px;letter-spacing:.2em">TOP</span><span class="sans" style="font-size:24px;margin:1px 0">10</span><span class="sans" style="font-size:6px;letter-spacing:.16em">TODAY</span></span><p class="lab">64</p></div>
+          <div class="avx"><span class="av av48" style="flex-direction:column"><span class="sans" style="font-size:6px;letter-spacing:.18em">TOP</span><span class="sans" style="font-size:18px;margin:1px 0">10</span><span class="sans" style="font-size:4.5px;letter-spacing:.14em">TODAY</span></span><p class="lab">48</p></div>
+          <div class="avx"><span class="av av32"><span class="sans">10</span></span><p class="lab">32 · numeral only</p></div>
+        </div>
+        <p class="note"><b>Reduction:</b> the full stack holds to 48px; at 32 and below it drops to the numeral alone. This is the only variation with a true square lockup — useful for app-icon-shaped placements.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 5 — MIXED SET ===== -->
+<section class="dir" id="l-5">
+  <div class="dir-head">
+    <span class="letter">Logo 5</span>
+    <h2>The Mixed Set</h2>
+    <p class="thesis">Tracked Inter caps, but the "10" is set in Merriweather 900 — the serif numeral from the ranked list, sitting inside the sans wordmark. One quiet habit connecting the logo to the product, invisible until you notice it, and then it's the whole brand.</p>
+  </div>
+  <div class="wrap">
+    <div class="cols2">
+      <div class="panel">
+        <p class="cap">Primary</p>
+        <div class="chipbox chip-light"><span class="l5 on-light"><span class="name">Top <span class="ten">10</span> Today</span></span></div>
+      </div>
+      <div class="panel">
+        <p class="cap">Reversed</p>
+        <div class="chipbox chip-dark"><span class="l5 on-dark"><span class="name">Top <span class="ten">10</span> Today</span></span></div>
+      </div>
+    </div>
+    <div class="cols2">
+      <div class="panel">
+        <p class="cap">In context</p>
+        <div class="ctx">
+          <span class="l5 on-light sm"><span class="name">Top <span class="ten">10</span> Today</span></span>
+          <div class="daterow"><span>Thursday, July 16, 2026</span><span>Columbus</span></div>
+          <div class="item"><span class="num">7.</span><h4>The bridge repaint moves to night work</h4></div>
+          <div class="item"><span class="num">6.</span><h4>A local pro checks your furnace *</h4></div>
+        </div>
+      </div>
+      <div class="panel">
+        <p class="cap">Avatar / favicon — the serif numeral carries it</p>
+        <div class="avrow">
+          <div class="avx"><span class="av outline av64"><span class="serif">10</span></span><p class="lab">64</p></div>
+          <div class="avx"><span class="av outline av48"><span class="serif">10</span></span><p class="lab">48</p></div>
+          <div class="avx"><span class="av av32"><span class="serif">10</span></span><p class="lab">32 · dark</p></div>
+        </div>
+        <p class="note"><b>Reduction:</b> the Merriweather 900 numeral alone — because the wordmark taught it as "the serif one," the avatar inherits the association. <b>The connection:</b> the ranked list's numerals are the same face and weight, so masthead, avatar, and countdown all speak with one voice.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================== -->
+<footer class="constants">
+  <div class="wrap">
+    <h2>Rules shared by all five</h2>
+    <ul>
+      <li><b>Strictly monochrome.</b> Ink on light, white on ink. No third color exists in the logo system.</li>
+      <li><b>Two faces only.</b> Inter and Merriweather — the same faces as the product. (If variation P's Source Serif wins round 4, it swaps in cleanly.)</li>
+      <li><b>No pictorial device.</b> No rings, arches, seals, or tallies. The reductions use the numeral because a favicon has to say something in 32 pixels — not because the brand worships it.</li>
+      <li><b>Production plan (proposal stage):</b> chosen logo ships as SVG (outlined paths) + PNG 2x in light/dark variants, same file convention as the current asset set. Existing logo files stay in place until the new set is approved.</li>
+    </ul>
+    <p class="next"><b>Composing:</b> the logo choice is independent of round 4's type/density/color choices — any logo here works with any Bulletin variation. Pick a number (or "3 but with the serif numeral," etc.) and the consolidated proposal gets built from the full stack of picks: Bulletin base + round-4 details + this logo. Earlier rounds: <a href="../">1</a> · <a href="../round-2/">2</a> · <a href="../round-3/">3</a> · <a href="../round-4/">4</a>. Same five treatments in The Morning's register: <a href="../round-5-morning/">the mirror board</a>.</p>
+  </div>
+</footer>
+
+</body>
+</html>
