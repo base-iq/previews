@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Top10Today — Design System Showcase</title>
+<link rel="icon" href="../assets/logos/top10today-icon-dark.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* color tokens */
+    --midnight:#0C2F2A; --teal:#0C6E5C; --deep-teal:#09584A; --mint:#64E3BC;
+    --body:#31423C; --gray:#57655D; --muted:#8A968F;
+    --paper:#FAFCFB; --tint:#ECF4F0; --rule:#D6E0DB; --white:#FFFFFF;
+    --gong-red:#A62A22;
+    /* type */
+    --display:"Abril Fatface",Georgia,serif;
+    --sans:"Public Sans",Helvetica,Arial,sans-serif;
+    /* motion */
+    --duration-micro:.12s;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--paper);color:var(--body);font-family:var(--sans);font-size:17px;line-height:1.6}
+  .wrap{max-width:940px;margin:0 auto;padding:0 20px}
+  :focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+
+  /* ---- the marquee (canonical header) ---- */
+  .marquee{background:var(--midnight);text-align:center;padding:34px 20px 30px}
+  .marquee .top,.marquee .today{font-weight:800;font-size:16px;letter-spacing:.5em;text-indent:.5em;text-transform:uppercase;color:var(--white);line-height:1}
+  .marquee .ring10{width:88px;height:88px;border:4px solid var(--mint);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;margin:13px 0}
+  .marquee .ring10 span{font-family:var(--display);font-size:42px;color:var(--mint);line-height:1;transform:translateY(2px)}
+  .date-row{border-top:1px solid var(--midnight);border-bottom:1px solid var(--midnight);padding:9px 0;font-weight:700;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);display:flex;justify-content:center;gap:26px;flex-wrap:wrap}
+  .date-row .loc{color:var(--body)}
+  .proposal-note{text-align:center;padding:20px 20px 0;font-size:14.5px;color:var(--gray);max-width:720px;margin:0 auto}
+
+  /* ---- section chrome ---- */
+  section{padding:52px 0 6px}
+  .stamp{display:inline-block;font-weight:700;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--teal)}
+  h2.sec{font-weight:800;font-size:27px;letter-spacing:-.01em;color:var(--midnight);line-height:1.15;margin:10px 0 8px}
+  .sec-note{font-size:15.5px;color:var(--gray);max-width:680px;margin-bottom:24px}
+  .subhead{font-weight:700;font-size:19px;color:var(--midnight);margin:30px 0 12px}
+  .demo{background:var(--white);border:1px solid var(--rule);padding:26px;margin-bottom:18px}
+  .demo-caption{font-weight:700;font-size:11px;color:var(--muted);letter-spacing:.14em;text-transform:uppercase;margin-bottom:16px}
+  .cols2{display:grid;grid-template-columns:1fr;gap:16px}
+  @media(min-width:760px){.cols2{grid-template-columns:1fr 1fr}}
+  .note{font-size:13.5px;color:var(--gray);margin-top:12px;max-width:700px}
+  .note b{color:var(--body)}
+
+  /* ---- logo chips ---- */
+  .chipbox{padding:34px 22px;display:flex;align-items:center;justify-content:center;min-height:130px;gap:34px;flex-wrap:wrap}
+  .chip-light{background:var(--white);border:1px solid var(--rule)}
+  .chip-dark{background:var(--midnight)}
+
+  /* lockups */
+  .lock-stack{text-align:center}
+  .lock-stack .w{font-weight:800;font-size:15px;letter-spacing:.5em;text-indent:.5em;text-transform:uppercase;line-height:1}
+  .lock-stack .ring{width:74px;height:74px;border:3.5px solid;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;margin:11px 0}
+  .lock-stack .ring span{font-family:var(--display);font-size:35px;line-height:1;transform:translateY(2px)}
+  .lock-stack.on-dark .w{color:var(--white)}
+  .lock-stack.on-dark .ring{border-color:var(--mint)}
+  .lock-stack.on-dark .ring span{color:var(--mint)}
+  .lock-stack.on-light .w{color:var(--midnight)}
+  .lock-stack.on-light .ring{border-color:var(--teal)}
+  .lock-stack.on-light .ring span{color:var(--teal)}
+
+  .lock-horiz{display:inline-flex;align-items:center;gap:12px}
+  .lock-horiz .w{font-weight:800;font-size:24px;letter-spacing:.14em;text-transform:uppercase}
+  .lock-horiz .ring{width:48px;height:48px;border:3px solid;border-radius:50%;display:inline-flex;align-items:center;justify-content:center}
+  .lock-horiz .ring span{font-family:var(--display);font-size:23px;transform:translateY(1px)}
+  .lock-horiz.on-light .w{color:var(--midnight)}
+  .lock-horiz.on-light .ring{border-color:var(--teal)}
+  .lock-horiz.on-light .ring span{color:var(--teal)}
+  .lock-horiz.on-dark .w{color:var(--white)}
+  .lock-horiz.on-dark .ring{border-color:var(--mint)}
+  .lock-horiz.on-dark .ring span{color:var(--mint)}
+
+  .icon10{width:76px;height:76px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center}
+  .icon10 .in{width:62px;height:62px;border:3px solid;border-radius:50%;display:flex;align-items:center;justify-content:center}
+  .icon10 .in span{font-family:var(--display);font-size:28px;transform:translateY(1px)}
+  .icon10.dark{background:var(--midnight)}
+  .icon10.dark .in{border-color:var(--mint)}
+  .icon10.dark .in span{color:var(--mint)}
+  .icon10.light{background:var(--tint)}
+  .icon10.light .in{border-color:var(--teal)}
+  .icon10.light .in span{color:var(--teal)}
+
+  .usage{font-size:14.5px;color:var(--body)}
+  .usage li{margin:7px 0 7px 18px}
+  .usage b{color:var(--midnight)}
+
+  /* ---- swatches ---- */
+  .swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:12px;margin-bottom:10px}
+  .swatch{border:1px solid var(--rule);background:var(--white)}
+  .swatch .chip{height:70px;border-bottom:1px solid var(--rule)}
+  .swatch .meta{padding:9px 11px}
+  .swatch .name{font-size:12.5px;font-weight:700;color:var(--midnight)}
+  .swatch .hex,.swatch .ratio{font-size:11.5px;color:var(--gray);font-family:ui-monospace,Menlo,monospace}
+
+  /* ---- type specimens ---- */
+  .spec{border-top:1px solid var(--rule);padding:16px 0;display:grid;grid-template-columns:1fr;gap:6px}
+  @media(min-width:700px){.spec{grid-template-columns:225px 1fr;align-items:baseline}}
+  .spec .lab{font-size:11.5px;color:var(--gray);letter-spacing:.05em;text-transform:uppercase;font-weight:600}
+  .t-finale{font-family:var(--display);font-size:28px;line-height:1.2;color:var(--midnight)}
+  .t-h1{font-weight:800;font-size:32px;line-height:1.15;letter-spacing:-.01em;color:var(--midnight)}
+  .t-h2{font-weight:800;font-size:24px;line-height:1.2;letter-spacing:-.01em;color:var(--midnight)}
+  .t-item{font-weight:700;font-size:18px;line-height:1.3;color:var(--midnight)}
+  .t-lede{font-size:18px;line-height:1.55;color:var(--body);max-width:600px}
+  .t-body{font-size:17px;line-height:1.6;color:var(--body);max-width:560px}
+  .t-stamp{font-weight:700;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--teal)}
+  .t-fine{font-size:13px;color:var(--gray)}
+
+  /* email proof */
+  .mailpair{display:grid;grid-template-columns:1fr;gap:0;border:1px solid var(--rule)}
+  @media(min-width:700px){.mailpair{grid-template-columns:1fr 1fr}}
+  .mailpair>div{padding:20px 22px;background:var(--white)}
+  .mailpair>div+div{border-top:1px solid var(--rule)}
+  @media(min-width:700px){.mailpair>div+div{border-top:0;border-left:1px solid var(--rule)}}
+  .mail-lab{font-weight:700;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+  .georgia-disp{font-family:Georgia,serif;font-size:28px;line-height:1.2;color:var(--midnight)}
+  .helv-body{font-family:Helvetica,Arial,sans-serif}
+  .helv-body .t-item{font-family:Helvetica,Arial,sans-serif}
+
+  /* ---- furniture ---- */
+  .ringdemo{display:flex;gap:26px;align-items:flex-end;flex-wrap:wrap}
+  .ringx{text-align:center}
+  .ringx .lab{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:10px}
+  .ring-outline{border:2.5px solid var(--midnight);border-radius:50%;display:inline-flex;align-items:center;justify-content:center}
+  .ring-outline span{font-family:var(--display);color:var(--midnight)}
+  .ring-finale{background:var(--midnight);border-radius:50%;display:inline-flex;align-items:center;justify-content:center}
+  .ring-finale span{font-family:var(--display);color:var(--mint)}
+  .r46{width:46px;height:46px}.r46 span{font-size:22px;transform:translateY(1px)}
+  .r76{width:76px;height:76px}.r76 span{font-size:38px;transform:translateY(2px)}
+  .r30{width:30px;height:30px;border-width:2px}.r30 span{font-size:15px;transform:translateY(1px)}
+
+  .houselights{background:var(--midnight);color:var(--white);padding:22px 24px;margin-bottom:0}
+  .houselights .t-stamp{color:var(--mint)}
+  .houselights p{color:#C4D6CE;font-size:15px;margin-top:6px}
+
+  /* ---- ranked item: three sizes ---- */
+  .size-label{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:22px 0 10px}
+  .size-label:first-child{margin-top:0}
+  .cd-row{display:grid;grid-template-columns:58px 1fr;gap:16px;padding:15px 0;border-top:1px solid var(--rule);align-items:start}
+  .cd-row .ring-outline{width:46px;height:46px;margin-top:2px}
+  .cd-row .ring-outline span{font-size:22px;transform:translateY(1px)}
+  .cd-row h4{font-weight:700;font-size:18px;color:var(--midnight);line-height:1.3}
+  .cd-row p{font-size:15px;line-height:1.55;margin-top:4px;max-width:540px}
+  .cd-row.sponsored h4 span.ast{color:var(--teal)}
+
+  .cd-finale{border-top:1px solid var(--rule);padding:20px 0 10px}
+  .cd-finale .t-stamp{display:block;margin-bottom:14px}
+  .cd-finale .row{display:grid;grid-template-columns:92px 1fr;gap:20px;align-items:start}
+  .cd-finale h3{font-family:var(--display);font-weight:400;font-size:26px;line-height:1.25;color:var(--midnight)}
+  .cd-finale p{font-size:15.5px;line-height:1.6;margin-top:9px;max-width:540px}
+
+  .cd-mini{display:flex;gap:11px;align-items:baseline;padding:8px 0;border-top:1px solid var(--rule)}
+  .cd-mini .num{font-family:var(--display);font-size:16px;color:var(--teal);min-width:28px;text-align:right}
+  .cd-mini .t{font-size:15px;font-weight:600;color:var(--midnight)}
+
+  /* ---- buttons ---- */
+  .btn{display:inline-flex;align-items:center;justify-content:center;font-family:var(--sans);font-weight:700;letter-spacing:.01em;border-radius:999px;text-decoration:none;cursor:pointer;border:2px solid transparent;transition:background-color var(--duration-micro),color var(--duration-micro),border-color var(--duration-micro)}
+  .btn-default{font-size:15px;padding:12px 28px;min-height:46px}
+  .btn-primary{background:var(--teal);color:#fff}
+  .btn-primary:hover,.btn-primary.is-hover{background:var(--deep-teal)}
+  .btn-primary.is-disabled{background:var(--rule);color:var(--muted);cursor:not-allowed}
+  .btn-secondary{background:transparent;color:var(--midnight);border-color:var(--midnight)}
+  .btn-secondary:hover,.btn-secondary.is-hover{background:var(--tint)}
+  a.ed-link{color:var(--teal);text-decoration:underline;text-underline-offset:3px;font-weight:600}
+  a.ed-link:hover{color:var(--deep-teal)}
+  a.ui-link{font-weight:700;color:var(--teal);text-decoration:none}
+  a.ui-link:hover{text-decoration:underline;text-underline-offset:3px}
+  .btnrow{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+
+  /* ---- motion demo ---- */
+  @keyframes finale-pulse{
+    0%{box-shadow:0 0 0 0 rgba(100,227,188,.55)}
+    100%{box-shadow:0 0 0 22px rgba(100,227,188,0)}
+  }
+  .pulse .ring-finale{animation:finale-pulse .9s ease-out 1}
+  @media(prefers-reduced-motion:reduce){
+    .pulse .ring-finale{animation:none}
+    *{transition-duration:.01ms!important}
+  }
+  .replay{margin-top:16px}
+
+  /* ---- where to use ---- */
+  table.use{width:100%;border-collapse:collapse;font-size:14px}
+  table.use th{text-align:left;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:700;padding:8px 10px;border-bottom:2px solid var(--midnight)}
+  table.use td{padding:10px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--body)}
+  table.use td b{color:var(--midnight)}
+  .scrollx{overflow-x:auto}
+
+  /* ---- footer ---- */
+  .board-foot{background:var(--midnight);margin-top:64px;padding:30px 0 56px}
+  .board-foot p{color:#C4D6CE;font-size:14.5px;max-width:720px}
+  .board-foot .t-stamp{color:var(--mint);display:block;margin-bottom:10px}
+</style>
+</head>
+<body>
+
+<!-- canonical header: the marquee, using the shipped asset -->
+<div class=”marquee”>
+  <img src=”../assets/logos/top10today-stacked-dark.svg” alt=”Top10Today” style=”height:180px;width:auto;display:inline-block”>
+</div>
+<div class=”date-row”>
+  <span>Thursday, July 16, 2026</span>
+  <span class=”loc”>Columbus · Evening Ten</span>
+</div>
+
+<p class=”proposal-note”><b>Design system showcase — “The Countdown,” approved 2026-07-16.</b> This board is the living visual reference for <code>brain/brands/top10today/</code> — brand-guide.md and design-system.md rendered as live HTML. The header above is the canonical presentation, using the shipped stacked lockup.</p>
+
+<!-- ================= LOGO ================= -->
+<section>
+  <div class="wrap">
+    <span class="stamp">01 — The mark</span>
+    <h2 class="sec">Logo system: the spotlight ten</h2>
+    <p class="sec-note">One pictorial device: a numeral 10 in Abril Fatface inside a ring — the spotlight, the medal, the cue card. The wordmark letters are Public Sans 800, letter-spaced wide like a marquee. The masthead ring always holds “10”; item rings hold their rank.</p>
+
+    <div class="demo">
+      <p class="demo-caption">Stacked lockup — primary (mastheads, site header, newsletter header)</p>
+      <div class="chipbox chip-dark">
+        <img src="../assets/logos/top10today-stacked-dark.svg" alt="Top10Today stacked lockup, dark variant" style="height:170px;width:auto">
+      </div>
+      <div class="chipbox chip-light" style="margin-top:14px">
+        <img src="../assets/logos/top10today-stacked-light.svg" alt="Top10Today stacked lockup, light variant" style="height:170px;width:auto">
+      </div>
+      <p class="note"><b>Variants:</b> on dark — white wordmark, Marquee Mint ring and numeral. On light — Midnight Teal wordmark, Signal Teal ring and numeral. Mint never appears on light backgrounds (1.5:1 — decorative-invisible); teal never appears on the midnight ground (too close in luminance — the ring goes muddy).</p>
+    </div>
+
+    <div class="cols2">
+      <div class="demo">
+        <p class="demo-caption">Horizontal lockup — tight spaces (nav bars, doc headers)</p>
+        <div class="chipbox chip-light" style="min-height:100px">
+          <img src="../assets/logos/top10today-horiz-light.svg" alt="Top10Today horizontal lockup, light variant" style="height:52px;width:auto">
+        </div>
+        <div class="chipbox chip-dark" style="min-height:100px;margin-top:14px">
+          <img src="../assets/logos/top10today-horiz-dark.svg" alt="Top10Today horizontal lockup, dark variant" style="height:52px;width:auto">
+        </div>
+      </div>
+      <div class="demo">
+        <p class="demo-caption">Ring icon — avatars, favicons, compact placements</p>
+        <div class="chipbox chip-light" style="min-height:100px">
+          <img src="../assets/logos/top10today-icon-dark.svg" alt="Top10Today ring icon, dark variant" style="width:76px;height:76px">
+          <img src="../assets/logos/top10today-icon-light.svg" alt="Top10Today ring icon, light variant" style="width:76px;height:76px">
+        </div>
+        <p class="note"><b>Default:</b> midnight field + mint ring (works on light and dark surroundings). Tint field + teal ring when the dark disc clashes. The icon is always the double circle — disc + ring — so it survives at 32px.</p>
+      </div>
+    </div>
+
+    <div class="demo">
+      <p class="demo-caption">Usage rules</p>
+      <ul class="usage">
+        <li><b>Clear space:</b> half the ring’s diameter on all sides.</li>
+        <li><b>Minimum sizes:</b> stacked lockup 96px tall; horizontal 140px wide; icon 32px.</li>
+        <li><b>The masthead ring always holds 10.</b> Rank numerals in rings belong to list items, never to the logo.</li>
+        <li><b>Don’t</b> set the numeral in Public Sans, square the ring, fill the ring on light backgrounds, add glow or shadow to the mark, rotate, or recolor outside the two variants.</li>
+        <li><b>Don’t</b> use the icon where space allows a full lockup.</li>
+        <li><b>Files</b> (live, produced 2026-07-16): <code>top10today-stacked-dark/-light</code>, <code>top10today-horiz-dark/-light</code>, <code>top10today-icon-dark/-light</code> — SVG (vector paths, no font dependency) + PNG 2x each, at <code>previews/top10today/assets/logos/</code>.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PALETTE ================= -->
+<section>
+  <div class="wrap">
+    <span class="stamp">02 — Color</span>
+    <h2 class="sec">Palette: house lights and one spotlight</h2>
+    <p class="sec-note">Light pages, dark frame. Midnight Teal is the house lights — masthead, finale ring, footer — never a body-page background. Signal Teal is the working accent on light; Marquee Mint is the accent on dark, and only on dark. The governing discipline: <b>the dark band frames, the spotlight points, everything between is calm.</b></p>
+
+    <div class="demo">
+      <p class="demo-caption">Primary</p>
+      <div class="swatches">
+        <div class="swatch"><div class="chip" style="background:var(--midnight)"></div><div class="meta"><div class="name">Midnight Teal</div><div class="hex">#0C2F2A</div><div class="ratio">13.9:1 on Paper — AAA</div></div></div>
+        <div class="swatch"><div class="chip" style="background:var(--teal)"></div><div class="meta"><div class="name">Signal Teal</div><div class="hex">#0C6E5C</div><div class="ratio">6.0:1 — AA+ any size</div></div></div>
+        <div class="swatch"><div class="chip" style="background:var(--deep-teal)"></div><div class="meta"><div class="name">Deep Teal</div><div class="hex">#09584A</div><div class="ratio">8.0:1 — hover/active</div></div></div>
+        <div class="swatch"><div class="chip" style="background:var(--mint)"></div><div class="meta"><div class="name">Marquee Mint</div><div class="hex">#64E3BC</div><div class="ratio">9.1:1 on Midnight only</div></div></div>
+      </div>
+      <p class="demo-caption" style="margin-top:22px">Neutrals</p>
+      <div class="swatches">
+        <div class="swatch"><div class="chip" style="background:var(--body)"></div><div class="meta"><div class="name">Body</div><div class="hex">#31423C</div><div class="ratio">10.3:1 — AAA</div></div></div>
+        <div class="swatch"><div class="chip" style="background:var(--gray)"></div><div class="meta"><div class="name">Gray</div><div class="hex">#57655D</div><div class="ratio">5.7:1 — meta, fine print</div></div></div>
+        <div class="swatch"><div class="chip" style="background:var(--muted)"></div><div class="meta"><div class="name">Muted</div><div class="hex">#8A968F</div><div class="ratio">2.9:1 — decorative only</div></div></div>
+        <div class="swatch"><div class="chip" style="background:var(--paper);border-bottom:1px solid var(--rule)"></div><div class="meta"><div class="name">Paper</div><div class="hex">#FAFCFB</div><div class="ratio">page background</div></div></div>
+        <div class="swatch"><div class="chip" style="background:var(--tint)"></div><div class="meta"><div class="name">Tint</div><div class="hex">#ECF4F0</div><div class="ratio">panels, callouts</div></div></div>
+        <div class="swatch"><div class="chip" style="background:var(--rule)"></div><div class="meta"><div class="name">Rule</div><div class="hex">#D6E0DB</div><div class="ratio">rules, borders</div></div></div>
+      </div>
+      <p class="demo-caption" style="margin-top:22px">Semantic</p>
+      <div class="swatches">
+        <div class="swatch"><div class="chip" style="background:var(--teal)"></div><div class="meta"><div class="name">Success = Signal Teal</div><div class="hex">#0C6E5C</div><div class="ratio">confirmations, checks</div></div></div>
+        <div class="swatch"><div class="chip" style="background:var(--gong-red)"></div><div class="meta"><div class="name">Gong Red</div><div class="hex">#A62A22</div><div class="ratio">6.8:1 — errors only</div></div></div>
+      </div>
+      <p class="note"><b>Why success shares the accent:</b> the brand’s teal is already an affirmative green — a second green would compete with it. Errors get the one warm-adjacent color in the system, and it appears nowhere else (it’s the gong — the act is over). Distinct from AmericanAdvisor’s crimson <code>#8A2331</code> and LocalUpdate’s signal red <code>#A8231C</code>: brighter, browner, and never decorative.</p>
+      <p class="note"><b>Territory check:</b> teal + mint sit squarely in the reserved cool/playful band — no warm hues (BaseLocal, AmericanAdvisor, TodayLocal), nowhere near Wire Cobalt <code>#2036B1</code>. White on Signal Teal: 6.1:1 — reversed button type is always safe.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TYPOGRAPHY ================= -->
+<section>
+  <div class="wrap">
+    <span class="stamp">03 — Type</span>
+    <h2 class="sec">Typography: the didone is rationed</h2>
+    <p class="sec-note">Two faces. <b>Abril Fatface</b> is the theater — numerals, the finale headline, the masthead ten. <b>Public Sans</b> is everything else: headlines, body, UI — plain, sturdy, government-form honest. The rule that keeps the system credible: <b>Abril never sets a full sentence except the finale headline.</b> If the didone spreads, the brand tips into perfume-ad.</p>
+
+    <div class="demo">
+      <p class="demo-caption">Scale</p>
+      <div class="spec"><span class="lab">Finale headline · Abril 26–28px / 1.25</span><p class="t-finale">And the number one thing in town tonight&hellip;</p></div>
+      <div class="spec"><span class="lab">H1 / lead · Public Sans 800 32px (26 mobile)</span><p class="t-h1">Ten things worth your Thursday</p></div>
+      <div class="spec"><span class="lab">H2 / section · Public Sans 800 24px (21 mobile)</span><p class="t-h2">The evening ten</p></div>
+      <div class="spec"><span class="lab">Item headline · Public Sans 700 18px / 1.3</span><p class="t-item">Council votes tonight on the Main Street parking change</p></div>
+      <div class="spec"><span class="lab">Lede · Public Sans 400 18px / 1.55</span><p class="t-lede">The ten things worth your time tonight — ranked, argued over, and trimmed to what you’ll actually use.</p></div>
+      <div class="spec"><span class="lab">Body · Public Sans 400 17px / 1.6 (16px email floor)</span><p class="t-body">Body text carries the blurbs. It never tracks, never goes didone, and never drops below the floor — the audience is 50+ and reading on phones.</p></div>
+      <div class="spec"><span class="lab">Intro stamp · 700 11.5px +0.18em caps · Signal Teal</span><p class="t-stamp">And tonight’s number one —</p></div>
+      <div class="spec"><span class="lab">Fine print · 400 13px · Gray</span><p class="t-fine">Items marked * are paid placements. The countdown is editorial.</p></div>
+      <p class="note"><b>Heading style:</b> sentence case everywhere; all-caps lives only in the small furniture (stamps, meta lines, the wordmark). Headlines never exclaim — the countdown position is the volume. Numerals in running text are lining figures from Public Sans; ranked numerals are always Abril.</p>
+    </div>
+
+    <div class="demo">
+      <p class="demo-caption">Email typography — designed on the fallback</p>
+      <p class="t-body" style="margin-bottom:16px">Gmail and Outlook don’t render web fonts; only Apple Mail does. The email stack is therefore designed on faces every device ships: <b>Georgia</b> inherits the didone role (a newspaper serif with real contrast — the theatrical register survives), <b>Helvetica/Arial</b> inherits Public Sans. Web faces listed first as progressive enhancement.</p>
+      <div class="mailpair">
+        <div>
+          <p class="mail-lab">Web — Abril Fatface + Public Sans</p>
+          <p class="t-finale" style="font-size:24px">And tonight’s number one&hellip;</p>
+          <p class="t-item" style="margin-top:12px">The bridge repaint moves to night work</p>
+          <p class="t-body" style="font-size:15px;margin-top:6px">Lane closures shift to 9 p.m.–5 a.m. through next week.</p>
+        </div>
+        <div>
+          <p class="mail-lab">Email fallback — Georgia + Helvetica</p>
+          <p class="georgia-disp" style="font-size:24px">And tonight’s number one&hellip;</p>
+          <div class="helv-body">
+            <p class="t-item" style="margin-top:12px">The bridge repaint moves to night work</p>
+            <p class="t-body" style="font-size:15px;margin-top:6px;font-family:inherit">Lane closures shift to 9 p.m.–5 a.m. through next week.</p>
+          </div>
+        </div>
+      </div>
+      <p class="note"><b>Ring numerals in email:</b> CSS circles die in Outlook (border-radius unsupported — rings become squares). Solution: the rank badges ship as a <b>pre-rendered PNG set</b> — ten outline rings (1–10) in each color variant plus the filled finale ring — produced once at delivery and reused in every edition forever, since the numbers never change. Alt text is the numeral (<code>alt="7"</code>); images-off readers get a live-text “7.” in Georgia before the headline. Wordmark is always a PNG in email.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FURNITURE ================= -->
+<section>
+  <div class="wrap">
+    <span class="stamp">04 — Furniture</span>
+    <h2 class="sec">Marquee furniture</h2>
+    <p class="sec-note">The signature devices — what makes a surface unmistakably Top10Today rather than a generic numbered list.</p>
+
+    <div class="demo">
+      <p class="demo-caption">The ring — rank numerals in three sizes</p>
+      <div class="ringdemo">
+        <div class="ringx"><span class="ring-outline r76"><span>7</span></span><p class="lab">Hero · 76px</p></div>
+        <div class="ringx"><span class="ring-outline r46"><span>7</span></span><p class="lab">Standard · 46px</p></div>
+        <div class="ringx"><span class="ring-outline r30"><span>7</span></span><p class="lab">Compact · 30px</p></div>
+        <div class="ringx"><span class="ring-finale r76"><span>1</span></span><p class="lab">The finale — filled, #1 only</p></div>
+      </div>
+      <p class="note">Outline rings are Midnight Teal on light surfaces. <b>The finale ring is the only filled ring</b> — midnight disc, mint numeral — and there is at most one per surface: the edition’s number one. Below 30px, drop the ring and use a bare Abril numeral with a period (“7.”) — the compact register.</p>
+    </div>
+
+    <div class="cols2">
+      <div class="demo">
+        <p class="demo-caption">The intro stamp</p>
+        <p class="t-stamp">And tonight’s number one —</p>
+        <p class="t-stamp" style="display:block;margin-top:10px">First, the weather —</p>
+        <p class="t-stamp" style="display:block;margin-top:10px">While you were out —</p>
+        <p class="note">Broadcast cadence as furniture: a teal caps line ending in an em-dash, introducing what follows. Section intros, the finale reveal, transition moments. This is where the voice lives in the UI.</p>
+      </div>
+      <div class="demo">
+        <p class="demo-caption">The house lights</p>
+        <div class="houselights">
+          <span class="t-stamp">The evening ten</span>
+          <p>Dark bands frame the surface — masthead and footer. Body pages stay light.</p>
+        </div>
+        <p class="note" style="margin-top:14px">Midnight Teal never becomes a page background — it’s the frame, not the room. On dark, accents are mint, text is white or <code>#C4D6CE</code>.</p>
+      </div>
+    </div>
+
+    <div class="demo">
+      <p class="demo-caption">Rules, corners, buttons</p>
+      <div class="btnrow" style="margin-bottom:16px">
+        <a class="btn btn-default btn-primary" href="#" onclick="return false">Get the evening ten</a>
+        <a class="btn btn-default btn-secondary" href="#" onclick="return false">See the full countdown</a>
+        <a class="ed-link" href="#" onclick="return false">an editorial link</a>
+        <a class="ui-link" href="#" onclick="return false">Every ranking, argued →</a>
+      </div>
+      <p class="note"><b>Pills, not squares:</b> every button is fully rounded — the ring is the system’s geometry and interactive elements echo it. One primary (teal) button per viewport; hover deepens color only. Separation is 1px Rule lines; no shadows anywhere except genuinely floating overlays. Cards don’t float in a theater — the light does.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= RANKED ITEM ================= -->
+<section>
+  <div class="wrap">
+    <span class="stamp">05 — The unit</span>
+    <h2 class="sec">The ranked item: one unit, three sizes</h2>
+    <p class="sec-note">The most-repeated component in the brand — number + headline + blurb. <b>Every ranked list counts down to #1, at every size.</b> A three-item section runs 3-2-1; the flat evening ten runs 10→1. The drumroll is the constraint that makes the brand: the best thing is always the finale, and the finale ring marks it.</p>
+
+    <div class="demo">
+      <p class="demo-caption">The unit at three sizes</p>
+
+      <p class="size-label">Standard — countdown row (the workhorse)</p>
+      <div class="cd-row">
+        <span class="ring-outline"><span>7</span></span>
+        <div>
+          <h4>The bridge repaint moves to night work</h4>
+          <p>Lane closures shift to 9 p.m.–5 a.m. through next week. Morning commutes go back to normal starting tomorrow.</p>
+        </div>
+      </div>
+      <div class="cd-row sponsored">
+        <span class="ring-outline"><span>6</span></span>
+        <div>
+          <h4>A local pro checks your furnace before the fall rush <span class="ast">*</span></h4>
+          <p>Tune-ups run $89 through August. Booked slots go fast once the first cold night hits — this is the cheap month.</p>
+        </div>
+      </div>
+      <p class=”note” style=”margin:10px 0 0”><b>Affiliate register:</b> identical rendering plus a teal asterisk after the headline. Paid items hold real rank positions — they are items in the countdown, not interruptions to it. Disclosure sits in the fine print.</p>
+
+      <p class="size-label">Hero — the finale (#1, always last)</p>
+      <div class="cd-finale pulse">
+        <span class="t-stamp">And tonight’s number one —</span>
+        <div class="row">
+          <span class="ring-finale r76"><span>1</span></span>
+          <div>
+            <h3>The Riverside Market reopens Saturday, two years after the flood</h3>
+            <p>44 stalls, a covered arcade, and the same peach lady in slot #3. Gates open at 8 a.m.; parking fills by 9. Worth the early alarm.</p>
+          </div>
+        </div>
+      </div>
+
+      <p class="size-label">Compact — quick countdown (secondary lists, recaps)</p>
+      <div>
+        <div class="cd-mini"><span class="num">10.</span><span class="t">Little League signups close Friday</span></div>
+        <div class="cd-mini"><span class="num">9.</span><span class="t">The heat advisory holds through Thursday</span></div>
+        <div class="cd-mini"><span class="num">8.</span><span class="t">Night markets return to Dock Street</span></div>
+      </div>
+    </div>
+
+    <div class="demo">
+      <p class="demo-caption">Rules of the countdown</p>
+      <ul class="usage">
+        <li><b>Every list descends.</b> Rank 1 is always the last item rendered. No exceptions — ascending order breaks the brand’s one promise.</li>
+        <li><b>One finale ring per email or page,</b> on the edition’s single most important #1. In a multi-section morning edition, the lead section’s #1 takes it; other sections end with a standard outline ring at #1.</li>
+        <li><b>Blurbs are 1–3 sentences.</b> If it needs more, it’s an article, not a ranked item — link out.</li>
+        <li><b>Placements are ranked items.</b> A paid item occupies a rank position — it’s #6, or #4, whatever the editor assigns. There is no “between ranks.” The countdown is the countdown.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MOTION ================= -->
+<section>
+  <div class="wrap">
+    <span class="stamp">06 — Motion</span>
+    <h2 class="sec">Motion: the drumroll, once</h2>
+    <p class="sec-note">One move in the whole system: when the finale enters the viewport, its ring pulses a single soft mint wave — 900ms, ease-out, once. Everything else is color-only at 120ms (hovers, links). Under <code>prefers-reduced-motion</code>, even the pulse is cut. The page header and the finale demo above run the pulse live — replay it here.</p>
+    <div class="demo">
+      <div class="ringdemo pulse" id="pulse-demo">
+        <div class="ringx"><span class="ring-finale r76"><span>1</span></span><p class="lab">The pulse — 900ms, once</p></div>
+      </div>
+      <button class="btn btn-default btn-secondary replay" onclick="const d=document.getElementById('pulse-demo');d.classList.remove('pulse');void d.offsetWidth;d.classList.add('pulse');return false">Replay the pulse</button>
+      <p class="note">Why so little: the audience is 50+, the promise is “worth your time,” and a theater only dims the lights once a night. The single pulse gives the drumroll a physical beat without turning the email into a slideshow (in email, where animation is unreliable, the finale’s staging — stamp, filled ring, Abril headline — carries the beat alone).</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= WHERE ================= -->
+<section>
+  <div class="wrap">
+    <span class="stamp">07 — Where</span>
+    <h2 class="sec">Where to use what</h2>
+    <div class="demo scrollx">
+      <table class="use">
+        <tr><th>Touchpoint</th><th>Logo</th><th>Palette</th><th>Type</th></tr>
+        <tr><td><b>Website</b> (top10today.com)</td><td>Stacked lockup in the marquee band</td><td>Full palette</td><td>Abril + Public Sans (Google Fonts)</td></tr>
+        <tr><td><b>Newsletter</b> (Beehiiv)</td><td>Stacked lockup PNG + date row</td><td>Full palette; rings as PNG badge set</td><td>Georgia + Helvetica stacks</td></tr>
+        <tr><td><b>Meta ad creatives</b></td><td>Stacked lockup or ring icon</td><td>Midnight + Mint + Paper</td><td>Abril numerals baked into image</td></tr>
+        <tr><td><b>Social avatars / favicons</b></td><td>Ring icon (dark default)</td><td>—</td><td>—</td></tr>
+        <tr><td><b>Internal docs</b></td><td>Horizontal lockup</td><td>Full palette</td><td>Full stack</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<footer class="board-foot">
+  <div class="wrap">
+    <span class="t-stamp">And the last thing before we go —</span>
+    <p>Identity approved 2026-07-16. This board renders the system defined in <code>brain/brands/top10today/brand-guide.md</code> and <code>design-system.md</code> — those files are the source of truth; this page is the visual reference. Logo assets live at <code>previews/top10today/assets/logos/</code>. Extensions go through <code>extend-design-system</code>: proposed components appear here for visual approval before anything is written to Brain.</p>
+  </div>
+</footer>
+
+</body>
+</html>
