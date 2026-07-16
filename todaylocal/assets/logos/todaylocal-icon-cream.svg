@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="TodayLocal icon">
+  <rect width="512" height="512" rx="96" fill="#FDF8EE"/>
+  <rect x="2" y="2" width="508" height="508" rx="94" fill="none" stroke="#E8DCC0" stroke-width="4"/>
+  <path fill="#E39B18" d="M118 307A138 138 0 0 1 394 307Z"/>
+  <rect x="61" y="307" width="390" height="26" rx="13" fill="#2A2119"/>
+</svg>

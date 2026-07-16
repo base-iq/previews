@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TodayLocal — First Light · Identity Board</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Karla:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FDF8EE;
+    --roast: #2A2119;
+    --body: #4A4036;
+    --field-gray: #6E6357;
+    --muted: #9C917E;
+    --marigold: #E39B18;
+    --deep-gold: #7E5700;
+    --gold-hover: #6B4A00;
+    --honey: #F6E9CB;
+    --wheat: #E8DCC0;
+    --green: #3B7031;
+    --red: #A83226;
+    --serif: 'Fraunces', Georgia, serif;
+    --sans: 'Karla', Helvetica, Arial, sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--sans);
+    background: var(--cream);
+    color: var(--body);
+    line-height: 1.65;
+    font-size: 17px;
+  }
+  .wrap { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+
+  /* ── proposal stamp ── */
+  .stamp-bar {
+    background: var(--roast); color: #E9E1D2; text-align: center;
+    font-size: 12px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+    padding: 9px 16px;
+  }
+  .stamp-bar b { color: var(--marigold); font-weight: 700; }
+
+  /* ── canonical masthead ── */
+  .masthead { text-align: center; padding: 52px 20px 34px; }
+  .horizon-wrap { position: relative; height: 34px; margin-bottom: 22px; max-width: 720px; margin-left: auto; margin-right: auto; }
+  .horizon-wrap .rule { position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: var(--roast); }
+  .sun-up {
+    position: absolute; left: 50%; bottom: 0; transform: translateX(-50%);
+    width: 52px; height: 26px; background: var(--marigold); border-radius: 52px 52px 0 0;
+  }
+  .wordmark {
+    font-family: var(--serif); font-optical-sizing: auto;
+    font-size: 64px; font-weight: 700; letter-spacing: -0.015em; color: var(--roast); line-height: 1;
+  }
+  .dateline {
+    margin-top: 18px; font-size: 12.5px; font-weight: 700;
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--deep-gold);
+  }
+  .dateline .sep { color: var(--muted); padding: 0 9px; }
+  @media (max-width: 640px) { .wordmark { font-size: 42px; } .sun-up { width: 40px; height: 20px; } }
+
+  /* ── section furniture ── */
+  section { padding: 54px 0 10px; }
+  .kicker {
+    font-size: 12px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--deep-gold); margin-bottom: 10px;
+  }
+  h2 {
+    font-family: var(--serif); font-size: 30px; font-weight: 600; letter-spacing: -0.01em;
+    color: var(--roast); line-height: 1.2; margin-bottom: 14px;
+  }
+  h3 { font-family: var(--serif); font-size: 21px; font-weight: 600; color: var(--roast); margin: 26px 0 10px; }
+  section > .wrap > p { max-width: 720px; margin-bottom: 12px; }
+  .section-rule { max-width: 1000px; margin: 44px auto 0; padding: 0 20px; }
+  .section-rule .inner { border-top: 1.5px solid var(--roast); }
+
+  .note { font-size: 14px; color: var(--field-gray); max-width: 720px; }
+  .mono { font-family: ui-monospace, Menlo, monospace; font-size: 0.92em; }
+
+  /* ── cards / stages ── */
+  .stage { border: 1px solid var(--wheat); background: #FFFDF7; padding: 34px 28px; margin: 18px 0; }
+  .stage.dark { background: var(--roast); border-color: var(--roast); }
+  .stage-caption { font-size: 13px; color: var(--field-gray); margin-top: 12px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  @media (max-width: 720px) { .grid-2 { grid-template-columns: 1fr; } }
+
+  /* wordmark variants */
+  .wm { font-family: var(--serif); font-size: 44px; font-weight: 700; letter-spacing: -0.015em; line-height: 1; }
+  .wm-stage { text-align: center; padding: 40px 20px; }
+  .wm-horizon { position: relative; height: 24px; margin: 0 auto 14px; max-width: 340px; }
+  .wm-horizon .rule { position: absolute; left: 0; right: 0; bottom: 0; height: 1.5px; }
+  .wm-horizon .sun { position: absolute; left: 50%; bottom: 0; transform: translateX(-50%); width: 36px; height: 18px; background: var(--marigold); border-radius: 36px 36px 0 0; }
+
+  /* icon */
+  .icon-row { display: flex; gap: 26px; flex-wrap: wrap; align-items: flex-end; }
+  .sunup-icon { position: relative; overflow: hidden; }
+  .sunup-icon .line { position: absolute; left: 12%; right: 12%; }
+  .sunup-icon .sun { position: absolute; left: 50%; transform: translateX(-50%); background: var(--marigold); }
+
+  /* swatches */
+  .swatches { display: flex; flex-wrap: wrap; gap: 12px; margin: 18px 0 6px; }
+  .swatch { width: 140px; }
+  .swatch .chip { height: 72px; border: 1px solid rgba(42,33,25,0.12); }
+  .swatch .name { font-size: 13.5px; font-weight: 700; color: var(--roast); margin-top: 8px; }
+  .swatch .hex { font-size: 12px; color: var(--field-gray); font-family: ui-monospace, Menlo, monospace; }
+  .swatch .use { font-size: 12px; color: var(--field-gray); margin-top: 2px; line-height: 1.4; }
+
+  /* tables */
+  table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 14.5px; }
+  th { text-align: left; font-size: 11.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--field-gray); font-weight: 700; padding: 8px 14px 8px 0; border-bottom: 1.5px solid var(--roast); }
+  td { padding: 9px 14px 9px 0; border-bottom: 1px solid var(--wheat); vertical-align: top; }
+  td:first-child { font-weight: 700; color: var(--roast); }
+
+  /* type scale demo */
+  .ts { margin: 22px 0; }
+  .ts .meta { font-size: 12px; color: var(--field-gray); font-family: ui-monospace, Menlo, monospace; margin-top: 6px; }
+  .t-h1 { font-family: var(--serif); font-size: 38px; font-weight: 600; line-height: 1.15; letter-spacing: -0.01em; color: var(--roast); }
+  .t-h2 { font-family: var(--serif); font-size: 28px; font-weight: 600; line-height: 1.25; letter-spacing: -0.01em; color: var(--roast); }
+  .t-h3 { font-family: var(--serif); font-size: 22px; font-weight: 600; line-height: 1.3; color: var(--roast); }
+  .t-lede { font-size: 18px; line-height: 1.6; }
+  .t-body { font-size: 17px; line-height: 1.65; }
+  .t-caption { font-size: 14px; color: var(--field-gray); }
+  .t-fine { font-size: 13px; color: var(--field-gray); }
+
+  /* buttons & links */
+  .btn {
+    display: inline-block; font-family: var(--sans); font-weight: 700; font-size: 15px;
+    background: var(--deep-gold); color: #fff; border: none; border-radius: 4px;
+    padding: 13px 28px; min-height: 46px; cursor: pointer; text-decoration: none;
+    transition: background-color 0.15s ease-out;
+  }
+  .btn:hover { background: var(--gold-hover); }
+  .btn.secondary { background: transparent; color: var(--roast); border: 2px solid var(--roast); padding: 11px 26px; }
+  .btn.secondary:hover { background: var(--honey); }
+  a { color: var(--deep-gold); text-underline-offset: 3px; transition: color 0.15s ease-out; }
+  a:hover { color: var(--gold-hover); }
+
+  /* daybreak band */
+  .daybreak { background: var(--honey); padding: 24px 26px; margin: 18px 0; }
+  .daybreak .kicker { margin-bottom: 8px; }
+
+  /* end mark */
+  .endmark-wrap { position: relative; height: 26px; max-width: 220px; margin: 10px auto; }
+  .endmark-wrap .rule { position: absolute; left: 0; right: 0; top: 0; height: 1.5px; background: var(--roast); }
+  .endmark-wrap .sun {
+    position: absolute; left: 50%; top: 1.5px; transform: translateX(-50%);
+    width: 30px; height: 15px; background: var(--marigold); border-radius: 0 0 30px 30px;
+  }
+
+  /* newsletter mock */
+  .nl { max-width: 620px; margin: 18px auto; border: 1px solid var(--wheat); background: var(--cream); }
+  .nl-inner { padding: 0 26px 26px; }
+  .nl .item { padding: 17px 0; border-bottom: 1px solid var(--wheat); }
+  .nl .item:last-child { border-bottom: none; }
+  .nl h4 { font-family: var(--serif); font-size: 20px; font-weight: 600; line-height: 1.3; color: var(--roast); margin: 4px 0 6px; }
+  .nl p { font-size: 15.5px; line-height: 1.6; }
+  .nl .kicker { font-size: 11.5px; margin-bottom: 2px; }
+  .nl .meta { font-size: 13px; color: var(--field-gray); }
+  .nl .today-flag {
+    display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+    background: var(--marigold); color: var(--roast); border-radius: 3px; padding: 2px 7px; margin-right: 7px; vertical-align: 2px;
+  }
+  .nl .daybreak { margin: 0 -26px; padding: 20px 26px; }
+  .nl .daybreak h4 { font-size: 17.5px; }
+  .nl-footer { background: var(--roast); color: #D8CFBF; text-align: center; padding: 26px 20px; font-size: 13.5px; }
+  .nl-footer .wm-mini { font-family: var(--serif); font-weight: 700; font-size: 22px; color: var(--cream); }
+  .nl-footer .tag { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--marigold); font-weight: 700; margin-top: 6px; }
+
+  /* microcopy strip */
+  .micro { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 18px 0; }
+  @media (max-width: 720px) { .micro { grid-template-columns: 1fr; } }
+  .micro .cell { border: 1px solid var(--wheat); background: #FFFDF7; padding: 18px 20px; font-size: 15px; }
+  .micro .cell .lbl { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--field-gray); margin-bottom: 8px; }
+  .micro .err { color: var(--red); font-weight: 500; }
+  .micro .ok { color: var(--green); font-weight: 500; }
+
+  /* fallback proof */
+  .fallback { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--wheat); }
+  .fallback > div { padding: 22px 24px; background: #FFFDF7; }
+  .fallback > div + div { border-left: 1px solid var(--wheat); }
+  .fallback .lbl { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--field-gray); margin-bottom: 10px; }
+  .fb-h { font-size: 24px; font-weight: 600; line-height: 1.25; color: var(--roast); margin-bottom: 8px; }
+  .fb-b { font-size: 15.5px; line-height: 1.6; }
+  @media (max-width: 720px) { .fallback { grid-template-columns: 1fr; } .fallback > div + div { border-left: none; border-top: 1px solid var(--wheat); } }
+
+  /* ships list */
+  .ships { background: var(--roast); color: #D8CFBF; padding: 44px 0 52px; margin-top: 60px; }
+  .ships h2 { color: var(--cream); }
+  .ships .kicker { color: var(--marigold); }
+  .ships li { margin: 8px 0 8px 20px; }
+  .ships .mono { color: #EFE7D6; }
+</style>
+</head>
+<body>
+
+<div class="stamp-bar">TodayLocal · <b>First Light</b> · Visual identity — approved July 16, 2026</div>
+
+<!-- ═══ Canonical masthead ═══ -->
+<div class="masthead">
+  <div class="horizon-wrap">
+    <div class="rule"></div>
+    <div class="sun-up"></div>
+  </div>
+  <div class="wordmark">TodayLocal</div>
+  <div class="dateline">Thursday, July 16, 2026 <span class="sep">·</span> Don&rsquo;t miss today</div>
+</div>
+
+<div class="wrap" style="text-align:center; max-width: 680px;">
+  <p style="font-size:15.5px; color: var(--field-gray);">The canonical presentation — <b>the sun-up masthead</b>: horizon rule, marigold half-disc rising through it, wordmark, dateline. This stack opens the site and every edition. The sun sits <em>on</em> the news, not instead of it.</p>
+</div>
+
+<div class="section-rule"><div class="inner"></div></div>
+
+<!-- ═══ Wordmark ═══ -->
+<section id="wordmark">
+  <div class="wrap">
+    <div class="kicker">01 · Wordmark</div>
+    <h2>One word, one sun</h2>
+    <p>&ldquo;TodayLocal&rdquo; set in Fraunces 700, tracked slightly tight (−0.015em), always one color. The warmth comes from the letterforms — Fraunces&rsquo;s soft terminals — and from the sun device above; the wordmark itself never goes marigold (a yellow wordmark at text sizes would fail contrast everywhere it matters).</p>
+    <div class="grid-2">
+      <div class="stage wm-stage">
+        <div class="wm-horizon"><div class="rule" style="background:var(--roast)"></div><div class="sun"></div></div>
+        <div class="wm" style="color:var(--roast)">TodayLocal</div>
+        <div class="stage-caption">Roast variant — light backgrounds (Dawn Cream, white, Honey Tint)</div>
+      </div>
+      <div class="stage dark wm-stage">
+        <div class="wm-horizon"><div class="rule" style="background:var(--cream)"></div><div class="sun"></div></div>
+        <div class="wm" style="color:var(--cream)">TodayLocal</div>
+        <div class="stage-caption" style="color:#B5AB99;">Cream variant — dark backgrounds (Roast, photography). The sun stays marigold: 6.7:1 on Roast.</div>
+      </div>
+    </div>
+    <p class="note"><b>Usage:</b> minimum clear space = the cap height of the &ldquo;T&rdquo; on all sides. Full wordmark never below 140px wide on screen. The horizon + sun may be dropped in cramped placements (nav bars), leaving the bare wordmark — but the canonical stack is the default. Never restyle in another face, never letter-space wide, never recolor outside the two variants.</p>
+    <p class="note" style="margin-top:10px;"><b>Files:</b> <span class="mono">todaylocal-full-roast</span> · <span class="mono">todaylocal-full-cream</span> (.svg vector-path + .png 2x, transparent) in <span class="mono">previews/todaylocal/assets/logos/</span>.</p>
+  </div>
+</section>
+
+<div class="section-rule"><div class="inner"></div></div>
+
+<!-- ═══ Icon ═══ -->
+<section id="icon">
+  <div class="wrap">
+    <div class="kicker">02 · Icon</div>
+    <h2>The sun-up icon</h2>
+    <p>The masthead device compressed to a square: horizon line, rising sun. No letter, no ticket, no calendar — the brand&rsquo;s whole idea (something is happening today, above the horizon) in two shapes. Reads clearly at 16px favicon size because it&rsquo;s geometry, not type.</p>
+    <div class="icon-row">
+      <div>
+        <div class="sunup-icon" style="width:96px;height:96px;background:var(--cream);border:1px solid var(--wheat);border-radius:20px;">
+          <div class="line" style="top:60%;height:5px;background:var(--roast);"></div>
+          <div class="sun" style="top:calc(60% - 26px);width:52px;height:26px;border-radius:52px 52px 0 0;"></div>
+        </div>
+        <div class="stage-caption">Cream field — default</div>
+      </div>
+      <div>
+        <div class="sunup-icon" style="width:96px;height:96px;background:var(--roast);border-radius:20px;">
+          <div class="line" style="top:60%;height:5px;background:var(--cream);"></div>
+          <div class="sun" style="top:calc(60% - 26px);width:52px;height:26px;border-radius:52px 52px 0 0;"></div>
+        </div>
+        <div class="stage-caption">Roast field — dark contexts</div>
+      </div>
+      <div>
+        <div class="sunup-icon" style="width:48px;height:48px;background:var(--cream);border:1px solid var(--wheat);border-radius:10px;">
+          <div class="line" style="top:60%;height:3px;background:var(--roast);"></div>
+          <div class="sun" style="top:calc(60% - 13px);width:26px;height:13px;border-radius:26px 26px 0 0;"></div>
+        </div>
+        <div class="stage-caption">32–48px</div>
+      </div>
+      <div>
+        <div class="sunup-icon" style="width:24px;height:24px;background:var(--cream);border:1px solid var(--wheat);border-radius:5px;">
+          <div class="line" style="top:60%;height:2px;background:var(--roast);"></div>
+          <div class="sun" style="top:calc(60% - 7px);width:14px;height:7px;border-radius:14px 14px 0 0;"></div>
+        </div>
+        <div class="stage-caption">Favicon</div>
+      </div>
+    </div>
+    <p class="note" style="margin-top:16px;"><b>Files:</b> <span class="mono">todaylocal-icon-cream</span> (default — carries a baked Wheat keyline for white UI) · <span class="mono">todaylocal-icon-roast</span> (dark contexts) (.svg + .png 512px) in <span class="mono">previews/todaylocal/assets/logos/</span>.</p>
+  </div>
+</section>
+
+<div class="section-rule"><div class="inner"></div></div>
+
+<!-- ═══ Palette ═══ -->
+<section id="palette">
+  <div class="wrap">
+    <div class="kicker">03 · Color</div>
+    <h2>Warm ink on dawn cream; marigold rationed like sunlight</h2>
+    <p>The governing discipline: <b>most of any surface is Roast on Dawn Cream.</b> Marigold appears where the sun would — the masthead, the TODAY flag, the end mark — and almost nowhere else. Deep Gold does the everyday clickable work. When two things would both be marigold, the less important one goes Deep Gold or Roast.</p>
+
+    <h3>Primary</h3>
+    <div class="swatches">
+      <div class="swatch"><div class="chip" style="background:var(--marigold)"></div><div class="name">Marigold</div><div class="hex">#E39B18</div><div class="use">The sun: masthead device, TODAY flag, end mark. Never small text (2.2:1).</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--deep-gold)"></div><div class="name">Deep Gold</div><div class="hex">#7E5700</div><div class="use">Links, kickers, datelines, buttons — the text-safe gold (6.1:1)</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--gold-hover)"></div><div class="name">Gold Hover</div><div class="hex">#6B4A00</div><div class="use">Hover / active states</div></div>
+    </div>
+
+    <h3>Neutrals</h3>
+    <div class="swatches">
+      <div class="swatch"><div class="chip" style="background:var(--roast)"></div><div class="name">Roast</div><div class="hex">#2A2119</div><div class="use">Headlines, wordmark, horizon rules, footer</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--body)"></div><div class="name">Body</div><div class="hex">#4A4036</div><div class="use">Body copy</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--field-gray)"></div><div class="name">Field Gray</div><div class="hex">#6E6357</div><div class="use">Captions, metadata, fine print</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--muted)"></div><div class="name">Muted</div><div class="hex">#9C917E</div><div class="use">Decorative &amp; disabled only — never readable text</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--cream)"></div><div class="name">Dawn Cream</div><div class="hex">#FDF8EE</div><div class="use">Page background — the brand never sits on pure white</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--honey)"></div><div class="name">Honey Tint</div><div class="hex">#F6E9CB</div><div class="use">The daybreak band: service sections, callouts, panels</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--wheat)"></div><div class="name">Wheat</div><div class="hex">#E8DCC0</div><div class="use">Rules, card borders, dividers</div></div>
+    </div>
+
+    <h3>Semantic</h3>
+    <div class="swatches">
+      <div class="swatch"><div class="chip" style="background:var(--green)"></div><div class="name">Garden Green</div><div class="hex">#3B7031</div><div class="use">Success, confirmations — nothing else</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--red)"></div><div class="name">Alarm Red</div><div class="hex">#A83226</div><div class="use">Errors — nothing else. A true red, hue-distinct from BaseLocal&rsquo;s terracotta.</div></div>
+    </div>
+
+    <h3>Contrast (on Dawn Cream unless noted)</h3>
+    <table>
+      <tr><th>Pair</th><th>Ratio</th><th>Verdict</th></tr>
+      <tr><td>Roast on Dawn Cream</td><td>≈ 14.8:1</td><td>AAA — headlines, wordmark</td></tr>
+      <tr><td>Body on Dawn Cream</td><td>≈ 9.5:1</td><td>AAA — body copy</td></tr>
+      <tr><td>Body on Honey Tint</td><td>≈ 8.5:1</td><td>AAA — panels stay readable</td></tr>
+      <tr><td>Deep Gold on Dawn Cream</td><td>≈ 6.1:1</td><td>AA+ — links &amp; kickers at any size</td></tr>
+      <tr><td>Field Gray on Dawn Cream</td><td>≈ 5.5:1</td><td>AA+ — captions, metadata</td></tr>
+      <tr><td>White on Deep Gold</td><td>≈ 6.5:1</td><td>AA+ — button text is always safe</td></tr>
+      <tr><td>Roast on Marigold</td><td>≈ 6.7:1</td><td>AA+ — the TODAY flag reads</td></tr>
+      <tr><td>Marigold on Roast</td><td>≈ 6.7:1</td><td>AA+ — the on-dark accent</td></tr>
+      <tr><td>Alarm Red on Dawn Cream</td><td>≈ 6.3:1</td><td>AA+ — error text</td></tr>
+      <tr><td>Garden Green on Dawn Cream</td><td>≈ 5.6:1</td><td>AA+ — success text</td></tr>
+      <tr><td>Marigold on Dawn Cream</td><td>≈ 2.2:1</td><td>Decorative only — never text</td></tr>
+    </table>
+    <p class="note">Portfolio guardrail: Marigold sits at hue ≈ 38° — a full quadrant from BaseLocal&rsquo;s red-clay <span class="mono">#C2604A</span> (≈ 11°), nowhere near AmericanAdvisor&rsquo;s crimson or LocalUpdate&rsquo;s cobalt. The 50+ audience rule applies here as everywhere: when in doubt, step <em>up</em> a contrast tier.</p>
+  </div>
+</section>
+
+<div class="section-rule"><div class="inner"></div></div>
+
+<!-- ═══ Typography ═══ -->
+<section id="type">
+  <div class="wrap">
+    <div class="kicker">04 · Typography</div>
+    <h2>Fraunces speaks, Karla reads</h2>
+    <p>Fraunces — a display serif with soft, warm terminals — is the features-desk voice: headlines, the wordmark, pull moments. Karla — a humanist grotesque with a hand-drawn undertone — does all the reading: body, UI, captions. Two families, no third. Neither appears anywhere else in the portfolio.</p>
+
+    <div class="ts"><div class="t-h1">Five things worth leaving the house for</div><div class="meta">H1 · Fraunces 600 · 38px (30px mobile) · lh 1.15 · −0.01em · Roast</div></div>
+    <div class="ts"><div class="t-h2">The bakery on Maple finally has a reopening date</div><div class="meta">H2 · Fraunces 600 · 28px (24px mobile) · lh 1.25 · −0.01em · Roast</div></div>
+    <div class="ts"><div class="t-h3">What else is new this morning</div><div class="meta">H3 · Fraunces 600 · 22px · lh 1.3 · Roast</div></div>
+    <div class="ts"><div class="t-lede">The lede runs a size up and a shade warmer — one sentence that tells you why this story is on top of your morning.</div><div class="meta">Lede · Karla 400 · 18px · lh 1.6 · Body</div></div>
+    <div class="ts"><div class="t-body">Body text is Karla at 17px — sturdy for a council vote, friendly for a bakery reopening. Emphasis is <b style="color:var(--roast)">Karla 700 in Roast</b>, links are <a href="#">Deep Gold and underlined</a>.</div><div class="meta">Body · Karla 400 · 17px (16px email floor) · lh 1.65 · Body</div></div>
+    <div class="ts"><div class="kicker" style="margin:0;">Your Morning · First Light</div><div class="meta">Kicker · Karla 700 · 12px · caps +0.16em · Deep Gold</div></div>
+    <div class="ts"><div class="t-caption">Captions and metadata sit in Field Gray at 14px — quiet, still readable.</div><div class="meta">Caption · Karla 400 · 14px · Field Gray</div></div>
+
+    <h3>Heading rules</h3>
+    <p>Sentence case everywhere; all-caps lives only in the small furniture (kickers, datelines, the TODAY flag). Headlines never exclaim — morning energy comes from present-tense verbs, not punctuation. Display sizes track slightly tight; body never tracks.</p>
+
+    <h3>Email typography — designed on the fallback</h3>
+    <p>Gmail and Outlook don&rsquo;t render web fonts; only Apple Mail does. So the email stack is designed to degrade in one deliberate move: <b>Fraunces → Georgia</b> (both warm, high-contrast serifs — the register survives) and <b>Karla → Helvetica/Arial</b>. The wordmark is always a PNG in email. Side-by-side proof:</p>
+    <div class="fallback">
+      <div>
+        <div class="lbl">Brand faces (web, Apple Mail)</div>
+        <div class="fb-h" style="font-family:'Fraunces',serif;">Council approves the Fifth Street repaving</div>
+        <div class="fb-b" style="font-family:'Karla',sans-serif;">Detours run through August; the farmers market moves one block east while crews work.</div>
+      </div>
+      <div>
+        <div class="lbl">Fallback (Gmail, Outlook)</div>
+        <div class="fb-h" style="font-family:Georgia,serif; letter-spacing:0;">Council approves the Fifth Street repaving</div>
+        <div class="fb-b" style="font-family:Helvetica,Arial,sans-serif;">Detours run through August; the farmers market moves one block east while crews work.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-rule"><div class="inner"></div></div>
+
+<!-- ═══ Furniture ═══ -->
+<section id="furniture">
+  <div class="wrap">
+    <div class="kicker">05 · Morning furniture</div>
+    <h2>The devices that make it TodayLocal</h2>
+
+    <h3>The horizon rule</h3>
+    <p>A 1.5–2px Roast rule opens every major surface — the masthead carries the sun; section breaks repeat the bare rule. Wheat 1px rules handle quiet separation (list items, cards). Depth comes from rules and tint panels, never shadows.</p>
+
+    <h3>The TODAY flag</h3>
+    <p>The brand promise as a device: a small marigold chip — <span class="nl" style="border:none;background:none;"><span class="today-flag" style="display:inline-block;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;background:var(--marigold);color:var(--roast);border-radius:3px;padding:2px 7px;">Today</span></span> — marking items that happen or expire <em>today</em>. Strictly rationed: if everything is today, nothing is. Never more than a third of the items on any surface.</p>
+
+    <h3>The daybreak band</h3>
+    <p>Monetized and service sections sit on a full-bleed Honey Tint panel — different stock for different content, marked honestly:</p>
+    <div class="daybreak" style="max-width:620px;">
+      <div class="kicker">Partner · Supports TodayLocal</div>
+      <div style="font-family:var(--serif); font-size:18px; font-weight:600; color:var(--roast); line-height:1.35;">Turning 65 this year? Compare 2026 Medicare plans in ten minutes</div>
+      <p style="font-size:15px; margin-top:6px;">Licensed advisors, no obligation — <a href="#">see your options →</a></p>
+    </div>
+
+    <h3>The sundown mark</h3>
+    <p>Every edition closes with the sun going <em>down</em> through the rule — the masthead device flipped. The edition is over; tomorrow&rsquo;s sun comes up in the next one. A small structural joke nobody else in the portfolio can make:</p>
+    <div class="endmark-wrap"><div class="rule"></div><div class="sun"></div></div>
+
+    <h3>Buttons &amp; interaction</h3>
+    <p style="margin-bottom:14px;">Deep Gold primary (one per viewport), Roast-frame secondary. Radius is a soft 4px — friendlier than the siblings&rsquo; hard corners, never a pill. Focus ring: 2px Deep Gold outline, 2px offset, everywhere.</p>
+    <p><a class="btn" href="#">Get today&rsquo;s edition</a>&nbsp;&nbsp;<a class="btn secondary" href="#">See yesterday&rsquo;s</a></p>
+
+    <h3>Motion — the morning stretch</h3>
+    <p>Content fades up gently on entry (240ms, ease-out, 8px rise, once) — the page wakes up rather than snapping on. Hovers change color only, 150ms. Nothing bounces, nothing lingers: upbeat is quick, not busy. <span class="mono">prefers-reduced-motion</span> collapses everything to instant.</p>
+
+    <h3>Photography</h3>
+    <p>Morning light, literally — golden-hour warmth, real places open for the day: the market setting up, the diner counter at 7am, the trailhead before the heat. Documentary, never lifestyle-stock. People 50+ appear as the capable subjects of the day. Every editorial photo takes a Field Gray caption.</p>
+  </div>
+</section>
+
+<div class="section-rule"><div class="inner"></div></div>
+
+<!-- ═══ Edition proof ═══ -->
+<section id="edition">
+  <div class="wrap">
+    <div class="kicker">06 · Proof — a morning edition</div>
+    <h2>The whole system, holding real news</h2>
+    <p>Masthead to sundown: council story, TODAY flag rationed to one item, a daybreak partner band, an event without a single piece of event iconography.</p>
+
+    <div class="nl">
+      <div class="masthead" style="padding: 30px 20px 22px;">
+        <div class="horizon-wrap" style="height:26px; max-width:400px; margin-bottom:14px;">
+          <div class="rule" style="height:1.5px;"></div>
+          <div class="sun-up" style="width:40px;height:20px;"></div>
+        </div>
+        <div class="wordmark" style="font-size:38px;">TodayLocal</div>
+        <div class="dateline" style="font-size:11px; margin-top:10px;">Thursday, July 16 <span class="sep">·</span> Springfield <span class="sep">·</span> Don&rsquo;t miss today</div>
+      </div>
+      <div class="nl-inner">
+        <div class="item">
+          <div class="kicker">Good morning</div>
+          <p style="font-size:16.5px;">It&rsquo;s 74° and clearing by nine. Here&rsquo;s what&rsquo;s new while the coffee&rsquo;s hot — one road vote, a reopening date, and tonight&rsquo;s free concert.</p>
+        </div>
+        <div class="item">
+          <div class="kicker">City Hall</div>
+          <h4>Council approves the Fifth Street repaving — closures start Monday</h4>
+          <p>The 6–1 vote ends a two-year fight over the corridor. Detours run through August; the farmers market moves one block east while crews work.</p>
+        </div>
+        <div class="item">
+          <h4><span class="today-flag">Today</span>Last day to weigh in on the parks budget</h4>
+          <p>The comment window closes at 5pm. Three minutes on the city site counts as much as a night at the podium.</p>
+        </div>
+        <div class="daybreak">
+          <div class="kicker">Partner · Supports TodayLocal</div>
+          <h4>Turning 65 this year? Compare 2026 Medicare plans in ten minutes</h4>
+          <p>Licensed advisors, no obligation — <a href="#">see your options →</a></p>
+        </div>
+        <div class="item">
+          <div class="kicker">Tonight</div>
+          <h4>Free brass band on the Capitol lawn, 7pm</h4>
+          <p class="meta">Capitol Lawn · Free · Bring a chair</p>
+        </div>
+        <div class="item" style="text-align:center; padding-bottom: 6px;">
+          <p style="font-size:15.5px;">That&rsquo;s the morning. Go have the day.</p>
+          <div class="endmark-wrap"><div class="rule"></div><div class="sun"></div></div>
+        </div>
+      </div>
+      <div class="nl-footer">
+        <div class="wm-mini">TodayLocal</div>
+        <div class="tag">Don&rsquo;t miss today</div>
+        <p style="margin-top:12px; font-size:12.5px;">You&rsquo;re reading the Springfield edition · <a href="#" style="color:#D8CFBF;">Manage preferences</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-rule"><div class="inner"></div></div>
+
+<!-- ═══ Voice ═══ -->
+<section id="voice">
+  <div class="wrap">
+    <div class="kicker">07 · Voice in UI</div>
+    <h2>Microcopy that sounds like morning</h2>
+    <p>Present tense, concrete, warm without exclamation points. The register: a friend who&rsquo;s already up.</p>
+    <div class="micro">
+      <div class="cell"><div class="lbl">Subscribe helper</div>One email each morning, worth the first coffee. No spam, ever.</div>
+      <div class="cell"><div class="lbl">Success</div><span class="ok">✓ You&rsquo;re in.</span> Your first edition lands tomorrow before 7am.</div>
+      <div class="cell"><div class="lbl">Empty state (events)</div>Quiet day on the calendar. The state roundup below has two day trips that are worth the gas.</div>
+      <div class="cell"><div class="lbl">Error</div><span class="err">⚠ That email is missing its ending</span> — try something like name@example.com.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Sources of truth ═══ -->
+<div class="ships">
+  <div class="wrap">
+    <div class="kicker">Approved July 16, 2026</div>
+    <h2>Where this identity lives</h2>
+    <ul>
+      <li>Brand identity (source of truth): <span class="mono">brain/brands/todaylocal/brand-guide.md</span></li>
+      <li>Tokens &amp; components: <span class="mono">brain/brands/todaylocal/design-system.md</span></li>
+      <li>Logo assets: <span class="mono">previews/todaylocal/assets/logos/</span> — <span class="mono">todaylocal-{full,icon}-{roast,cream}.{svg,png}</span></li>
+      <li>This board is the living visual reference — it renders the approved system as live HTML</li>
+      <li>Portfolio territory locked in <span class="mono">brain/shared/portfolio.md</span>: Marigold <span class="mono">#E39B18</span> / Deep Gold <span class="mono">#7E5700</span> on Dawn Cream <span class="mono">#FDF8EE</span></li>
+    </ul>
+  </div>
+</div>
+
+</body>
+</html>
