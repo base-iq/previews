@@ -1,0 +1,447 @@
+/* ============================================
+   LocalUpdate Newsletter — single canonical stylesheet
+   ============================================
+   Implements brain/brands/localupdate/design-system.md
+   § Newsletter Components. Email typography is the approved
+   Helvetica-first stack (brand-guide.md § Email typography) —
+   no web fonts are loaded, by design: the email is designed
+   on the fallback, not hoping to avoid it. Stamps run on
+   Courier New, installed everywhere.
+
+   Tokens (design-system.md):
+     black #111411 · body #33362F · gray #5E625A · muted #7F837B
+     paper #FCFCFA · tint #F1F1EE · rule #D8D8D2
+     cobalt #2036B1 · deep-cobalt #16277F · cobalt-light #93A8FF
+
+   Structure: one bulletin sheet on Print White. Flat and
+   square — radius 0, no shadows. Depth is the rule system
+   (5px tape, 1px black for emphasis, 1px gray for separation);
+   section names are reversed slugs; cobalt is rationed.
+   ============================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 1.65;
+    color: #33362F;
+    background: #FCFCFA;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ---- NEWSLETTER PAGE (the bulletin sheet) ---- */
+.newsletter {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 0 24px 56px;
+}
+
+/* ---- THE TAPE ----
+   5px Bulletin Black. Opens the email; reappears above the
+   sign-off (the bottom-CTA position). Nowhere else. */
+.tape {
+    height: 5px;
+    background: #111411;
+    margin: 0 -24px;
+}
+
+/* ---- NEWSLETTER HEADER (the tape stack, emailed) ----
+   Tape → wordmark PNG → date row between 1px black rules.
+   The brand's most recognizable moment — don't decompose. */
+.nl-header {
+    padding-top: 26px;
+    text-align: center;
+}
+
+.masthead-img {
+    display: block;
+    height: 44px;
+    width: auto;
+    margin: 0 auto 18px;
+}
+
+/* The edition's locale, promoted — the city set as its own
+   nameplate line between the wordmark and the date row.
+   Uppercase is allowed here: this is masthead furniture. */
+.edition-locale {
+    font-size: 18px;
+    font-weight: 900;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #111411;
+    line-height: 1.3;
+    margin-bottom: 14px;
+}
+
+.date-row {
+    border-top: 1px solid #111411;
+    border-bottom: 1px solid #111411;
+    padding: 8px 0;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #33362F;
+    line-height: 1.5;
+}
+
+/* The edition flag's block — the date row's one cobalt mark. */
+.edition-flag {
+    color: #2036B1;
+}
+
+/* ---- GREETING / INTRO ---- */
+.intro {
+    padding-top: 26px;
+}
+
+.intro p {
+    margin: 0 0 16px 0;
+}
+
+.intro p:last-child {
+    margin-bottom: 0;
+}
+
+.intro strong,
+.briefing-item strong,
+.event-item strong {
+    font-weight: 700;
+    color: #111411;
+}
+
+/* ---- EDITORIAL LINKS ---- */
+.newsletter a {
+    color: #2036B1;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.newsletter a:hover {
+    color: #16277F;
+}
+
+/* Footer links opt out of the editorial register. */
+.newsletter .nl-footer a {
+    color: #B9BCB4;
+    font-weight: 500;
+    text-decoration: underline;
+}
+
+.newsletter .nl-footer a:hover {
+    color: #93A8FF;
+}
+
+/* ---- SECTION FURNITURE ----
+   Every section opens with its slug — the section name
+   reversed white-out-of-black. No kickers, no deks; the
+   slug and the items' own headlines carry the scan. */
+.section {
+    margin-top: 42px;
+}
+
+.slug {
+    display: inline-block;
+    background: #111411;
+    color: #FCFCFA;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    line-height: 1;
+    padding: 7px 14px;
+    margin-bottom: 14px;
+}
+
+/* ---- STAMP LINE (Courier provenance) ---- */
+.stamp-line {
+    display: block;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #5E625A;
+    line-height: 1.4;
+}
+
+/* ---- NEW FLAG ----
+   Rationed: marks first-report items only, never more than
+   a third of the items on the page. */
+.new-flag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #2036B1;
+    margin-right: 8px;
+    vertical-align: 2px;
+}
+
+/* ---- LEAD UPDATE (Overnight only) ----
+   The edition's biggest change. One per email. */
+.lead-update .lead-headline {
+    margin: 0 0 10px 0;
+    font-size: 28px;
+    font-weight: 900;
+    color: #111411;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    text-wrap: pretty;
+}
+
+.lead-update .lead-lede {
+    font-size: 18px;
+    line-height: 1.55;
+    margin-bottom: 12px;
+}
+
+.lead-update .stamp-line {
+    margin-top: 2px;
+}
+
+/* ---- BRIEFING ITEM ----
+   The workhorse: bold headline, compressed prose, stamp meta.
+   1px gray rules divide items. Affiliate items render
+   identical to organic (trailing asterisk marks paid). */
+.briefing-item {
+    padding: 16px 0;
+}
+
+.briefing-item + .briefing-item {
+    border-top: 1px solid #D8D8D2;
+}
+
+.lead-update + .briefing-item {
+    border-top: 1px solid #D8D8D2;
+    margin-top: 22px;
+}
+
+.briefing-item:last-child {
+    padding-bottom: 0;
+}
+
+.item-headline {
+    display: block;
+    font-size: 19px;
+    font-weight: 700;
+    color: #111411;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    margin-bottom: 4px;
+}
+
+.briefing-item p {
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.briefing-item .stamp-line {
+    margin-top: 6px;
+    font-weight: 400;
+}
+
+/* ---- BLOCK BULLET LIST (Notices) ----
+   The system's only list device: the cobalt ■. */
+.block-list {
+    list-style: none;
+    margin: 4px 0 0 0;
+}
+
+.block-list li {
+    position: relative;
+    padding: 6px 0 6px 22px;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.block-list li::before {
+    content: "\25A0";
+    position: absolute;
+    left: 0;
+    top: 6px;
+    color: #2036B1;
+    font-size: 10px;
+    line-height: 1.9;
+}
+
+/* ---- FEATURE MODULE (sponsor / affiliate feature) ---- */
+.feature-module .module-headline {
+    margin: 0 0 6px 0;
+    font-size: 22px;
+    font-weight: 900;
+    color: #111411;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+}
+
+.feature-module .sponsor-stamp {
+    margin-bottom: 14px;
+}
+
+.feature-module p {
+    margin-bottom: 14px;
+}
+
+.feature-module p:last-child {
+    margin-bottom: 0;
+}
+
+/* ---- SERVICE BAND (Service Desk) ----
+   Fully monetized section on the Gray Tint band — the one
+   filled surface on the page, marking it as different stock.
+   Flat, square, no border. */
+.service-band {
+    background: #F1F1EE;
+    margin-left: -24px;
+    margin-right: -24px;
+    padding: 26px 24px 22px;
+}
+
+.service-band .briefing-item + .briefing-item {
+    border-top: 1px solid #D8D8D2;
+}
+
+/* ---- EVENTS (On the Calendar) ---- */
+.event-item {
+    padding: 13px 0;
+}
+
+.event-item + .event-item {
+    border-top: 1px solid #D8D8D2;
+}
+
+.event-item .event-name {
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+.event-item .stamp-line {
+    margin-top: 3px;
+    font-weight: 400;
+}
+
+.browse-more {
+    margin-top: 16px;
+    font-size: 16px;
+}
+
+/* ---- SIGN-OFF ----
+   Sits under the second tape (the bottom-CTA position). */
+.signoff {
+    margin-top: 44px;
+}
+
+.signoff .tape {
+    margin-bottom: 24px;
+}
+
+.signoff p {
+    margin-bottom: 14px;
+}
+
+.signoff-byline {
+    font-weight: 700;
+    color: #111411;
+}
+
+/* The end mark — one cobalt block, closing the edition. */
+.end-mark {
+    color: #2036B1;
+    font-size: 12px;
+    margin-left: 6px;
+}
+
+.subscribe-ps {
+    font-size: 15px;
+    color: #5E625A;
+}
+
+/* ---- FOOTER ---- */
+.nl-footer {
+    background: #111411;
+    margin: 40px -24px 0;
+    padding: 30px 28px;
+    text-align: center;
+}
+
+.nl-footer .footer-masthead {
+    height: 22px;
+    width: auto;
+    margin-bottom: 10px;
+}
+
+.footer-tagline {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #B9BCB4;
+    margin-bottom: 18px;
+}
+
+.footer-rule {
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    margin: 0 auto 18px;
+    width: 64px;
+}
+
+.nl-footer p {
+    font-size: 13px;
+    line-height: 1.6;
+    color: #B9BCB4;
+    margin-bottom: 8px;
+}
+
+.nl-footer p:last-child {
+    margin-bottom: 0;
+}
+
+/* ---- MOBILE ---- */
+@media (max-width: 600px) {
+    .newsletter {
+        padding: 0 20px 44px;
+    }
+
+    .tape,
+    .service-band,
+    .nl-footer {
+        margin-left: -20px;
+        margin-right: -20px;
+    }
+
+    .service-band {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .masthead-img {
+        height: 36px;
+    }
+
+    .edition-locale {
+        font-size: 15px;
+        letter-spacing: 0.16em;
+    }
+
+    .lead-update .lead-headline {
+        font-size: 24px;
+    }
+
+    .date-row {
+        font-size: 11px;
+        letter-spacing: 0.08em;
+    }
+}
