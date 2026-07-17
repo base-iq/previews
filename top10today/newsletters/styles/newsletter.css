@@ -1,0 +1,396 @@
+/* ============================================
+   Top10Today Newsletter — single canonical stylesheet
+   ============================================
+   Implements brain/brands/top10today/design-system.md
+   § Newsletter Components ("The Morning"). Email typography
+   is the approved Georgia-first stack (brand-guide.md
+   § Email typography) — PT faces listed first as progressive
+   enhancement, no web fonts loaded. Rank numerals are live
+   text in every client; the wordmark is always a PNG.
+
+   Tokens (design-system.md):
+     ink #20262C · body #333B42 · gray #5F6A73
+     paper #FAFAF8 · tint #EEF0F0 · rule #DEE1E1
+     slate #3E5A75 · deep-slate #2F4459 · powder #B7C9DA
+     on-dark-text #C3CBD3
+
+   Structure: one quiet sheet on Soft White. Emphasis by
+   weight and size, never by device — no badges, no fills,
+   no shadows. Depth is the rule system (1px Ink hairline
+   for section openers and masthead furniture, 1px gray
+   Rule between ranked items). Slate appears only on its
+   allowance list: links, the edition name, the paid
+   asterisk, the #1 finale numeral.
+   ============================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'PT Sans', Helvetica, Arial, sans-serif;
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: #333B42;
+    background: #FAFAF8;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ---- NEWSLETTER PAGE (the morning sheet) ---- */
+.newsletter {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 0 24px 56px;
+}
+
+/* ---- NEWSLETTER HEADER ----
+   The flag PNG (hairline rules are part of the mark),
+   then the date row. No band, no background change —
+   the masthead sits directly on Soft White. */
+.nl-header {
+    padding-top: 38px;
+    text-align: center;
+}
+
+.masthead-img {
+    display: block;
+    width: 100%;
+    max-width: 460px;
+    height: auto;
+    margin: 0 auto 16px;
+}
+
+/* The edition's locale, promoted — the city as its own
+   nameplate line between the flag and the date row.
+   Uppercase is allowed here: this is masthead furniture. */
+.edition-locale {
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #20262C;
+    line-height: 1.3;
+    margin-bottom: 10px;
+}
+
+.date-row {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #5F6A73;
+    line-height: 1.4;
+}
+
+/* The edition name — one of Slate's allowed appearances. */
+.date-row .edition-name {
+    color: #3E5A75;
+}
+
+/* ---- GREETING / INTRO ---- */
+.intro {
+    padding-top: 30px;
+}
+
+.intro p {
+    margin: 0 0 16px 0;
+}
+
+.intro p:first-child {
+    font-size: 18px;
+}
+
+.intro p:last-child {
+    margin-bottom: 0;
+}
+
+.intro strong,
+.countdown-item strong {
+    font-weight: 700;
+    color: #20262C;
+}
+
+/* ---- LINKS (editorial register) ---- */
+.newsletter a {
+    color: #3E5A75;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.newsletter a:hover {
+    color: #2F4459;
+}
+
+/* Footer links opt out of the editorial register. */
+.newsletter .nl-footer a {
+    color: #C3CBD3;
+    font-weight: 400;
+    text-decoration: underline;
+}
+
+.newsletter .nl-footer a:hover {
+    color: #B7C9DA;
+}
+
+/* ---- SECTION FURNITURE ----
+   A section opens with its heading over a 1px Ink
+   hairline — no kickers, no deks. The rank numerals
+   carry the scan from there. */
+.section {
+    margin-top: 48px;
+}
+
+.section-heading {
+    font-family: 'PT Serif', Georgia, serif;
+    font-size: 23px;
+    font-weight: 700;
+    color: #20262C;
+    line-height: 1.25;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #20262C;
+}
+
+/* ---- COUNTDOWN ROW (the workhorse) ----
+   58px right-aligned numeral column + content. Numerals
+   are live text — PT Serif/Georgia 700 with a period —
+   so the eye runs straight down the ranks. Lists always
+   descend; rank 1 renders last. */
+.countdown-item {
+    display: flex;
+    gap: 14px;
+    padding: 16px 0;
+}
+
+.countdown-item + .countdown-item {
+    border-top: 1px solid #DEE1E1;
+}
+
+.rank {
+    flex: none;
+    width: 58px;
+    text-align: right;
+    font-family: 'PT Serif', Georgia, serif;
+    font-size: 27px;
+    font-weight: 700;
+    color: #20262C;
+    line-height: 1;
+    padding-top: 3px;
+}
+
+.countdown-item .item-content {
+    min-width: 0;
+}
+
+.item-headline {
+    display: block;
+    font-family: 'PT Serif', Georgia, serif;
+    font-size: 18.5px;
+    font-weight: 700;
+    color: #20262C;
+    line-height: 1.35;
+    margin-bottom: 4px;
+}
+
+.countdown-item p {
+    font-size: 16px;
+    line-height: 1.6;
+    max-width: 560px;
+}
+
+/* ---- PAID REGISTER ----
+   A paid item is a ranked item like any other — same
+   rendering, editor-assigned rank, plus the Slate
+   asterisk after its headline. The footer fine print
+   carries the disclosure. Never rank #1 in a mixed list. */
+.paid-star {
+    color: #3E5A75;
+    font-weight: 700;
+}
+
+/* ---- INTRO STAMP + FINALE (#1, always last) ----
+   One finale per email — the lead list's #1. Emphasis is
+   stamp + Slate numeral + a larger headline. Nothing fills,
+   nothing moves. */
+.intro-stamp {
+    display: block;
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #3E5A75;
+    line-height: 1.4;
+    margin-bottom: 12px;
+}
+
+.countdown-item.finale {
+    display: block;
+}
+
+.countdown-item.finale .finale-row {
+    display: flex;
+    gap: 14px;
+}
+
+.countdown-item.finale .rank {
+    font-size: 34px;
+    color: #3E5A75;
+    padding-top: 0;
+}
+
+.countdown-item.finale .item-headline {
+    font-size: 21.5px;
+}
+
+/* ---- EVENT META (Things to Do rows) ---- */
+.event-meta {
+    display: block;
+    font-size: 13.5px;
+    color: #5F6A73;
+    line-height: 1.5;
+    margin-top: 4px;
+}
+
+.browse-more {
+    margin-top: 18px;
+    font-size: 16px;
+}
+
+/* ---- SPONSOR MODULE ----
+   The one dedicated placement — a Tint panel between
+   lists (between sections, never between ranks). */
+.sponsor-module {
+    margin-top: 48px;
+    background: #EEF0F0;
+    border-radius: 12px;
+    padding: 24px 26px;
+}
+
+.sponsor-module .intro-stamp {
+    margin-bottom: 8px;
+}
+
+.sponsor-module .module-headline {
+    font-family: 'PT Serif', Georgia, serif;
+    font-size: 21px;
+    font-weight: 700;
+    color: #20262C;
+    line-height: 1.3;
+    margin-bottom: 10px;
+}
+
+.sponsor-module p {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 14px;
+}
+
+.sponsor-module p:last-child {
+    margin-bottom: 0;
+}
+
+/* ---- SIGN-OFF ---- */
+.signoff {
+    margin-top: 48px;
+    border-top: 1px solid #20262C;
+    padding-top: 24px;
+}
+
+.signoff p {
+    margin-bottom: 14px;
+}
+
+.signoff-byline {
+    font-weight: 700;
+    color: #20262C;
+}
+
+.subscribe-ps {
+    font-size: 13.5px;
+    color: #5F6A73;
+}
+
+/* ---- FOOTER ---- */
+.nl-footer {
+    background: #20262C;
+    margin: 48px -24px 0;
+    padding: 34px 28px;
+    text-align: center;
+}
+
+.nl-footer .footer-masthead {
+    width: 200px;
+    height: auto;
+    margin-bottom: 12px;
+}
+
+.footer-tagline {
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #C3CBD3;
+    margin-bottom: 20px;
+}
+
+.footer-rule {
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    margin: 0 auto 20px;
+    width: 64px;
+}
+
+.nl-footer p {
+    font-size: 13px;
+    line-height: 1.6;
+    color: #C3CBD3;
+    margin-bottom: 8px;
+}
+
+.nl-footer p:last-child {
+    margin-bottom: 0;
+}
+
+/* ---- MOBILE ---- */
+@media (max-width: 600px) {
+    .newsletter {
+        padding: 0 20px 44px;
+    }
+
+    .nl-footer {
+        margin-left: -20px;
+        margin-right: -20px;
+    }
+
+    .masthead-img {
+        max-width: 320px;
+    }
+
+    .edition-locale {
+        font-size: 16px;
+        letter-spacing: 0.18em;
+    }
+
+    .date-row {
+        font-size: 11px;
+        letter-spacing: 0.12em;
+    }
+
+    .rank {
+        width: 44px;
+    }
+
+    .countdown-item {
+        gap: 12px;
+    }
+
+    .countdown-item.finale .rank {
+        font-size: 30px;
+    }
+
+    .sponsor-module {
+        padding: 20px;
+    }
+}
