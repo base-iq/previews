@@ -3168,6 +3168,16 @@
     .day-list .ev-price.is-free { font-weight: 700; color: var(--success); }
     .day-list .day-empty { display: block; grid-template-columns: none; font: 400 15px 'Lato', sans-serif; font-style: italic; color: var(--secondary-text); padding: 12px 0; }
     .day-list .day-empty a { color: var(--primary); font-weight: 700; font-style: normal; text-decoration: none; }
+    .day-list li > details > summary { display: grid; grid-template-columns: 72px minmax(0,1fr) auto 14px; gap: 12px; padding: 14px 0; align-items: start; cursor: pointer; list-style: none; }
+    .day-list summary::-webkit-details-marker { display: none; }
+    .day-list summary:hover { background: var(--bg-warm); }
+    .ev-caret { color: var(--light-text); font-size: 13px; padding-top: 4px; transition: transform 0.15s; }
+    details[open] > summary .ev-caret { transform: rotate(90deg); }
+    .ev-expand { background: var(--bg-warm); border-radius: 8px; padding: 16px 18px; margin: 0 0 14px; }
+    .ev-expand .desc { font: 400 15px/1.6 'Lato', sans-serif; color: var(--body); margin: 0 0 14px; max-width: 600px; }
+    .ev-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    .ev-actions a, .ev-actions button { font: 700 14px 'Lato', sans-serif; color: var(--primary); background: var(--bg-page); border: 1px solid var(--border); border-radius: 999px; padding: 8px 14px; min-height: 40px; display: inline-flex; align-items: center; gap: 5px; text-decoration: none; cursor: pointer; }
+    .ev-actions a:hover, .ev-actions button:hover { border-color: var(--primary); }
     @media (max-width: 480px) {
       .day-list li { grid-template-columns: 56px minmax(0,1fr) auto; }
     }
@@ -4862,6 +4872,29 @@
         <ul class="day-list">
           <li class="day-empty">Nothing listed yet for Monday — <a href="#">see what's coming later this week →</a></li>
         </ul>
+        <div style="margin-top:24px;" class="proposed-card">
+          <span class="proposed-badge">Proposed (pending approval)</span>
+          <p class="caption">Expanded row state — native &lt;details&gt;: summary is the standard row (plus caret), the panel is a Warm Cream card with description and an action row (external organizer link, .ics, copy-fragment-link). Rows carry stable ids for deep links; a URL fragment auto-opens its row.</p>
+          <ul class="day-list">
+            <li id="ds-demo-whaling"><details class="ev-row" open><summary>
+              <span class="ev-time">10:00am</span>
+              <div>
+                <h4 class="ev-name" style="font-size:15px; margin:0;">Silverdale Whaling Days — Grand Parade &amp; Street Fair</h4>
+                <div class="ev-venue">Silverdale Waterfront Park · fireworks at dusk <span class="ev-verified">· verified Jul 20</span></div>
+              </div>
+              <span class="ev-price is-free">Free</span>
+              <span class="ev-caret" aria-hidden="true">▸</span></summary>
+              <div class="ev-expand">
+                <p class="desc">The county's biggest summer weekend, fifty-plus years running. Parade at 10, street fair all day, fireworks over Dyes Inlet at dusk. Locals park at the mall and walk down.</p>
+                <div class="ev-actions">
+                  <a href="#">Event website ↗</a>
+                  <a href="#">📅 Add to calendar</a>
+                  <button type="button">Copy link</button>
+                </div>
+              </div>
+            </details></li>
+          </ul>
+        </div>
       </div>
     </section>
 
