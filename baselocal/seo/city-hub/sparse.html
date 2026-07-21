@@ -11,7 +11,7 @@
 <meta property="og:url" content="https://baselocal.com/wa/shelton/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="BaseLocal">
-<meta property="og:image" content="https://base-iq.github.io/previews/baselocal/assets/logos/baselocal-full-terracotta.png">
+<meta property="og:image" content="https://d22tdnouap4m5b.cloudfront.net/locations/3545/website-1773418425643.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@700&family=Lato:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -20,10 +20,11 @@
      market (Shelton, WA).
      The city hub stays fully indexable even here — the subscribe offer stands on its own.
      Programmatic modules collapse independently: "New in {city}" omitted (no spotlights this
-     month), most-read omitted (no click history yet), no location hero image yet, and the
-     week's picks collapse to two. LAUNCH MODE: subscriber count is below the display
-     threshold, so no count renders anywhere — social proof flips to "just launched /
-     be one of the first" framing. No noindex. -->
+     month), most-read omitted (no click history yet), and the week's picks collapse to
+     two. LAUNCH MODE: real counts still render (events, free, stories); the reader pill
+     is replaced by "Newly launched this month" — new markets never show a small
+     subscriber number, but never hide their data either. Hero asset here is a stand-in
+     (Yakima's CDN image) — every location gets its own. No noindex. -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -48,6 +49,7 @@
     "url": "https://baselocal.com/",
     "logo": "https://base-iq.github.io/previews/baselocal/assets/logos/baselocal-full-terracotta.png"
   },
+  "image": "https://d22tdnouap4m5b.cloudfront.net/locations/3545/website-1773418425643.jpg",
   "about": {
     "@type": "City",
     "name": "Shelton",
@@ -90,13 +92,16 @@
   <h1>The Shelton newsletter</h1>
   <p class="lede">A small town on the inlet — the week's events, the new spots, and the Mason County news that matters. Free in your inbox if you want it.</p>
 
-  <!-- No hero image yet (new market) — the stat grid follows the lede directly, no overlap.
-       Grid is 1×N: the "new spots" and subscriber cells are dropped this month. -->
-  <div class="stat-grid">
+  <img class="hero-img" src="https://d22tdnouap4m5b.cloudfront.net/locations/3545/website-1773418425643.jpg" alt="Shelton, WA" width="1400" height="600" fetchpriority="high">
+  <div class="stat-grid overlap">
     <div><span class="n">6</span><span class="l">Events this week</span></div>
     <div><span class="n">4</span><span class="l">Free things to do</span></div>
+    <div><span class="n">140</span><span class="l">Local stories</span></div>
   </div>
-  <p class="stamp"><span class="by">By the BaseLocal team</span> · <b>● Just launched</b> — checked every morning before the 6 AM send.</p>
+  <div class="proof-row">
+    <p class="stamp"><span class="by">By the BaseLocal team</span> · <b>● Checked this morning</b>, before the 6 AM send.</p>
+    <span class="trust-chip"><span class="ic" aria-hidden="true">●</span> Newly launched this month</span>
+  </div>
 
   <section class="signup primary top" id="subscribe" aria-labelledby="subscribe-h">
     <p class="h" id="subscribe-h">Start your morning with Shelton</p>
