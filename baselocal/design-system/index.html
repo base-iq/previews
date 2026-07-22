@@ -3131,6 +3131,30 @@
     .proposed-card { border-top: 3px solid var(--primary); background: #fff; padding-top: 4px; }
     .proposed-badge { display: inline-block; background: var(--primary); color: #fff; font: 900 11px 'Lato', sans-serif; letter-spacing: 0.5px; text-transform: uppercase; padding: 4px 10px; border-radius: 3px; margin: 0 0 8px; }
 
+    /* ===== 5.8 Directory Changelog ===== */
+    .changelog { border-top: 2px solid var(--dark); }
+    .changelog-h { font: 900 12px 'Lato', sans-serif; letter-spacing: 0.1em; text-transform: uppercase; color: var(--primary); padding: 10px 0 4px; }
+    .changelog ul { list-style: none; margin: 0; padding: 0; }
+    .changelog li { display: flex; gap: 12px; border-bottom: 1px solid var(--border); padding: 10px 0; font: 400 14px/1.55 'Lato', sans-serif; color: var(--secondary-text); }
+    .changelog li:last-child { border-bottom: 0; }
+    .changelog .d { font: 700 12px 'Lato', sans-serif; text-transform: uppercase; letter-spacing: 0.5px; color: var(--secondary-text); white-space: nowrap; padding-top: 2px; }
+    .changelog .what b { color: var(--dark); font-weight: 700; }
+    .changelog .g-add { color: var(--success); font-weight: 900; }
+    .changelog .g-rm { color: var(--light-text); font-weight: 900; }
+    .changelog .g-chk { color: var(--success); font-weight: 900; }
+
+    /* ===== 5.9 BaseLocal's Best Badge ===== */
+    .bl-badge { display: inline-flex; align-items: center; gap: 10px; background: var(--bg-page); border: 1px solid var(--border); border-radius: 6px; padding: 8px 14px; text-decoration: none; transition: border-color 0.15s; }
+    .bl-badge img { height: 20px; display: block; }
+    .bl-badge .nm { font: 700 15px 'Bitter', Georgia, serif; color: var(--dark); line-height: 1.2; }
+    .bl-badge:hover { border-color: var(--primary); }
+    .bl-badge:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+    .bl-badge.dark { background: var(--dark); border-color: var(--dark); }
+    .bl-badge.dark .nm { color: #FAF6F4; }
+    .bl-badge.sm { padding: 5px 10px; gap: 8px; }
+    .bl-badge.sm img { height: 14px; }
+    .bl-badge.sm .nm { font-size: 13px; }
+
     /* ===== 5.5 Breadcrumbs (proposed) ===== */
     .crumbs { font: 400 13px 'Lato', sans-serif; color: var(--secondary-text); }
     .crumbs ol { list-style: none; display: flex; flex-wrap: wrap; align-items: center; margin: 0; padding: 0; }
@@ -4894,6 +4918,32 @@
             </details></li>
           </ul>
         </div>
+      </div>
+
+      <h3 style="font-family: 'Bitter', Georgia, serif; font-size: 22px; color: var(--dark); margin: 32px 0 12px;">5.8 Directory Changelog</h3>
+      <p class="group-desc">Proof-of-maintenance log for curated reference surfaces (directory root; future registries). Day-stamped entries for additions, retirements, and re-checks — the visible evidence that the list is alive. Glyph colors follow the affirmative/absence rule: <b>+</b> and <b>✓</b> in success Green, <b>–</b> in Silver (a closure is loss, not error — never red), and no Terracotta (reserved for links/CTAs around it). Entries end with a short editorial clause — the voice moment. Empty month → the component is omitted entirely, never a "no changes" filler row. Container carries a stable anchor id (citable).</p>
+      <div class="demo">
+        <div class="changelog" id="demo-changelog">
+          <p class="changelog-h">This month in the ledger</p>
+          <ul>
+            <li><span class="d">Jul 18</span><span class="what"><span class="g-add" role="img" aria-label="Added">+</span> <b>Sound Plumbing Co.</b> added to Services — readers kept recommending it to each other</span></li>
+            <li><span class="d">Jul 14</span><span class="what"><span class="g-add" role="img" aria-label="Added">+</span> <b>Cirice</b> added to Eat &amp; drink — wood-fired everything on 6th Ave</span></li>
+            <li><span class="d">Jul 11</span><span class="what"><span class="g-rm" role="img" aria-label="Retired">–</span> <b>Harbor Lights Diner</b> retired — closed after 14 years; we'll miss the hash browns</span></li>
+            <li><span class="d">Jul 8</span><span class="what"><span class="g-chk" role="img" aria-label="Re-checked">✓</span> <b>All 38 Wellness listings</b> re-checked — hours and contacts verified</span></li>
+          </ul>
+        </div>
+        <p class="caption" style="margin-top: 12px;">Shows the latest 4–6 entries; no archive page. Date column: Lato 700 12px uppercase Gray. Rows: 14px Gray with names in bold Espresso, hairline-divided.</p>
+      </div>
+
+      <h3 style="font-family: 'Bitter', Georgia, serif; font-size: 22px; color: var(--dark); margin: 32px 0 12px;">5.9 BaseLocal's Best Badge</h3>
+      <p class="group-desc">The link-earning embed: a business listed in a directory earns the mark and places it on its own site, linked to its listing's fragment URL. Also rendered on directory pages inside the badge-program module. The name is set in Bitter — the plaque register, distinct from UI chrome. Rules: only listed businesses may use it (inclusion is editor-curated, so the claim is defensible under the hype rule); it always links to the listing (followed link — that is the point); no city name in the lockup, no year, no star implication.</p>
+      <div class="demo">
+        <div class="demo-row" style="display: flex; gap: 18px; flex-wrap: wrap; align-items: center;">
+          <a class="bl-badge" href="#"><img src="../assets/logos/baselocal-icon-dark.svg" alt=""><span class="nm">BaseLocal&rsquo;s Best</span></a>
+          <a class="bl-badge dark" href="#"><img src="../assets/logos/baselocal-icon-white.svg" alt=""><span class="nm">BaseLocal&rsquo;s Best</span></a>
+          <a class="bl-badge sm" href="#"><img src="../assets/logos/baselocal-icon-dark.svg" alt=""><span class="nm">BaseLocal&rsquo;s Best</span></a>
+        </div>
+        <p class="caption" style="margin-top: 12px;">Default (light) · dark variant for dark sites · small. Name: Bitter 700 15px (13px small); icon mark 20px / 14px; hover moves the border to Terracotta; focus-visible gets the standard 2px Terracotta outline.</p>
       </div>
     </section>
 
