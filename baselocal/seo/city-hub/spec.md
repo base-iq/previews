@@ -36,7 +36,7 @@ Canonical rules: self-referencing canonical on every instance; query strings (`?
 
 ## 4. Page structure
 
-Landmarks: `header` (site header — logo, Locations, Advertise) → **location bar** (two `nav`s in one band: breadcrumb + location sections) → `main` → `footer` (site footer). Heading outline (one h1, no skips; day labels, stat labels, and the freshness stamp are **not** headings):
+Landmarks: `header` (site header — logo, Locations, Advertise) → **location bar** (sticky; section nav in the label register + subscribe CTA) → `main`, opening with the breadcrumb trail above the h1 → `footer` (site footer). Heading outline (one h1, no skips; day labels, stat labels, and the freshness stamp are **not** headings):
 
 ```
 h1  The {City} newsletter
