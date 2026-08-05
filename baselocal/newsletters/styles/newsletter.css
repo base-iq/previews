@@ -964,6 +964,73 @@ body {
 }
 
 
+/* ---- RANKED LIST (condensed) ----
+   Compact ten-row ranked list for multi-list formats (weekend-top-10).
+   Where .ranked-card gives each item its own card, .ranked-list packs
+   ten items into a single .section-card — one or two lines per item.
+   See design-system.md § Newsletter Components > Ranked List. */
+
+.ranked-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.ranked-row {
+    display: flex;
+    gap: 14px;
+    padding: 12px 0;
+    border-top: 1px solid #EDE6E1;
+    font-family: 'Bitter', Georgia, serif;
+    font-size: 16px;
+    line-height: 24px;
+    color: #2C2421;
+}
+
+.ranked-row:first-child {
+    border-top: none;
+    padding-top: 0;
+}
+
+.ranked-row:last-child {
+    padding-bottom: 0;
+}
+
+.ranked-row .rank-num {
+    flex-shrink: 0;
+    width: 26px;
+    font-family: 'Bitter', Georgia, serif;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: -0.5px;
+    color: #C2604A;
+    text-align: right;
+}
+
+.ranked-row .row-body {
+    flex: 1;
+    min-width: 0;
+}
+
+.ranked-row .row-body strong {
+    color: #2C2421;
+}
+
+.ranked-row a {
+    color: #C2604A;
+    text-decoration: underline;
+    font-weight: 700;
+}
+
+.ranked-row .row-meta {
+    font-style: italic;
+    color: #6B6258;
+}
+
+/* Affiliate rows render identical to organic — .affiliate is tracking only. */
+
+
 /* ===== 3. DEALS OVERLAY (formerly newsletter-deals.css) ===== */
 
 /* ============================================
