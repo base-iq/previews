@@ -1353,3 +1353,145 @@ body {
     text-decoration: underline;
     font-weight: 700;
 }
+
+
+/* ===== 5. DEDICATED SEND — letter-style offer re-engagement format ===== */
+
+/* ---- LETTER HEADER ----
+   Wordmark-only header for letter-register sends. No masthead
+   banner, no top-links — the email should read as a note, not
+   an edition. */
+.letter-wordmark {
+    display: block;
+    height: 26px;
+    width: auto;
+    margin-bottom: 18px;
+}
+
+/* ---- LETTER BODY ----
+   Bitter body follows the ranked-format editorial signature —
+   a letter should feel considered, not like UI chrome. */
+.letter-body p {
+    margin: 0 0 18px 0;
+    font-family: 'Bitter', Georgia, serif;
+    font-size: 16px;
+    line-height: 25px;
+    color: #2C2421;
+}
+
+.letter-body p:last-child {
+    margin-bottom: 0;
+}
+
+.letter-body strong {
+    color: #2C2421;
+}
+
+.letter-body a {
+    color: #C2604A;
+    text-decoration: underline;
+    font-weight: 700;
+}
+
+/* ---- COST CALLOUT ----
+   Paper card holding scannable line items with right-aligned
+   figures. The proof block at the center of an offer argument. */
+.cost-callout {
+    background: #FAF6F4;
+    border: 1px solid #EDE6E1;
+    border-radius: 5px;
+    padding: 20px 22px;
+    margin: 0 0 18px 0;
+}
+
+.cost-callout-label {
+    font-family: 'Lato', Helvetica, Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #6B6258;
+    margin: 0 0 4px 0;
+}
+
+.cost-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    padding: 10px 0;
+    border-bottom: 1px solid #EDE6E1;
+    font-family: 'Bitter', Georgia, serif;
+    font-size: 16px;
+    line-height: 22px;
+    color: #2C2421;
+}
+
+.cost-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.cost-amount {
+    font-family: 'Lato', Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: #2C2421;
+    white-space: nowrap;
+}
+
+/* ---- CTA BUTTON ----
+   The system's first true button. Reserved for dedicated sends —
+   editorial formats keep using text links and border-bottom CTAs. */
+.cta-button-wrap {
+    text-align: center;
+    margin: 26px 0 10px 0;
+}
+
+.cta-button {
+    display: inline-block;
+    background: #C2604A;
+    color: #FFFFFF;
+    font-family: 'Lato', Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 15px 30px;
+    border-radius: 5px;
+}
+
+.cta-button:hover {
+    background: #A84E3B;
+}
+
+.cta-fallback {
+    margin: 0;
+    text-align: center;
+    font-family: 'Bitter', Georgia, serif;
+    font-style: italic;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #6B6258;
+}
+
+.cta-fallback a {
+    color: #C2604A;
+    text-decoration: underline;
+    font-weight: 700;
+    font-style: normal;
+}
+
+/* ---- FINE PRINT ----
+   Offer terms + affiliate disclosure. Silver is intentional —
+   non-essential text per the accessibility rules. */
+.fine-print {
+    border-top: 1px solid #EDE6E1;
+    margin-top: 24px;
+    padding-top: 14px;
+    font-family: 'Lato', Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    line-height: 1.6;
+    color: #999999;
+}
