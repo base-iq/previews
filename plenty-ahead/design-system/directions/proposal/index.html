@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Plenty Ahead — Identity Proposal · Round Two</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --evergreen:#173F36; --forward:#236B5B; --forward-hover:#17564B; --coral:#B84F3F;
+    --body:#263B36; --sage:#52645F;
+    --open-white:#FFFDF7; --sea-glass:#DCEDE7; --soft-peach:#F7E8E1; --mist:#CFDDD8; --white:#FFFFFF;
+    --lora:"Lora", Georgia, serif;
+    --dm:"DM Sans", Arial, Helvetica, sans-serif;
+    --mono:ui-monospace, Menlo, Consolas, monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--open-white);color:var(--body);font-family:var(--dm);font-size:17px;line-height:1.65}
+  :focus-visible{outline:2px solid var(--forward);outline-offset:2px}
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none !important;animation:none !important}}
+  .wrap{max-width:960px;margin:0 auto;padding:0 20px}
+  @media(min-width:700px){.wrap{padding:0 28px}}
+
+  /* ---- chrome ---- */
+  .intro{padding:56px 20px 44px;text-align:center;border-bottom:1px solid var(--mist)}
+  .intro .wm{font-family:var(--lora);font-weight:700;letter-spacing:-0.02em;color:var(--evergreen);font-size:30px}
+  .intro .tag{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--sage);margin-top:10px}
+  .intro p{font-size:16px;color:var(--sage);max-width:640px;margin:18px auto 0;line-height:1.6}
+  .intro .proposed{display:inline-block;margin-top:20px;background:var(--coral);color:#fff;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:5px 12px;border-radius:4px}
+  section.block{padding:64px 0 8px}
+  .kicker{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--forward)}
+  h2.sec{font-family:var(--lora);font-weight:700;font-size:30px;color:var(--evergreen);line-height:1.25;margin:6px 0 10px;letter-spacing:-0.01em}
+  .sec-note{font-size:16px;color:var(--sage);max-width:660px;margin-bottom:30px}
+  .rule{border:none;border-top:1px solid var(--mist);margin:64px 0 0}
+  .exhibit{max-width:680px;margin:0 auto;border:1px solid var(--mist);border-radius:14px;overflow:hidden;background:var(--open-white)}
+  .exhibit.wide{max-width:960px}
+  .exhibit-caption{max-width:680px;margin:0 auto 12px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--sage)}
+  .exhibit-caption.wide{max-width:960px}
+  .annotation{max-width:680px;margin:14px auto 0;font-size:14px;color:var(--sage);line-height:1.6}
+  .annotation.wide{max-width:960px}
+  .annotation strong{color:var(--evergreen)}
+
+  /* ================================================================
+     THE DAILY — full edition in the almanac system
+     ================================================================ */
+  .d-mast{padding:44px 24px 0;text-align:center}
+  .d-mast .est{font-family:var(--lora);font-style:italic;font-size:15px;color:var(--sage)}
+  .d-mast .wm{font-family:var(--lora);font-weight:700;letter-spacing:-0.02em;color:var(--evergreen);font-size:clamp(34px,5.5vw,44px);line-height:1.1;margin:8px 0 10px}
+  .d-mast .promise{font-family:var(--lora);font-style:italic;font-size:16px;color:var(--body)}
+  .h-mark{display:flex;align-items:flex-end;max-width:520px;margin:22px auto 0}
+  .h-mark .l{flex:1;border-top:1px solid var(--evergreen)}
+  .h-mark .sun{width:22px;height:11px;border:1px solid var(--evergreen);border-bottom:none;border-radius:22px 22px 0 0;margin:0 10px}
+  .sky{height:72px}
+  @media(min-width:700px){.sky{height:96px}}
+  .d-body{max-width:640px;margin:0 auto;padding:0 24px 48px}
+  .d-lede{font-size:17px;line-height:1.7}
+  .d-lede::first-letter{font-family:var(--lora);font-weight:700;color:var(--evergreen);float:left;font-size:58px;line-height:.82;padding:6px 10px 0 0}
+  .d-ch{font-family:var(--lora);font-style:italic;font-size:15px;color:var(--sage);text-align:center;margin:32px 0 16px}
+  .d-item{display:flex;gap:18px;padding:20px 0;border-top:1px solid var(--mist)}
+  .d-item .n{font-family:var(--lora);font-weight:700;font-size:24px;color:var(--coral);min-width:34px;line-height:1.2}
+  .d-item h4{font-family:var(--lora);font-weight:600;font-size:20px;line-height:1.35;color:var(--evergreen);margin-bottom:6px}
+  .d-item p{font-size:16px;line-height:1.6;margin-bottom:10px}
+  .d-item .foot{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+  .d-item a.act{font-weight:700;font-size:15px;color:var(--forward);text-decoration:underline;text-underline-offset:3px}
+  /* scam alert as numbered entry */
+  .d-item.alert{background:var(--soft-peach);border-top:none;border-left:4px solid var(--coral);border-radius:0 14px 14px 0;padding:20px 20px 20px 16px;margin:0 -4px}
+  .d-item.alert .n{color:var(--coral)}
+  .d-item.alert .sig{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--coral);margin-bottom:6px}
+  /* recommendation entry */
+  .d-rec{border:1px solid var(--mist);border-radius:14px;padding:22px;margin-top:28px}
+  .d-rec .fit{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--forward);margin-bottom:6px}
+  .d-rec h4{font-family:var(--lora);font-weight:600;font-size:20px;color:var(--evergreen);margin-bottom:4px}
+  .d-rec .price{font-weight:700;font-size:16px;margin-bottom:10px}
+  .d-rec p{font-size:16px;line-height:1.6;margin-bottom:12px}
+  .d-rec .row{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+  .d-rec .btn{display:inline-flex;align-items:center;justify-content:center;background:var(--forward);color:#fff;font-weight:700;font-size:16px;min-height:48px;padding:12px 26px;border-radius:8px;text-decoration:none}
+  .d-rec .btn:hover{background:var(--forward-hover)}
+  .d-rec .disc{font-size:13px;color:var(--sage);line-height:1.5;max-width:300px}
+  .d-worth{background:var(--sea-glass);border-radius:14px;padding:22px 26px;margin-top:28px}
+  .d-worth .k{font-family:var(--lora);font-style:italic;font-size:16px;color:var(--forward-hover);margin-bottom:6px}
+  .d-worth p{color:var(--evergreen);font-size:16px}
+  .d-worth a{color:var(--forward-hover);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+  .d-close{text-align:center;margin-top:40px}
+  .d-close .sig{font-family:var(--lora);font-style:italic;font-size:16px;color:var(--sage);margin-top:14px}
+  .d-footer{background:var(--evergreen);padding:28px 24px 22px;color:var(--sea-glass);font-size:13px;text-align:center}
+  .d-footer .wm{font-family:var(--lora);font-weight:700;letter-spacing:-0.02em;color:var(--open-white);font-size:19px;margin-bottom:12px}
+  .d-footer nav{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
+  .d-footer nav a{color:var(--open-white);text-decoration:underline;text-underline-offset:3px;font-weight:500;font-size:13px}
+  .d-footer .fine{line-height:1.6;max-width:480px;margin:0 auto}
+
+  /* ================================================================
+     ACQUISITION — sunrise architecture
+     ================================================================ */
+  .l-hero{background:var(--evergreen);position:relative;padding:80px 28px 0;text-align:center;overflow:hidden}
+  .l-hero .wm{font-family:var(--lora);font-weight:700;letter-spacing:-0.03em;color:var(--open-white);font-size:clamp(42px,8vw,72px);line-height:1}
+  .l-hero .promise{font-size:18px;color:var(--sea-glass);max-width:420px;margin:20px auto 0;line-height:1.6}
+  .l-hero .cta{display:inline-flex;align-items:center;justify-content:center;margin-top:30px;background:var(--open-white);color:var(--evergreen);font-weight:700;font-size:17px;min-height:52px;padding:14px 36px;border-radius:8px;text-decoration:none}
+  .l-hero .cta:hover{background:var(--sea-glass)}
+  .l-sunrise{position:relative;height:130px;margin-top:56px}
+  .l-sunrise .sun{position:absolute;left:50%;transform:translateX(-50%);bottom:0;width:min(520px,78vw);height:68px;background:var(--sea-glass);border-radius:520px 520px 0 0}
+  .l-proof{background:var(--sea-glass);padding:52px 28px 60px}
+  .l-proof .k{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--forward-hover);text-align:center;margin-bottom:22px}
+  .l-proof .sample{max-width:480px;margin:0 auto;background:var(--open-white);border-radius:14px;padding:24px}
+  .l-proof .sample .d-item{border-top:none;padding:0}
+  .l-sub{background:var(--open-white);padding:72px 28px 84px;text-align:center}
+  .l-sub h3{font-family:var(--lora);font-weight:700;font-size:clamp(26px,4.5vw,34px);line-height:1.25;color:var(--evergreen);max-width:520px;margin:0 auto 14px;letter-spacing:-0.015em}
+  .l-sub p{max-width:440px;margin:0 auto 26px;font-size:17px}
+  .l-sub .control{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;max-width:480px;margin:0 auto}
+  .l-sub input{flex:1;min-width:200px;background:var(--white);border:1px solid var(--mist);border-radius:8px;min-height:52px;padding:0 14px;font-family:var(--dm);font-size:16px;color:var(--body)}
+  .l-sub input:hover{border-color:var(--evergreen)}
+  .l-sub .btn{display:inline-flex;align-items:center;justify-content:center;background:var(--forward);color:#fff;font-weight:700;font-size:17px;min-height:52px;padding:14px 30px;border-radius:8px;border:none;cursor:pointer}
+  .l-sub .btn:hover{background:var(--forward-hover)}
+  .l-sub .fine{font-size:13px;color:var(--sage);margin-top:14px}
+
+  /* ================================================================
+     spec delta + open questions
+     ================================================================ */
+  .delta{border-top:1px solid var(--mist);padding:20px 0;display:grid;grid-template-columns:1fr;gap:8px}
+  @media(min-width:700px){.delta{grid-template-columns:240px 1fr;align-items:start}}
+  .delta .k{font-size:13px;font-weight:700;color:var(--evergreen)}
+  .delta .k .badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--forward);border:1px solid var(--forward);border-radius:4px;padding:1px 6px;margin-left:8px;vertical-align:2px}
+  .delta .k .badge.rev{color:var(--coral);border-color:var(--coral)}
+  .delta .v{font-size:15px;line-height:1.6}
+  .delta .v code{font-family:var(--mono);font-size:13px;background:var(--sea-glass);padding:1px 6px;border-radius:4px;color:var(--evergreen)}
+  .oq{list-style:none;counter-reset:oq}
+  .oq li{counter-increment:oq;padding:14px 0;border-bottom:1px solid var(--mist);font-size:16px;line-height:1.6;display:flex;gap:14px}
+  .oq li::before{content:counter(oq);font-family:var(--lora);font-weight:700;color:var(--coral);min-width:24px}
+  .oq li:last-child{border-bottom:none}
+  .page-end{padding:56px 0 96px;text-align:center;font-size:13px;color:var(--sage)}
+</style>
+</head>
+<body>
+
+<header class="intro">
+  <div class="wm">Plenty Ahead</div>
+  <div class="tag">Identity Proposal · Round Two</div>
+  <p>The unified direction from round one: the almanac system (B) as the brand's core, the sunrise architecture (C) reserved for acquisition surfaces, and the sky (A) kept as a spacing rule. Two complete surfaces below, then the exact design-system changes this implies. Nothing is written to the design system until this page is approved.</p>
+  <span class="proposed">Proposed — pending approval</span>
+</header>
+
+<!-- ================================================================
+     SURFACE 1 — THE DAILY
+     ================================================================ -->
+<section class="block wrap">
+  <span class="kicker">Surface 1 · The core system</span>
+  <h2 class="sec">The Daily, complete</h2>
+  <p class="sec-note">A full edition in the almanac system: editor's opening with drop cap, numbered entries, the scam alert living inside the numbered flow, an italic editor's aside, and a signed close. The sky — 96px of nothing between masthead and lede — is Direction A's contribution.</p>
+</section>
+
+<div class="exhibit-caption">Exhibit · Daily edition No. 214, top to bottom</div>
+<div class="exhibit">
+  <div class="d-mast">
+    <div class="est">Monday, August 10 · No. 214</div>
+    <div class="wm">Plenty Ahead</div>
+    <div class="promise">Smart, useful ideas for making more of what's ahead</div>
+    <div class="h-mark" aria-hidden="true"><span class="l"></span><span class="sun"></span><span class="l"></span></div>
+  </div>
+  <div class="sky" aria-hidden="true"></div>
+  <div class="d-body">
+    <p class="d-lede">Medicare's annual notices land this week, and the four lines that matter are buried on page three. Today: what to check before December 7, a hotel-fee list worth reading before you book fall travel, and a bank text you should never answer.</p>
+
+    <div class="d-ch">In this edition</div>
+
+    <article class="d-item">
+      <div class="n">1</div>
+      <div>
+        <h4>The four lines to read in your Medicare annual notice</h4>
+        <p>Premium, deductible, drug tiers, and the pharmacy network. A change to any of the four is grounds to compare plans before the December 7 deadline.</p>
+        <div class="foot"><a class="act" href="#">Read the four lines</a></div>
+      </div>
+    </article>
+
+    <article class="d-item">
+      <div class="n">2</div>
+      <div>
+        <h4>Five hotel fees worth checking before you book</h4>
+        <p>Resort, parking, and early check-in fees now average $47 a night at large chains. Three of the five are negotiable if you ask before booking, not at the desk.</p>
+        <div class="foot"><a class="act" href="#">See the five fees</a></div>
+      </div>
+    </article>
+
+    <article class="d-item alert">
+      <div class="n">3</div>
+      <div>
+        <div class="sig">⚠ Scam alert</div>
+        <h4>If your bank texts this question, do not answer it</h4>
+        <p><strong>The signal:</strong> a text claiming to be your bank asks "Did you authorize a charge of $487.20? Reply YES or NO." Replying confirms your number is live and invites the follow-up call.</p>
+        <p><strong>What to do:</strong> do not reply. Call the number on the back of your card and ask whether a hold exists.</p>
+        <div class="foot"><a class="act" href="#">Read the warning signs</a></div>
+      </div>
+    </article>
+
+    <article class="d-item">
+      <div class="n">4</div>
+      <div>
+        <h4>Three walking shoes that are stable without feeling stiff</h4>
+        <p>Eleven pairs tested against podiatrist criteria for lateral support and toe-box room. Three kept the stability without the concrete-boot feel.</p>
+        <div class="foot"><a class="act" href="#">Compare the three</a></div>
+      </div>
+    </article>
+
+    <div class="d-rec">
+      <div class="fit">From today's shoe test · Best for daily walks on pavement</div>
+      <h4>Brooks Ghost 16</h4>
+      <div class="price">$139.95</div>
+      <p>Wide toe box, stable heel, four widths including extra wide. The mesh upper runs warm in summer heat.</p>
+      <div class="row">
+        <a class="btn" href="#">See today's price</a>
+        <span class="disc">If you buy through this link, Plenty Ahead may earn a commission. That never changes the price or our judgment.</span>
+      </div>
+    </div>
+
+    <div class="d-worth">
+      <div class="k">Worth your time</div>
+      <p>The National Park Service lifetime pass is still $80 for anyone 62 or older — one of the few prices unchanged since 2017. <a href="#">See what it covers</a></p>
+    </div>
+
+    <div class="d-close">
+      <div class="h-mark" aria-hidden="true" style="max-width:200px"><span class="l"></span><span class="sun"></span><span class="l"></span></div>
+      <p class="sig">More tomorrow. — The editors</p>
+    </div>
+  </div>
+  <div class="d-footer">
+    <div class="wm">Plenty Ahead</div>
+    <nav>
+      <a href="#">Preferences</a>
+      <a href="#">Unsubscribe</a>
+      <a href="#">Privacy</a>
+    </nav>
+    <p class="fine">Plenty Ahead, 123 Example Street, Suite 400, Wilmington, DE 19801. Some links may earn us a commission; that never changes the price you pay.</p>
+  </div>
+</div>
+<p class="annotation">Everything above survives email rendering: the numerals, italic narrator, horizon marks, and sky are text, borders, and spacing — they degrade to Georgia/Arial without losing the identity. <strong>The editor's voice is the system's signature:</strong> the dateline, the chapter heading, the aside, and the signed close are the same italic thread — a person edited this, start to finish.</p>
+
+<hr class="rule">
+
+<!-- ================================================================
+     SURFACE 2 — ACQUISITION
+     ================================================================ -->
+<section class="block wrap">
+  <span class="kicker">Surface 2 · Acquisition architecture</span>
+  <h2 class="sec">The landing page</h2>
+  <p class="sec-note">Direction C, reserved for the surfaces where one promise at monumental scale is the job: Meta landing pages and the welcome email hero. The middle screen is the bridge — an actual Daily entry, in the almanac system, shown as proof. The reader sees the product before subscribing, and the two identities meet in one scroll.</p>
+</section>
+
+<div class="exhibit-caption wide">Exhibit · Acquisition landing, three screens</div>
+<div class="exhibit wide" style="max-width:680px">
+  <div class="l-hero">
+    <div class="wm">Plenty Ahead</div>
+    <p class="promise">Smart, useful ideas for making more of what's ahead. One email a day, worth opening.</p>
+    <a class="cta" href="#">Get the Daily</a>
+    <div class="l-sunrise" aria-hidden="true"><div class="sun"></div></div>
+  </div>
+  <div class="l-proof">
+    <div class="k">From yesterday's edition</div>
+    <div class="sample">
+      <article class="d-item">
+        <div class="n">1</div>
+        <div>
+          <h4>The four lines to read in your Medicare annual notice</h4>
+          <p>Premium, deductible, drug tiers, and the pharmacy network. A change to any of the four is grounds to compare plans before December 7.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+  <div class="l-sub">
+    <h3>Free, useful, and gone in one click</h3>
+    <p>No spam and no selling your address. Unsubscribe sits at the top of every email, not buried in the footer.</p>
+    <div class="control">
+      <input type="email" aria-label="Email address" placeholder="name@example.com">
+      <button class="btn">Send me the Daily</button>
+    </div>
+    <p class="fine">Free. One email a day. No selling your address.</p>
+  </div>
+</div>
+<p class="annotation" style="max-width:680px"><strong>The sunrise appears exactly once,</strong> at architectural scale, and never inside the Daily itself. It is also the strongest candidate for the eventual compact logo symbol — the same semicircle at 32px is the avatar and favicon.</p>
+
+<hr class="rule">
+
+<!-- ================================================================
+     SPEC DELTA
+     ================================================================ -->
+<section class="block wrap">
+  <span class="kicker">The contract</span>
+  <h2 class="sec">What this changes in the design system</h2>
+  <p class="sec-note">On approval, these entries are written to <code style="font-family:var(--mono);font-size:14px;background:var(--sea-glass);padding:1px 6px;border-radius:4px">brain/brands/plenty-ahead/design-system.md</code> (and the two voice devices noted to the writing guide). Everything else in the locked system stands.</p>
+
+  <div class="delta"><div class="k">Lora Italic <span class="badge">New</span></div><div class="v">Added to the type roster as the editor's voice: dateline/edition number, chapter headings ("In this edition"), the Worth-your-time label, and the sign-off. Never used for body copy, headlines, or UI controls.</div></div>
+  <div class="delta"><div class="k">Numbered entry <span class="badge">New</span></div><div class="v">The Daily's item unit: Lora 700 24px coral numeral, hanging left. Replaces the plain story item inside numbered editions; the un-numbered story item remains for site and non-almanac surfaces. Falls within coral's existing "sparing editorial accent" allowance.</div></div>
+  <div class="delta"><div class="k">Scam alert <span class="badge rev">Revised</span></div><div class="v">Now composable as a numbered entry: Soft Peach fill and 4px coral border-left wrap the entry in place, keeping the alert inside the reading flow instead of interrupting it. Required content order unchanged.</div></div>
+  <div class="delta"><div class="k">Edition masthead <span class="badge rev">Revised</span></div><div class="v">Centered stack: italic dateline + edition number, wordmark, italic brand promise, horizon mark. Edition numbering (<code>No. 214</code>) becomes a permanent masthead element.</div></div>
+  <div class="delta"><div class="k">The sky <span class="badge">New</span></div><div class="v">A mandatory 96px (72px mobile) of empty space between masthead and first content in every edition and page header. No content, no decoration. This is Direction A's surviving contribution.</div></div>
+  <div class="delta"><div class="k">Horizon mark usage <span class="badge rev">Revised</span></div><div class="v">Canonical placement: opens the edition (in the masthead) and closes it (above the sign-off). The "at most twice" rule becomes exactly these two, plus never elsewhere in an edition.</div></div>
+  <div class="delta"><div class="k">Edition sign-off <span class="badge">New</span></div><div class="v">Closing horizon mark + italic signed line ("More tomorrow. — The editors"). Every edition ends signed; the sign-off text may vary by edition but stays under eight words.</div></div>
+  <div class="delta"><div class="k">Sunrise architecture <span class="badge">New</span></div><div class="v">The large flat sea-glass semicircle rising into an evergreen field. Permitted only on acquisition surfaces: landing pages and the welcome email hero. Never inside regular editions, never animated, never gradient-filled. Same geometry at 32px is the proposed compact symbol for avatar and favicon.</div></div>
+  <div class="delta"><div class="k">Boundary constraint <span class="badge">New</span></div><div class="v">The almanac register must not drift into broadsheet territory: no double rules, no column layouts, no all-caps serif mastheads, no newsprint tinting. Those devices belong to AmericanAdvisor.</div></div>
+</section>
+
+<hr class="rule">
+
+<!-- ================================================================
+     OPEN QUESTIONS
+     ================================================================ -->
+<section class="block wrap">
+  <span class="kicker">Before this ships</span>
+  <h2 class="sec">Open questions</h2>
+  <ol class="oq">
+    <li>Edition numbering: start at No. 1 on launch day, or seed at a higher number? Almanac logic says count honestly from 1.</li>
+    <li>The sign-off voice: "— The editors" (institutional) or a named editor (personal)? Named builds more attachment but creates a staffing dependency.</li>
+    <li>Welcome email: full sunrise hero (C) or a compact evergreen band? Needs a rendering test in Gmail and Outlook before it enters the spec.</li>
+    <li>Logo production: does the sunrise-as-compact-symbol proposal here become the brief for the logo round, or does logo exploration stay open?</li>
+  </ol>
+</section>
+
+<div class="page-end">
+  Round two · Approval writes the spec delta to Brain; the showcase gets rebuilt to match · August 10, 2026
+</div>
+
+</body>
+</html>

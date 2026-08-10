@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Plenty Ahead — Design System Showcase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,600;0,700;1,400;1,500&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* color tokens */
+    --evergreen:#173F36; --forward:#236B5B; --forward-hover:#17564B; --coral:#B84F3F;
+    --body:#263B36; --sage-gray:#52645F;
+    --open-white:#FFFDF7; --sea-glass:#DCEDE7; --soft-peach:#F7E8E1; --mist:#CFDDD8; --white:#FFFFFF;
+    /* type */
+    --font-display:"Lora", Georgia, serif;
+    --font-ui:"DM Sans", Arial, Helvetica, sans-serif;
+    --font-mono:ui-monospace, Menlo, Consolas, monospace;
+    /* spacing (4px base) */
+    --s-4:4px; --s-8:8px; --s-12:12px; --s-16:16px; --s-24:24px; --s-32:32px; --s-48:48px; --s-64:64px; --s-96:96px;
+    /* shape */
+    --r-control:8px; --r-panel:14px; --r-feature:22px;
+    --shadow-overlay:0 4px 18px rgba(23,63,54,.14);
+    /* motion */
+    --t:140ms;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--open-white);color:var(--body);font-family:var(--font-ui);font-size:17px;line-height:1.65}
+  .wrap{max-width:960px;margin:0 auto;padding:0 20px}
+  @media(min-width:700px){.wrap{padding:0 28px}}
+  :focus-visible{outline:2px solid var(--forward);outline-offset:2px}
+  @media(prefers-reduced-motion:reduce){
+    *,*::before,*::after{transition:none !important;animation:none !important}
+  }
+
+  /* ---- showcase header (canonical masthead presentation) ---- */
+  .masthead{padding:48px 16px 0;text-align:center}
+  .wordmark{font-family:var(--font-display);font-weight:700;letter-spacing:-0.02em;color:var(--evergreen);font-size:clamp(34px,6vw,48px);line-height:1.1}
+  .masthead .dateline{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--sage-gray);margin-top:14px}
+  .masthead-rule{border:none;border-top:1px solid var(--mist);margin:28px auto 0;max-width:960px}
+  .showcase-note{font-size:14px;color:var(--sage-gray);max-width:640px;margin:20px auto 0;line-height:1.55}
+  .showcase-note code{font-family:var(--font-mono);font-size:12.5px;background:var(--sea-glass);padding:1px 6px;border-radius:4px;color:var(--evergreen)}
+
+  /* ---- section chrome ---- */
+  section{padding:56px 0 8px}
+  .kicker{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--forward)}
+  h2.sec{font-family:var(--font-display);font-weight:700;font-size:26px;color:var(--evergreen);line-height:1.28;margin:6px 0 8px}
+  .sec-note{font-size:16px;color:var(--sage-gray);max-width:640px;margin-bottom:28px}
+  .rule{border:none;border-top:1px solid var(--mist);margin:48px 0 0}
+  .subhead{font-family:var(--font-display);font-weight:600;font-size:21px;line-height:1.35;color:var(--evergreen);margin:34px 0 12px}
+
+  /* ---- swatches ---- */
+  .swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;margin-bottom:28px}
+  .swatch{border:1px solid var(--mist);border-radius:var(--r-panel);overflow:hidden;background:var(--white)}
+  .swatch .chip{height:84px;border-bottom:1px solid var(--mist)}
+  .swatch .meta{padding:10px 12px}
+  .swatch .name{font-size:13px;font-weight:600;color:var(--evergreen)}
+  .swatch .hex{font-family:var(--font-mono);font-size:12px;color:var(--sage-gray)}
+  .swatch .use{font-size:12px;color:var(--sage-gray);line-height:1.45;margin-top:4px}
+  .contrast-note{font-size:14px;color:var(--sage-gray);max-width:640px}
+
+  /* ---- type specimens ---- */
+  .spec{border-top:1px solid var(--mist);padding:20px 0;display:grid;grid-template-columns:1fr;gap:6px}
+  .spec .label{font-size:12px;color:var(--sage-gray);letter-spacing:.06em;text-transform:uppercase;font-weight:700}
+  @media(min-width:700px){.spec{grid-template-columns:220px 1fr;align-items:baseline}}
+  .t-display{font-family:var(--font-display);font-weight:700;font-size:36px;line-height:1.18;color:var(--evergreen)}
+  .t-section{font-family:var(--font-display);font-weight:700;font-size:26px;line-height:1.28;color:var(--evergreen)}
+  .t-item{font-family:var(--font-display);font-weight:600;font-size:21px;line-height:1.35;color:var(--evergreen)}
+  .t-lede{font-size:19px;line-height:1.6}
+  .t-body{font-size:17px;line-height:1.65}
+  .t-strong{font-size:17px;line-height:1.65;font-weight:700}
+  .t-label{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;line-height:1.4;color:var(--forward)}
+  .t-meta{font-size:14px;font-weight:500;line-height:1.5;color:var(--sage-gray)}
+  .t-fine{font-size:13px;line-height:1.55;color:var(--sage-gray)}
+  @media(max-width:600px){.t-display{font-size:30px}}
+
+  /* ---- spacing / shape ---- */
+  .space-row{display:flex;align-items:center;gap:14px;padding:6px 0;font-size:13px;color:var(--sage-gray)}
+  .space-row .bar{background:var(--forward);height:16px;border-radius:2px}
+  .space-row code{font-family:var(--font-mono);font-size:12px;min-width:56px;color:var(--evergreen)}
+  .radius-demos{display:flex;gap:16px;flex-wrap:wrap}
+  .radius-demo{width:130px;height:80px;border:1px solid var(--mist);background:var(--white);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:12px;color:var(--sage-gray);text-align:center;line-height:1.4}
+
+  /* ---- demo panels ---- */
+  .demo{background:var(--white);border:1px solid var(--mist);border-radius:var(--r-panel);padding:28px;margin-bottom:20px}
+  .demo.on-open{background:var(--open-white)}
+  .demo-caption{font-size:12px;color:var(--sage-gray);letter-spacing:.06em;text-transform:uppercase;font-weight:700;margin-bottom:18px}
+  .state-label{font-size:11px;color:var(--sage-gray);letter-spacing:.06em;text-transform:uppercase;display:block;margin-top:8px;text-align:center;font-weight:500}
+  .state-grid{display:flex;gap:22px;flex-wrap:wrap;align-items:flex-end}
+
+  /* ---- horizon motif ---- */
+  .horizon{display:flex;align-items:flex-end;justify-content:center;padding:26px 0 0}
+  .horizon .line{flex:1;border-top:1.5px solid var(--evergreen)}
+  .horizon .sun{width:34px;height:17px;border:1.5px solid var(--evergreen);border-bottom:none;border-radius:34px 34px 0 0;margin:0 0}
+  .horizon.tinted .line,.horizon.tinted .sun{border-color:var(--forward)}
+
+  /* ---- masthead demo ---- */
+  .masthead-demo{text-align:center;padding:32px 20px 0}
+  .masthead-demo .wm{font-family:var(--font-display);font-weight:700;letter-spacing:-0.02em;color:var(--evergreen);font-size:34px;line-height:1.1}
+  .masthead-demo .edition{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--sage-gray);margin-top:10px}
+  .masthead-demo hr{border:none;border-top:1px solid var(--mist);margin-top:24px}
+
+  /* ---- section heading demo ---- */
+  .sh-label{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--forward)}
+  .sh-heading{font-family:var(--font-display);font-weight:700;font-size:26px;line-height:1.28;color:var(--evergreen);margin:4px 0 6px}
+  .sh-dek{font-size:17px;color:var(--body);max-width:580px}
+  .sh-rule{border:none;border-top:1px solid var(--mist);margin-top:12px}
+
+  /* ---- story item ---- */
+  .story{padding:24px 0}
+  .story + .story{border-top:1px solid var(--mist)}
+  .story .lane{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--forward);margin-bottom:6px}
+  .story h4{font-family:var(--font-display);font-weight:600;font-size:21px;line-height:1.35;color:var(--evergreen);margin-bottom:8px}
+  .story p{font-size:17px;line-height:1.65;margin-bottom:10px}
+  .story .utility{font-size:14px;font-weight:500;color:var(--sage-gray);margin-bottom:10px}
+  .story a.action{font-weight:700;color:var(--forward);text-decoration:underline;text-underline-offset:3px}
+  .story a.action:hover{color:var(--forward-hover)}
+
+  /* ---- quick take ---- */
+  .quick-take{background:var(--sea-glass);border-radius:var(--r-panel);padding:20px 24px}
+  .quick-take .label{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--forward);margin-bottom:8px}
+  .quick-take p{font-size:17px;line-height:1.65;color:var(--evergreen)}
+  .quick-take a{font-weight:700;color:var(--forward);text-decoration:underline;text-underline-offset:3px}
+
+  /* ---- scam alert ---- */
+  .scam-alert{background:var(--soft-peach);border-left:4px solid var(--coral);border-radius:0 var(--r-panel) var(--r-panel) 0;padding:20px 24px}
+  .scam-alert .label{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--coral);margin-bottom:8px}
+  .scam-alert h4{font-family:var(--font-display);font-weight:600;font-size:21px;line-height:1.35;color:var(--evergreen);margin-bottom:8px}
+  .scam-alert p{font-size:17px;line-height:1.65;margin-bottom:8px}
+  .scam-alert p:last-child{margin-bottom:0}
+
+  /* ---- recommendation card ---- */
+  .rec-card{background:var(--open-white);border:1px solid var(--mist);border-radius:var(--r-panel);padding:24px}
+  .rec-card .fit{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--forward);margin-bottom:8px}
+  .rec-card h4{font-family:var(--font-display);font-weight:600;font-size:21px;line-height:1.35;color:var(--evergreen);margin-bottom:4px}
+  .rec-card .price{font-weight:700;font-size:17px;color:var(--body);margin-bottom:12px}
+  .rec-card .price .checked{font-weight:500;font-size:14px;color:var(--sage-gray)}
+  .rec-card ul{list-style:none;margin:0 0 16px}
+  .rec-card li{font-size:16px;line-height:1.55;padding:3px 0;display:flex;gap:10px}
+  .rec-card li .pro{color:var(--forward);font-weight:700;flex-shrink:0}
+  .rec-card li .con{color:var(--sage-gray);font-weight:700;flex-shrink:0}
+  .rec-card .cta-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:4px}
+  .rec-card .disclosure{font-size:13px;line-height:1.55;color:var(--sage-gray);max-width:340px}
+
+  /* ---- deal marker ---- */
+  .deal-marker{display:inline-block;background:var(--sea-glass);color:var(--evergreen);font-size:13px;font-weight:600;padding:4px 12px;border-radius:6px}
+
+  /* ---- buttons ---- */
+  .btn{display:inline-flex;align-items:center;justify-content:center;font-family:var(--font-ui);font-weight:700;font-size:17px;min-height:48px;padding:12px 28px;border-radius:var(--r-control);border:none;cursor:pointer;text-decoration:none;transition:background-color var(--t),color var(--t),border-color var(--t)}
+  .btn-primary{background:var(--forward);color:var(--white)}
+  .btn-primary:hover,.btn-primary.is-hover{background:var(--forward-hover)}
+  .btn-secondary{background:transparent;color:var(--evergreen);border:2px solid var(--evergreen)}
+  .btn-secondary:hover,.btn-secondary.is-hover{background:var(--sea-glass)}
+  .btn.is-disabled{background:var(--sea-glass);color:var(--sage-gray);border:none;cursor:not-allowed}
+
+  /* ---- links ---- */
+  a.editorial-link{color:var(--forward);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+  a.editorial-link:hover{color:var(--forward-hover)}
+  a.ui-link{color:var(--forward);font-weight:700;text-decoration:none}
+  a.ui-link:hover{text-decoration:underline;text-underline-offset:3px}
+  a.muted-link{color:var(--sage-gray);font-weight:500;text-decoration:none}
+  a.muted-link:hover{text-decoration:underline;text-underline-offset:3px}
+
+  /* ---- forms ---- */
+  .field{display:flex;flex-direction:column;gap:6px;max-width:380px;margin-bottom:20px}
+  .field label{font-size:14px;font-weight:600;color:var(--evergreen)}
+  .field input{background:var(--white);border:1px solid var(--mist);border-radius:var(--r-control);min-height:48px;padding:0 14px;font-family:var(--font-ui);font-size:16px;color:var(--body);transition:border-color var(--t)}
+  .field input:hover{border-color:var(--evergreen)}
+  .field input:focus-visible{outline:2px solid var(--forward);outline-offset:2px}
+  .field.is-error input{border-color:var(--coral)}
+  .field .error-msg{font-size:14px;color:var(--coral);font-weight:500}
+  .field.is-disabled input{background:var(--sea-glass);color:var(--sage-gray);cursor:not-allowed}
+  .field .helper{font-size:13px;color:var(--sage-gray)}
+
+  /* ---- subscribe control ---- */
+  .subscribe{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end}
+  .subscribe .field{margin-bottom:0;flex:1;min-width:220px}
+
+  /* ---- email shell miniature ---- */
+  .email-shell{max-width:640px;margin:0 auto;background:var(--open-white);border:1px solid var(--mist);border-radius:var(--r-panel);overflow:hidden}
+  .email-shell .inner{padding:24px}
+  @media(max-width:600px){.email-shell .inner{padding:20px}}
+
+  /* ---- footer demo ---- */
+  .footer-demo{background:var(--evergreen);padding:32px 28px 24px;color:var(--sea-glass);font-size:14px;border-radius:0}
+  .footer-demo .wm{font-family:var(--font-display);font-weight:700;letter-spacing:-0.02em;color:var(--open-white);font-size:22px;margin-bottom:16px}
+  .footer-demo nav{display:flex;gap:24px;flex-wrap:wrap;padding-bottom:20px;border-bottom:1px solid rgba(220,237,231,.25);margin-bottom:16px}
+  .footer-demo nav a{color:var(--open-white);text-decoration:underline;text-underline-offset:3px;font-weight:500}
+  .footer-demo nav a:hover{color:var(--sea-glass)}
+  .footer-demo .fine{font-size:13px;line-height:1.6;color:var(--sea-glass)}
+
+  /* ---- accessibility table ---- */
+  .a11y-list{list-style:none}
+  .a11y-list li{padding:10px 0;border-bottom:1px solid var(--mist);font-size:16px;display:flex;gap:12px}
+  .a11y-list li:last-child{border-bottom:none}
+  .a11y-list .tick{color:var(--forward);font-weight:700;flex-shrink:0}
+
+  /* ---- almanac edition system (direction-level) ---- */
+  .direction-tag{display:inline-block;background:var(--sea-glass);color:var(--forward-hover);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:4px;margin-bottom:14px}
+  .t-editor{font-family:var(--font-display);font-style:italic;font-weight:400;font-size:16px;line-height:1.5;color:var(--sage-gray)}
+  .h-mark{display:flex;align-items:flex-end;max-width:520px;margin:22px auto 0}
+  .h-mark .l{flex:1;border-top:1px solid var(--evergreen)}
+  .h-mark .sun-s{width:22px;height:11px;border:1px solid var(--evergreen);border-bottom:none;border-radius:22px 22px 0 0;margin:0 10px}
+  .alm-mast{padding:36px 24px 0;text-align:center}
+  .alm-mast .est{font-family:var(--font-display);font-style:italic;font-size:15px;color:var(--sage-gray)}
+  .alm-mast .wm{font-family:var(--font-display);font-weight:700;letter-spacing:-0.02em;color:var(--evergreen);font-size:34px;line-height:1.1;margin:8px 0 10px}
+  .alm-mast .promise{font-family:var(--font-display);font-style:italic;font-size:16px;color:var(--body)}
+  .alm-sky{height:72px;position:relative}
+  .alm-sky::after{content:"the sky — 96px desktop / 72px mobile, deliberately empty";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--mist)}
+  .alm-body{max-width:600px;margin:0 auto;padding:0 24px 36px}
+  .alm-ch{font-family:var(--font-display);font-style:italic;font-size:15px;color:var(--sage-gray);text-align:center;margin:0 0 14px}
+  .alm-item{display:flex;gap:18px;padding:18px 0;border-top:1px solid var(--mist)}
+  .alm-item .n{font-family:var(--font-display);font-weight:700;font-size:24px;color:var(--coral);min-width:34px;line-height:1.2}
+  .alm-item h4{font-family:var(--font-display);font-weight:600;font-size:20px;line-height:1.35;color:var(--evergreen);margin-bottom:6px}
+  .alm-item p{font-size:16px;line-height:1.6;margin-bottom:8px}
+  .alm-item a{font-weight:700;font-size:15px;color:var(--forward);text-decoration:underline;text-underline-offset:3px}
+  .alm-item.alert{background:var(--soft-peach);border-top:none;border-left:4px solid var(--coral);border-radius:0 14px 14px 0;padding:18px 18px 18px 14px;margin:0 -4px}
+  .alm-item.alert .sig{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--coral);margin-bottom:6px}
+  .alm-close{text-align:center;padding-bottom:8px}
+  .alm-close .sig{font-family:var(--font-display);font-style:italic;font-size:16px;color:var(--sage-gray);margin-top:14px}
+  /* ---- sunrise architecture (direction-level) ---- */
+  .sunr{background:var(--evergreen);position:relative;padding:56px 24px 0;text-align:center;overflow:hidden;border-radius:var(--r-panel)}
+  .sunr .wm{font-family:var(--font-display);font-weight:700;letter-spacing:-0.03em;color:var(--open-white);font-size:clamp(34px,6vw,52px);line-height:1}
+  .sunr .promise{font-size:17px;color:var(--sea-glass);max-width:400px;margin:16px auto 0;line-height:1.6}
+  .sunr .rise{position:relative;height:96px;margin-top:44px}
+  .sunr .rise .sun{position:absolute;left:50%;transform:translateX(-50%);bottom:0;width:min(440px,75%);height:56px;background:var(--sea-glass);border-radius:440px 440px 0 0}
+  /* ---- page footer ---- */
+  .page-end{padding:64px 0 96px;text-align:center;font-size:13px;color:var(--sage-gray)}
+</style>
+</head>
+<body>
+
+<!-- ============ Masthead ============ -->
+<header class="masthead">
+  <div class="wordmark">Plenty Ahead</div>
+  <div class="dateline">Design System Showcase</div>
+  <p class="showcase-note">This page renders <code>brain/brands/plenty-ahead/design-system.md</code> as living components. It is the visual reference for the open-horizon identity: if a value or component is not on this page, it is not in the system. Logo assets do not exist yet; the wordmark below is the approved live-text treatment.</p>
+  <hr class="masthead-rule">
+</header>
+
+<main class="wrap">
+
+<!-- ============ Principles ============ -->
+<section>
+  <span class="kicker">Foundations</span>
+  <h2 class="sec">Governing principles</h2>
+  <div class="spec"><span class="label">Open, not empty</span><span class="t-body">Generous space creates clarity, but every surface retains a useful editorial hierarchy.</span></div>
+  <div class="spec"><span class="label">Readable by identity</span><span class="t-body">Strong contrast, 17px body type, obvious links, and large targets are brand features, not accommodations.</span></div>
+  <div class="spec"><span class="label">Warmth through restraint</span><span class="t-body">Evergreen does the work; sea glass creates breathing room; coral marks only moments that deserve attention.</span></div>
+  <div class="spec"><span class="label">Forward motion, no theater</span><span class="t-body">Direction comes from layout and the horizon motif, not sliding or pulsing elements.</span></div>
+  <div class="spec"><span class="label">Commerce is legible</span><span class="t-body">Paid modules fit the system but remain unmistakably disclosed.</span></div>
+</section>
+<hr class="rule">
+
+<!-- ============ Color ============ -->
+<section>
+  <span class="kicker">Tokens</span>
+  <h2 class="sec">Color</h2>
+  <p class="sec-note">The palette owns the evergreen and sea-glass territory in the BaseIQ portfolio. Coral is not a general CTA color: it communicates caution or provides a single small editorial accent.</p>
+
+  <h3 class="subhead">Core</h3>
+  <div class="swatches">
+    <div class="swatch"><div class="chip" style="background:#173F36"></div><div class="meta"><div class="name">Evergreen</div><div class="hex">#173F36</div><div class="use">Headlines, wordmark, footer, strongest emphasis</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#236B5B"></div><div class="meta"><div class="name">Forward Green</div><div class="hex">#236B5B</div><div class="use">Links, primary buttons, focus rings, active states</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#17564B"></div><div class="meta"><div class="name">Deep Green</div><div class="hex">#17564B</div><div class="use">Hover and pressed states</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#B84F3F"></div><div class="meta"><div class="name">Warm Coral</div><div class="hex">#B84F3F</div><div class="use">Warnings, scam markers, sparing accents</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#DCEDE7"></div><div class="meta"><div class="name">Sea Glass</div><div class="hex">#DCEDE7</div><div class="use">Utility panels, quiet highlights, on-dark secondary text</div></div></div>
+  </div>
+
+  <h3 class="subhead">Neutrals</h3>
+  <div class="swatches">
+    <div class="swatch"><div class="chip" style="background:#263B36"></div><div class="meta"><div class="name">Charcoal Green</div><div class="hex">#263B36</div><div class="use">Body copy</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#52645F"></div><div class="meta"><div class="name">Sage Gray</div><div class="hex">#52645F</div><div class="use">Secondary text, metadata, fine print</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#FFFDF7;border-bottom:1px solid #CFDDD8"></div><div class="meta"><div class="name">Open White</div><div class="hex">#FFFDF7</div><div class="use">Page and email background</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#F7E8E1"></div><div class="meta"><div class="name">Soft Peach</div><div class="hex">#F7E8E1</div><div class="use">Commerce and human-interest panels</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#CFDDD8"></div><div class="meta"><div class="name">Mist</div><div class="hex">#CFDDD8</div><div class="use">Rules, field borders, dividers</div></div></div>
+  </div>
+
+  <p class="contrast-note">Contrast against Open White: Evergreen 11.47:1, Forward Green 6.21:1, Sage Gray 6.17:1, Warm Coral 4.88:1. Coral passes AA but is never used for long body text. Warnings always pair color with an icon and a plain-language label.</p>
+</section>
+<hr class="rule">
+
+<!-- ============ Typography ============ -->
+<section>
+  <span class="kicker">Tokens</span>
+  <h2 class="sec">Typography</h2>
+  <p class="sec-note">Lora carries editorial hierarchy; DM Sans carries service content, utility information, prices, buttons, and navigation. In email, both degrade to Georgia and Arial. Body copy never falls below 16px in email.</p>
+
+  <div class="spec"><span class="label">Display · Lora 700 · 36/30px</span><span class="t-display">More worth looking forward to</span></div>
+  <div class="spec"><span class="label">Section · Lora 700 · 26px</span><span class="t-section">Five hotel fees worth checking before you book</span></div>
+  <div class="spec"><span class="label">Item title · Lora 600 · 21px</span><span class="t-item">What Medicare will—and will not—cover during overseas travel</span></div>
+  <div class="spec"><span class="label">Lede · DM Sans 400 · 19px</span><span class="t-lede">The rules changed in January, and the difference matters most if you spend more than 60 days abroad.</span></div>
+  <div class="spec"><span class="label">Body · DM Sans 400 · 17px</span><span class="t-body">Medicare generally does not pay for care outside the United States. Some Medigap plans cover 80% of emergency care abroad, with a $250 deductible and a $50,000 lifetime cap.</span></div>
+  <div class="spec"><span class="label">Body strong · DM Sans 700 · 17px</span><span class="t-strong">Check your plan before you buy separate travel coverage.</span></div>
+  <div class="spec"><span class="label">Label · DM Sans 700 · 12px</span><span class="t-label">Picks &amp; Deals</span></div>
+  <div class="spec"><span class="label">Meta · DM Sans 500 · 14px</span><span class="t-meta">Source: Medicare.gov · Checked August 8, 2026</span></div>
+  <div class="spec"><span class="label">Fine print · DM Sans 400 · 13px</span><span class="t-fine">If you buy through this link, Plenty Ahead may earn a commission. That never changes the price you pay.</span></div>
+  <div class="spec"><span class="label">Editor · Lora Italic · 15–16px</span><span class="t-editor">Monday, August 10 · No. 214 — the editor's voice: datelines, chapter headings, asides, sign-offs. Direction-level; never body copy or UI.</span></div>
+</section>
+<hr class="rule">
+
+<!-- ============ Spacing / Shape / Motion ============ -->
+<section>
+  <span class="kicker">Tokens</span>
+  <h2 class="sec">Spacing, shape, and motion</h2>
+  <p class="sec-note">Base unit 4px. Cards do not float: hierarchy comes from background, border, and spacing rather than shadows. The single shadow token is reserved for menus and true overlays.</p>
+
+  <h3 class="subhead">Spacing scale</h3>
+  <div class="space-row"><code>s-4</code><span class="bar" style="width:4px"></span>Tight inline space</div>
+  <div class="space-row"><code>s-8</code><span class="bar" style="width:8px"></span>Label gaps</div>
+  <div class="space-row"><code>s-12</code><span class="bar" style="width:12px"></span>Compact component gaps</div>
+  <div class="space-row"><code>s-16</code><span class="bar" style="width:16px"></span>Paragraph and row rhythm</div>
+  <div class="space-row"><code>s-24</code><span class="bar" style="width:24px"></span>Card padding, item breaks</div>
+  <div class="space-row"><code>s-32</code><span class="bar" style="width:32px"></span>Panel padding</div>
+  <div class="space-row"><code>s-48</code><span class="bar" style="width:48px"></span>Section breaks</div>
+  <div class="space-row"><code>s-64</code><span class="bar" style="width:64px"></span>Major page breaks</div>
+  <div class="space-row"><code>s-96</code><span class="bar" style="width:96px"></span>Page-end breathing room</div>
+
+  <h3 class="subhead">Radius</h3>
+  <div class="radius-demos">
+    <div class="radius-demo" style="border-radius:8px">r-control<br>8px</div>
+    <div class="radius-demo" style="border-radius:14px">r-panel<br>14px</div>
+    <div class="radius-demo" style="border-radius:22px">r-feature<br>22px</div>
+  </div>
+  <p class="t-fine" style="margin-top:12px">r-feature is limited to one major feature panel per surface.</p>
+
+  <h3 class="subhead">Motion</h3>
+  <p class="t-body" style="max-width:640px">Standard transition: 140ms on color, border-color, and opacity. Hover states never move or scale. <code style="font-family:var(--font-mono);font-size:14px">prefers-reduced-motion</code> removes nonessential transitions — this page honors it.</p>
+</section>
+<hr class="rule">
+
+<!-- ============ Horizon motif ============ -->
+<section>
+  <span class="kicker">Identity</span>
+  <h2 class="sec">The open horizon</h2>
+  <p class="sec-note">A level line interrupted by a rising semicircle: possibility ahead without a literal sunset. The sun always rises from or sits above the line, never below it. Use at most twice on a page, or once in an email body plus the masthead. In editions (direction-level): exactly twice — opening the edition in the masthead and closing it above the sign-off. Never animate it, pattern it, or pair it with landscape photography.</p>
+
+  <div class="demo on-open">
+    <div class="demo-caption">Section divider — exhibit</div>
+    <div class="horizon"><span class="line"></span><span class="sun"></span><span class="line" style="flex:2"></span></div>
+  </div>
+  <p class="t-fine">The instance above is an exhibit, not page decoration. The compact symbol version (for avatars and favicons) awaits logo production; do not improvise it in prototypes.</p>
+</section>
+<hr class="rule">
+
+<!-- ============ Masthead + section heading ============ -->
+<section>
+  <span class="kicker">Components</span>
+  <h2 class="sec">Masthead and section heading</h2>
+  <p class="sec-note">Open White background, no colored masthead band. Until logo assets exist, the wordmark is live text: Lora 700, Evergreen, tracking −0.02em, one line where space allows.</p>
+
+  <div class="demo on-open" style="padding:0;overflow:hidden">
+    <div class="masthead-demo">
+      <div class="wm">Plenty Ahead</div>
+      <div class="edition">The Daily · Monday, August 10</div>
+      <hr>
+    </div>
+    <div style="padding:28px">
+      <div class="sh-label">Money</div>
+      <h4 class="sh-heading">The Social Security date that can change your first payment</h4>
+      <p class="sh-dek">When you file matters less than which month you file in. Here is how the timing works.</p>
+      <hr class="sh-rule">
+    </div>
+  </div>
+</section>
+<hr class="rule">
+
+<!-- ============ Story item ============ -->
+<section>
+  <span class="kicker">Components</span>
+  <h2 class="sec">Story item</h2>
+  <p class="sec-note">The workhorse of every edition. Headline, essential context, utility line, one action. 24px vertical padding, Mist divider between items.</p>
+
+  <div class="demo on-open">
+    <article class="story">
+      <div class="lane">Travel</div>
+      <h4>Five hotel fees worth checking before you book</h4>
+      <p>Resort, parking, and early check-in fees now add an average of $47 a night at large chains. Three of the five are negotiable if you ask before booking, not at the desk.</p>
+      <div class="utility">Source: NerdWallet fee survey · Checked August 7, 2026</div>
+      <a class="action" href="#">See the five fees</a>
+    </article>
+    <article class="story">
+      <div class="lane">Health</div>
+      <h4>Three walking shoes that are stable without feeling stiff</h4>
+      <p>We compared 11 pairs against podiatrist criteria for lateral support and toe-box room. The three below kept the stability without the concrete-boot feel.</p>
+      <div class="utility">Prices checked August 9, 2026</div>
+      <a class="action" href="#">Compare the three options</a>
+    </article>
+  </div>
+</section>
+<hr class="rule">
+
+<!-- ============ Quick take + scam alert ============ -->
+<section>
+  <span class="kicker">Components</span>
+  <h2 class="sec">Quick take and scam alert</h2>
+  <p class="sec-note">Quick takes carry information the reader can act on immediately: Sea Glass, one primary action maximum. Scam alerts follow a required order — recognizable signal, action to take, official verification route — with calm urgency and no fear imagery. Direction-level: inside a numbered edition, the scam alert composes as a numbered entry (see Almanac edition system below).</p>
+
+  <div class="demo on-open">
+    <div class="demo-caption">Quick take</div>
+    <div class="quick-take">
+      <div class="label">The short version</div>
+      <p>Medicare open enrollment runs October 15 to December 7. If your plan's annual notice shows a premium increase, you have until December 7 to switch without penalty. <a href="#">Check the eligibility rules</a></p>
+    </div>
+  </div>
+
+  <div class="demo on-open">
+    <div class="demo-caption">Scam alert</div>
+    <div class="scam-alert">
+      <div class="label">⚠ Scam alert</div>
+      <h4>If your bank texts this question, do not answer it</h4>
+      <p><strong>The signal:</strong> a text claiming to be your bank's fraud department asks "Did you authorize a charge of $487.20? Reply YES or NO." Replying confirms your number is live and triggers a follow-up call from the "fraud team."</p>
+      <p><strong>What to do:</strong> do not reply. Call the number on the back of your card and ask whether a hold exists.</p>
+      <p><strong>Verify:</strong> real fraud alerts never ask for your PIN, password, or a code sent to your phone.</p>
+    </div>
+  </div>
+</section>
+<hr class="rule">
+
+<!-- ============ Recommendation card + deal marker ============ -->
+<section>
+  <span class="kicker">Components</span>
+  <h2 class="sec">Recommendation card and deal marker</h2>
+  <p class="sec-note">Every card answers five questions: who it is for, why it is useful, what limitation matters, what it costs, and whether Plenty Ahead may be compensated. A deal marker requires a real prior, typical, or comparable market price — coral is never used to make a sale feel urgent.</p>
+
+  <div class="demo on-open">
+    <div class="rec-card">
+      <div class="fit">Best for daily walks on pavement</div>
+      <h4>Brooks Ghost 16</h4>
+      <div class="price">$139.95 <span class="checked">· checked August 9, 2026</span></div>
+      <ul>
+        <li><span class="pro">+</span>Wide toe box and a stable heel without a stiff sole</li>
+        <li><span class="pro">+</span>Comes in four widths, including extra wide</li>
+        <li><span class="con">–</span>Mesh upper runs warm in summer heat</li>
+      </ul>
+      <p class="t-body" style="margin-bottom:16px"><span class="deal-marker">Typically $139.95 — now $109 at REI</span></p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#">See today's price</a>
+        <p class="disclosure">If you buy through this link, Plenty Ahead may earn a commission. That never changes the price you pay or our judgment.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<hr class="rule">
+
+<!-- ============ Buttons + links ============ -->
+<section>
+  <span class="kicker">Components</span>
+  <h2 class="sec">Buttons and links</h2>
+  <p class="sec-note">DM Sans 700, sentence case, 48px minimum height. One primary button per component; one dominant primary action per viewport. Links never rely on color alone in body copy.</p>
+
+  <div class="demo">
+    <div class="demo-caption">Button variants</div>
+    <div class="state-grid">
+      <div><button class="btn btn-primary">Get Plenty Ahead</button><span class="state-label">Primary</span></div>
+      <div><button class="btn btn-primary is-hover">Get Plenty Ahead</button><span class="state-label">Primary hover</span></div>
+      <div><button class="btn btn-secondary">Compare the options</button><span class="state-label">Secondary</span></div>
+      <div><button class="btn is-disabled" disabled>Get Plenty Ahead</button><span class="state-label">Disabled</span></div>
+    </div>
+  </div>
+
+  <div class="demo">
+    <div class="demo-caption">Link styles</div>
+    <p class="t-body" style="margin-bottom:12px">Editorial: the annual notice explains <a class="editorial-link" href="#">how your plan's costs change next year</a> in the first four pages.</p>
+    <p class="t-body" style="margin-bottom:12px">UI: <a class="ui-link" href="#">Read the warning signs</a></p>
+    <p class="t-body">Muted: <a class="muted-link" href="#">Manage preferences</a></p>
+  </div>
+</section>
+<hr class="rule">
+
+<!-- ============ Forms ============ -->
+<section>
+  <span class="kicker">Components</span>
+  <h2 class="sec">Forms and subscribe control</h2>
+  <p class="sec-note">Every field has a persistent label — placeholders never replace one. Errors explain how to correct the input. The subscribe control is one email field and one specific action button; "Submit" is banned.</p>
+
+  <div class="demo">
+    <div class="demo-caption">Field states</div>
+    <div class="field">
+      <label for="f-default">Email address</label>
+      <input id="f-default" type="email" placeholder="name@example.com">
+      <span class="helper">One email a day. Unsubscribe any time.</span>
+    </div>
+    <div class="field is-error">
+      <label for="f-error">Email address</label>
+      <input id="f-error" type="email" value="name@example" aria-describedby="f-error-msg">
+      <span class="error-msg" id="f-error-msg">⚠ That address is missing its ending — use a full email like name@example.com</span>
+    </div>
+    <div class="field is-disabled">
+      <label for="f-disabled">Email address</label>
+      <input id="f-disabled" type="email" disabled value="name@example.com">
+    </div>
+  </div>
+
+  <div class="demo">
+    <div class="demo-caption">Subscribe control</div>
+    <div class="subscribe">
+      <div class="field">
+        <label for="f-sub">Email address</label>
+        <input id="f-sub" type="email" placeholder="name@example.com">
+      </div>
+      <button class="btn btn-primary">Send me the Daily</button>
+    </div>
+  </div>
+</section>
+<hr class="rule">
+
+<!-- ============ Email shell + footer ============ -->
+<section>
+  <span class="kicker">Newsletter foundation</span>
+  <h2 class="sec">Email shell and footer</h2>
+  <p class="sec-note">640px maximum width on Open White, 17px body, one clear lead item before secondary modules, at least 48px between lanes. The footer is the only Evergreen band in the system: Open White primary text, Sea Glass secondary, clearly underlined links.</p>
+
+  <div class="email-shell">
+    <div class="masthead-demo" style="padding-top:28px">
+      <div class="wm" style="font-size:28px">Plenty Ahead</div>
+      <div class="edition">The Daily · Monday, August 10</div>
+      <hr>
+    </div>
+    <div class="inner">
+      <article class="story" style="padding-top:8px">
+        <div class="lane">Money</div>
+        <h4>The Social Security date that can change your first payment</h4>
+        <p>Benefits are paid the month after they are due, and your birthday determines the Wednesday they arrive. Filing in the wrong month can delay your first check by up to six weeks.</p>
+        <a class="action" href="#">Check your payment date</a>
+      </article>
+    </div>
+    <div class="footer-demo">
+      <div class="wm">Plenty Ahead</div>
+      <nav>
+        <a href="#">Preferences</a>
+        <a href="#">Unsubscribe</a>
+        <a href="#">Privacy</a>
+      </nav>
+      <p class="fine">Plenty Ahead, 123 Example Street, Suite 400, Wilmington, DE 19801. Some links in this email may earn us a commission; that never changes the price you pay. You are receiving this because you signed up for the Daily.</p>
+    </div>
+  </div>
+</section>
+<hr class="rule">
+
+<!-- ============ Almanac edition system ============ -->
+<section>
+  <span class="kicker">Identity direction</span>
+  <h2 class="sec">Almanac edition system</h2>
+  <span class="direction-tag">Direction-level · Approved Aug 10, 2026 · Details finalized by email-format specs</span>
+  <p class="sec-note">The approved general direction for editions: an editor's voice in Lora Italic threading from dateline to sign-off, numbered entries with coral numerals, the scam alert composed into the reading flow, and the sky — mandatory empty space below the masthead. Values shown are reference implementations; the email-format specifications determine final details.</p>
+
+  <div class="demo on-open" style="padding:0;overflow:hidden">
+    <div class="alm-mast">
+      <div class="est">Monday, August 10 · No. 214</div>
+      <div class="wm">Plenty Ahead</div>
+      <div class="promise">Smart, useful ideas for making more of what's ahead</div>
+      <div class="h-mark" aria-hidden="true" style="max-width:400px"><span class="l"></span><span class="sun-s"></span><span class="l"></span></div>
+    </div>
+    <div class="alm-sky" aria-hidden="true"></div>
+    <div class="alm-body">
+      <div class="alm-ch">In this edition</div>
+      <article class="alm-item">
+        <div class="n">1</div>
+        <div>
+          <h4>The four lines to read in your Medicare annual notice</h4>
+          <p>Premium, deductible, drug tiers, and the pharmacy network. A change to any of the four is grounds to compare plans before December 7.</p>
+          <a href="#">Read the four lines</a>
+        </div>
+      </article>
+      <article class="alm-item alert">
+        <div class="n">2</div>
+        <div>
+          <div class="sig">⚠ Scam alert</div>
+          <h4>If your bank texts this question, do not answer it</h4>
+          <p><strong>The signal:</strong> a text asking "Did you authorize this charge? Reply YES or NO." <strong>What to do:</strong> do not reply — call the number on the back of your card.</p>
+          <a href="#">Read the warning signs</a>
+        </div>
+      </article>
+      <div class="alm-close" style="border-top:1px solid var(--mist);padding-top:8px">
+        <div class="h-mark" aria-hidden="true" style="max-width:180px"><span class="l"></span><span class="sun-s"></span><span class="l"></span></div>
+        <p class="sig">More tomorrow. — The editors</p>
+      </div>
+    </div>
+  </div>
+  <p class="t-fine" style="margin-top:12px">Boundary constraint: the almanac register never borrows broadsheet devices — no double rules, column layouts, all-caps serif mastheads, or newsprint tinting. Those belong to AmericanAdvisor.</p>
+</section>
+<hr class="rule">
+
+<!-- ============ Sunrise architecture ============ -->
+<section>
+  <span class="kicker">Identity direction</span>
+  <h2 class="sec">Sunrise architecture</h2>
+  <span class="direction-tag">Direction-level · Acquisition surfaces only</span>
+  <p class="sec-note">The system's single pictorial moment: a flat Sea Glass semicircle rising into an Evergreen field. Permitted only on landing pages and the welcome email hero — never inside regular editions, never animated, never gradient-filled. The same geometry at ~32px is the working candidate for the compact symbol, pending logo production.</p>
+  <div class="sunr">
+    <div class="wm">Plenty Ahead</div>
+    <p class="promise">Smart, useful ideas for making more of what's ahead. One email a day, worth opening.</p>
+    <div class="rise" aria-hidden="true"><div class="sun"></div></div>
+  </div>
+</section>
+<hr class="rule">
+
+<!-- ============ Accessibility ============ -->
+<section>
+  <span class="kicker">Standards</span>
+  <h2 class="sec">Accessibility</h2>
+  <p class="sec-note">Age improves the design: larger type, strong contrast, generous spacing, and obvious interaction states are identity traits, not compliance work.</p>
+  <ul class="a11y-list">
+    <li><span class="tick">✓</span>Body text 17px default; 16px absolute email floor</li>
+    <li><span class="tick">✓</span>Touch targets at least 44×44px</li>
+    <li><span class="tick">✓</span>Text contrast WCAG AA minimum; body copy targets AAA</li>
+    <li><span class="tick">✓</span>Visible focus state on every interactive element</li>
+    <li><span class="tick">✓</span>Warnings use icon plus label plus text, never color alone</li>
+    <li><span class="tick">✓</span>Link purpose understandable out of context</li>
+    <li><span class="tick">✓</span>No information depends on animation</li>
+  </ul>
+</section>
+
+<div class="page-end">
+  Rendered from brain/brands/plenty-ahead/design-system.md · Last updated August 10, 2026
+</div>
+
+</main>
+</body>
+</html>

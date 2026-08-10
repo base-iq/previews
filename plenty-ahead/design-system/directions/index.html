@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Plenty Ahead — Identity Directions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --evergreen:#173F36; --forward:#236B5B; --forward-hover:#17564B; --coral:#B84F3F;
+    --body:#263B36; --sage:#52645F;
+    --open-white:#FFFDF7; --sea-glass:#DCEDE7; --soft-peach:#F7E8E1; --mist:#CFDDD8; --white:#FFFFFF;
+    --lora:"Lora", Georgia, serif;
+    --dm:"DM Sans", Arial, Helvetica, sans-serif;
+    --mono:ui-monospace, Menlo, Consolas, monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--open-white);color:var(--body);font-family:var(--dm);font-size:17px;line-height:1.65}
+  :focus-visible{outline:2px solid var(--forward);outline-offset:2px}
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none !important;animation:none !important}}
+  .wrap{max-width:960px;margin:0 auto;padding:0 20px}
+  @media(min-width:700px){.wrap{padding:0 28px}}
+
+  /* ============ intro chrome ============ */
+  .intro{padding:56px 20px 40px;text-align:center;border-bottom:1px solid var(--mist)}
+  .intro .wm{font-family:var(--lora);font-weight:700;letter-spacing:-0.02em;color:var(--evergreen);font-size:30px}
+  .intro .tag{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--sage);margin-top:10px}
+  .intro p{font-size:16px;color:var(--sage);max-width:620px;margin:18px auto 0;line-height:1.6}
+  .intro .proposed{display:inline-block;margin-top:20px;background:var(--coral);color:#fff;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:5px 12px;border-radius:4px}
+  .jump{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:24px}
+  .jump a{font-size:14px;font-weight:700;color:var(--forward);text-decoration:none;border:1px solid var(--mist);border-radius:999px;padding:9px 18px}
+  .jump a:hover{border-color:var(--forward);background:var(--sea-glass)}
+
+  /* direction header band */
+  .dir-head{padding:64px 20px 8px}
+  .dir-head .num{font-family:var(--lora);font-weight:700;font-size:15px;color:var(--coral)}
+  .dir-head h2{font-family:var(--lora);font-weight:700;font-size:clamp(28px,4.5vw,38px);color:var(--evergreen);line-height:1.2;margin:6px 0 12px;letter-spacing:-0.01em}
+  .dir-head .thesis{font-size:18px;line-height:1.6;max-width:640px}
+  .heur{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin:26px auto 0;max-width:960px}
+  .heur .cell{border:1px solid var(--mist);border-radius:10px;padding:14px 16px;background:var(--white)}
+  .heur .k{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--sage);margin-bottom:4px}
+  .heur .v{font-size:14px;line-height:1.5}
+  .exhibit-label{max-width:960px;margin:40px auto 12px;padding:0 20px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--sage)}
+  .exhibit{max-width:960px;margin:0 auto 8px;border:1px solid var(--mist);border-radius:14px;overflow:hidden}
+  @media(max-width:700px){.exhibit{border-radius:0;border-left:none;border-right:none}}
+  .dir-divider{border:none;border-top:1px solid var(--mist);margin:64px 0 0}
+
+  /* ================================================================
+     DIRECTION A — THE HORIZON IS THE GRID
+     ================================================================ */
+  .a-canvas{background:var(--open-white)}
+  /* masthead: wordmark anchored to a full-width horizon rule; sun rises at the wordmark */
+  .a-mast{padding:56px 0 0}
+  .a-mast .edition{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--sage);padding:0 32px;margin-bottom:34px}
+  .a-lockup{position:relative;padding:0 32px}
+  .a-lockup .wm{font-family:var(--lora);font-weight:700;letter-spacing:-0.025em;color:var(--evergreen);font-size:clamp(40px,7vw,62px);line-height:1;display:inline-block;padding-bottom:0}
+  .a-horizon{display:flex;align-items:flex-end;margin-top:-2px}
+  .a-horizon .pre{width:32px;border-top:2px solid var(--evergreen)}
+  .a-horizon .under{width:min(46%,340px);border-top:2px solid var(--evergreen)}
+  .a-horizon .sun{width:26px;height:13px;border:2px solid var(--evergreen);border-bottom:none;border-radius:26px 26px 0 0}
+  .a-horizon .run{flex:1;border-top:2px solid var(--evergreen)}
+  /* sky gap: deliberate emptiness between masthead and lead — the "plenty" */
+  .a-sky{height:96px}
+  .a-lead{padding:0 32px 56px;max-width:820px}
+  .a-lead .lane{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--forward);margin-bottom:14px}
+  .a-lead h3{font-family:var(--lora);font-weight:700;font-size:clamp(30px,5vw,44px);line-height:1.16;letter-spacing:-0.015em;color:var(--evergreen);margin-bottom:18px}
+  .a-lead .dek{font-size:19px;line-height:1.6;max-width:580px;margin-bottom:22px}
+  .a-action{display:inline-block;font-weight:700;font-size:17px;color:var(--forward);text-decoration:none;border-bottom:2px solid var(--forward);padding-bottom:4px}
+  .a-action:hover{color:var(--forward-hover);border-color:var(--forward-hover)}
+  /* section datum: every section starts at a horizon; the sun travels along it */
+  .a-section{border-top:2px solid var(--evergreen);position:relative;padding:34px 32px 44px}
+  .a-section .sun{position:absolute;top:-13px;width:26px;height:13px;border:2px solid var(--evergreen);border-bottom:none;border-radius:26px 26px 0 0;background:var(--open-white)}
+  .a-section .lane{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--forward);margin-bottom:10px}
+  .a-section h4{font-family:var(--lora);font-weight:600;font-size:24px;line-height:1.3;color:var(--evergreen);margin-bottom:10px;max-width:560px}
+  .a-section p{max-width:560px;margin-bottom:14px}
+  .a-two{display:grid;grid-template-columns:1fr;gap:0}
+  @media(min-width:700px){.a-two{grid-template-columns:1fr 1fr}.a-two .a-section+.a-section{border-left:1px solid var(--mist)}}
+
+  /* ================================================================
+     DIRECTION B — THE ALMANAC OF WHAT'S NEXT
+     ================================================================ */
+  .b-canvas{background:var(--open-white)}
+  .b-mast{padding:44px 24px 0;text-align:center}
+  .b-mast .est{font-family:var(--lora);font-style:italic;font-size:15px;color:var(--sage)}
+  .b-mast .wm{font-family:var(--lora);font-weight:700;letter-spacing:-0.02em;color:var(--evergreen);font-size:clamp(34px,5.5vw,46px);line-height:1.1;margin:8px 0 10px}
+  .b-mast .promise{font-family:var(--lora);font-style:italic;font-size:17px;color:var(--body)}
+  .b-rule{display:flex;align-items:flex-end;max-width:520px;margin:22px auto 0}
+  .b-rule .l{flex:1;border-top:1px solid var(--evergreen)}
+  .b-rule .sun{width:22px;height:11px;border:1px solid var(--evergreen);border-bottom:none;border-radius:22px 22px 0 0;margin:0 10px}
+  .b-body{max-width:680px;margin:0 auto;padding:36px 24px 48px}
+  .b-lede{font-size:17px;line-height:1.7}
+  .b-lede::first-letter{font-family:var(--lora);font-weight:700;color:var(--evergreen);float:left;font-size:58px;line-height:.82;padding:6px 10px 0 0}
+  .b-contents{margin:34px 0 8px}
+  .b-contents .ch{font-family:var(--lora);font-style:italic;font-size:15px;color:var(--sage);text-align:center;margin-bottom:18px}
+  .b-item{display:flex;gap:18px;padding:18px 0;border-top:1px solid var(--mist)}
+  .b-item .n{font-family:var(--lora);font-weight:700;font-size:24px;color:var(--coral);min-width:34px;line-height:1.2}
+  .b-item h4{font-family:var(--lora);font-weight:600;font-size:20px;line-height:1.35;color:var(--evergreen);margin-bottom:6px}
+  .b-item p{font-size:16px;line-height:1.6;margin-bottom:8px}
+  .b-item .foot{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+  .b-item a{font-weight:700;font-size:15px;color:var(--forward);text-decoration:underline;text-underline-offset:3px}
+  .b-stamp{display:inline-block;font-size:12px;font-weight:500;color:var(--sage);border:1px solid var(--mist);border-radius:999px;padding:2px 10px}
+  .b-worth{background:var(--sea-glass);border-radius:14px;padding:22px 26px;margin-top:34px}
+  .b-worth .k{font-family:var(--lora);font-style:italic;font-size:16px;color:var(--forward-hover);margin-bottom:6px}
+  .b-worth p{color:var(--evergreen)}
+  .b-close{text-align:center;margin-top:38px}
+  .b-close .sig{font-family:var(--lora);font-style:italic;font-size:16px;color:var(--sage)}
+
+  /* ================================================================
+     DIRECTION C — MORE SKY
+     ================================================================ */
+  .c-canvas{background:var(--evergreen)}
+  .c-hero{position:relative;padding:88px 28px 0;text-align:center;overflow:hidden}
+  .c-hero .wm{font-family:var(--lora);font-weight:700;letter-spacing:-0.03em;color:var(--open-white);font-size:clamp(44px,9vw,84px);line-height:1}
+  .c-hero .promise{font-size:19px;color:var(--sea-glass);max-width:440px;margin:22px auto 0;line-height:1.6}
+  .c-hero .cta{display:inline-flex;align-items:center;justify-content:center;margin-top:34px;background:var(--open-white);color:var(--evergreen);font-weight:700;font-size:17px;min-height:52px;padding:14px 36px;border-radius:8px;text-decoration:none}
+  .c-hero .cta:hover{background:var(--sea-glass)}
+  /* the giant rising sun: sea-glass semicircle breaking the hero's lower edge */
+  .c-sunrise{position:relative;height:150px;margin-top:64px}
+  .c-sunrise .sun{position:absolute;left:50%;transform:translateX(-50%);bottom:0;width:min(560px,80vw);height:75px;background:var(--sea-glass);border-radius:560px 560px 0 0}
+  .c-below{background:var(--sea-glass);padding:56px 28px 72px;text-align:center}
+  .c-below .k{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--forward-hover);margin-bottom:16px}
+  .c-below h3{font-family:var(--lora);font-weight:700;font-size:clamp(26px,4.5vw,36px);line-height:1.22;color:var(--evergreen);max-width:560px;margin:0 auto 16px;letter-spacing:-0.015em}
+  .c-below p{max-width:480px;margin:0 auto 24px;color:var(--body);font-size:18px;line-height:1.65}
+  .c-below a{font-weight:700;color:var(--forward-hover);text-decoration:underline;text-underline-offset:4px;font-size:17px}
+  .c-one{background:var(--open-white);padding:96px 28px;text-align:center}
+  .c-one .lane{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--forward);margin-bottom:18px}
+  .c-one h3{font-family:var(--lora);font-weight:700;font-size:clamp(28px,5vw,40px);line-height:1.2;color:var(--evergreen);max-width:620px;margin:0 auto 18px;letter-spacing:-0.015em}
+  .c-one p{max-width:480px;margin:0 auto 26px;font-size:18px}
+  .c-one .btn{display:inline-flex;align-items:center;justify-content:center;background:var(--forward);color:#fff;font-weight:700;font-size:17px;min-height:52px;padding:14px 36px;border-radius:8px;text-decoration:none}
+  .c-one .btn:hover{background:var(--forward-hover)}
+
+  /* ============ comparison + next steps ============ */
+  .compare{padding:64px 0 8px}
+  .compare h2{font-family:var(--lora);font-weight:700;font-size:28px;color:var(--evergreen);margin-bottom:8px}
+  .compare .note{font-size:16px;color:var(--sage);max-width:640px;margin-bottom:24px}
+  .ctable{width:100%;border-collapse:collapse;font-size:15px}
+  .ctable th,.ctable td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--mist);vertical-align:top;line-height:1.5}
+  .ctable thead th{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--sage);border-bottom:2px solid var(--evergreen)}
+  .ctable td:first-child{font-weight:700;color:var(--evergreen);white-space:nowrap}
+  .ctable-scroll{overflow-x:auto}
+  .page-end{padding:56px 0 96px;text-align:center;font-size:13px;color:var(--sage)}
+</style>
+</head>
+<body>
+
+<header class="intro">
+  <div class="wm">Plenty Ahead</div>
+  <div class="tag">Identity Directions · Round One</div>
+  <p>Three divergent answers to the same question: how does "plenty ahead" become something you can see? Each keeps the locked palette, type pairing, and accessibility floor — what changes is the structural idea. Nothing here is final; a chosen direction gets developed into a proposal before anything reaches the design system.</p>
+  <span class="proposed">Proposed — pending direction choice</span>
+  <nav class="jump">
+    <a href="#dir-a">A · The horizon is the grid</a>
+    <a href="#dir-b">B · The almanac of what's next</a>
+    <a href="#dir-c">C · More sky</a>
+    <a href="proposal/" style="background:var(--sea-glass);border-color:var(--forward)">Round two proposal →</a>
+  </nav>
+</header>
+
+<!-- ================================================================
+     DIRECTION A
+     ================================================================ -->
+<section id="dir-a">
+  <div class="dir-head wrap">
+    <div class="num">Direction A</div>
+    <h2>The horizon is the grid</h2>
+    <p class="thesis">Stop treating the horizon as a logo garnish and make it the page's structural datum. Every section begins at a horizon line, and the sun travels along it as the reader moves down the page — masthead, first section, second section. The identity lives in the bones: strong horizontals, a left-anchored wordmark sitting on its own horizon, and deliberate "sky" — empty space above content that makes the name literal. Asymmetric, editorial, quietly confident.</p>
+    <div class="heur">
+      <div class="cell"><div class="k">Surprise</div><div class="v">The sun's position moves along each section's horizon — a signature you notice on the second read, never animated.</div></div>
+      <div class="cell"><div class="k">Constraint</div><div class="v">All identity expression must be horizontal. No badges, no panels doing identity work — only lines, suns, and space.</div></div>
+      <div class="cell"><div class="k">Density &amp; pacing</div><div class="v">Sparse sky above the lead; sections below run denser. The page breathes at the top and works at the bottom.</div></div>
+    </div>
+  </div>
+
+  <div class="exhibit-label">Exhibit · Daily edition, top of email</div>
+  <div class="exhibit a-canvas">
+    <div class="a-mast">
+      <div class="edition">The Daily · Monday, August 10</div>
+      <div class="a-lockup"><span class="wm">Plenty Ahead</span></div>
+      <div class="a-horizon" aria-hidden="true"><span class="pre"></span><span class="under"></span><span class="sun"></span><span class="run"></span></div>
+    </div>
+    <div class="a-sky" aria-hidden="true"></div>
+    <div class="a-lead">
+      <div class="lane">Money</div>
+      <h3>The Social Security date that can change your first payment</h3>
+      <p class="dek">Benefits are paid the month after they are due, and your birthday sets the Wednesday they arrive. Filing in the wrong month can push your first check back six weeks.</p>
+      <a class="a-action" href="#">Check your payment date</a>
+    </div>
+    <div class="a-two">
+      <div class="a-section">
+        <span class="sun" style="left:15%" aria-hidden="true"></span>
+        <div class="lane">Travel</div>
+        <h4>Five hotel fees worth checking before you book</h4>
+        <p>Three of the five are negotiable — if you ask before booking, not at the desk.</p>
+        <a class="a-action" style="font-size:15px" href="#">See the five fees</a>
+      </div>
+      <div class="a-section">
+        <span class="sun" style="left:55%" aria-hidden="true"></span>
+        <div class="lane">Health</div>
+        <h4>Three walking shoes that are stable without feeling stiff</h4>
+        <p>Eleven pairs tested against podiatrist criteria. Three kept the support without the concrete-boot feel.</p>
+        <a class="a-action" style="font-size:15px" href="#">Compare the three</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="dir-divider">
+
+<!-- ================================================================
+     DIRECTION B
+     ================================================================ -->
+<section id="dir-b">
+  <div class="dir-head wrap">
+    <div class="num">Direction B</div>
+    <h2>The almanac of what's next</h2>
+    <p class="thesis">Identity through editorial craft: Plenty Ahead as a well-thumbed annual you trust, published daily. Lora's italic joins the system as the voice of the editor — datelines, chapter headings, sign-offs. Items are numbered in coral like an almanac's entries, every fact wears its "checked" date as a stamp, and each edition closes with a signed line. Warmth comes from print conventions used honestly, not nostalgia — the reader's sense that a person edited this.</p>
+    <div class="heur">
+      <div class="cell"><div class="k">Surprise</div><div class="v">The verification stamp — "Checked Aug 9" as a visible badge on every claim. Trust turned into a design element.</div></div>
+      <div class="cell"><div class="k">Voice in UI</div><div class="v">Lora italic carries an editorial narrator through the chrome: "In this edition…", "Worth your time…", "— The editors".</div></div>
+      <div class="cell"><div class="k">Density &amp; pacing</div><div class="v">Denser than the other directions by design — a well-set page of numbered entries, opened and closed by sparse italic moments.</div></div>
+    </div>
+  </div>
+
+  <div class="exhibit-label">Exhibit · Daily edition, full miniature</div>
+  <div class="exhibit b-canvas">
+    <div class="b-mast">
+      <div class="est">Monday, August 10 · No. 214</div>
+      <div class="wm">Plenty Ahead</div>
+      <div class="promise">Smart, useful ideas for making more of what's ahead</div>
+      <div class="b-rule" aria-hidden="true"><span class="l"></span><span class="sun"></span><span class="l"></span></div>
+    </div>
+    <div class="b-body">
+      <p class="b-lede">Medicare's annual notices land this week, and the four lines that matter are buried on page three. Today's edition walks through what to check, plus a hotel-fee list worth reading before you book fall travel.</p>
+      <div class="b-contents">
+        <div class="ch">In this edition</div>
+        <article class="b-item">
+          <div class="n">1</div>
+          <div>
+            <h4>The four lines to read in your Medicare annual notice</h4>
+            <p>Premium, deductible, drug tiers, and the pharmacy network. Changes to any of the four are grounds to compare plans before December 7.</p>
+            <div class="foot"><a href="#">Read the four lines</a><span class="b-stamp">Checked Aug 9</span></div>
+          </div>
+        </article>
+        <article class="b-item">
+          <div class="n">2</div>
+          <div>
+            <h4>Five hotel fees worth checking before you book</h4>
+            <p>Resort, parking, and early check-in fees now average $47 a night at large chains. Three are negotiable if you ask before booking.</p>
+            <div class="foot"><a href="#">See the five fees</a><span class="b-stamp">Checked Aug 7</span></div>
+          </div>
+        </article>
+        <article class="b-item" style="border-bottom:1px solid var(--mist)">
+          <div class="n">3</div>
+          <div>
+            <h4>If your bank texts this question, do not answer it</h4>
+            <p>A text asking "Did you authorize this charge? Reply YES or NO" confirms your number is live. Call the number on your card instead.</p>
+            <div class="foot"><a href="#">Read the warning signs</a><span class="b-stamp">Checked Aug 10</span></div>
+          </div>
+        </article>
+      </div>
+      <div class="b-worth">
+        <div class="k">Worth your time</div>
+        <p>The National Park Service lifetime pass is still $80 for anyone 62 or older — one of the few prices unchanged since 2017. <a class="editorial-link" style="color:var(--forward-hover);font-weight:700" href="#">See what it covers</a></p>
+      </div>
+      <div class="b-close">
+        <div class="b-rule" aria-hidden="true" style="max-width:200px"><span class="l"></span><span class="sun"></span><span class="l"></span></div>
+        <p class="sig" style="margin-top:14px">More tomorrow. — The editors</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="dir-divider">
+
+<!-- ================================================================
+     DIRECTION C
+     ================================================================ -->
+<section id="dir-c">
+  <div class="dir-head wrap">
+    <div class="num">Direction C</div>
+    <h2>More sky</h2>
+    <p class="thesis">The most radical answer: identity through scale and subtraction. One idea per screen, monumental Lora, and the sunrise made literal — a huge sea-glass sun rising into the evergreen field, the only pictorial moment in the whole system. Coral disappears except for warnings. Every surface is either evergreen, sea glass, or open white, stacked like land, light, and sky. Nothing performs; the confidence is the identity. This is "one useful focal point" taken to its logical end.</p>
+    <div class="heur">
+      <div class="cell"><div class="k">Surprise</div><div class="v">The giant rising sun — a brand element at architectural scale, built from two flat colors, no gradient, no photo.</div></div>
+      <div class="cell"><div class="k">Constraint</div><div class="v">One idea per viewport. If a screen needs two messages, it becomes two screens.</div></div>
+      <div class="cell"><div class="k">Brand-uniqueness</div><div class="v">A competitor's logo cannot sit on this page — the composition <em>is</em> the horizon, not a layout holding one.</div></div>
+    </div>
+  </div>
+
+  <div class="exhibit-label">Exhibit · Landing page, first three screens</div>
+  <div class="exhibit c-canvas">
+    <div class="c-hero">
+      <div class="wm">Plenty Ahead</div>
+      <p class="promise">Smart, useful ideas for making more of what's ahead. One email a day, worth opening.</p>
+      <a class="cta" href="#">Get the Daily</a>
+      <div class="c-sunrise" aria-hidden="true"><div class="sun"></div></div>
+    </div>
+    <div class="c-below">
+      <div class="k">What you get</div>
+      <h3>The four lines to read in your Medicare annual notice</h3>
+      <p>Yesterday's edition, in one example: the exact four lines to check, why each one matters, and the December 7 deadline that makes them urgent.</p>
+      <a href="#">Read yesterday's edition</a>
+    </div>
+    <div class="c-one">
+      <div class="lane">No spam, ever</div>
+      <h3>Written by editors, checked by hand, gone in one click</h3>
+      <p>Every claim carries the date we verified it. Unsubscribe lives at the top of every email, not buried in the footer.</p>
+      <a class="btn" href="#">Send me the Daily</a>
+    </div>
+  </div>
+</section>
+
+<hr class="dir-divider">
+
+<!-- ================================================================
+     COMPARISON
+     ================================================================ -->
+<section class="compare wrap">
+  <h2>How the three differ</h2>
+  <p class="note">All three honor the locked tokens, the 17px floor, and the calm register. They diverge on where identity lives.</p>
+  <div class="ctable-scroll">
+    <table class="ctable">
+      <thead><tr><th>Direction</th><th>Identity lives in</th><th>Horizon motif becomes</th><th>Risk</th><th>Best first surface</th></tr></thead>
+      <tbody>
+        <tr><td>A · Horizon grid</td><td>Structure — datum lines, asymmetry, sky-space</td><td>The layout system itself; sun travels per section</td><td>Subtle enough that a rushed reader may not register it</td><td>Newsletter</td></tr>
+        <tr><td>B · Almanac</td><td>Editorial craft — italic narrator, numerals, stamps</td><td>A small centered mark opening and closing each edition</td><td>Denser page; needs discipline to avoid clutter</td><td>Newsletter</td></tr>
+        <tr><td>C · More sky</td><td>Scale and subtraction — monumental type, flat fields</td><td>Architecture — a sun the size of the viewport</td><td>Demands ruthless editing; weakest for dense list content</td><td>Landing page / acquisition</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note" style="margin-top:22px">These also combine: C's architecture for acquisition surfaces, with A's or B's system inside the newsletter, is a coherent pairing — many strong brands run exactly that split.</p>
+</section>
+
+<div class="page-end">
+  Round one · Nothing here modifies the design system until a direction is chosen and developed · August 10, 2026
+</div>
+
+</body>
+</html>
