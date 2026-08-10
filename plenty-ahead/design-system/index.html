@@ -207,8 +207,6 @@
   .alm-mast .est{font-family:var(--font-display);font-style:italic;font-size:15px;color:var(--sage-gray)}
   .alm-mast .wm{font-family:var(--font-display);font-weight:700;letter-spacing:-0.02em;color:var(--evergreen);font-size:34px;line-height:1.1;margin:8px 0 10px}
   .alm-mast .promise{font-family:var(--font-display);font-style:italic;font-size:16px;color:var(--body)}
-  .alm-sky{height:72px;position:relative}
-  .alm-sky::after{content:"the sky — 96px desktop / 72px mobile, deliberately empty";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--mist)}
   .alm-body{max-width:600px;margin:0 auto;padding:0 24px 36px}
   .alm-ch{font-family:var(--font-display);font-style:italic;font-size:15px;color:var(--sage-gray);text-align:center;margin:0 0 14px}
   .alm-item{display:flex;gap:18px;padding:18px 0;border-top:1px solid var(--mist)}
@@ -220,12 +218,9 @@
   .alm-item.alert .sig{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--coral);margin-bottom:6px}
   .alm-close{text-align:center;padding-bottom:8px}
   .alm-close .sig{font-family:var(--font-display);font-style:italic;font-size:16px;color:var(--sage-gray);margin-top:14px}
-  /* ---- sunrise architecture (direction-level) ---- */
-  .sunr{background:var(--evergreen);position:relative;padding:56px 24px 0;text-align:center;overflow:hidden;border-radius:var(--r-panel)}
-  .sunr .wm{font-family:var(--font-display);font-weight:700;letter-spacing:-0.03em;color:var(--open-white);font-size:clamp(34px,6vw,52px);line-height:1}
-  .sunr .promise{font-size:17px;color:var(--sea-glass);max-width:400px;margin:16px auto 0;line-height:1.6}
-  .sunr .rise{position:relative;height:96px;margin-top:44px}
-  .sunr .rise .sun{position:absolute;left:50%;transform:translateX(-50%);bottom:0;width:min(440px,75%);height:56px;background:var(--sea-glass);border-radius:440px 440px 0 0}
+  /* ---- sponsored module (direction-level) ---- */
+  .rec-card.sponsored{background:var(--soft-peach);border-color:var(--soft-peach)}
+  .rec-card.sponsored .sponsor-tag{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--sage-gray);margin-bottom:10px}
   /* ---- page footer ---- */
   .page-end{padding:64px 0 96px;text-align:center;font-size:13px;color:var(--sage-gray)}
 </style>
@@ -236,7 +231,7 @@
 <header class="masthead">
   <div class="wordmark">Plenty Ahead</div>
   <div class="dateline">Design System Showcase</div>
-  <p class="showcase-note">This page renders <code>brain/brands/plenty-ahead/design-system.md</code> as living components. It is the visual reference for the open-horizon identity: if a value or component is not on this page, it is not in the system. Logo assets do not exist yet; the wordmark below is the approved live-text treatment.</p>
+  <p class="showcase-note">This page renders <code>brain/brands/plenty-ahead/design-system.md</code> as living components. It is the visual reference for the Plenty Ahead system: if a value or component is not on this page, it is not in the system. Logo assets do not exist yet and the compact symbol is under exploration; the wordmark below is the approved live-text treatment and the primary brand asset.</p>
   <hr class="masthead-rule">
 </header>
 
@@ -246,9 +241,9 @@
 <section>
   <span class="kicker">Foundations</span>
   <h2 class="sec">Governing principles</h2>
-  <div class="spec"><span class="label">Open, not empty</span><span class="t-body">Generous space creates clarity, but every surface retains a useful editorial hierarchy.</span></div>
+  <div class="spec"><span class="label">Open, not empty</span><span class="t-body">Space creates clarity, but it is used intentionally, never as a rigid rule — readers reach the first meaningful content quickly, especially in email and on mobile. Every surface retains a useful editorial hierarchy.</span></div>
   <div class="spec"><span class="label">Readable by identity</span><span class="t-body">Strong contrast, 17px body type, obvious links, and large targets are brand features, not accommodations.</span></div>
-  <div class="spec"><span class="label">Warmth through restraint</span><span class="t-body">Evergreen does the work; sea glass creates breathing room; coral marks only moments that deserve attention.</span></div>
+  <div class="spec"><span class="label">Energy through restraint</span><span class="t-body">Evergreen is the serious anchor; coral is the energetic accent, marking moments that deserve attention; sea glass creates breathing room. Energy comes from confident type, accents, and momentum — never from noise.</span></div>
   <div class="spec"><span class="label">Forward motion, no theater</span><span class="t-body">Direction comes from layout and the horizon motif, not sliding or pulsing elements.</span></div>
   <div class="spec"><span class="label">Commerce is legible</span><span class="t-body">Paid modules fit the system but remain unmistakably disclosed.</span></div>
 </section>
@@ -297,7 +292,7 @@
   <div class="spec"><span class="label">Label · DM Sans 700 · 12px</span><span class="t-label">Picks &amp; Deals</span></div>
   <div class="spec"><span class="label">Meta · DM Sans 500 · 14px</span><span class="t-meta">Source: Medicare.gov · Checked August 8, 2026</span></div>
   <div class="spec"><span class="label">Fine print · DM Sans 400 · 13px</span><span class="t-fine">If you buy through this link, Plenty Ahead may earn a commission. That never changes the price you pay.</span></div>
-  <div class="spec"><span class="label">Editor · Lora Italic · 15–16px</span><span class="t-editor">Monday, August 10 · No. 214 — the editor's voice: datelines, chapter headings, asides, sign-offs. Direction-level; never body copy or UI.</span></div>
+  <div class="spec"><span class="label">Editor · Lora Italic · 15–16px</span><span class="t-editor">Monday, August 10 — the Daily's editor's voice: datelines, chapter headings, asides, sign-offs. Direction-level; use sparingly (a few moments per edition), never body copy or UI. Heavy serif/italic reads literary — when in doubt, DM Sans.</span></div>
 </section>
 <hr class="rule">
 
@@ -335,13 +330,13 @@
 <section>
   <span class="kicker">Identity</span>
   <h2 class="sec">The open horizon</h2>
-  <p class="sec-note">A level line interrupted by a rising semicircle: possibility ahead without a literal sunset. The sun always rises from or sits above the line, never below it. Use at most twice on a page, or once in an email body plus the masthead. In editions (direction-level): exactly twice — opening the edition in the masthead and closing it above the sign-off. Never animate it, pattern it, or pair it with landscape photography.</p>
+  <p class="sec-note"><strong>Status: exploration, not finalized.</strong> The horizon/sunrise concept can subconsciously read as sunset or twilight for this audience — exactly the association to avoid. Symbol exploration continues around forward momentum, openness, abundance, expansion, possibility, and curiosity; the wordmark remains the primary brand asset. Where the motif is used during exploration: at most twice on a page; in editions (direction-level), optional — if used, opening the edition and closing it above the sign-off. Never animate it, pattern it, or pair it with landscape photography.</p>
 
   <div class="demo on-open">
     <div class="demo-caption">Section divider — exhibit</div>
     <div class="horizon"><span class="line"></span><span class="sun"></span><span class="line" style="flex:2"></span></div>
   </div>
-  <p class="t-fine">The instance above is an exhibit, not page decoration. The compact symbol version (for avatars and favicons) awaits logo production; do not improvise it in prototypes.</p>
+  <p class="t-fine">The instance above is an exhibit, not page decoration. The compact symbol is unresolved — small placements use live-text wordmark treatments in the interim, and no production asset should depend on the sunrise geometry.</p>
 </section>
 <hr class="rule">
 
@@ -423,7 +418,7 @@
 <section>
   <span class="kicker">Components</span>
   <h2 class="sec">Recommendation card and deal marker</h2>
-  <p class="sec-note">Every card answers five questions: who it is for, why it is useful, what limitation matters, what it costs, and whether Plenty Ahead may be compensated. A deal marker requires a real prior, typical, or comparable market price — coral is never used to make a sale feel urgent.</p>
+  <p class="sec-note">Commerce is a first-class part of the system. Every card answers five questions: who it is for, why it is useful, what limitation matters, what it costs, and whether Plenty Ahead may be compensated. A deal marker requires a real prior, typical, or comparable market price — coral is never used to make a sale feel urgent. Direction-level: every commercial module is visibly one of three tiers — editorial (standard styling, no marker), affiliate-supported (plain-language disclosure adjacent to the CTA), or sponsored (Soft Peach panel, SPONSORED marker; never imitates editorial, scam alerts, or health warnings).</p>
 
   <div class="demo on-open">
     <div class="rec-card">
@@ -439,6 +434,19 @@
       <div class="cta-row">
         <a class="btn btn-primary" href="#">See today's price</a>
         <p class="disclosure">If you buy through this link, Plenty Ahead may earn a commission. That never changes the price you pay or our judgment.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="demo on-open">
+    <div class="demo-caption">Sponsored module — paid tier (direction-level)</div>
+    <div class="rec-card sponsored">
+      <div class="sponsor-tag">Sponsored · Beacon Travel Insurance</div>
+      <h4>Trip coverage that includes pre-existing conditions</h4>
+      <p class="t-body" style="margin-bottom:16px">Beacon's plans cover pre-existing conditions when purchased within 14 days of your first trip payment — a window most travelers miss.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" style="background:var(--evergreen)" href="#">Compare Beacon's plans</a>
+        <p class="disclosure">Paid partnership. Beacon compensated Plenty Ahead for this placement; our editors did not review this product.</p>
       </div>
     </div>
   </div>
@@ -481,7 +489,7 @@
     <div class="field">
       <label for="f-default">Email address</label>
       <input id="f-default" type="email" placeholder="name@example.com">
-      <span class="helper">One email a day. Unsubscribe any time.</span>
+      <span class="helper">Free. Unsubscribe any time, in one click.</span>
     </div>
     <div class="field is-error">
       <label for="f-error">Email address</label>
@@ -543,18 +551,17 @@
 <!-- ============ Almanac edition system ============ -->
 <section>
   <span class="kicker">Identity direction</span>
-  <h2 class="sec">Almanac edition system</h2>
-  <span class="direction-tag">Direction-level · Approved Aug 10, 2026 · Details finalized by email-format specs</span>
-  <p class="sec-note">The approved general direction for editions: an editor's voice in Lora Italic threading from dateline to sign-off, numbered entries with coral numerals, the scam alert composed into the reading flow, and the sky — mandatory empty space below the masthead. Values shown are reference implementations; the email-format specifications determine final details.</p>
+  <h2 class="sec">Daily edition editorial DNA</h2>
+  <span class="direction-tag">Direction-level · Revised Aug 10, 2026 · Details finalized by email-format specs</span>
+  <p class="sec-note">The Daily carries almanac-inspired editorial DNA as an influence, not a brand definition: numbered entries with coral numerals, a sparing editor's voice, and the scam alert composed into the reading flow. Edition numbering is optional quiet metadata. Spacing is intentional, not mandated — readers reach item one quickly. The core brand system stays modern and flexible; future email products are designed individually later.</p>
 
   <div class="demo on-open" style="padding:0;overflow:hidden">
     <div class="alm-mast">
-      <div class="est">Monday, August 10 · No. 214</div>
+      <div class="est">Monday, August 10 <span style="font-style:normal;font-family:var(--font-ui);font-size:12px;color:var(--mist)">· No. 214</span></div>
       <div class="wm">Plenty Ahead</div>
-      <div class="promise">Smart, useful ideas for making more of what's ahead</div>
       <div class="h-mark" aria-hidden="true" style="max-width:400px"><span class="l"></span><span class="sun-s"></span><span class="l"></span></div>
     </div>
-    <div class="alm-sky" aria-hidden="true"></div>
+    <div style="height:28px" aria-hidden="true"></div>
     <div class="alm-body">
       <div class="alm-ch">In this edition</div>
       <article class="alm-item">
@@ -580,20 +587,26 @@
       </div>
     </div>
   </div>
-  <p class="t-fine" style="margin-top:12px">Boundary constraint: the almanac register never borrows broadsheet devices — no double rules, column layouts, all-caps serif mastheads, or newsprint tinting. Those belong to AmericanAdvisor.</p>
+  <p class="t-fine" style="margin-top:12px">Boundary constraints: no broadsheet devices (double rules, column layouts, all-caps serif mastheads, newsprint tinting — those belong to AmericanAdvisor) and no literary-magazine or public-radio register. When a surface starts feeling bookish or ceremonial, cut serif/italic moments and restore momentum.</p>
 </section>
 <hr class="rule">
 
 <!-- ============ Sunrise architecture ============ -->
 <section>
-  <span class="kicker">Identity direction</span>
-  <h2 class="sec">Sunrise architecture</h2>
-  <span class="direction-tag">Direction-level · Acquisition surfaces only</span>
-  <p class="sec-note">The system's single pictorial moment: a flat Sea Glass semicircle rising into an Evergreen field. Permitted only on landing pages and the welcome email hero — never inside regular editions, never animated, never gradient-filled. The same geometry at ~32px is the working candidate for the compact symbol, pending logo production.</p>
-  <div class="sunr">
-    <div class="wm">Plenty Ahead</div>
-    <p class="promise">Smart, useful ideas for making more of what's ahead. One email a day, worth opening.</p>
-    <div class="rise" aria-hidden="true"><div class="sun"></div></div>
+  <span class="kicker">Ahead</span>
+  <h2 class="sec">Acquisition surfaces</h2>
+  <span class="direction-tag">Planned · Not yet designed</span>
+  <p class="sec-note">Business-critical and coming — and deliberately not designed yet. The literal landing pages will be designed as their own projects when the campaigns are real, and this system gets updated from those real designs. What the system records today is intent only.</p>
+
+  <div class="demo" style="border-style:dashed;background:var(--white)">
+    <div class="demo-caption">Recorded as intent in design-system.md</div>
+    <ul class="a11y-list">
+      <li><span class="tick">→</span>Acquisition on Meta targets a sub-$0.50 subscriber; most arrive through specific hooks, not a branded homepage. The hook sells the signup; the brand builds the relationship after.</li>
+      <li><span class="tick">→</span>Landing pages will be direct-response: hook-dominant, benefit-clear, signup-prominent, minimal-friction, mobile-first, trusted-publisher presence, success states included.</li>
+      <li><span class="tick">→</span>The branded hero is never assumed to be the primary acquisition experience.</li>
+      <li><span class="tick">→</span>The first email to a paid cohort fulfills the ad's exact promise immediately; brand introduction follows the value. Organic welcome treatment equally deferred.</li>
+      <li><span class="tick">→</span>No frequency promises — value, not cadence. No production acquisition asset depends on sunrise imagery while the symbol is in exploration.</li>
+    </ul>
   </div>
 </section>
 <hr class="rule">
