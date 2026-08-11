@@ -101,12 +101,22 @@ body {
     color: #52645F;
 }
 
-.masthead-dateline .edition-no {
+/* Format label — identifies which Plenty Ahead email this is
+   (Daily today; future formats swap the word). */
+.masthead-dateline .format-label {
     font-family: 'DM Sans', Arial, Helvetica, sans-serif;
     font-style: normal;
     font-size: 12px;
-    font-weight: 500;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #236B5B;
+}
+
+.masthead-dateline .dateline-sep {
+    font-style: normal;
     color: #52645F;
+    margin: 0 7px;
 }
 
 .masthead-wordmark {
