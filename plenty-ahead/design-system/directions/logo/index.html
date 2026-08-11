@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Plenty Ahead — Logo Exploration · Round One</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --evergreen:#173F36; --forward:#236B5B; --forward-hover:#17564B; --coral:#B84F3F;
+    --body:#263B36; --sage:#52645F;
+    --open-white:#FFFDF7; --sea-glass:#DCEDE7; --soft-peach:#F7E8E1; --mist:#CFDDD8; --white:#FFFFFF;
+    --lora:"Lora", Georgia, serif;
+    --dm:"DM Sans", Arial, Helvetica, sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--open-white);color:var(--body);font-family:var(--dm);font-size:17px;line-height:1.65}
+  :focus-visible{outline:2px solid var(--forward);outline-offset:2px}
+  .wrap{max-width:960px;margin:0 auto;padding:0 20px}
+  @media(min-width:700px){.wrap{padding:0 28px}}
+
+  .intro{padding:56px 20px 44px;text-align:center;border-bottom:1px solid var(--mist)}
+  .intro .wm{font-family:var(--lora);font-weight:700;letter-spacing:-0.02em;color:var(--evergreen);font-size:30px}
+  .intro .tag{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--sage);margin-top:10px}
+  .intro p{font-size:16px;color:var(--sage);max-width:660px;margin:18px auto 0;line-height:1.6}
+  .intro .status{display:inline-block;margin-top:20px;background:var(--coral);color:#fff;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:5px 12px;border-radius:4px}
+
+  section{padding:56px 0 8px}
+  .kicker{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--forward)}
+  h2.sec{font-family:var(--lora);font-weight:700;font-size:28px;color:var(--evergreen);line-height:1.25;margin:6px 0 10px;letter-spacing:-0.01em}
+  .sec-note{font-size:16px;color:var(--sage);max-width:680px;margin-bottom:30px}
+  .rule{border:none;border-top:1px solid var(--mist);margin:56px 0 0}
+
+  /* ---- wordmark treatments ---- */
+  .wm-grid{display:grid;grid-template-columns:1fr;gap:16px}
+  @media(min-width:760px){.wm-grid{grid-template-columns:1fr 1fr}}
+  .wm-tile{border:1px solid var(--mist);border-radius:14px;padding:44px 24px;display:flex;align-items:center;justify-content:center;min-height:150px}
+  .wm-tile .mark{font-family:var(--lora);font-weight:700;letter-spacing:-0.02em;font-size:clamp(28px,4.5vw,38px);line-height:1;white-space:nowrap}
+  .wm-caption{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--sage);margin:10px 0 0;text-align:center}
+
+  /* ---- candidates ---- */
+  .cand{border:1px solid var(--mist);border-radius:14px;background:var(--white);padding:28px;margin-bottom:26px}
+  .cand .head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+  .cand .letter{font-family:var(--lora);font-weight:700;font-size:15px;color:var(--coral)}
+  .cand h3{font-family:var(--lora);font-weight:600;font-size:22px;color:var(--evergreen);letter-spacing:-0.01em}
+  .cand .territory{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--forward)}
+  .cand .idea{font-size:15.5px;color:var(--body);line-height:1.6;max-width:640px;margin-bottom:20px}
+  .cand .risk{font-size:13.5px;color:var(--sage);line-height:1.55;max-width:640px;margin-top:16px}
+  .cand .risk strong{color:var(--evergreen)}
+  .sizes{display:flex;align-items:flex-end;gap:28px;flex-wrap:wrap}
+  .size-cell{text-align:center}
+  .size-cell .label{font-size:11px;color:var(--sage);letter-spacing:.06em;text-transform:uppercase;margin-top:8px;font-weight:500}
+  .chip{display:flex;align-items:center;justify-content:center;border:1px solid var(--mist);border-radius:12px;background:var(--open-white)}
+  .chip.lg{width:112px;height:112px}
+  .chip.dark{background:var(--evergreen);border-color:var(--evergreen)}
+  .avatar{width:48px;height:48px;border-radius:50%;background:var(--evergreen);display:flex;align-items:center;justify-content:center}
+  .fav{width:32px;height:32px;border-radius:7px;border:1px solid var(--mist);background:var(--open-white);display:flex;align-items:center;justify-content:center}
+  .fav.tiny{width:20px;height:20px;border-radius:5px}
+  .lockup{display:flex;align-items:center;gap:14px;margin-top:22px;padding-top:20px;border-top:1px solid var(--mist)}
+  .lockup .wm{font-family:var(--lora);font-weight:700;letter-spacing:-0.02em;color:var(--evergreen);font-size:26px;line-height:1;white-space:nowrap}
+  .lockup .label{font-size:11px;color:var(--sage);letter-spacing:.06em;text-transform:uppercase;font-weight:500;margin-left:auto}
+
+  /* ---- comparison ---- */
+  .ctable-scroll{overflow-x:auto}
+  .ctable{width:100%;border-collapse:collapse;font-size:14.5px;min-width:640px}
+  .ctable th,.ctable td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--mist);vertical-align:top;line-height:1.5}
+  .ctable thead th{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--sage);border-bottom:2px solid var(--evergreen)}
+  .ctable td:first-child{font-weight:700;color:var(--evergreen);white-space:nowrap}
+  .page-end{padding:56px 0 96px;text-align:center;font-size:13px;color:var(--sage)}
+</style>
+</head>
+<body>
+
+<header class="intro">
+  <div class="wm">Plenty Ahead</div>
+  <div class="tag">Logo Exploration · Round One</div>
+  <p>The wordmark is an Approved Foundation and needs faithful production, shown first in its treatments. The compact symbol is Not Yet Designed — five candidates below explore the agreed territory (forward momentum, openness, abundance, expansion, possibility, curiosity), each tested at avatar and favicon scale, with its sunset-risk and cliché-risk stated honestly. Pick a direction to refine; nothing here touches Brain or becomes an asset until approved.</p>
+  <span class="status">Direction chosen: B · The Open Circle — see the <a href="proposal/" style="color:#fff;text-decoration:underline">round-two proposal</a></span>
+</header>
+
+<main class="wrap">
+
+<!-- ============ Wordmark ============ -->
+<section>
+  <span class="kicker">Approved Foundation</span>
+  <h2 class="sec">The wordmark, produced</h2>
+  <p class="sec-note">"Plenty Ahead" in Lora Bold, one line, tracking −0.02em (current working direction). Two canonical treatments plus the quiet panel variant. Final deliverables will be true-vector SVGs (Lora outlined to paths) plus PNG sizes — produced in the build round after the symbol direction is chosen, so wordmark and symbol ship as one consistent family.</p>
+  <div class="wm-grid">
+    <div>
+      <div class="wm-tile" style="background:var(--open-white)"><span class="mark" style="color:var(--evergreen)">Plenty Ahead</span></div>
+      <p class="wm-caption">Primary · Evergreen on Open White</p>
+    </div>
+    <div>
+      <div class="wm-tile" style="background:var(--evergreen);border-color:var(--evergreen)"><span class="mark" style="color:var(--open-white)">Plenty Ahead</span></div>
+      <p class="wm-caption">Reversed · Open White on Evergreen</p>
+    </div>
+    <div>
+      <div class="wm-tile" style="background:var(--sea-glass);border-color:var(--sea-glass)"><span class="mark" style="color:var(--evergreen)">Plenty Ahead</span></div>
+      <p class="wm-caption">On Sea Glass panels</p>
+    </div>
+    <div>
+      <div class="wm-tile" style="background:var(--open-white)"><span class="mark" style="color:var(--evergreen);font-size:17px">Plenty Ahead</span></div>
+      <p class="wm-caption">Small use — wordmark holds down to ~110px wide; below that, the symbol takes over</p>
+    </div>
+  </div>
+</section>
+<hr class="rule">
+
+<!-- ============ Symbol candidates ============ -->
+<section>
+  <span class="kicker">Not Yet Designed · Exploration</span>
+  <h2 class="sec">Symbol candidates</h2>
+  <p class="sec-note">All five are flat Evergreen, no gradients or effects, built to survive 16px. Each is shown at display size, reversed, as an avatar, at favicon sizes, and locked up with the wordmark.</p>
+
+  <!-- A -->
+  <div class="cand">
+    <div class="head"><span class="letter">A</span><h3>The Rise</h3><span class="territory">Momentum · Growth</span></div>
+    <p class="idea">Three dots stepping upward, left to right, each larger than the last. More, and better, as you go — momentum you can read in half a second. Warm rather than corporate because the geometry is circles, not arrows.</p>
+    <div class="sizes">
+      <div class="size-cell"><div class="chip lg"><svg width="72" height="72" viewBox="0 0 64 64" role="img" aria-label="Three dots rising left to right"><circle cx="13" cy="47" r="5.5" fill="#173F36"/><circle cx="30" cy="36" r="7.5" fill="#173F36"/><circle cx="50" cy="22" r="10" fill="#173F36"/></svg></div><div class="label">Display</div></div>
+      <div class="size-cell"><div class="chip lg dark"><svg width="72" height="72" viewBox="0 0 64 64" aria-hidden="true"><circle cx="13" cy="47" r="5.5" fill="#FFFDF7"/><circle cx="30" cy="36" r="7.5" fill="#FFFDF7"/><circle cx="50" cy="22" r="10" fill="#FFFDF7"/></svg></div><div class="label">Reversed</div></div>
+      <div class="size-cell"><div class="avatar"><svg width="30" height="30" viewBox="0 0 64 64" aria-hidden="true"><circle cx="13" cy="47" r="6.5" fill="#DCEDE7"/><circle cx="30" cy="36" r="8.5" fill="#DCEDE7"/><circle cx="50" cy="22" r="11" fill="#DCEDE7"/></svg></div><div class="label">Avatar</div></div>
+      <div class="size-cell"><div class="fav"><svg width="22" height="22" viewBox="0 0 64 64" aria-hidden="true"><circle cx="13" cy="47" r="7" fill="#173F36"/><circle cx="30" cy="36" r="9" fill="#173F36"/><circle cx="50" cy="22" r="11.5" fill="#173F36"/></svg></div><div class="label">32px</div></div>
+      <div class="size-cell"><div class="fav tiny"><svg width="14" height="14" viewBox="0 0 64 64" aria-hidden="true"><circle cx="13" cy="47" r="7.5" fill="#173F36"/><circle cx="30" cy="36" r="9.5" fill="#173F36"/><circle cx="50" cy="22" r="12" fill="#173F36"/></svg></div><div class="label">16px</div></div>
+    </div>
+    <div class="lockup"><svg width="34" height="34" viewBox="0 0 64 64" aria-hidden="true"><circle cx="13" cy="47" r="5.5" fill="#173F36"/><circle cx="30" cy="36" r="7.5" fill="#173F36"/><circle cx="50" cy="22" r="10" fill="#173F36"/></svg><span class="wm">Plenty Ahead</span><span class="label">Lockup</span></div>
+    <p class="risk"><strong>Risks:</strong> ascending-dots marks exist in fintech; ours reads warmer at small size but distinctiveness depends on exact spacing and scale ratios. No sunset association. No age coding.</p>
+  </div>
+
+  <!-- B -->
+  <div class="cand">
+    <div class="head"><span class="letter">B</span><h3>The Open Circle</h3><span class="territory">Openness · Curiosity</span></div>
+    <p class="idea">A ring that doesn't close, with one dot sitting just beyond the opening. The circle is the life already built; the gap faces forward, and there's something past it worth going toward. The most conceptual of the five — quiet until you see it, then hard to unsee.</p>
+    <div class="sizes">
+      <div class="size-cell"><div class="chip lg"><svg width="72" height="72" viewBox="0 0 64 64" role="img" aria-label="Open ring with a dot beyond the gap"><path d="M33.4 19.6 A18 18 0 1 0 45.3 33.6" fill="none" stroke="#173F36" stroke-width="5.5" stroke-linecap="round"/><circle cx="46" cy="18" r="5" fill="#173F36"/></svg></div><div class="label">Display</div></div>
+      <div class="size-cell"><div class="chip lg dark"><svg width="72" height="72" viewBox="0 0 64 64" aria-hidden="true"><path d="M33.4 19.6 A18 18 0 1 0 45.3 33.6" fill="none" stroke="#FFFDF7" stroke-width="5.5" stroke-linecap="round"/><circle cx="46" cy="18" r="5" fill="#FFFDF7"/></svg></div><div class="label">Reversed</div></div>
+      <div class="size-cell"><div class="avatar"><svg width="30" height="30" viewBox="0 0 64 64" aria-hidden="true"><path d="M33.4 19.6 A18 18 0 1 0 45.3 33.6" fill="none" stroke="#DCEDE7" stroke-width="6.5" stroke-linecap="round"/><circle cx="46" cy="18" r="5.5" fill="#DCEDE7"/></svg></div><div class="label">Avatar</div></div>
+      <div class="size-cell"><div class="fav"><svg width="22" height="22" viewBox="0 0 64 64" aria-hidden="true"><path d="M33.4 19.6 A18 18 0 1 0 45.3 33.6" fill="none" stroke="#173F36" stroke-width="7" stroke-linecap="round"/><circle cx="46" cy="18" r="6" fill="#173F36"/></svg></div><div class="label">32px</div></div>
+      <div class="size-cell"><div class="fav tiny"><svg width="14" height="14" viewBox="0 0 64 64" aria-hidden="true"><path d="M33.4 19.6 A18 18 0 1 0 45.3 33.6" fill="none" stroke="#173F36" stroke-width="8" stroke-linecap="round"/><circle cx="46" cy="18" r="6.5" fill="#173F36"/></svg></div><div class="label">16px</div></div>
+    </div>
+    <div class="lockup"><svg width="34" height="34" viewBox="0 0 64 64" aria-hidden="true"><path d="M33.4 19.6 A18 18 0 1 0 45.3 33.6" fill="none" stroke="#173F36" stroke-width="5.5" stroke-linecap="round"/><circle cx="46" cy="18" r="5" fill="#173F36"/></svg><span class="wm">Plenty Ahead</span><span class="label">Lockup</span></div>
+    <p class="risk"><strong>Risks:</strong> gap-plus-dot geometry needs care to avoid reading as a power button or a notification badge; the gap angle and dot placement are the whole design. No sunset association. No age coding.</p>
+  </div>
+
+  <!-- C -->
+  <div class="cand">
+    <div class="head"><span class="letter">C</span><h3>The Fan</h3><span class="territory">Expansion · Possibility</span></div>
+    <p class="idea">Three arcs opening outward from a single origin — one point, widening horizons. The most spatial of the five: it draws the feeling of options multiplying as you move forward.</p>
+    <div class="sizes">
+      <div class="size-cell"><div class="chip lg"><svg width="72" height="72" viewBox="0 0 64 64" role="img" aria-label="Three arcs expanding from a corner"><path d="M13 39 A13 13 0 0 1 26 52" fill="none" stroke="#173F36" stroke-width="5.5" stroke-linecap="round"/><path d="M13 26 A26 26 0 0 1 39 52" fill="none" stroke="#173F36" stroke-width="5.5" stroke-linecap="round"/><path d="M13 13 A39 39 0 0 1 52 52" fill="none" stroke="#173F36" stroke-width="5.5" stroke-linecap="round"/></svg></div><div class="label">Display</div></div>
+      <div class="size-cell"><div class="chip lg dark"><svg width="72" height="72" viewBox="0 0 64 64" aria-hidden="true"><path d="M13 39 A13 13 0 0 1 26 52" fill="none" stroke="#FFFDF7" stroke-width="5.5" stroke-linecap="round"/><path d="M13 26 A26 26 0 0 1 39 52" fill="none" stroke="#FFFDF7" stroke-width="5.5" stroke-linecap="round"/><path d="M13 13 A39 39 0 0 1 52 52" fill="none" stroke="#FFFDF7" stroke-width="5.5" stroke-linecap="round"/></svg></div><div class="label">Reversed</div></div>
+      <div class="size-cell"><div class="avatar"><svg width="30" height="30" viewBox="0 0 64 64" aria-hidden="true"><path d="M13 39 A13 13 0 0 1 26 52" fill="none" stroke="#DCEDE7" stroke-width="7" stroke-linecap="round"/><path d="M13 26 A26 26 0 0 1 39 52" fill="none" stroke="#DCEDE7" stroke-width="7" stroke-linecap="round"/><path d="M13 13 A39 39 0 0 1 52 52" fill="none" stroke="#DCEDE7" stroke-width="7" stroke-linecap="round"/></svg></div><div class="label">Avatar</div></div>
+      <div class="size-cell"><div class="fav"><svg width="22" height="22" viewBox="0 0 64 64" aria-hidden="true"><path d="M13 39 A13 13 0 0 1 26 52" fill="none" stroke="#173F36" stroke-width="7.5" stroke-linecap="round"/><path d="M13 26 A26 26 0 0 1 39 52" fill="none" stroke="#173F36" stroke-width="7.5" stroke-linecap="round"/><path d="M13 13 A39 39 0 0 1 52 52" fill="none" stroke="#173F36" stroke-width="7.5" stroke-linecap="round"/></svg></div><div class="label">32px</div></div>
+      <div class="size-cell"><div class="fav tiny"><svg width="14" height="14" viewBox="0 0 64 64" aria-hidden="true"><path d="M13 26 A26 26 0 0 1 39 52" fill="none" stroke="#173F36" stroke-width="9" stroke-linecap="round"/><path d="M13 13 A39 39 0 0 1 52 52" fill="none" stroke="#173F36" stroke-width="9" stroke-linecap="round"/></svg></div><div class="label">16px · drops to two arcs</div></div>
+    </div>
+    <div class="lockup"><svg width="34" height="34" viewBox="0 0 64 64" aria-hidden="true"><path d="M13 39 A13 13 0 0 1 26 52" fill="none" stroke="#173F36" stroke-width="5.5" stroke-linecap="round"/><path d="M13 26 A26 26 0 0 1 39 52" fill="none" stroke="#173F36" stroke-width="5.5" stroke-linecap="round"/><path d="M13 13 A39 39 0 0 1 52 52" fill="none" stroke="#173F36" stroke-width="5.5" stroke-linecap="round"/></svg><span class="wm">Plenty Ahead</span><span class="label">Lockup</span></div>
+    <p class="risk"><strong>Risks:</strong> the real hazard is reading as a Wi-Fi or signal icon rotated — orientation and stroke rhythm have to fight that, and at 16px it needs to drop to two arcs. No sunset association. No age coding.</p>
+  </div>
+
+  <!-- D -->
+  <div class="cand">
+    <div class="head"><span class="letter">D</span><h3>Daylight</h3><span class="territory">The horizon, answered</span></div>
+    <p class="idea">The horizon exploration, evolved to answer its own critique: the circle floats fully clear of the line. Not rising, not setting — risen. Broad daylight, the whole day ahead. Keeps the equity of the original concept while removing the twilight ambiguity.</p>
+    <div class="sizes">
+      <div class="size-cell"><div class="chip lg"><svg width="72" height="72" viewBox="0 0 64 64" role="img" aria-label="A circle floating fully above a level line"><circle cx="32" cy="22" r="11" fill="#173F36"/><line x1="9" y1="48" x2="55" y2="48" stroke="#173F36" stroke-width="5.5" stroke-linecap="round"/></svg></div><div class="label">Display</div></div>
+      <div class="size-cell"><div class="chip lg dark"><svg width="72" height="72" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="22" r="11" fill="#FFFDF7"/><line x1="9" y1="48" x2="55" y2="48" stroke="#FFFDF7" stroke-width="5.5" stroke-linecap="round"/></svg></div><div class="label">Reversed</div></div>
+      <div class="size-cell"><div class="avatar"><svg width="30" height="30" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="22" r="12" fill="#DCEDE7"/><line x1="9" y1="48" x2="55" y2="48" stroke="#DCEDE7" stroke-width="7" stroke-linecap="round"/></svg></div><div class="label">Avatar</div></div>
+      <div class="size-cell"><div class="fav"><svg width="22" height="22" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="22" r="12.5" fill="#173F36"/><line x1="9" y1="48" x2="55" y2="48" stroke="#173F36" stroke-width="7.5" stroke-linecap="round"/></svg></div><div class="label">32px</div></div>
+      <div class="size-cell"><div class="fav tiny"><svg width="14" height="14" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="21" r="13" fill="#173F36"/><line x1="9" y1="48" x2="55" y2="48" stroke="#173F36" stroke-width="9" stroke-linecap="round"/></svg></div><div class="label">16px</div></div>
+    </div>
+    <div class="lockup"><svg width="34" height="34" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="22" r="11" fill="#173F36"/><line x1="9" y1="48" x2="55" y2="48" stroke="#173F36" stroke-width="5.5" stroke-linecap="round"/></svg><span class="wm">Plenty Ahead</span><span class="label">Lockup</span></div>
+    <p class="risk"><strong>Risks:</strong> even fully risen, a circle over a horizon stays in the sun family — a viewer who wants to see sunset can still see it. This is the candidate to pick only if the horizon equity feels worth that residual ambiguity. Also lives near Japanese-flag and generic "sunrise finance" marks.</p>
+  </div>
+
+  <!-- E -->
+  <div class="cand">
+    <div class="head"><span class="letter">E</span><h3>The Monogram</h3><span class="territory">Wordmark-derived · Safest</span></div>
+    <p class="idea">"PA" in Lora Bold inside the evergreen field. No metaphor, no decode — pure equity transfer from the wordmark. The pragmatic answer: it can ship immediately, works at every size, and leaves the door open to adopt a conceptual symbol later without rebranding.</p>
+    <div class="sizes">
+      <div class="size-cell"><div class="chip lg dark" style="border-radius:50%"><span style="font-family:var(--lora);font-weight:700;font-size:38px;letter-spacing:-0.02em;color:var(--open-white)">PA</span></div><div class="label">Display</div></div>
+      <div class="size-cell"><div class="chip lg" style="border-radius:50%"><span style="font-family:var(--lora);font-weight:700;font-size:38px;letter-spacing:-0.02em;color:var(--evergreen)">PA</span></div><div class="label">Light</div></div>
+      <div class="size-cell"><div class="avatar"><span style="font-family:var(--lora);font-weight:700;font-size:17px;letter-spacing:-0.02em;color:var(--open-white)">PA</span></div><div class="label">Avatar</div></div>
+      <div class="size-cell"><div class="fav" style="background:var(--evergreen);border-color:var(--evergreen)"><span style="font-family:var(--lora);font-weight:700;font-size:12px;letter-spacing:-0.02em;color:var(--open-white)">PA</span></div><div class="label">32px</div></div>
+      <div class="size-cell"><div class="fav tiny" style="background:var(--evergreen);border-color:var(--evergreen)"><span style="font-family:var(--lora);font-weight:700;font-size:8px;letter-spacing:-0.01em;color:var(--open-white)">PA</span></div><div class="label">16px</div></div>
+    </div>
+    <div class="lockup"><span class="avatar" style="width:34px;height:34px"><span style="font-family:var(--lora);font-weight:700;font-size:13px;letter-spacing:-0.02em;color:var(--open-white)">PA</span></span><span class="wm">Plenty Ahead</span><span class="label">Lockup</span></div>
+    <p class="risk"><strong>Risks:</strong> zero story — it identifies without expressing the brand promise. Monograms also blur among other serif-initial marks. Strongest as an interim or as the fallback if no conceptual candidate earns conviction.</p>
+  </div>
+</section>
+<hr class="rule">
+
+<!-- ============ Comparison ============ -->
+<section>
+  <span class="kicker">Side by side</span>
+  <h2 class="sec">How they compare</h2>
+  <div class="ctable-scroll">
+    <table class="ctable">
+      <thead><tr><th>Candidate</th><th>Says</th><th>16px</th><th>Sunset risk</th><th>Main hazard</th></tr></thead>
+      <tbody>
+        <tr><td>A · The Rise</td><td>More, and better, ahead</td><td>Strong</td><td>None</td><td>Fintech-adjacent ascending motif</td></tr>
+        <tr><td>B · The Open Circle</td><td>Life open, something beyond</td><td>Strong</td><td>None</td><td>Power-button misread if gap is wrong</td></tr>
+        <tr><td>C · The Fan</td><td>Options widening</td><td>Needs 2-arc cut</td><td>None</td><td>Wi-Fi misread</td></tr>
+        <tr><td>D · Daylight</td><td>The whole day ahead</td><td>Strong</td><td>Residual</td><td>Stays in the sun family</td></tr>
+        <tr><td>E · Monogram</td><td>Identification only</td><td>Adequate</td><td>None</td><td>No story</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="sec-note" style="margin-top:22px">All candidates honor the brand rules: flat evergreen, no gradients, no outlines or shadows, and none of the banned devices. Exact geometry (angles, ratios, stroke weights) is refinement-round work for whichever direction is chosen.</p>
+</section>
+
+<div class="page-end">
+  Round one · Nothing becomes an asset or touches Brain until a direction is chosen and refined · August 11, 2026
+</div>
+
+</main>
+</body>
+</html>

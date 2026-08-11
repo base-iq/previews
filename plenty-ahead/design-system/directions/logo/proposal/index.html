@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Plenty Ahead — The Open Circle · Logo Proposal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --evergreen:#173F36; --forward:#236B5B; --coral:#B84F3F;
+    --body:#263B36; --sage:#52645F;
+    --open-white:#FFFDF7; --sea-glass:#DCEDE7; --soft-peach:#F7E8E1; --mist:#CFDDD8; --white:#FFFFFF;
+    --lora:"Lora", Georgia, serif;
+    --dm:"DM Sans", Arial, Helvetica, sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--open-white);color:var(--body);font-family:var(--dm);font-size:17px;line-height:1.65}
+  :focus-visible{outline:2px solid var(--forward);outline-offset:2px}
+  .wrap{max-width:960px;margin:0 auto;padding:0 20px}
+  @media(min-width:700px){.wrap{padding:0 28px}}
+
+  .intro{padding:56px 20px 44px;text-align:center;border-bottom:1px solid var(--mist)}
+  .intro .tag{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--sage);margin-top:18px}
+  .intro p{font-size:16px;color:var(--sage);max-width:640px;margin:18px auto 0;line-height:1.6}
+  .intro .status{display:inline-block;margin-top:20px;background:var(--coral);color:#fff;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:5px 12px;border-radius:4px}
+
+  section{padding:56px 0 8px}
+  .kicker{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--forward)}
+  h2.sec{font-family:var(--lora);font-weight:700;font-size:28px;color:var(--evergreen);line-height:1.25;margin:6px 0 10px;letter-spacing:-0.01em}
+  .sec-note{font-size:16px;color:var(--sage);max-width:680px;margin-bottom:30px}
+  .rule{border:none;border-top:1px solid var(--mist);margin:56px 0 0}
+
+  .hero-mark{display:flex;justify-content:center;padding:52px 0 8px}
+  .story{font-size:16px;color:var(--body);max-width:560px;margin:26px auto 0;text-align:center;line-height:1.7}
+
+  .variants{display:grid;grid-template-columns:1fr;gap:18px}
+  @media(min-width:760px){.variants{grid-template-columns:1fr 1fr 1fr}}
+  .variant{border:1px solid var(--mist);border-radius:14px;background:var(--white);padding:24px;text-align:center}
+  .variant.pick{border:2px solid var(--forward)}
+  .variant .vname{font-family:var(--lora);font-weight:600;font-size:18px;color:var(--evergreen);margin-top:14px}
+  .variant .vnote{font-size:13.5px;color:var(--sage);line-height:1.55;margin-top:6px}
+  .variant .rec{display:inline-block;background:var(--forward);color:#fff;font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;border-radius:4px;margin-top:12px}
+
+  .ctx-grid{display:flex;gap:26px;flex-wrap:wrap;align-items:flex-end}
+  .ctx{text-align:center}
+  .ctx .label{font-size:11px;color:var(--sage);letter-spacing:.06em;text-transform:uppercase;margin-top:8px;font-weight:500}
+  .chip{display:flex;align-items:center;justify-content:center;border:1px solid var(--mist);border-radius:12px;background:var(--open-white)}
+  .chip.dark{background:var(--evergreen);border-color:var(--evergreen)}
+  .avatar{width:48px;height:48px;border-radius:50%;background:var(--evergreen);display:flex;align-items:center;justify-content:center}
+  .appicon{width:64px;height:64px;border-radius:15px;background:var(--evergreen);display:flex;align-items:center;justify-content:center}
+  .fav{width:32px;height:32px;border-radius:7px;border:1px solid var(--mist);background:var(--open-white);display:flex;align-items:center;justify-content:center}
+  .fav.tiny{width:20px;height:20px;border-radius:5px}
+
+  .lockups{display:grid;grid-template-columns:1fr;gap:18px}
+  @media(min-width:760px){.lockups{grid-template-columns:1fr 1fr}}
+  .lockup-tile{border:1px solid var(--mist);border-radius:14px;background:var(--open-white);padding:36px 24px;display:flex;align-items:center;justify-content:center;gap:16px;min-height:130px}
+  .lockup-tile.dark{background:var(--evergreen);border-color:var(--evergreen)}
+  .lockup-tile .wm{font-family:var(--lora);font-weight:700;letter-spacing:-0.02em;font-size:clamp(24px,3.5vw,30px);line-height:1;white-space:nowrap}
+  .lockup-tile.stacked{flex-direction:column;gap:14px}
+  .lockup-caption{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--sage);margin:10px 0 0;text-align:center}
+
+  .rules-grid{display:grid;grid-template-columns:1fr;gap:14px}
+  @media(min-width:760px){.rules-grid{grid-template-columns:1fr 1fr}}
+  .rule-cell{border:1px solid var(--mist);border-radius:10px;padding:16px 18px;background:var(--white)}
+  .rule-cell .k{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+  .rule-cell .k.do{color:var(--forward)}
+  .rule-cell .k.dont{color:var(--coral)}
+  .rule-cell p{font-size:14.5px;line-height:1.55}
+
+  .next{border:1px dashed var(--mist);border-radius:14px;padding:22px 26px;background:var(--white)}
+  .next ol{margin-left:20px;font-size:15.5px;line-height:1.8}
+  .page-end{padding:56px 0 96px;text-align:center;font-size:13px;color:var(--sage)}
+</style>
+</head>
+<body>
+
+<header class="intro">
+  <svg width="88" height="88" viewBox="0 0 64 64" role="img" aria-label="The Open Circle — Plenty Ahead symbol"><path d="M35.1 17.8 A17 17 0 1 0 46.2 28.9" fill="none" stroke="#173F36" stroke-width="6" stroke-linecap="round"/><circle cx="48.4" cy="15.6" r="5" fill="#173F36"/></svg>
+  <div class="tag">The Open Circle · Logo Proposal · Round Two</div>
+  <p>Direction B from round one, refined. The ring is the life already built — full, but not closed. The gap faces forward and up, and the dot is what's beyond it: something specific, close enough to reach. One gesture, two shapes, flat evergreen.</p>
+  <span class="status" style="background:var(--forward)">Approved · B1 — assets produced August 11, 2026</span>
+</header>
+
+<main class="wrap">
+
+<!-- ============ Geometry variants ============ -->
+<section>
+  <span class="kicker">The one decision in this round</span>
+  <h2 class="sec">The ring–dot relationship</h2>
+  <p class="sec-note">Gap centered at 45° (up-forward), spanning ~55° — wide enough to never read as a power button, aimed so the mark always moves up and to the right. The remaining variable is how the dot relates to the ring: held close, reaching further, or heavier. This changes the mark's emotional temperature.</p>
+
+  <div class="variants">
+    <div class="variant pick">
+      <svg width="96" height="96" viewBox="0 0 64 64" role="img" aria-label="Variant one, dot held close"><path d="M35.1 17.8 A17 17 0 1 0 46.2 28.9" fill="none" stroke="#173F36" stroke-width="6" stroke-linecap="round"/><circle cx="48.4" cy="15.6" r="5" fill="#173F36"/></svg>
+      <div class="vname">B1 · Held</div>
+      <p class="vnote">Dot close to the opening — within reach. Confident and warm; the "plenty" feels attainable, not aspirationally distant.</p>
+      <span class="rec">Recommended</span>
+    </div>
+    <div class="variant">
+      <svg width="96" height="96" viewBox="0 0 64 64" role="img" aria-label="Variant two, dot reaching further"><path d="M35.1 17.8 A17 17 0 1 0 46.2 28.9" fill="none" stroke="#173F36" stroke-width="6" stroke-linecap="round"/><circle cx="50.5" cy="13.5" r="4.5" fill="#173F36"/></svg>
+      <div class="vname">B2 · Reaching</div>
+      <p class="vnote">Smaller dot, further out — more longing, more horizon. Elegant at display size but the dot risks detaching at 16px.</p>
+    </div>
+    <div class="variant">
+      <svg width="96" height="96" viewBox="0 0 64 64" role="img" aria-label="Variant three, heavier weights"><path d="M35.1 17.8 A17 17 0 1 0 46.2 28.9" fill="none" stroke="#173F36" stroke-width="6.5" stroke-linecap="round"/><circle cx="49.1" cy="14.9" r="6.5" fill="#173F36"/></svg>
+      <div class="vname">B3 · Bold</div>
+      <p class="vnote">Heavier stroke, bigger dot. Maximum small-size punch; slightly less air, reads a touch more corporate.</p>
+    </div>
+  </div>
+</section>
+<hr class="rule">
+
+<!-- ============ Contexts (B1) ============ -->
+<section>
+  <span class="kicker">B1 in the wild</span>
+  <h2 class="sec">Every size it has to survive</h2>
+  <p class="sec-note">Small sizes use a compensated cut — stroke and dot thicken proportionally so the gesture stays legible. The 16px favicon is the hardest test; the gap and dot still read.</p>
+  <div class="ctx-grid">
+    <div class="ctx"><div class="chip dark" style="width:112px;height:112px"><svg width="72" height="72" viewBox="0 0 64 64" aria-hidden="true"><path d="M35.1 17.8 A17 17 0 1 0 46.2 28.9" fill="none" stroke="#FFFDF7" stroke-width="6" stroke-linecap="round"/><circle cx="48.4" cy="15.6" r="5" fill="#FFFDF7"/></svg></div><div class="label">Reversed</div></div>
+    <div class="ctx"><div class="appicon"><svg width="40" height="40" viewBox="0 0 64 64" aria-hidden="true"><path d="M35.1 17.8 A17 17 0 1 0 46.2 28.9" fill="none" stroke="#DCEDE7" stroke-width="6.5" stroke-linecap="round"/><circle cx="48.4" cy="15.6" r="5.5" fill="#DCEDE7"/></svg></div><div class="label">App icon · Sea Glass on Evergreen</div></div>
+    <div class="ctx"><div class="avatar"><svg width="30" height="30" viewBox="0 0 64 64" aria-hidden="true"><path d="M35.1 17.8 A17 17 0 1 0 46.2 28.9" fill="none" stroke="#DCEDE7" stroke-width="7" stroke-linecap="round"/><circle cx="48.4" cy="15.6" r="6" fill="#DCEDE7"/></svg></div><div class="label">Avatar 48px</div></div>
+    <div class="ctx"><div class="fav"><svg width="22" height="22" viewBox="0 0 64 64" aria-hidden="true"><path d="M35.1 17.8 A17 17 0 1 0 46.2 28.9" fill="none" stroke="#173F36" stroke-width="7.5" stroke-linecap="round"/><circle cx="48.4" cy="15.6" r="6.5" fill="#173F36"/></svg></div><div class="label">32px</div></div>
+    <div class="ctx"><div class="fav tiny"><svg width="14" height="14" viewBox="0 0 64 64" aria-hidden="true"><path d="M35.1 17.8 A17 17 0 1 0 46.2 28.9" fill="none" stroke="#173F36" stroke-width="8.5" stroke-linecap="round"/><circle cx="48.4" cy="15.6" r="7" fill="#173F36"/></svg></div><div class="label">16px</div></div>
+  </div>
+</section>
+<hr class="rule">
+
+<!-- ============ Lockups ============ -->
+<section>
+  <span class="kicker">With the wordmark</span>
+  <h2 class="sec">Lockups</h2>
+  <p class="sec-note">The wordmark stays the primary identity; the symbol joins it only where both fit comfortably. Symbol height matches the capital height of the wordmark in the horizontal lockup. Clear space around any lockup: the symbol's width on all sides (current working direction).</p>
+  <div class="lockups">
+    <div>
+      <div class="lockup-tile">
+        <svg width="32" height="32" viewBox="0 0 64 64" aria-hidden="true"><path d="M35.1 17.8 A17 17 0 1 0 46.2 28.9" fill="none" stroke="#173F36" stroke-width="6" stroke-linecap="round"/><circle cx="48.4" cy="15.6" r="5" fill="#173F36"/></svg>
+        <span class="wm" style="color:var(--evergreen)">Plenty Ahead</span>
+      </div>
+      <p class="lockup-caption">Horizontal · primary</p>
+    </div>
+    <div>
+      <div class="lockup-tile dark">
+        <svg width="32" height="32" viewBox="0 0 64 64" aria-hidden="true"><path d="M35.1 17.8 A17 17 0 1 0 46.2 28.9" fill="none" stroke="#FFFDF7" stroke-width="6" stroke-linecap="round"/><circle cx="48.4" cy="15.6" r="5" fill="#FFFDF7"/></svg>
+        <span class="wm" style="color:var(--open-white)">Plenty Ahead</span>
+      </div>
+      <p class="lockup-caption">Horizontal · reversed</p>
+    </div>
+    <div>
+      <div class="lockup-tile stacked">
+        <svg width="44" height="44" viewBox="0 0 64 64" aria-hidden="true"><path d="M35.1 17.8 A17 17 0 1 0 46.2 28.9" fill="none" stroke="#173F36" stroke-width="6" stroke-linecap="round"/><circle cx="48.4" cy="15.6" r="5" fill="#173F36"/></svg>
+        <span class="wm" style="color:var(--evergreen);font-size:22px">Plenty Ahead</span>
+      </div>
+      <p class="lockup-caption">Stacked · centered contexts</p>
+    </div>
+    <div>
+      <div class="lockup-tile">
+        <span class="wm" style="color:var(--evergreen)">Plenty Ahead</span>
+      </div>
+      <p class="lockup-caption">Wordmark alone — still the default everywhere</p>
+    </div>
+  </div>
+</section>
+<hr class="rule">
+
+<!-- ============ Usage rules ============ -->
+<section>
+  <span class="kicker">Keeping it honest</span>
+  <h2 class="sec">Usage</h2>
+  <div class="rules-grid">
+    <div class="rule-cell"><div class="k do">Do</div><p>Flat evergreen on light, Open White or Sea Glass on dark. Gap always aims up-and-forward (45°). Use the compensated cut below 32px.</p></div>
+    <div class="rule-cell"><div class="k do">Do</div><p>Use the symbol alone only below ~110px wide or in fixed square placements (avatar, favicon, app icon). Everywhere else, wordmark or lockup.</p></div>
+    <div class="rule-cell"><div class="k dont">Don't</div><p>Rotate it. Gap-down closes the circle's story into an ending — the exact wrong metaphor. Gap-up-left points backward.</p></div>
+    <div class="rule-cell"><div class="k dont">Don't</div><p>Move the dot inside the ring (notification badge), close the gap, add gradients, outlines, shadows, or set it in coral.</p></div>
+  </div>
+</section>
+<hr class="rule">
+
+<!-- ============ Next steps ============ -->
+<section>
+  <span class="kicker">On approval</span>
+  <h2 class="sec">What happens next</h2>
+  <div class="next">
+    <ol>
+      <li>Produce the asset set into <code>previews/plenty-ahead/assets/logos/</code>: symbol SVGs (full + compensated small cut, light + reversed), wordmark SVG with Lora outlined to paths, lockup SVGs, and PNG exports (favicon and avatar sizes).</li>
+      <li>Update Brain: symbol moves from "Not Yet Designed" to approved with its geometry and usage rules; brand-guide small-placement guidance switches from live-text interim to the real assets.</li>
+      <li>Update the design-system showcase to render the real assets, and retire the sunrise/horizon exploration status.</li>
+    </ol>
+  </div>
+</section>
+
+<div class="page-end">
+  Round two · The Open Circle · Approval triggers asset production and Brain updates · August 11, 2026
+</div>
+
+</main>
+</body>
+</html>
