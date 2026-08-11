@@ -1,0 +1,484 @@
+/* ============================================
+   Plenty Ahead Newsletter — single canonical stylesheet
+   ============================================
+   First created for dailyv1 (the flagship Daily).
+   Implements the Plenty Ahead design-system tokens:
+     evergreen  #173F36   dark anchor — headlines, footer
+     forward    #236B5B   links, section markers, CTAs
+     fwd-hover  #17564B   hover/active pair
+     coral      #B84F3F   numerals, alerts, editorial accents
+     body       #263B36   body copy
+     sage-gray  #52645F   metadata, labels, fine print
+     open-white #FFFDF7   canvas
+     sea-glass  #DCEDE7   page surround + quiet panels
+     soft-peach #F7E8E1   commerce panels
+     mist       #CFDDD8   hairlines and dividers
+   Email typography rides reliable fallbacks: Lora → Georgia
+   for display, DM Sans → Arial for body (per brand-guide.md).
+   ============================================ */
+
+@import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,600;0,700;1,400;1,500&family=DM+Sans:wght@400;500;700&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'DM Sans', Arial, Helvetica, sans-serif;
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: #263B36;
+    background: #DCEDE7;
+    -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+    outline: 2px solid #236B5B;
+    outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        transition: none !important;
+        animation: none !important;
+    }
+}
+
+/* ---- NEWSLETTER CONTAINER ---- */
+.newsletter {
+    max-width: 648px;
+    margin: 0 auto;
+    padding: 24px 16px 48px;
+}
+
+/* ---- CANVAS ----
+   One continuous open-white reading surface. The Daily does not
+   use per-section cards — sections flow on a single canvas with
+   heading marks and hairlines carrying the rhythm. */
+.canvas {
+    background: #FFFDF7;
+    border-radius: 14px;
+    padding: 36px 40px 40px;
+}
+
+@media (max-width: 600px) {
+    .canvas {
+        padding: 28px 20px 32px;
+    }
+}
+
+/* ---- LINKS (default inside canvas) ---- */
+.canvas a {
+    color: #236B5B;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color 120ms ease;
+}
+
+.canvas a:hover {
+    color: #17564B;
+}
+
+/* ---- MASTHEAD ----
+   Compact and typographic: italic dateline with quiet edition
+   metadata, live-text wordmark, hairline below. No banner image,
+   no symbol (unresolved), no top-links nav — content starts fast. */
+.masthead {
+    text-align: center;
+    padding-bottom: 22px;
+    border-bottom: 1px solid #CFDDD8;
+    margin-bottom: 24px;
+}
+
+.masthead-dateline {
+    font-family: 'Lora', Georgia, serif;
+    font-style: italic;
+    font-size: 15px;
+    color: #52645F;
+}
+
+.masthead-dateline .edition-no {
+    font-family: 'DM Sans', Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-size: 12px;
+    font-weight: 500;
+    color: #52645F;
+}
+
+.masthead-wordmark {
+    font-family: 'Lora', Georgia, serif;
+    font-weight: 700;
+    font-size: 34px;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: #173F36;
+    margin-top: 6px;
+}
+
+@media (max-width: 600px) {
+    .masthead-wordmark {
+        font-size: 30px;
+    }
+}
+
+/* ---- OPENING ---- */
+.opening p {
+    font-size: 17px;
+    line-height: 1.65;
+}
+
+.opening strong {
+    color: #173F36;
+}
+
+/* ---- SECTIONS + SECTION HEADING ----
+   One headline per section, full stop. The coral mark above the
+   heading is the only recurring section device — no numbers, no
+   eyebrows, no repeated labels. */
+.section {
+    margin-top: 40px;
+}
+
+.section-mark {
+    width: 30px;
+    height: 4px;
+    border-radius: 2px;
+    background: #B84F3F;
+    margin-bottom: 10px;
+}
+
+.section-heading {
+    font-family: 'Lora', Georgia, serif;
+    font-weight: 700;
+    font-size: 25px;
+    line-height: 1.25;
+    color: #173F36;
+    margin-bottom: 6px;
+}
+
+@media (max-width: 600px) {
+    .section-heading {
+        font-size: 23px;
+    }
+}
+
+/* ---- NUMBERED ITEM ----
+   The earned almanac DNA: coral Lora numerals. Used in Worth
+   Knowing; hairlines divide items. */
+.numbered-item {
+    display: flex;
+    gap: 16px;
+    padding: 18px 0;
+}
+
+.numbered-item + .numbered-item {
+    border-top: 1px solid #CFDDD8;
+}
+
+.numbered-item .num {
+    flex-shrink: 0;
+    min-width: 24px;
+    font-family: 'Lora', Georgia, serif;
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 1.2;
+    color: #B84F3F;
+}
+
+.numbered-item .item-body {
+    flex: 1;
+    min-width: 0;
+}
+
+@media (max-width: 600px) {
+    .numbered-item {
+        gap: 12px;
+    }
+}
+
+/* ---- ITEM HEADLINE (shared by numbered + plain items) ---- */
+.item-headline {
+    font-family: 'Lora', Georgia, serif;
+    font-weight: 600;
+    font-size: 19px;
+    line-height: 1.35;
+    color: #173F36;
+    margin-bottom: 6px;
+    text-wrap: pretty;
+}
+
+.numbered-item p,
+.plain-item p {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 8px;
+}
+
+.numbered-item p:last-child,
+.plain-item p:last-child {
+    margin-bottom: 0;
+}
+
+.numbered-item p strong,
+.plain-item p strong {
+    color: #173F36;
+}
+
+/* ---- PLAIN ITEM ----
+   Unnumbered item for Remember When?, Live Better, and Enjoy
+   Yourself. Same headline treatment, hairline dividers. */
+.plain-item {
+    padding: 18px 0;
+}
+
+.plain-item + .plain-item {
+    border-top: 1px solid #CFDDD8;
+}
+
+/* ---- CATEGORY LABEL ----
+   Subtle content label (Health / Home / Money in Live Better).
+   Subordinate to the item headline — never a second heading. */
+.category-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #236B5B;
+    margin-bottom: 4px;
+}
+
+/* ---- PARTNER LABEL ----
+   Plain-language disclosure marker on monetized items that sit
+   inside editorial flow. Sage, small caps, always present on
+   paid items — transparency without banner-ad styling. */
+.partner-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #52645F;
+    margin-bottom: 4px;
+}
+
+/* ---- ALERT LABEL (scam alerts) ----
+   Icon + label + text, never color alone. Lives inside the
+   reading flow as a labeled item, not an interrupting banner. */
+.alert-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #B84F3F;
+    margin-bottom: 4px;
+}
+
+/* ---- SEA-GLASS PANEL ----
+   Quiet utility panel: Then & Now prices, trivia answers. */
+.panel {
+    background: #DCEDE7;
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin: 16px 0 4px;
+}
+
+.panel-title {
+    font-family: 'Lora', Georgia, serif;
+    font-weight: 600;
+    font-size: 17px;
+    color: #173F36;
+    margin-bottom: 8px;
+}
+
+.panel p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #263B36;
+}
+
+.panel-footnote {
+    font-family: 'Lora', Georgia, serif;
+    font-style: italic;
+    font-size: 13px;
+    color: #52645F;
+    margin-top: 10px;
+}
+
+/* ---- THEN & NOW ROWS (inside .panel) ---- */
+.then-now-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    padding: 8px 0;
+    border-bottom: 1px solid #CFDDD8;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.then-now-row:last-of-type {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.then-now-row .prices {
+    white-space: nowrap;
+    font-weight: 700;
+    color: #173F36;
+}
+
+.then-now-row .prices .arrow {
+    color: #236B5B;
+    font-weight: 400;
+}
+
+/* ---- TRIVIA LIST ---- */
+.trivia-q {
+    display: flex;
+    gap: 12px;
+    padding: 10px 0;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.trivia-q + .trivia-q {
+    border-top: 1px solid #CFDDD8;
+}
+
+.trivia-q .q-num {
+    flex-shrink: 0;
+    min-width: 20px;
+    font-family: 'Lora', Georgia, serif;
+    font-weight: 700;
+    font-size: 17px;
+    color: #B84F3F;
+}
+
+.trivia-note {
+    font-family: 'Lora', Georgia, serif;
+    font-style: italic;
+    font-size: 15px;
+    color: #52645F;
+    margin-top: 6px;
+}
+
+/* ---- PARTNER LINE ----
+   Compact contextual offer adjacent to an editorial item —
+   soft-peach so commerce is legible at a glance, small enough
+   that it never dominates the section. Optional per edition. */
+.partner-line {
+    background: #F7E8E1;
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-top: 4px;
+}
+
+.partner-line p {
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.partner-line .partner-label {
+    margin-bottom: 2px;
+}
+
+/* ---- SHORTLIST ----
+   The concentrated commercial block. Soft-peach panel, plain
+   disclosure up top, hairline-divided recommendation rows.
+   Holds 3–5 rows; looks complete at any count. */
+.shortlist {
+    background: #F7E8E1;
+    border-radius: 14px;
+    padding: 24px 26px;
+    margin-top: 14px;
+}
+
+.shortlist-intro {
+    font-size: 14px;
+    line-height: 1.55;
+    color: #52645F;
+    margin-bottom: 4px;
+}
+
+.shortlist-item {
+    padding: 14px 0;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.shortlist-item + .shortlist-item {
+    border-top: 1px solid #FFFDF7;
+}
+
+.shortlist-item:last-child {
+    padding-bottom: 0;
+}
+
+.shortlist-item strong {
+    color: #173F36;
+}
+
+@media (max-width: 600px) {
+    .shortlist {
+        padding: 20px 18px;
+    }
+}
+
+/* ---- SIGN-OFF ---- */
+.signoff {
+    text-align: center;
+    font-family: 'Lora', Georgia, serif;
+    font-style: italic;
+    font-size: 16px;
+    color: #52645F;
+    margin-top: 40px;
+}
+
+/* ---- FOOTER ---- */
+.newsletter-footer {
+    background: #173F36;
+    border-radius: 14px;
+    margin-top: 10px;
+    padding: 28px 30px 24px;
+    text-align: center;
+    color: #DCEDE7;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.footer-wordmark {
+    font-family: 'Lora', Georgia, serif;
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: -0.02em;
+    color: #FFFDF7;
+    margin-bottom: 12px;
+}
+
+.newsletter-footer nav {
+    margin-bottom: 12px;
+}
+
+.newsletter-footer nav a {
+    color: #FFFDF7;
+    font-weight: 500;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    margin: 0 10px;
+}
+
+.newsletter-footer .footer-fine {
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+.newsletter-footer .footer-fine p {
+    margin-bottom: 8px;
+}
