@@ -119,6 +119,14 @@ body {
     margin-top: 6px;
 }
 
+.masthead-tagline {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: #52645F;
+    margin-top: 8px;
+}
+
 @media (max-width: 600px) {
     .masthead-wordmark {
         font-size: 30px;
@@ -239,32 +247,9 @@ body {
     border-top: 1px solid #CFDDD8;
 }
 
-/* ---- CATEGORY LABEL ----
-   Subtle content label (Health / Home / Money in Live Better).
-   Subordinate to the item headline — never a second heading. */
-.category-label {
-    display: block;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: #236B5B;
-    margin-bottom: 4px;
-}
-
-/* ---- PARTNER LABEL ----
-   Plain-language disclosure marker on monetized items that sit
-   inside editorial flow. Sage, small caps, always present on
-   paid items — transparency without banner-ad styling. */
-.partner-label {
-    display: block;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: #52645F;
-    margin-bottom: 4px;
-}
+/* Monetized items carry no label — an asterisk at the end of the
+   link marks a paid-partner placement, explained once in the
+   footer disclosure. */
 
 /* ---- ALERT LABEL (scam alerts) ----
    Icon + label + text, never color alone. Lives inside the
@@ -383,10 +368,6 @@ body {
     font-size: 16px;
     line-height: 1.6;
     margin: 0;
-}
-
-.partner-line .partner-label {
-    margin-bottom: 2px;
 }
 
 /* ---- SHORTLIST ----
