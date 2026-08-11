@@ -120,11 +120,21 @@ body {
 }
 
 .masthead-tagline {
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: 0.02em;
-    color: #52645F;
     margin-top: 8px;
+}
+
+.masthead-tagline .tagline-lead {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    color: #173F36;
+}
+
+.masthead-tagline .tagline-sub {
+    font-size: 13px;
+    font-weight: 400;
+    color: #52645F;
+    margin-top: 2px;
 }
 
 @media (max-width: 600px) {
