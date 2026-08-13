@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Plenty Ahead — Email Color Under Forced Dark Mode</title>
+<link rel="icon" href="../../../assets/logos/pa-symbol-small.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,600;0,700;1,400;1,500&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --evergreen:#173F36; --forward:#236B5B; --forward-hover:#17564B; --coral:#B84F3F;
+    --body:#263B36; --sage-gray:#52645F;
+    --open-white:#FFFDF7; --sea-glass:#DCEDE7; --soft-peach:#F7E8E1; --mist:#CFDDD8; --white:#FFFFFF;
+    --font-display:"Lora", Georgia, serif;
+    --font-ui:"DM Sans", Arial, Helvetica, sans-serif;
+    --font-mono:ui-monospace, Menlo, Consolas, monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--open-white);color:var(--body);font-family:var(--font-ui);font-size:17px;line-height:1.65}
+  .wrap{max-width:960px;margin:0 auto;padding:0 20px}
+  @media(min-width:700px){.wrap{padding:0 28px}}
+  :focus-visible{outline:2px solid var(--forward);outline-offset:2px}
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none !important;animation:none !important}}
+  code{font-family:var(--font-mono);font-size:.85em;background:var(--sea-glass);padding:1px 6px;border-radius:4px;color:var(--evergreen)}
+
+  /* ---- page chrome (matches showcase) ---- */
+  .masthead{padding:48px 16px 0;text-align:center}
+  .masthead .dateline{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--sage-gray);margin-top:14px}
+  .masthead-rule{border:none;border-top:1px solid var(--mist);margin:28px auto 0;max-width:960px}
+  .page-note{font-size:15px;color:var(--sage-gray);max-width:700px;margin:20px auto 0;line-height:1.6;text-align:left}
+  .badge{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;padding:3px 9px;border-radius:4px;vertical-align:middle}
+  .badge.proposed{background:var(--coral);color:#fff}
+  .badge.direction{background:var(--sea-glass);color:var(--forward-hover)}
+  section{padding:56px 0 8px}
+  .kicker{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--forward)}
+  h2.sec{font-family:var(--font-display);font-weight:700;font-size:26px;color:var(--evergreen);line-height:1.28;margin:6px 0 10px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .sec-note{font-size:16px;color:var(--sage-gray);max-width:700px;margin-bottom:26px}
+  .sec-note strong{color:var(--evergreen)}
+  .rule{border:none;border-top:1px solid var(--mist);margin:48px 0 0}
+  .subhead{font-family:var(--font-display);font-weight:600;font-size:20px;line-height:1.35;color:var(--evergreen);margin:32px 0 10px}
+
+  /* ---- token inversion table ---- */
+  .tok-table{width:100%;border-collapse:collapse;font-size:14.5px;margin-bottom:8px}
+  .tok-table th{text-align:left;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--sage-gray);padding:8px 10px;border-bottom:2px solid var(--mist)}
+  .tok-table td{padding:9px 10px;border-bottom:1px solid var(--mist);vertical-align:middle;line-height:1.5}
+  .tok-table .hex{font-family:var(--font-mono);font-size:13px;white-space:nowrap}
+  .dot{display:inline-block;width:17px;height:17px;border-radius:5px;border:1px solid var(--mist);vertical-align:-3px;margin-right:8px}
+  .verdict-ok{color:var(--forward);font-weight:700}
+  .verdict-bad{color:var(--coral);font-weight:700}
+  .verdict-meh{color:var(--sage-gray);font-weight:700}
+
+  /* ---- comparison cards ---- */
+  .module-label{font-size:12px;color:var(--sage-gray);letter-spacing:.08em;text-transform:uppercase;font-weight:700;margin:26px 0 10px}
+  .compare{display:grid;grid-template-columns:1fr;gap:16px}
+  @media(min-width:780px){.compare{grid-template-columns:1fr 1fr}}
+  .render{border:1px solid var(--mist);border-radius:14px;overflow:hidden;background:var(--white)}
+  .render .bar{display:flex;justify-content:space-between;gap:10px;align-items:baseline;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--sage-gray);padding:9px 16px;border-bottom:1px solid var(--mist)}
+  .render .bar .hexes{font-family:var(--font-mono);font-weight:400;letter-spacing:0;text-transform:none;font-size:11px}
+  .render .stage{padding:24px 22px}
+  .render .ratios{font-size:12px;line-height:1.6;color:var(--sage-gray);padding:9px 16px;border-top:1px solid var(--mist)}
+  .render .ratios b{color:var(--evergreen);font-weight:700}
+
+  /* =========================================================
+     EMAIL SAMPLE COMPONENTS — driven by per-mode variables:
+     --canvas --surround --head --bodyc --meta --link --num
+     --alert --panel --hair --band
+     ========================================================= */
+  .stage{background:var(--surround, var(--canvas))}
+  .email{background:var(--canvas);max-width:360px;margin:0 auto;font-size:16px;color:var(--bodyc)}
+  .stage.boxed .email{border-radius:12px;padding:20px 18px}
+
+  /* masthead sample */
+  .em-mast{text-align:center;padding-bottom:16px;border-bottom:1px solid var(--hair)}
+  .em-dateline{font-family:var(--font-display);font-style:italic;font-size:14px;color:var(--meta)}
+  .em-dateline .fmt{font-family:var(--font-ui);font-style:normal;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--link)}
+  .em-dateline .sep{font-style:normal;margin:0 6px}
+  .em-wm{font-family:var(--font-display);font-weight:700;font-size:29px;letter-spacing:-.02em;line-height:1.1;color:var(--head);margin-top:6px}
+  .em-tag-lead{font-size:13px;font-weight:700;color:var(--head);margin-top:7px}
+  .em-tag-sub{font-size:12px;color:var(--meta);margin-top:2px}
+  .em-mast.banded{background:var(--band);border-bottom:none;border-radius:12px;padding:18px 16px}
+
+  /* numbered item sample */
+  .em-item{display:flex;gap:14px;padding:15px 0}
+  .em-item + .em-item{border-top:1px solid var(--hair)}
+  .em-item .n{font-family:var(--font-display);font-weight:700;font-size:21px;line-height:1.2;color:var(--num);min-width:22px}
+  .em-item h4{font-family:var(--font-display);font-weight:600;font-size:17.5px;line-height:1.35;color:var(--head);margin-bottom:5px}
+  .em-item p{font-size:16px;line-height:1.6}
+  .em-item p strong{color:var(--head)}
+  .em-item a{color:var(--link);font-weight:700;text-decoration:underline;text-underline-offset:3px;font-size:16px}
+  .em-alert-label{display:block;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--alert);margin-bottom:4px}
+
+  /* sea-glass panel sample */
+  .em-panel{background:var(--panel);border-radius:12px;padding:16px 18px}
+  .em-panel.hairlined{border:1px solid var(--hair)}
+  .em-panel.stroked{background:transparent;border:1px solid var(--hair);border-top:3px solid var(--link)}
+  .em-panel-title{font-family:var(--font-display);font-weight:600;font-size:16px;color:var(--head);margin-bottom:6px}
+  .em-tn{width:100%;border-collapse:collapse}
+  .em-tn td{padding:7px 0;border-bottom:1px solid var(--hair);font-size:16px;line-height:1.5;vertical-align:baseline}
+  .em-tn tr:last-child td{border-bottom:none;padding-bottom:0}
+  .em-tn .prices{text-align:right;white-space:nowrap;font-weight:700;color:var(--head)}
+  .em-tn .prices .arr{color:var(--link);font-weight:400}
+  .em-panel-note{font-family:var(--font-display);font-style:italic;font-size:12.5px;color:var(--meta);margin-top:9px}
+
+  /* sign-off sample */
+  .em-signoff{text-align:center;font-family:var(--font-display);font-style:italic;font-size:16px;color:var(--meta);padding-top:6px}
+  .em-signoff.ruled{border-top:1px solid var(--hair);padding-top:14px}
+  .em-signoff.banded{background:var(--band);border-radius:12px;padding:14px 16px}
+  .em-signoff .so-lead{color:var(--head);font-weight:600}
+
+  /* ---- mode variable sets ---- */
+  /* current palette (failure demo) */
+  .f-light{--surround:#DCEDE7;--canvas:#FFFDF7;--head:#173F36;--bodyc:#263B36;--meta:#52645F;--link:#236B5B;--num:#B84F3F;--alert:#B84F3F;--panel:#DCEDE7;--hair:#CFDDD8;--band:#DCEDE7}
+  .f-dark{--surround:#1D382F;--canvas:#302400;--head:#ACE1D5;--bodyc:#B5CFC9;--meta:#95A8A2;--link:#86D8C6;--num:#C05646;--alert:#C05646;--panel:#1D382F;--hair:#2D403A;--band:#1D382F}
+  /* proposed palette (all three options share these values) */
+  .m-light{--canvas:#FFFFFF;--head:#173F36;--bodyc:#263B36;--meta:#52645F;--link:#236B5B;--num:#B84F3F;--alert:#9A4136;--panel:#DCEDE7;--hair:#CFDDD8;--band:#DCEDE7}
+  .m-dark{--canvas:#141414;--head:#ACE1D5;--bodyc:#B5CFC9;--meta:#95A8A2;--link:#86D8C6;--num:#C05646;--alert:#C76B5F;--panel:#1D382F;--hair:#2D403A;--band:#1D382F}
+
+  /* ---- option chrome ---- */
+  .opt{border:2px solid var(--mist);border-radius:18px;padding:26px 26px 30px;margin-top:34px;background:var(--white)}
+  .opt.recommended{border-color:var(--forward)}
+  .opt-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .opt-letter{font-family:var(--font-display);font-weight:700;font-size:34px;color:var(--coral);line-height:1}
+  .opt h3{font-family:var(--font-display);font-weight:700;font-size:23px;color:var(--evergreen);line-height:1.3}
+  .opt-thesis{font-size:15.5px;color:var(--sage-gray);line-height:1.6;max-width:700px;margin-top:8px}
+  .opt-thesis strong{color:var(--evergreen)}
+  .rec-chip{font-size:10.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;padding:3px 9px;border-radius:4px;background:var(--forward);color:#fff}
+
+  .page-end{padding:64px 0 96px;text-align:center;font-size:13px;color:var(--sage-gray)}
+  .page-end a{color:var(--forward);font-weight:700}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <img src="../../../assets/logos/plenty-ahead-lockup.svg" alt="Plenty Ahead" style="height:46px;width:auto;max-width:86%">
+  <div class="dateline">Email Color Under Forced Dark Mode · Decided: Option A · August 13, 2026</div>
+  <p class="page-note"><strong style="color:var(--evergreen)">Why this page exists.</strong> The first Email on Acid certification of the dailyv1 Daily (August 13, 2026) showed email clients force-inverting our palette: Open White <code>#FFFDF7</code> turns muddy mustard in Gmail, Yahoo, and Outlook dark modes, and the Evergreen and Sea Glass fields render badly on iPhones. beehiiv strips all <code>&lt;style&gt;</code> tags at send, so there is no <code>prefers-color-scheme</code> escape hatch — the palette itself must degrade gracefully under hue-preserving inversion. Below: why it fails, and three token strategies that survive, each rendered in light mode and simulated inversion.</p>
+  <hr class="masthead-rule">
+</header>
+
+<main class="wrap">
+
+<!-- ============ The model ============ -->
+<section>
+  <span class="kicker">Method</span>
+  <h2 class="sec">How the simulation works <span class="badge direction">Model</span></h2>
+  <p class="sec-note">Gmail-class dark modes transform colors in HSL space: <strong>hue and saturation are preserved, lightness is flipped</strong> and compressed into a dark-theme range (we model L′ = 0.08 + 0.84·(1−L)). This is exactly why warm off-whites die: a near-white like Open White has tiny visible warmth but <strong>100% HSL saturation</strong> — flip its lightness and that hidden saturation surfaces as dark mustard. A truly neutral white (saturation 0) flips to a clean neutral dark. Mid-tones barely move. Every "inverted" rendering below applies this transform to every color in the sample; a real Email on Acid re-certification is still the final proof.</p>
+
+  <table class="tok-table">
+    <tr><th>Token</th><th>Light</th><th>Inverts to</th><th>What happens</th></tr>
+    <tr><td>Open White</td><td class="hex"><span class="dot" style="background:#FFFDF7"></span>#FFFDF7</td><td class="hex"><span class="dot" style="background:#302400"></span>#302400</td><td><span class="verdict-bad">The failure.</span> HSL saturation 100% at near-white lightness → dark mustard. Never an email background.</td></tr>
+    <tr><td>Soft Peach</td><td class="hex"><span class="dot" style="background:#F7E8E1"></span>#F7E8E1</td><td class="hex"><span class="dot" style="background:#391D0F"></span>#391D0F</td><td><span class="verdict-meh">Muddy but workable.</span> Dark brick; text pairs on it stay AAA. Tolerated as a panel fill, never a canvas.</td></tr>
+    <tr><td>Pure white</td><td class="hex"><span class="dot" style="background:#FFFFFF"></span>#FFFFFF</td><td class="hex"><span class="dot" style="background:#141414"></span>#141414</td><td><span class="verdict-ok">Safe.</span> Zero saturation → clean neutral dark. The proposed email canvas.</td></tr>
+    <tr><td>Sea Glass</td><td class="hex"><span class="dot" style="background:#DCEDE7"></span>#DCEDE7</td><td class="hex"><span class="dot" style="background:#1D382F"></span>#1D382F</td><td><span class="verdict-ok">The gift.</span> Inverts into deep evergreen — the brand's own anchor color. Sea-glass surfaces stay on-brand in both worlds.</td></tr>
+    <tr><td>Evergreen</td><td class="hex"><span class="dot" style="background:#173F36"></span>#173F36</td><td class="hex"><span class="dot" style="background:#ACE1D5"></span>#ACE1D5</td><td><span class="verdict-ok">Safe as text.</span> Headlines invert to pale mint at 12.7:1. Large evergreen <em>fields</em> are what misbehave on iPhones.</td></tr>
+    <tr><td>Warm Coral</td><td class="hex"><span class="dot" style="background:#B84F3F"></span>#B84F3F</td><td class="hex"><span class="dot" style="background:#C05646"></span>#C05646</td><td><span class="verdict-meh">Safe for large text only.</span> 4.97:1 light / 4.09:1 inverted on the canvas — fine for 21px+ bold numerals, below AA for small text. And never on sea-glass (2.8:1 inverted).</td></tr>
+    <tr><td>Coral Deep <span class="badge proposed" style="font-size:9px">New · email-only</span></td><td class="hex"><span class="dot" style="background:#9A4136"></span>#9A4136</td><td class="hex"><span class="dot" style="background:#C76B5F"></span>#C76B5F</td><td><span class="verdict-ok">The small-coral fix.</span> 6.6:1 light / 5.0:1 inverted — AA both ways for alert labels and trivia numerals.</td></tr>
+    <tr><td>Charcoal / Sage / Forward</td><td class="hex">#263B36 · #52645F · #236B5B</td><td class="hex">#B5CFC9 · #95A8A2 · #86D8C6</td><td><span class="verdict-ok">Safe.</span> Every text token holds AA or better in both renderings on the proposed canvas.</td></tr>
+  </table>
+</section>
+<hr class="rule">
+
+<!-- ============ Failure demo ============ -->
+<section>
+  <span class="kicker">Evidence</span>
+  <h2 class="sec">The current palette, inverted <span class="badge proposed">Why we're here</span></h2>
+  <p class="sec-note">dailyv1 as certified: Open White canvas on a Sea Glass surround. Contrast technically survives the flip — the problem is what the brand <strong>becomes</strong>: a mustard-brown card that reads as a scan of old newsprint, on a brand built to feel modern and forward.</p>
+  <div class="compare">
+    <div class="render">
+      <div class="bar"><span>Light — as designed</span><span class="hexes">canvas #FFFDF7</span></div>
+      <div class="stage boxed f-light">
+        <div class="email">
+          <div class="em-mast">
+            <div class="em-dateline"><span class="fmt">Daily</span><span class="sep">·</span>Wednesday, August 13</div>
+            <div class="em-wm">Plenty Ahead</div>
+            <div class="em-tag-lead">Make more of what's next.</div>
+            <div class="em-tag-sub">The newsletter built for Americans 50 and older.</div>
+          </div>
+          <div class="em-item">
+            <div class="n">1</div>
+            <div>
+              <h4>The four lines to read in your Medicare annual notice</h4>
+              <p>Premium, deductible, drug tiers, and the pharmacy network. A change to any of the four is grounds to compare plans before December&nbsp;7.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ratios">Wordmark <b>11.5</b> · Body <b>11.7</b> · Numeral <b>4.9</b> — all pass, and it looks like us.</div>
+    </div>
+    <div class="render">
+      <div class="bar"><span>Simulated forced inversion</span><span class="hexes">canvas → #302400</span></div>
+      <div class="stage boxed f-dark">
+        <div class="email">
+          <div class="em-mast">
+            <div class="em-dateline"><span class="fmt">Daily</span><span class="sep">·</span>Wednesday, August 13</div>
+            <div class="em-wm">Plenty Ahead</div>
+            <div class="em-tag-lead">Make more of what's next.</div>
+            <div class="em-tag-sub">The newsletter built for Americans 50 and older.</div>
+          </div>
+          <div class="em-item">
+            <div class="n">1</div>
+            <div>
+              <h4>The four lines to read in your Medicare annual notice</h4>
+              <p>Premium, deductible, drug tiers, and the pharmacy network. A change to any of the four is grounds to compare plans before December&nbsp;7.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ratios">Wordmark <b>10.5</b> · Body <b>9.2</b> — contrast passes, but the canvas is <b>mustard-brown</b>. The Email on Acid failure, reproduced.</div>
+    </div>
+  </div>
+</section>
+<hr class="rule">
+
+<!-- ============ Shared foundation ============ -->
+<section>
+  <span class="kicker">Common ground</span>
+  <h2 class="sec">What all three options share <span class="badge" style="background:var(--forward);color:#fff">Approved · August 13, 2026</span></h2>
+  <p class="sec-note">Every option below is built on the same four email-only decisions — the options differ in how much surface they give the brand colors, not in the chemistry. <strong>No global palette value changes in any option:</strong> Open White stays the web canvas; the web palette is untouched.</p>
+  <table class="tok-table">
+    <tr><th>Decision</th><th>Scope</th><th>Detail</th></tr>
+    <tr><td><strong>Email Canvas</strong> <code>#FFFFFF</code></td><td>Email-only · new token</td><td>The email reading surface. Replaces Open White in email. Zero saturation → inverts to clean neutral <code>#141414</code>.</td></tr>
+    <tr><td><strong>Coral Deep</strong> <code>#9A4136</code></td><td>Email-only · new token</td><td>Coral <em>text</em> below large-text size (alert labels, trivia numerals): 6.6:1 light / 5.0:1 inverted. Item numerals at 21px+ bold stay Warm Coral.</td></tr>
+    <tr><td>Open White banned as email background</td><td>Email-only · rule</td><td>Any near-white with visible warmth carries extreme HSL saturation and inverts to mud. Applies to Soft Peach as a canvas too.</td></tr>
+    <tr><td>Coral never sits on Sea Glass in email</td><td>Email-only · rule</td><td>2.8:1 after inversion. Numbered items always sit on the canvas.</td></tr>
+  </table>
+</section>
+<hr class="rule">
+
+<!-- ============ Options ============ -->
+<section>
+  <span class="kicker">Decide</span>
+  <h2 class="sec">Three ways to wear the palette in email <span class="badge" style="background:var(--forward);color:#fff">Decided · Option A</span></h2>
+  <p class="sec-note">Same chemistry, three levels of exposure. A is the smallest change from dailyv1 as built. B removes every filled surface — nothing left to invert badly. C leans into the sea-glass↔evergreen symmetry and gives the brand the most presence in both modes.</p>
+
+  <!-- ================= OPTION A ================= -->
+  <div class="opt recommended" id="option-a">
+    <div class="opt-head"><span class="opt-letter">A</span><h3>Neutral Canvas</h3><span class="rec-chip">Approved · August 13, 2026</span></div>
+    <p class="opt-thesis">The minimal correction. The canvas goes truly neutral; everything readers recognize — evergreen headlines, coral numerals, sea-glass panels — keeps its exact current values. Panels gain a mist hairline so their edge survives when tints flatten on low-quality displays. The evergreen footer field and sea-glass page surround are dropped in email (the two "field" failures on iPhones); the footer becomes typographic. <strong>Closest to dailyv1 as built, and nothing large left that inverts badly.</strong></p>
+
+    <div class="module-label">Masthead</div>
+    <div class="compare">
+      <div class="render">
+        <div class="bar"><span>Light</span><span class="hexes">canvas #FFFFFF</span></div>
+        <div class="stage m-light">
+          <div class="email">
+            <div class="em-mast">
+              <div class="em-dateline"><span class="fmt">Daily</span><span class="sep">·</span>Wednesday, August 13</div>
+              <div class="em-wm">Plenty Ahead</div>
+              <div class="em-tag-lead">Make more of what's next.</div>
+              <div class="em-tag-sub">The newsletter built for Americans 50 and older.</div>
+            </div>
+          </div>
+        </div>
+        <div class="ratios">Wordmark <b>11.7</b> · Format label <b>6.3</b> · Dateline <b>6.3</b> · Tagline sub <b>6.3</b></div>
+      </div>
+      <div class="render">
+        <div class="bar"><span>Simulated inversion</span><span class="hexes">canvas → #141414</span></div>
+        <div class="stage m-dark">
+          <div class="email">
+            <div class="em-mast">
+              <div class="em-dateline"><span class="fmt">Daily</span><span class="sep">·</span>Wednesday, August 13</div>
+              <div class="em-wm">Plenty Ahead</div>
+              <div class="em-tag-lead">Make more of what's next.</div>
+              <div class="em-tag-sub">The newsletter built for Americans 50 and older.</div>
+            </div>
+          </div>
+        </div>
+        <div class="ratios">Wordmark <b>12.7</b> (mint on neutral dark) · Format label <b>11.1</b> · Dateline <b>7.4</b></div>
+      </div>
+    </div>
+
+    <div class="module-label">Numbered item · with scam-alert variant</div>
+    <div class="compare">
+      <div class="render">
+        <div class="bar"><span>Light</span><span class="hexes">numeral #B84F3F · label #9A4136</span></div>
+        <div class="stage m-light">
+          <div class="email">
+            <div class="em-item">
+              <div class="n">3</div>
+              <div>
+                <h4>Social Security's overpayment clawback rate is changing</h4>
+                <p>Starting in October, the default withholding drops from 100% of your check to 10%. If you got an overpayment notice this year, re-read it.</p>
+                <a href="#">See the new rate</a>
+              </div>
+            </div>
+            <div class="em-item">
+              <div class="n">4</div>
+              <div>
+                <span class="em-alert-label">⚠ Scam alert</span>
+                <h4>If your bank texts this question, do not answer it</h4>
+                <p><strong>The signal:</strong> a text asking "Did you authorize this charge? Reply YES or NO."</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ratios">Numeral <b>5.0</b> (21px bold — large) · Alert label <b>6.6</b> (Coral Deep) · Headline <b>11.7</b> · Body <b>11.9</b> · Link <b>6.3</b></div>
+      </div>
+      <div class="render">
+        <div class="bar"><span>Simulated inversion</span><span class="hexes">numeral → #C05646 · label → #C76B5F</span></div>
+        <div class="stage m-dark">
+          <div class="email">
+            <div class="em-item">
+              <div class="n">3</div>
+              <div>
+                <h4>Social Security's overpayment clawback rate is changing</h4>
+                <p>Starting in October, the default withholding drops from 100% of your check to 10%. If you got an overpayment notice this year, re-read it.</p>
+                <a href="#">See the new rate</a>
+              </div>
+            </div>
+            <div class="em-item">
+              <div class="n">4</div>
+              <div>
+                <span class="em-alert-label">⚠ Scam alert</span>
+                <h4>If your bank texts this question, do not answer it</h4>
+                <p><strong>The signal:</strong> a text asking "Did you authorize this charge? Reply YES or NO."</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ratios">Numeral <b>4.1</b> (large-text AA) · Alert label <b>5.0</b> · Headline <b>12.7</b> · Body <b>11.2</b> · Link <b>11.1</b></div>
+      </div>
+    </div>
+
+    <div class="module-label">Sea-glass panel · Then &amp; Now</div>
+    <div class="compare">
+      <div class="render">
+        <div class="bar"><span>Light</span><span class="hexes">panel #DCEDE7 + mist hairline</span></div>
+        <div class="stage m-light">
+          <div class="email">
+            <div class="em-panel hairlined">
+              <div class="em-panel-title">What things cost in 1985</div>
+              <table class="em-tn">
+                <tr><td>Gallon of gas</td><td class="prices">$1.20 <span class="arr">→</span> $3.42</td></tr>
+                <tr><td>Movie ticket</td><td class="prices">$3.55 <span class="arr">→</span> $11.31</td></tr>
+                <tr><td>First-class stamp</td><td class="prices">22¢ <span class="arr">→</span> 73¢</td></tr>
+              </table>
+              <div class="em-panel-note">Adjusted for nothing but memory.</div>
+            </div>
+          </div>
+        </div>
+        <div class="ratios">Title <b>9.6</b> · Rows <b>9.8</b> · Footnote <b>5.2</b></div>
+      </div>
+      <div class="render">
+        <div class="bar"><span>Simulated inversion</span><span class="hexes">panel → #1D382F — deep evergreen</span></div>
+        <div class="stage m-dark">
+          <div class="email">
+            <div class="em-panel hairlined">
+              <div class="em-panel-title">What things cost in 1985</div>
+              <table class="em-tn">
+                <tr><td>Gallon of gas</td><td class="prices">$1.20 <span class="arr">→</span> $3.42</td></tr>
+                <tr><td>Movie ticket</td><td class="prices">$3.55 <span class="arr">→</span> $11.31</td></tr>
+                <tr><td>First-class stamp</td><td class="prices">22¢ <span class="arr">→</span> 73¢</td></tr>
+              </table>
+              <div class="em-panel-note">Adjusted for nothing but memory.</div>
+            </div>
+          </div>
+        </div>
+        <div class="ratios">Title <b>8.7</b> · Rows <b>7.7</b> · Footnote <b>5.1</b> — the panel inverts <b>into evergreen</b>: still the brand.</div>
+      </div>
+    </div>
+
+    <div class="module-label">Sign-off</div>
+    <div class="compare">
+      <div class="render">
+        <div class="bar"><span>Light</span><span class="hexes">sage #52645F on canvas</span></div>
+        <div class="stage m-light">
+          <div class="email"><div class="em-signoff">More tomorrow. — The editors</div></div>
+        </div>
+        <div class="ratios">Sign-off <b>6.3</b></div>
+      </div>
+      <div class="render">
+        <div class="bar"><span>Simulated inversion</span><span class="hexes">sage → #95A8A2</span></div>
+        <div class="stage m-dark">
+          <div class="email"><div class="em-signoff">More tomorrow. — The editors</div></div>
+        </div>
+        <div class="ratios">Sign-off <b>7.4</b></div>
+      </div>
+    </div>
+
+    <p class="opt-thesis" style="margin-top:22px"><strong>Option A token changes, all email-only:</strong> Email Canvas <code>#FFFFFF</code> replaces Open White and the sea-glass surround · sea-glass panels gain a 1px mist hairline · Coral Deep <code>#9A4136</code> for small coral text · the evergreen footer field becomes a typographic footer (evergreen text, hairline rule) · Soft Peach panels keep their fill (invert to dark brick <code>#391D0F</code>; all text pairs stay AAA). Global changes: <strong>none</strong>.</p>
+  </div>
+
+  <!-- ================= OPTION B ================= -->
+  <div class="opt" id="option-b">
+    <div class="opt-head"><span class="opt-letter">B</span><h3>Structure in Strokes</h3><span class="badge" style="background:transparent;color:var(--sage-gray);border:1px dashed var(--sage-gray)">Explored · not chosen</span></div>
+    <p class="opt-thesis">The bulletproof version. No filled surface anywhere — panels are drawn, not painted: a mist hairline box with a forward-green top rule. Ink on canvas is all there is, so there is nothing for any client to invert badly, on any device, ever. The cost is real: <strong>sea glass disappears from email entirely</strong>, and with it some of the palette's identity. The brand lives in type, coral numerals, and green rules.</p>
+
+    <div class="module-label">Masthead · coral mark added as the brand's color moment</div>
+    <div class="compare">
+      <div class="render">
+        <div class="bar"><span>Light</span><span class="hexes">ink on #FFFFFF only</span></div>
+        <div class="stage m-light">
+          <div class="email">
+            <div class="em-mast" style="border-bottom-width:0;padding-bottom:0">
+              <div class="em-dateline"><span class="fmt">Daily</span><span class="sep">·</span>Wednesday, August 13</div>
+              <div class="em-wm">Plenty Ahead</div>
+              <div class="em-tag-lead">Make more of what's next.</div>
+              <div class="em-tag-sub">The newsletter built for Americans 50 and older.</div>
+              <div style="width:30px;height:4px;border-radius:2px;background:var(--num);margin:14px auto 0"></div>
+            </div>
+          </div>
+        </div>
+        <div class="ratios">Wordmark <b>11.7</b> · coral mark is decorative (no contrast requirement)</div>
+      </div>
+      <div class="render">
+        <div class="bar"><span>Simulated inversion</span><span class="hexes">nothing to invert but ink</span></div>
+        <div class="stage m-dark">
+          <div class="email">
+            <div class="em-mast" style="border-bottom-width:0;padding-bottom:0">
+              <div class="em-dateline"><span class="fmt">Daily</span><span class="sep">·</span>Wednesday, August 13</div>
+              <div class="em-wm">Plenty Ahead</div>
+              <div class="em-tag-lead">Make more of what's next.</div>
+              <div class="em-tag-sub">The newsletter built for Americans 50 and older.</div>
+              <div style="width:30px;height:4px;border-radius:2px;background:var(--num);margin:14px auto 0"></div>
+            </div>
+          </div>
+        </div>
+        <div class="ratios">Wordmark <b>12.7</b> · the coral mark survives as coral</div>
+      </div>
+    </div>
+
+    <div class="module-label">Numbered item — identical to A</div>
+    <div class="compare">
+      <div class="render">
+        <div class="bar"><span>Light</span><span class="hexes">same tokens as A</span></div>
+        <div class="stage m-light">
+          <div class="email">
+            <div class="em-item" style="padding-top:4px">
+              <div class="n">3</div>
+              <div>
+                <h4>Social Security's overpayment clawback rate is changing</h4>
+                <p>Starting in October, the default withholding drops from 100% of your check to 10%.</p>
+                <a href="#">See the new rate</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ratios">Numeral <b>5.0</b> · Headline <b>11.7</b> · Body <b>11.9</b></div>
+      </div>
+      <div class="render">
+        <div class="bar"><span>Simulated inversion</span><span class="hexes"></span></div>
+        <div class="stage m-dark">
+          <div class="email">
+            <div class="em-item" style="padding-top:4px">
+              <div class="n">3</div>
+              <div>
+                <h4>Social Security's overpayment clawback rate is changing</h4>
+                <p>Starting in October, the default withholding drops from 100% of your check to 10%.</p>
+                <a href="#">See the new rate</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ratios">Numeral <b>4.1</b> (large) · Headline <b>12.7</b> · Body <b>11.2</b></div>
+      </div>
+    </div>
+
+    <div class="module-label">Panel · stroked, no fill</div>
+    <div class="compare">
+      <div class="render">
+        <div class="bar"><span>Light</span><span class="hexes">mist box + forward top rule</span></div>
+        <div class="stage m-light">
+          <div class="email">
+            <div class="em-panel stroked">
+              <div class="em-panel-title">What things cost in 1985</div>
+              <table class="em-tn">
+                <tr><td>Gallon of gas</td><td class="prices">$1.20 <span class="arr">→</span> $3.42</td></tr>
+                <tr><td>Movie ticket</td><td class="prices">$3.55 <span class="arr">→</span> $11.31</td></tr>
+              </table>
+              <div class="em-panel-note">Adjusted for nothing but memory.</div>
+            </div>
+          </div>
+        </div>
+        <div class="ratios">Title <b>11.7</b> · Rows <b>11.9</b> · Footnote <b>6.3</b> (all on canvas)</div>
+      </div>
+      <div class="render">
+        <div class="bar"><span>Simulated inversion</span><span class="hexes">rules invert, canvas stays neutral</span></div>
+        <div class="stage m-dark">
+          <div class="email">
+            <div class="em-panel stroked">
+              <div class="em-panel-title">What things cost in 1985</div>
+              <table class="em-tn">
+                <tr><td>Gallon of gas</td><td class="prices">$1.20 <span class="arr">→</span> $3.42</td></tr>
+                <tr><td>Movie ticket</td><td class="prices">$3.55 <span class="arr">→</span> $11.31</td></tr>
+              </table>
+              <div class="em-panel-note">Adjusted for nothing but memory.</div>
+            </div>
+          </div>
+        </div>
+        <div class="ratios">Title <b>12.7</b> · Rows <b>11.2</b> · Footnote <b>7.4</b></div>
+      </div>
+    </div>
+
+    <div class="module-label">Sign-off · hairline ruled</div>
+    <div class="compare">
+      <div class="render">
+        <div class="bar"><span>Light</span><span class="hexes"></span></div>
+        <div class="stage m-light">
+          <div class="email"><div class="em-signoff ruled">More tomorrow. — The editors</div></div>
+        </div>
+        <div class="ratios">Sign-off <b>6.3</b></div>
+      </div>
+      <div class="render">
+        <div class="bar"><span>Simulated inversion</span><span class="hexes"></span></div>
+        <div class="stage m-dark">
+          <div class="email"><div class="em-signoff ruled">More tomorrow. — The editors</div></div>
+        </div>
+        <div class="ratios">Sign-off <b>7.4</b></div>
+      </div>
+    </div>
+
+    <p class="opt-thesis" style="margin-top:22px"><strong>Option B token changes, all email-only:</strong> Email Canvas <code>#FFFFFF</code> · <strong>no filled panels in email</strong> — sea-glass and soft-peach fills replaced by hairline boxes with a forward (editorial) or coral (commerce) top rule · Coral Deep <code>#9A4136</code> for small coral text · typographic footer. Global changes: <strong>none</strong>.</p>
+  </div>
+
+  <!-- ================= OPTION C ================= -->
+  <div class="opt" id="option-c">
+    <div class="opt-head"><span class="opt-letter">C</span><h3>Sea-Glass Banded</h3><span class="badge" style="background:transparent;color:var(--sage-gray);border:1px dashed var(--sage-gray)">Explored · not chosen</span></div>
+    <p class="opt-thesis">The expressive version — it treats the inversion as a feature. Because sea glass inverts into deep evergreen, a sea-glass band is <strong>on-brand in both worlds</strong>: light mode opens on a pale sea-glass masthead with the evergreen wordmark; inverted, the same band becomes an evergreen field flying a mint wordmark. Bands bookend the email (masthead and sign-off), panels keep their fill, and the footer keeps its evergreen field — which inverts to the mirror image. The trade-off: this option carries the most filled surface, and large tinted fields are exactly what Email on Acid flagged on iPhones. <strong>Choose C only with a re-certification pass.</strong></p>
+
+    <div class="module-label">Masthead · sea-glass band</div>
+    <div class="compare">
+      <div class="render">
+        <div class="bar"><span>Light</span><span class="hexes">band #DCEDE7</span></div>
+        <div class="stage m-light">
+          <div class="email">
+            <div class="em-mast banded">
+              <div class="em-dateline"><span class="fmt">Daily</span><span class="sep">·</span>Wednesday, August 13</div>
+              <div class="em-wm">Plenty Ahead</div>
+              <div class="em-tag-lead">Make more of what's next.</div>
+              <div class="em-tag-sub">The newsletter built for Americans 50 and older.</div>
+            </div>
+          </div>
+        </div>
+        <div class="ratios">Wordmark <b>9.6</b> · Format label <b>5.2</b> · Dateline <b>5.2</b></div>
+      </div>
+      <div class="render">
+        <div class="bar"><span>Simulated inversion</span><span class="hexes">band → #1D382F — evergreen flag</span></div>
+        <div class="stage m-dark">
+          <div class="email">
+            <div class="em-mast banded">
+              <div class="em-dateline"><span class="fmt">Daily</span><span class="sep">·</span>Wednesday, August 13</div>
+              <div class="em-wm">Plenty Ahead</div>
+              <div class="em-tag-lead">Make more of what's next.</div>
+              <div class="em-tag-sub">The newsletter built for Americans 50 and older.</div>
+            </div>
+          </div>
+        </div>
+        <div class="ratios">Wordmark <b>8.7</b> · Format label <b>7.6</b> · Dateline <b>5.1</b></div>
+      </div>
+    </div>
+
+    <div class="module-label">Numbered item — on canvas, identical to A (coral never on sea-glass)</div>
+    <div class="compare">
+      <div class="render">
+        <div class="bar"><span>Light</span><span class="hexes"></span></div>
+        <div class="stage m-light">
+          <div class="email">
+            <div class="em-item" style="padding-top:4px">
+              <div class="n">3</div>
+              <div>
+                <h4>Social Security's overpayment clawback rate is changing</h4>
+                <p>Starting in October, the default withholding drops from 100% of your check to 10%.</p>
+                <a href="#">See the new rate</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ratios">Numeral <b>5.0</b> · Headline <b>11.7</b> · Body <b>11.9</b></div>
+      </div>
+      <div class="render">
+        <div class="bar"><span>Simulated inversion</span><span class="hexes"></span></div>
+        <div class="stage m-dark">
+          <div class="email">
+            <div class="em-item" style="padding-top:4px">
+              <div class="n">3</div>
+              <div>
+                <h4>Social Security's overpayment clawback rate is changing</h4>
+                <p>Starting in October, the default withholding drops from 100% of your check to 10%.</p>
+                <a href="#">See the new rate</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ratios">Numeral <b>4.1</b> (large) · Headline <b>12.7</b> · Body <b>11.2</b></div>
+      </div>
+    </div>
+
+    <div class="module-label">Sea-glass panel — fill kept, no hairline (bands make fills the deliberate language)</div>
+    <div class="compare">
+      <div class="render">
+        <div class="bar"><span>Light</span><span class="hexes">panel #DCEDE7</span></div>
+        <div class="stage m-light">
+          <div class="email">
+            <div class="em-panel">
+              <div class="em-panel-title">What things cost in 1985</div>
+              <table class="em-tn">
+                <tr><td>Gallon of gas</td><td class="prices">$1.20 <span class="arr">→</span> $3.42</td></tr>
+                <tr><td>Movie ticket</td><td class="prices">$3.55 <span class="arr">→</span> $11.31</td></tr>
+              </table>
+              <div class="em-panel-note">Adjusted for nothing but memory.</div>
+            </div>
+          </div>
+        </div>
+        <div class="ratios">Title <b>9.6</b> · Rows <b>9.8</b> · Footnote <b>5.2</b></div>
+      </div>
+      <div class="render">
+        <div class="bar"><span>Simulated inversion</span><span class="hexes">panel → #1D382F</span></div>
+        <div class="stage m-dark">
+          <div class="email">
+            <div class="em-panel">
+              <div class="em-panel-title">What things cost in 1985</div>
+              <table class="em-tn">
+                <tr><td>Gallon of gas</td><td class="prices">$1.20 <span class="arr">→</span> $3.42</td></tr>
+                <tr><td>Movie ticket</td><td class="prices">$3.55 <span class="arr">→</span> $11.31</td></tr>
+              </table>
+              <div class="em-panel-note">Adjusted for nothing but memory.</div>
+            </div>
+          </div>
+        </div>
+        <div class="ratios">Title <b>8.7</b> · Rows <b>7.7</b> · Footnote <b>5.1</b></div>
+      </div>
+    </div>
+
+    <div class="module-label">Sign-off · sea-glass band bookends the email</div>
+    <div class="compare">
+      <div class="render">
+        <div class="bar"><span>Light</span><span class="hexes">band #DCEDE7</span></div>
+        <div class="stage m-light">
+          <div class="email">
+            <div class="em-signoff banded"><span class="so-lead">More tomorrow.</span> — The editors</div>
+          </div>
+        </div>
+        <div class="ratios">Lead <b>9.6</b> · Byline <b>5.2</b></div>
+      </div>
+      <div class="render">
+        <div class="bar"><span>Simulated inversion</span><span class="hexes">band → #1D382F</span></div>
+        <div class="stage m-dark">
+          <div class="email">
+            <div class="em-signoff banded"><span class="so-lead">More tomorrow.</span> — The editors</div>
+          </div>
+        </div>
+        <div class="ratios">Lead <b>8.7</b> · Byline <b>5.1</b></div>
+      </div>
+    </div>
+
+    <p class="opt-thesis" style="margin-top:22px"><strong>Option C token changes, all email-only:</strong> Email Canvas <code>#FFFFFF</code> · sea-glass bands at masthead and sign-off · panels keep sea-glass fill · footer keeps the evergreen field (inverts to a mint field with evergreen text — the mirror image, verified AA) · Coral Deep <code>#9A4136</code> for small coral text. Global changes: <strong>none</strong>. <strong>Condition:</strong> approve only alongside an Email on Acid re-certification, since this option carries the largest filled-field footprint — the failure class flagged on iPhones.</p>
+  </div>
+</section>
+<hr class="rule">
+
+<!-- ============ Recommendation ============ -->
+<section>
+  <span class="kicker">Recommendation</span>
+  <h2 class="sec">The decision</h2>
+  <p class="sec-note"><strong>Option A — approved August 13, 2026, and promoted to <code>design-system.md</code> § Color → Email color.</strong> It fixes both certified failures (mustard canvas, misbehaving fields) with the smallest visible change to the Daily the team already approved, keeps sea glass — the palette's most distinctive surface — in the email, and every rendered pairing above holds AA or better in both worlds. B is the fallback if re-certification shows <em>any</em> filled surface misbehaving. C is the most branded outcome and worth a re-cert experiment once dailyv1 is stable. Whichever wins: NewsletterStrategist applies the tokens to the dailyv1 stylesheet from <code>design-system.md</code>, and the next Email on Acid pass is the real referee — this page simulates the transform; it doesn't replace the cert.</p>
+</section>
+
+<div class="page-end">
+  Option A approved August 13, 2026 · Driving artifact: dailyv1 Email on Acid certification · Decision recorded in design-system.md § Color → Email color<br>
+  <a href="../../">← Back to the design-system showcase</a>
+</div>
+
+</main>
+</body>
+</html>
