@@ -2,17 +2,25 @@
    Plenty Ahead Newsletter — single canonical stylesheet
    ============================================
    First created for dailyv1 (the flagship Daily).
-   Implements the Plenty Ahead design-system tokens:
-     evergreen  #173F36   dark anchor — headlines, footer
-     forward    #236B5B   links, section markers, CTAs
-     fwd-hover  #17564B   hover/active pair
-     coral      #B84F3F   numerals, alerts, editorial accents
-     body       #263B36   body copy
-     sage-gray  #52645F   metadata, labels, fine print
-     open-white #FFFDF7   canvas
-     sea-glass  #DCEDE7   page surround + quiet panels
-     soft-peach #F7E8E1   commerce panels
-     mist       #CFDDD8   hairlines and dividers
+   Implements the Plenty Ahead design-system tokens,
+   including the email-only tokens from § Email color
+   (Foundation, 2026-08-13 — dark-mode-inversion safe):
+     evergreen    #173F36   dark anchor — headlines, footer text
+     forward      #236B5B   links, section markers, CTAs
+     fwd-hover    #17564B   hover/active pair
+     coral        #B84F3F   large numerals (≥21px bold), accents
+     coral-deep   #9A4136   coral TEXT below large-text size
+                            (alert labels, trivia numerals)
+     body         #263B36   body copy
+     sage-gray    #52645F   metadata, labels, fine print
+     email-canvas #FFFFFF   the email reading surface — replaces
+                            open-white; warm near-whites invert
+                            to mud in forced dark mode
+     sea-glass    #DCEDE7   quiet panels (fill + 1px mist hairline;
+                            never a page surround — no large
+                            filled fields in email)
+     soft-peach   #F7E8E1   commerce panels (never the canvas)
+     mist         #CFDDD8   hairlines and dividers
    Email typography rides reliable fallbacks: Lora → Georgia
    for display, DM Sans → Arial for body (per brand-guide.md).
    ============================================ */
@@ -31,7 +39,7 @@ body {
     font-weight: 400;
     line-height: 1.6;
     color: #263B36;
-    background: #DCEDE7;
+    background: #FFFFFF;
     -webkit-font-smoothing: antialiased;
 }
 
@@ -55,12 +63,13 @@ body {
 }
 
 /* ---- CANVAS ----
-   One continuous open-white reading surface. The Daily does not
-   use per-section cards — sections flow on a single canvas with
-   heading marks and hairlines carrying the rhythm. */
+   One continuous white reading surface (email-canvas token —
+   zero saturation survives forced dark-mode inversion; the old
+   open-white canvas turned mustard). The sea-glass page surround
+   is dropped: no large filled fields in email. Sections flow on
+   a single canvas with heading marks and hairlines. */
 .canvas {
-    background: #FFFDF7;
-    border-radius: 14px;
+    background: #FFFFFF;
     padding: 36px 40px 40px;
 }
 
@@ -271,21 +280,25 @@ body {
 
 /* ---- ALERT LABEL (scam alerts) ----
    Icon + label + text, never color alone. Lives inside the
-   reading flow as a labeled item, not an interrupting banner. */
+   reading flow as a labeled item, not an interrupting banner.
+   Coral-deep: coral text below large-text size. */
 .alert-label {
     display: block;
     font-size: 11px;
     font-weight: 700;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: #B84F3F;
+    color: #9A4136;
     margin-bottom: 4px;
 }
 
 /* ---- SEA-GLASS PANEL ----
-   Quiet utility panel: Then & Now prices, trivia answers. */
+   Quiet utility panel: Then & Now prices, trivia answers.
+   The 1px mist hairline keeps the edge where dark-mode
+   inversion flattens the tint against the canvas. */
 .panel {
     background: #DCEDE7;
+    border: 1px solid #CFDDD8;
     border-radius: 12px;
     padding: 20px 24px;
     margin: 16px 0 4px;
@@ -371,7 +384,7 @@ body {
     font-family: 'Lora', Georgia, serif;
     font-weight: 700;
     font-size: 17px;
-    color: #B84F3F;
+    color: #9A4136; /* coral-deep — below large-text size */
 }
 
 .trivia-q .q-text {
@@ -428,7 +441,7 @@ body {
 }
 
 .shortlist-item + .shortlist-item {
-    border-top: 1px solid #FFFDF7;
+    border-top: 1px solid #FFFFFF;
 }
 
 .shortlist-item:last-child {
@@ -455,14 +468,16 @@ body {
     margin-top: 40px;
 }
 
-/* ---- FOOTER ---- */
+/* ---- FOOTER ----
+   Typographic: evergreen text over a mist rule, on the canvas.
+   The filled evergreen field is dropped — no large filled
+   fields in email (it misbehaved under dark-mode inversion). */
 .newsletter-footer {
-    background: #173F36;
-    border-radius: 14px;
-    margin-top: 10px;
-    padding: 28px 30px 24px;
+    border-top: 1px solid #CFDDD8;
+    margin-top: 32px;
+    padding: 24px 30px 0;
     text-align: center;
-    color: #DCEDE7;
+    color: #52645F;
     font-size: 13px;
     line-height: 1.6;
 }
@@ -472,7 +487,7 @@ body {
     font-weight: 700;
     font-size: 18px;
     letter-spacing: -0.02em;
-    color: #FFFDF7;
+    color: #173F36;
     margin-bottom: 12px;
 }
 
@@ -481,7 +496,7 @@ body {
 }
 
 .newsletter-footer nav a {
-    color: #FFFDF7;
+    color: #236B5B;
     font-weight: 500;
     text-decoration: underline;
     text-underline-offset: 3px;
