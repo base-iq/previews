@@ -196,20 +196,25 @@ body {
 
 /* ---- NUMBERED ITEM ----
    The earned almanac DNA: coral Lora numerals. Used in Worth
-   Knowing; hairlines divide items. */
+   Knowing; hairlines divide items. Table-based: Outlook's Word
+   engine has no flexbox — email components never use flex/grid. */
 .numbered-item {
-    display: flex;
-    gap: 16px;
-    padding: 18px 0;
+    width: 100%;
+    border-collapse: collapse;
 }
 
-.numbered-item + .numbered-item {
+.numbered-item td {
+    padding: 18px 0;
+    vertical-align: top;
+}
+
+.numbered-item + .numbered-item td {
     border-top: 1px solid #CFDDD8;
 }
 
 .numbered-item .num {
-    flex-shrink: 0;
-    min-width: 24px;
+    width: 24px;
+    padding-right: 16px;
     font-family: 'Lora', Georgia, serif;
     font-weight: 700;
     font-size: 22px;
@@ -218,14 +223,7 @@ body {
 }
 
 .numbered-item .item-body {
-    flex: 1;
-    min-width: 0;
-}
-
-@media (max-width: 600px) {
-    .numbered-item {
-        gap: 12px;
-    }
+    width: 100%;
 }
 
 /* ---- ITEM HEADLINE (shared by numbered + plain items) ---- */
@@ -317,22 +315,29 @@ body {
 
 /* ---- THEN & NOW ROWS (inside .panel) ---- */
 .then-now-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 16px;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.then-now-row td {
     padding: 8px 0;
     border-bottom: 1px solid #CFDDD8;
     font-size: 16px;
     line-height: 1.5;
+    vertical-align: baseline;
 }
 
-.then-now-row:last-of-type {
+.then-now-row:last-of-type td {
     border-bottom: none;
     padding-bottom: 0;
 }
 
+.then-now-row .tn-label {
+    text-align: left;
+}
+
 .then-now-row .prices {
+    text-align: right;
     white-space: nowrap;
     font-weight: 700;
     color: #173F36;
@@ -345,24 +350,32 @@ body {
 
 /* ---- TRIVIA LIST ---- */
 .trivia-q {
-    display: flex;
-    gap: 12px;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.trivia-q td {
     padding: 10px 0;
     font-size: 16px;
     line-height: 1.6;
+    vertical-align: top;
 }
 
-.trivia-q + .trivia-q {
+.trivia-q + .trivia-q td {
     border-top: 1px solid #CFDDD8;
 }
 
 .trivia-q .q-num {
-    flex-shrink: 0;
-    min-width: 20px;
+    width: 20px;
+    padding-right: 12px;
     font-family: 'Lora', Georgia, serif;
     font-weight: 700;
     font-size: 17px;
     color: #B84F3F;
+}
+
+.trivia-q .q-text {
+    width: 100%;
 }
 
 .trivia-note {
