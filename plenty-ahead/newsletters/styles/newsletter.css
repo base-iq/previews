@@ -59,7 +59,7 @@ body {
 .newsletter {
     max-width: 648px;
     margin: 0 auto;
-    padding: 24px 16px 48px;
+    padding: 24px 0 48px;
 }
 
 /* ---- CANVAS ----
@@ -70,12 +70,15 @@ body {
    a single canvas with heading marks and hairlines. */
 .canvas {
     background: #FFFFFF;
-    padding: 36px 40px 40px;
+    padding: 28px 20px 32px;
 }
 
-@media (max-width: 600px) {
+/* Mobile-first: base values are the email-safe mobile values
+   (beehiiv strips media queries — email always renders base).
+   min-width queries only WIDEN for desktop web preview. */
+@media (min-width: 600px) {
     .canvas {
-        padding: 28px 20px 32px;
+        padding: 36px 40px 40px;
     }
 }
 
@@ -131,7 +134,7 @@ body {
 .masthead-wordmark {
     font-family: 'Lora', Georgia, serif;
     font-weight: 700;
-    font-size: 34px;
+    font-size: 30px;
     letter-spacing: -0.02em;
     line-height: 1.1;
     color: #173F36;
@@ -156,9 +159,9 @@ body {
     margin-top: 2px;
 }
 
-@media (max-width: 600px) {
+@media (min-width: 600px) {
     .masthead-wordmark {
-        font-size: 30px;
+        font-size: 34px;
     }
 }
 
@@ -191,15 +194,15 @@ body {
 .section-heading {
     font-family: 'Lora', Georgia, serif;
     font-weight: 700;
-    font-size: 25px;
+    font-size: 23px;
     line-height: 1.25;
     color: #173F36;
     margin-bottom: 6px;
 }
 
-@media (max-width: 600px) {
+@media (min-width: 600px) {
     .section-heading {
-        font-size: 23px;
+        font-size: 25px;
     }
 }
 
@@ -423,7 +426,7 @@ body {
 .shortlist {
     background: #F7E8E1;
     border-radius: 14px;
-    padding: 24px 26px;
+    padding: 20px 18px;
     margin-top: 14px;
 }
 
@@ -452,9 +455,9 @@ body {
     color: #173F36;
 }
 
-@media (max-width: 600px) {
+@media (min-width: 600px) {
     .shortlist {
-        padding: 20px 18px;
+        padding: 24px 26px;
     }
 }
 
