@@ -364,6 +364,26 @@ body {
     font-weight: 400;
 }
 
+/* ---- ITEM PHOTO + CREDIT ----
+   Archival photo inside Remember When (earned 2026-08-14..17:
+   every edition carries one). Credit is archive attribution
+   only — never license text (that's production metadata). */
+.item-photo {
+    display: block;
+    width: 100%;
+    max-width: 568px;
+    height: auto;
+    border-radius: 6px;
+    margin: 12px 0 4px;
+}
+
+.photo-credit {
+    font-size: 12px;
+    line-height: 1.5;
+    color: #52645F;
+    margin: 0 0 8px;
+}
+
 /* ---- TRIVIA LIST ---- */
 .trivia-q {
     width: 100%;
