@@ -1440,6 +1440,64 @@ body {
     white-space: nowrap;
 }
 
+/* ---- NUMBERS STRIP ----
+   Paper strip of label/value rows for daily-changing figures
+   (lottery jackpots, gas prices). Cost Callout's email-hardened
+   editorial sibling — table markup, no flex. First used by
+   state-7xv1's {State} Report. */
+.numbers-strip {
+    background: #FAF6F4;
+    border: 1px solid #EDE6E1;
+    border-radius: 5px;
+    padding: 16px 18px 6px 18px;
+    margin: 0 0 28px 0;
+}
+
+.numbers-strip-label {
+    font-family: 'Lato', Helvetica, Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #6B6258;
+    margin: 0;
+}
+
+.numbers-strip table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.numbers-strip td {
+    padding: 11px 0;
+    border-bottom: 1px solid #EDE6E1;
+    font-family: 'Bitter', Georgia, serif;
+    font-size: 16px;
+    line-height: 22px;
+    color: #2C2421;
+    vertical-align: baseline;
+}
+
+.numbers-strip tr:last-child td {
+    border-bottom: none;
+}
+
+.numbers-strip .num-meta {
+    font-style: italic;
+    font-size: 14px;
+    color: #6B6258;
+}
+
+.numbers-strip .num-value {
+    text-align: right;
+    font-family: 'Lato', Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: #2C2421;
+    white-space: nowrap;
+    padding-left: 16px;
+}
+
 /* ---- CTA BUTTON ----
    The system's first true button. Reserved for dedicated sends —
    editorial formats keep using text links and border-bottom CTAs. */
