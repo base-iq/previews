@@ -13,7 +13,7 @@
       --primary-hover: #A84E3B;
       --dark: #2C2421;
       --body: #444444;
-      --secondary-text: #797979;
+      --secondary-text: #666666;
       --light-text: #999999;
       --bg-warm: #FAF6F4;
       --border: #E8E0DC;
@@ -284,7 +284,7 @@
       left: 14px; top: 50%;
       width: 16px; height: 16px;
       transform: translateY(-50%);
-      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><circle cx='7' cy='7' r='5' fill='none' stroke='%23797979' stroke-width='2'/><line x1='11' y1='11' x2='15' y2='15' stroke='%23797979' stroke-width='2' stroke-linecap='round'/></svg>");
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><circle cx='7' cy='7' r='5' fill='none' stroke='%23666666' stroke-width='2'/><line x1='11' y1='11' x2='15' y2='15' stroke='%23666666' stroke-width='2' stroke-linecap='round'/></svg>");
       background-repeat: no-repeat;
       pointer-events: none;
     }
@@ -520,7 +520,7 @@
       font-weight: 700;
     }
     .cal-day.is-today:not(.is-selected) {
-      border: 1.5px solid var(--primary);
+      border: 1px solid var(--primary);
       color: var(--primary);
     }
     .cal-day.is-out {
@@ -701,7 +701,7 @@
       font-weight: 700;
       font-size: 14px;
       background: var(--bg-page);
-      border: 1.5px solid var(--border);
+      border: 1px solid var(--border);
       color: var(--secondary-text);
       transition: background-color 0.2s, border-color 0.2s, color 0.2s;
     }
@@ -1055,7 +1055,7 @@
        ============================================= */
     .slot-cta {
       background: var(--bg-page);
-      border: 1.5px dashed var(--primary);
+      border: 1px dashed var(--primary);
       border-radius: 6px;
       padding: 18px 20px;
       text-align: center;
@@ -1137,57 +1137,49 @@
        ============================================= */
     .site-footer {
       background: var(--dark);
-      color: #B5A89C;
-      padding: 60px 24px 28px;
+      color: #CCCCCC;
+      padding: 48px 24px 24px;
       font-family: 'Lato', sans-serif;
-      font-size: 14px;
-      line-height: 1.6;
+      font-size: 15px;
+      line-height: 1.5;
       border-radius: 8px;
     }
     .site-footer-inner { max-width: 1120px; margin: 0 auto; }
     .footer-top {
       display: grid;
-      grid-template-columns: 1.4fr 1fr 1fr;
-      gap: 60px;
-      padding-bottom: 36px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      margin-bottom: 22px;
+      grid-template-columns: 1.6fr 1fr 1fr 1fr 1fr;
+      gap: 32px;
     }
-    .footer-brand .footer-logo { height: 28px; margin-bottom: 16px; display: block; }
-    .footer-tagline { color: #B5A89C; font-size: 14px; line-height: 1.55; max-width: 320px; margin: 0; }
+    .footer-brand .footer-logo { height: 24px; margin-bottom: 16px; display: block; }
+    .footer-tagline { color: #CCCCCC; font-size: 15px; line-height: 1.5; max-width: 300px; margin: 0; }
+    .footer-col { display: flex; flex-direction: column; gap: 12px; }
     .footer-col h4 {
       font-family: 'Lato', sans-serif;
-      font-size: 12px;
-      font-weight: 900;
-      letter-spacing: 0.14em;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
       text-transform: uppercase;
       color: #FFFFFF;
-      margin: 0 0 14px;
+      margin: 0;
     }
     .footer-col a {
       display: block;
-      color: #B5A89C;
-      font-weight: 500;
+      color: #CCCCCC;
+      font-weight: 400;
       text-decoration: none;
-      padding: 4px 0;
       transition: color 0.15s;
     }
-    .footer-col a:hover { color: var(--primary); }
-    .footer-contact { margin-bottom: 14px; }
+    .footer-col a:hover { color: #FFFFFF; }
     .footer-contact-label {
       display: block;
-      color: #8A7E73;
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
+      color: #CCCCCC;
+      font-size: 13px;
       margin-bottom: 2px;
     }
     .footer-col .footer-contact a { display: inline; padding: 0; }
-    .footer-bottom { font-size: 12px; color: #8A7E73; margin: 0; }
+    .footer-bottom { font-size: 12px; color: var(--light-text); border-top: 1px solid rgba(255, 255, 255, 0.1); margin: 40px 0 0; padding-top: 24px; }
     @media (max-width: 720px) {
-      .site-footer { padding: 48px 24px 22px; }
-      .footer-top { grid-template-columns: 1fr 1fr; gap: 32px 28px; padding-bottom: 28px; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 32px 28px; }
       .footer-brand { grid-column: 1 / -1; }
     }
     @media (max-width: 480px) {
@@ -1784,7 +1776,8 @@
     }
     .type-h1 { font-family: 'Bitter', Georgia, serif; font-size: 35px; font-weight: 700; line-height: 1.2; color: var(--dark); margin: 0; }
     .type-h2 { font-family: 'Bitter', Georgia, serif; font-size: 28px; font-weight: 700; line-height: 1.3; color: var(--dark); margin: 0; }
-    .type-h3 { font-family: 'Lato', sans-serif; font-size: 22px; font-weight: 700; line-height: 1.3; color: var(--dark); margin: 0; }
+    .type-h3 { font-family: 'Lato', sans-serif; font-size: 20px; font-weight: 700; line-height: 1.3; color: var(--dark); margin: 0; }
+    .type-subhead { font-family: 'Lato', sans-serif; font-size: 20px; font-weight: 400; line-height: 1.6; color: var(--secondary-text); margin: 0; }
     .type-body { font-family: 'Lato', sans-serif; font-size: 17px; font-weight: 400; line-height: 1.7; color: var(--body); margin: 0; }
     .type-body-bold { font-family: 'Lato', sans-serif; font-size: 17px; font-weight: 700; line-height: 1.7; color: var(--dark); margin: 0; }
     .type-small { font-family: 'Lato', sans-serif; font-size: 15px; font-weight: 500; line-height: 1.5; color: var(--secondary-text); margin: 0; }
@@ -2678,7 +2671,7 @@
        SITE HEADER
        ============================================= */
     .site-header {
-      max-width: 720px;
+      max-width: 1120px;
       margin: 0 auto;
       padding: 20px 24px;
       display: flex;
@@ -2688,7 +2681,7 @@
       background: var(--bg-page);
     }
     .site-header img { height: 28px; display: block; }
-    .site-header nav { display: flex; gap: 24px; }
+    .site-header nav { display: flex; gap: 24px; align-items: center; }
     .site-header nav a {
       font-family: 'Lato', sans-serif;
       font-weight: 500;
@@ -2697,6 +2690,18 @@
       text-decoration: none;
     }
     .site-header nav a:hover { color: var(--primary); }
+    .site-header nav a.is-active { font-weight: 700; color: var(--primary); }
+    .site-header .nav-cta {
+      background: var(--primary);
+      color: #FFFFFF;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.2px;
+      padding: 10px 18px;
+      border-radius: 2px;
+      transition: background-color 0.15s;
+    }
+    .site-header .nav-cta:hover { background: var(--primary-hover); color: #FFFFFF; }
 
     /* Section divider */
     .section-divider {
@@ -3158,7 +3163,7 @@
     /* ===== 5.5 Breadcrumbs (proposed) ===== */
     .crumbs { font: 400 13px 'Lato', sans-serif; color: var(--secondary-text); }
     .crumbs ol { list-style: none; display: flex; flex-wrap: wrap; align-items: center; margin: 0; padding: 0; }
-    .crumbs a { color: var(--secondary-text); text-decoration: none; padding: 12px 4px; margin: -10px 0; display: inline-block; }
+    .crumbs a { color: var(--secondary-text); font-weight: 700; text-decoration: none; padding: 12px 4px; margin: -10px 0; display: inline-block; }
     .crumbs a:hover { color: var(--primary); }
     .crumbs .sep { color: var(--light-text); margin: 0 6px; }
     .crumbs [aria-current="page"] { font-weight: 700; color: var(--dark); }
@@ -3178,9 +3183,9 @@
 
     /* ===== 5.7 Event Day-List Table (proposed) ===== */
     .day-list { margin: 0; padding: 0; list-style: none; }
-    .day-list-header { display: flex; justify-content: space-between; align-items: baseline; font: 900 13px 'Lato', sans-serif; letter-spacing: 0.5px; text-transform: uppercase; color: var(--primary); border-bottom: 2px solid var(--dark); padding: 16px 0 6px; }
+    .day-list-header { display: flex; justify-content: space-between; align-items: baseline; font: 900 13px 'Lato', sans-serif; letter-spacing: 0.5px; text-transform: uppercase; color: var(--dark); border-bottom: 2px solid var(--dark); padding: 26px 0 8px; }
     .day-list-header .count { font: 700 13px 'Lato', sans-serif; letter-spacing: 0; text-transform: none; color: var(--secondary-text); }
-    .day-list li { display: grid; grid-template-columns: 72px minmax(0,1fr) auto; gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--border); align-items: start; }
+    .day-list li { display: grid; grid-template-columns: 72px minmax(0,1fr) auto; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--border); align-items: start; }
     .day-list li.is-clickable:hover { background: var(--bg-warm); }
     .day-list .ev-time { font: 400 14px 'Lato', sans-serif; color: var(--secondary-text); white-space: nowrap; font-variant-numeric: tabular-nums; padding-top: 1px; }
     .day-list .ev-name { font: 700 15px 'Lato', sans-serif; color: var(--dark); line-height: 1.4; margin: 0; }
@@ -3257,11 +3262,11 @@
             </div>
           </div>
           <div class="swatch">
-            <div class="swatch-fill" style="background: #797979;"></div>
+            <div class="swatch-fill" style="background: #666666;"></div>
             <div class="swatch-info">
               <p class="swatch-name">Gray</p>
               <p class="swatch-token">secondary-text</p>
-              <p class="swatch-hex">#797979</p>
+              <p class="swatch-hex">#666666</p>
             </div>
           </div>
           <div class="swatch">
@@ -3334,7 +3339,7 @@
       <h3 style="font-family: 'Bitter', Georgia, serif; font-size: 22px; color: var(--dark); margin: 40px 0 12px;">Typography</h3>
       <div class="demo demo-light">
         <div class="type-row">
-          <div class="type-meta"><span class="tname">h1</span>Bitter 35px / 700 / 1.2 / Espresso</div>
+          <div class="type-meta"><span class="tname">h1</span>Bitter 35px / 700 / 1.2 / Espresso — content pages. Display scale on marketing surfaces: 42px homepage, 40px advertise fork, 38px directory root</div>
           <p class="type-h1">The quick brown fox jumps over the lazy dog</p>
         </div>
         <div class="type-row">
@@ -3342,8 +3347,12 @@
           <p class="type-h2">The quick brown fox jumps over the lazy dog</p>
         </div>
         <div class="type-row">
-          <div class="type-meta"><span class="tname">h3</span>Lato 22px / 700 / 1.3 / Espresso</div>
+          <div class="type-meta"><span class="tname">h3</span>Lato 20px / 700 / 1.3 / Espresso</div>
           <p class="type-h3">The quick brown fox jumps over the lazy dog</p>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><span class="tname">subhead</span>Lato 20px / 400 / 1.6 / Gray — hero subheads under display h1s</div>
+          <p class="type-subhead">Local news, events, and recommendations for your city. Free.</p>
         </div>
         <div class="type-row">
           <div class="type-meta"><span class="tname">body</span>Lato 17px / 400 / 1.7 / Charcoal</div>
@@ -3524,10 +3533,18 @@
           <button class="btn btn-primary btn-lg" type="button">Start Your Free Trial →</button>
         </div>
         <p class="caption">States (default size)</p>
-        <div class="btn-row">
+        <div class="btn-row" style="margin-bottom: 24px;">
           <button class="btn btn-primary btn-md" type="button">Default</button>
           <button class="btn btn-primary btn-md demo-hover" type="button">Hover</button>
           <button class="btn btn-primary btn-md demo-active" type="button">Active</button>
+        </div>
+        <p class="caption">Hero CTA variant — radius-pill 20px on marketing surfaces (e.g. homepage)</p>
+        <div class="btn-row" style="margin-bottom: 24px;">
+          <button class="btn btn-primary btn-lg" style="border-radius: 20px;" type="button">Find your city →</button>
+        </div>
+        <p class="caption">Header nav CTA — compact chrome button: Lato 700 14px, 0.2px tracking, 10px 18px padding, 2px radius</p>
+        <div class="btn-row">
+          <button class="btn btn-primary" style="font-size: 14px; letter-spacing: 0.2px; padding: 10px 18px; border-radius: 2px;" type="button">Join the Insiders' Club</button>
         </div>
       </div>
 
@@ -3706,9 +3723,10 @@
         <header class="site-header" style="max-width: none;">
           <a href="#"><img src="../assets/logos/baselocal-full-dark.svg" alt="BaseLocal"></a>
           <nav>
-            <a href="#">Newsletter</a>
-            <a href="#">Events</a>
-            <a href="#">About</a>
+            <a href="#" class="is-active">Home</a>
+            <a href="#">Locations</a>
+            <a href="#">Advertise</a>
+            <a href="#" class="nav-cta">Join the Insiders' Club</a>
           </nav>
         </header>
       </div>
@@ -3799,7 +3817,7 @@
             <line x1="24" y1="180" x2="336" y2="180" stroke="#E8E0DC" stroke-width="1"/>
             <path d="M 24 177 L 76 174 L 128 164 L 180 141 L 232 115 L 284 83 L 336 50 L 336 180 L 24 180 Z" fill="url(#ds-chart-fill-a)"/>
             <path d="M 24 177 L 76 174 L 128 164 L 180 141 L 232 115 L 284 83 L 336 50" fill="none" stroke="#C2604A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <text x="128" y="70" text-anchor="middle" font-family="Lato, sans-serif" font-size="10" font-weight="900" letter-spacing="1.5" fill="#797979">WEGOVY APPROVED</text>
+            <text x="128" y="70" text-anchor="middle" font-family="Lato, sans-serif" font-size="10" font-weight="900" letter-spacing="1.5" fill="#666666">WEGOVY APPROVED</text>
             <line x1="128" y1="80" x2="128" y2="159" stroke="#C2604A" stroke-width="1" stroke-dasharray="2 3" opacity="0.55"/>
             <circle cx="128" cy="164" r="3.5" fill="#C2604A"/>
             <text x="336" y="30" text-anchor="end" font-family="Bitter, Georgia, serif" font-size="22" font-weight="700" fill="#C2604A">~2M</text>
@@ -3826,7 +3844,7 @@
             <line x1="24" y1="180" x2="336" y2="180" stroke="#E8E0DC" stroke-width="1"/>
             <path d="M 24 177 L 76 174 L 128 164 L 180 141 L 232 115 L 284 83 L 336 50 L 336 180 L 24 180 Z" fill="url(#ds-chart-fill-b)"/>
             <path d="M 24 177 L 76 174 L 128 164 L 180 141 L 232 115 L 284 83 L 336 50" fill="none" stroke="#C2604A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <text x="128" y="70" text-anchor="middle" font-family="Lato, sans-serif" font-size="10" font-weight="900" letter-spacing="1.5" fill="#797979">WEGOVY APPROVED</text>
+            <text x="128" y="70" text-anchor="middle" font-family="Lato, sans-serif" font-size="10" font-weight="900" letter-spacing="1.5" fill="#666666">WEGOVY APPROVED</text>
             <line x1="128" y1="80" x2="128" y2="159" stroke="#C2604A" stroke-width="1" stroke-dasharray="2 3" opacity="0.55"/>
             <circle cx="128" cy="164" r="3.5" fill="#C2604A"/>
             <text x="336" y="30" text-anchor="end" font-family="Bitter, Georgia, serif" font-size="22" font-weight="700" fill="#C2604A">~2M</text>
@@ -4156,24 +4174,14 @@
     <!-- ============= 02 TEXTAREA ============= -->
     <section class="group">
       <h2><span class="num">4.2</span>Textarea</h2>
-      <p class="group-desc">Same styling as text input. Min-height 120px. Counter sits below, right-aligned.</p>
+      <p class="group-desc">Same styling as text input. Min-height 120px. Limits are enforced via <code class="tok">maxlength</code> (1000 on the live event-description field) with no visible counter — surface a limit in helper text prose when it needs saying.</p>
 
       <div class="demo">
         <div class="demo-row">
-          <p class="caption">Default · with counter</p>
+          <p class="caption">Default</p>
           <label class="field-label">Event description <span class="req">*</span></label>
-          <textarea class="ds-textarea" placeholder="Tell people what to expect…">Spring volleyball league for ages 10 to 14. Eight weeks of evening practices and Saturday games at Jason Lee Middle School. Open to all skill levels.</textarea>
-          <p class="char-counter">187 / 500</p>
-        </div>
-        <div class="demo-row">
-          <p class="caption">Counter near limit (terracotta)</p>
-          <textarea class="ds-textarea">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum sed.</textarea>
-          <p class="char-counter is-warn">472 / 500</p>
-        </div>
-        <div class="demo-row">
-          <p class="caption">Counter over limit (red)</p>
-          <textarea class="ds-textarea is-error">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum and a few extra characters too many.</textarea>
-          <p class="char-counter is-over">514 / 500</p>
+          <textarea class="ds-textarea" maxlength="1000" placeholder="Tell people what to expect…">Spring volleyball league for ages 10 to 14. Eight weeks of evening practices and Saturday games at Jason Lee Middle School. Open to all skill levels.</textarea>
+          <p class="helper-text">Up to 1,000 characters.</p>
         </div>
       </div>
     </section>
@@ -4365,10 +4373,9 @@
       <div class="demo">
         <div class="calendar">
           <div class="cal-quick-picks">
-            <button class="ds-pill" type="button">Today</button>
-            <button class="ds-pill" type="button">Tomorrow</button>
             <button class="ds-pill" type="button">This weekend</button>
             <button class="ds-pill" type="button">Next 7 days</button>
+            <button class="ds-pill" type="button">Next 30 days</button>
             <button class="ds-pill" type="button">Clear</button>
           </div>
           <div class="cal-header">
@@ -4746,7 +4753,7 @@
               <p class="dir-card-note">Family-run since 2002, and the quote they give you is the invoice you get. Water heaters, drains, the unglamorous stuff done right — usually same week.</p>
               <p class="dir-card-meta">Serves all of Glendale · <a href="#">adamshillplumbing.com</a></p>
             </div>
-            <p class="pinned-zone-note">* Paid placement, city-wide. Reviewed by our editor like every listing.</p>
+            <p class="pinned-zone-note">Paid placements are always marked.</p>
           </div>
           <p class="dir-result-meta">Eat &amp; drink · 14 places</p>
           <div class="dir-card">
@@ -4769,8 +4776,8 @@
         <div class="demo-row">
           <p class="caption">Open slot — inside the Pinned Zone</p>
           <div class="slot-cta is-open-slot">
-            <p class="slot-prompt">One pinned spot is open today.</p>
-            <p>Your business, top of this page, $10 a day. <a href="#">Claim the spot →</a></p>
+            <p class="slot-prompt">This spot is open today.</p>
+            <p>Two pinned places a day in Spring Hill — $10 here, $25 adds the newsletter. <a href="#">List your business →</a></p>
           </div>
         </div>
       </div>
@@ -4783,19 +4790,33 @@
             <div class="footer-top">
               <div class="footer-brand">
                 <img class="footer-logo" src="../assets/logos/baselocal-full-white.svg" alt="BaseLocal">
-                <p class="footer-tagline">Good stuff happening near you, recommended by people who actually checked.</p>
+                <p class="footer-tagline">Local news, events, and recommendations for 900+ locations.</p>
               </div>
               <div class="footer-col">
-                <h4>Explore</h4>
-                <a href="#">Directory</a>
-                <a href="#">Events</a>
-                <a href="#">Newsletter</a>
-              </div>
-              <div class="footer-col">
-                <h4>Work with us</h4>
+                <h4>Navigate</h4>
+                <a href="#">Home</a>
+                <a href="#">Locations</a>
                 <a href="#">Advertise</a>
-                <div class="footer-contact" style="margin-top: 14px;">
-                  <span class="footer-contact-label">Questions</span>
+              </div>
+              <div class="footer-col">
+                <h4>Legal</h4>
+                <a href="#">Privacy</a>
+                <a href="#">Terms of Use</a>
+                <a href="#">Data Request</a>
+              </div>
+              <div class="footer-col">
+                <h4>Insiders' Club</h4>
+                <a href="#">Join the Insiders' Club</a>
+                <a href="#">Sign in</a>
+              </div>
+              <div class="footer-col">
+                <h4>Contact</h4>
+                <div class="footer-contact">
+                  <span class="footer-contact-label">Partnerships</span>
+                  <a href="#">partner@baselocal.com</a>
+                </div>
+                <div class="footer-contact">
+                  <span class="footer-contact-label">Everything else</span>
                   <a href="#">hello@baselocal.com</a>
                 </div>
               </div>
@@ -5507,7 +5528,7 @@
             <tr><td>Heading contrast</td><td>Espresso on white = 15.4:1 (AAA) ✓</td></tr>
             <tr><td>Minimum body font</td><td>16px (newsletter), 17px (web). Never smaller for body text.</td></tr>
             <tr><td>Touch targets</td><td>Minimum 44×44px for all tappable elements on mobile.</td></tr>
-            <tr><td>Gray text minimum</td><td>Gray #797979 only at 16px+ or for non-essential info. Silver #999 for fine print only.</td></tr>
+            <tr><td>Gray text minimum</td><td>Gray #666666 (5.74:1 on white — passes AA at body sizes) for secondary info. Silver #999 for fine print only.</td></tr>
           </tbody>
         </table>
       </div>
