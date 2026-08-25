@@ -964,10 +964,11 @@ body {
 }
 
 
-/* ---- RANKED LIST (condensed) ----
+/* ---- RANKED LIST (compact) ----
    Compact ten-row ranked list for multi-list formats (weekend-top-10).
    Where .ranked-card gives each item its own card, .ranked-list packs
-   ten items into a single .section-card — one or two lines per item.
+   ten items into a single .section-card — bodies run from one line
+   to a short paragraph; the format spec sets copy length per section.
    See design-system.md § Newsletter Components > Ranked List. */
 
 .ranked-list {
