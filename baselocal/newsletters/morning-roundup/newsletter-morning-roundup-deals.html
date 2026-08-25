@@ -14,14 +14,6 @@
          SECTION 1: HEADER + INTRO
          ============================================ -->
     <div class="section-card">
-        <div class="top-links">
-            <a href="#">Subscribe</a>
-            <span class="sep">|</span>
-            <a href="#">Advertise</a>
-            <span class="sep">|</span>
-            <a href="#">Submit Event</a>
-        </div>
-
         <div class="masthead">
             <div class="masthead-meta">
                 <span class="masthead-date">Tuesday, April 26 &middot; Sunny, 78&deg;</span>
@@ -44,7 +36,7 @@
     <div class="section-card" id="news">
         <span class="kicker"><span class="kicker-num">01</span> &mdash; Worth knowing</span>
         <div class="section-heading">In the news</div>
-        <p class="section-dek">Three local stories from this week, plus a few worth your money.</p>
+        <p class="section-dek">Three local stories this week, plus a few worth your money.</p>
 
         <!-- Organic (3 items) -->
         <div class="news-item">
@@ -68,6 +60,10 @@
             <strong>Paying hundreds of dollars a month for car insurance?</strong> Switching providers could save you up to $600 a year, and shopping around is way faster than it used to be – free comparison tools like <a href="#">this one</a> make it easy.*
         </div>
 
+        <div class="news-item affiliate">
+            <strong>Why drain your savings for one big purchase?</strong> Keep the cash where it is and put the expense here instead: interest-free until nearly 2028, no annual fee, and at least 1.5% cash back on your purchase. Chip away at the balance over the months ahead and your savings never take the hit &mdash; <a href="#">take a look</a>.*
+        </div>
+
         <!-- Highlights sub-section -->
         <div class="sub-heading">Highlights this week:</div>
 
@@ -82,30 +78,6 @@
     </div>
 
     <!-- ============================================
-         SECTION 3: LEAD SPONSOR MODULE
-         Only appears when a sponsor is booked.
-         Omitted entirely when no sponsor.
-         ============================================ -->
-    <!--
-    <div class="section-card sponsor-module">
-        <div class="section-heading">&#x1F3C6; Gold and silver are hot</div>
-        <p class="sponsor-tagline">Together with our sponsor <a href="#">GoldCo</a></p>
-
-        <div class="news-item">
-            Coming off gold's best year since 1979, the momentum is carrying well into 2026 with silver remaining one of the most talked-about assets. Curious why precious metals are back in focus? GoldCo has a free guide that explains what's happening and how people are approaching it today.
-        </div>
-
-        <div class="news-item">
-            Plus, qualifying purchases include up to $15,000 in bonus precious metals to help protect your retirement savings.
-        </div>
-
-        <div class="news-item">
-            <a href="#">Get your free information kit here &rarr;</a>
-        </div>
-    </div>
-    -->
-
-    <!-- ============================================
          SECTION 4: LOCAL BUSINESS SPOTLIGHT
          3 organic local business features. Not ads.
          Appears every edition.
@@ -113,7 +85,12 @@
     <div class="section-card" id="spotlight">
         <span class="kicker"><span class="kicker-num">02</span> &mdash; On our radar</span>
         <div class="section-heading">Local business spotlight</div>
-        <p class="section-dek">Three nearby spots we'd actually send a friend to.</p>
+        <p class="section-dek">Nearby spots we'd actually send a friend to.</p>
+
+        <div class="advertise-cta advertise-cta--top">
+            <p class="advertise-pitch">Want your business featured here in front of thousands of folks who live, eat, and shop nearby?</p>
+            <a href="#" class="advertise-link">Advertise with us &rarr;</a>
+        </div>
 
         <div class="news-item">
             <strong>Indoor energy outlet:</strong> PLAYzona is a Glendale indoor play space for kids (birth–7) with open play, music and art enrichment, and birthday parties. When the park's a no-go, it keeps wiggles in check and the day moving. Easy, imaginative play for them and a breather for you.
@@ -127,11 +104,7 @@
             <strong>Steak night, upgraded:</strong> Arrowhead Grill serves hand-cut USDA Prime steaks with polished service, fresh seafood, and a solid wine list alongside proper cocktails. Perfect for date night, celebrations, or when the week wants something special, minus downtown fuss.
         </div>
 
-        <div class="advertise-cta">
-            <p class="advertise-prompt">Run a Glendale business?</p>
-            <p class="advertise-pitch">We feature local spots every day &mdash; tell us about yours.</p>
-            <a href="#" class="advertise-link">Advertise with BaseLocal &rarr;</a>
-        </div>
+        <p class="browse-more"><a href="#">Explore more local spots worth a visit &rarr;</a></p>
     </div>
 
     <!-- ============================================
@@ -237,13 +210,25 @@
     </div>
 
     <!-- ============================================
+         EVENT-SUBMISSION CTA
+         Standalone card between We Got Your Back and Events.
+         ============================================ -->
+    <div class="section-card">
+        <div class="advertise-cta advertise-cta--bare">
+            <p class="advertise-prompt">Have an event to share?</p>
+            <p class="advertise-pitch">We (and our readers) can't wait to hear about it!</p>
+            <a href="#" class="advertise-link">Submit an event &rarr;</a>
+        </div>
+    </div>
+
+    <!-- ============================================
          SECTION 7: EVENTS
          Heading varies by edition/theme.
          ============================================ -->
     <div class="section-card" id="events">
-        <span class="kicker"><span class="kicker-num">05</span> &mdash; This week's calendar</span>
+        <span class="kicker"><span class="kicker-num">05</span> &mdash; The event calendar</span>
         <div class="section-heading">Our favorite events this week</div>
-        <p class="section-dek">Seven things on our list, plus the live music lineup.</p>
+        <p class="section-dek">All the best things to do this week. Dates, times, and locations are subject to change. Always check official event pages before heading out.</p>
 
         <div class="event-item">
             <span class="event-emoji">&#x1F388;</span> <a href="#">Pop-In Playdate</a> @ Tacoma Nazarene Church | <span class="event-meta">Wednesday (2/25) at 10:00 AM</span> — Parenting may be a marathon, but this pop-in playdate hands you a caffeine station, snacks, and actual adult conversation while the tiny tornadoes wear themselves out.
@@ -287,17 +272,37 @@
             <li>3/7 <a href="#">Hysteria and more</a> @ Spanish Ballroom — 8:00 PM</li>
         </ul>
 
-        <p class="browse-more">Wanna see more? <a href="#">Browse our full events calendar &rarr;</a></p>
+        <p class="browse-more">Want more? <a href="#">Browse our full events calendar</a> &nbsp;|&nbsp; <a href="#">Submit an event</a></p>
+    </div>
+
+    <!-- ============================================
+         SECOND SPONSOR MODULE
+         Between Events and the Location Report. Pairs with
+         one of the In the News affiliate items (same offer).
+         ============================================ -->
+    <div class="section-card sponsor-module">
+        <span class="kicker"><span class="kicker-num">06</span> &mdash; From our sponsor</span>
+        <div class="section-heading">After 50, car insurance should get cheaper. Has yours?</div>
+
+        <div class="news-item">
+            Your fifties and sixties are when the pricing finally tilts your way: decades behind the wheel, a long clean record, kids grown and off the policy, and often far fewer miles than the commuting years. Carriers rate all of that favorably, but only when the policy gets repriced.
+        </div>
+
+        <div class="news-item">
+            Switching could save some drivers up to $1,500 a year, and some users report cutting their monthly rate by as much as 50% or higher &mdash; same coverage, priced for who you are now.
+        </div>
+
+        <div class="news-item">
+            <a href="#">Compare your rate free &rarr;</a>*
+        </div>
     </div>
 
     <!-- ============================================
          SECTION 8: LOCATION REPORT
          ============================================ -->
     <div class="section-card">
-        <span class="kicker"><span class="kicker-num">06</span> &mdash; The Glendale report</span>
-        <div class="section-heading">Glendale Report</div>
-
-        <div class="weather-subheading">Weather forecast</div>
+        <span class="kicker"><span class="kicker-num">07</span> &mdash; Glendale report</span>
+        <div class="section-heading">Weather forecast</div>
 
         <div class="weather-day">
             <p><span class="day-label">Today</span> — <span class="day-stats">High: 47&deg;F — Low: 36&deg;F — Precip: 60%</span></p>
@@ -324,19 +329,23 @@
     <div class="section-card">
         <div class="signoff">
             <div class="signoff-text">
-                <strong>Thanks for reading!</strong> If you know someone who'd love BaseLocal, <a href="#">send 'em here</a> so they can sign up too :)
+                <strong>Thanks for reading!</strong> Know someone who'd love to get the best of Glendale in their inbox? <a href="#">Send 'em here so they can sign up too &rarr;</a>
             </div>
         </div>
-
-        <p class="subscribe-ps"><strong>P.S.</strong> Did someone share this page with you? <a href="#">Click here to subscribe</a> (it's free)!</p>
     </div>
 
     <!-- ============================================
          FOOTER
          ============================================ -->
     <div class="newsletter-footer">
+        <div class="footer-nav">
+            <a href="#">Insiders' Club</a>
+            <a href="#">Advertise</a>
+            <a href="#">Submit event</a>
+        </div>
         <img src="BaseLocal-Logo.png.webp" alt="BaseLocal" class="footer-logo">
         <p>We may receive a commission on purchases made through affiliate links in this newsletter. Content marked with an * is paid advertising. These companies may also generate commission from affiliate links in the newsletter. You received this email because you signed up for our list.</p>
+        <p class="footer-prefs"><a href="#">Update your email preferences or unsubscribe here</a></p>
         <p>&copy; 2026 BaseLocal</p>
     </div>
 
