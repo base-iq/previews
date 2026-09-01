@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Review and pay — BaseLocal for business</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@400;700&family=Lato:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="review">
+
+<div id="header-slot"></div>
+
+<main class="page narrow">
+  <h1>Review and pay.</h1>
+  <p class="subhead">Your card ending in <span id="cardLast4">4242</span> gets charged today, once. Nothing recurring.</p>
+
+  <div class="alert error" id="declineAlert" hidden role="alert">
+    <span class="icon" aria-hidden="true">&#9888;</span>
+    <div class="body">Your bank turned down the charge. Nothing was booked and nothing is held.
+      <div class="actions"><a href="#">Try another card &rarr;</a></div>
+    </div>
+  </div>
+
+  <div class="summary" style="margin-top:28px;max-width:420px">
+    <div class="summary-header">Order summary</div>
+    <div id="summaryBody"></div>
+  </div>
+
+  <div class="note-block">
+    <p>A BaseLocal editor in each market writes the final copy and sends it to you before the first day runs.</p>
+    <p>Cancel any day up to 48 hours before it runs and that day is refunded in full. Inside 48 hours, the day is locked in.</p>
+  </div>
+
+  <button type="button" class="btn primary large" id="payBtn">Pay &rarr;</button>
+
+  <p class="small" style="margin-top:18px"><a href="#" class="muted-link">Use a different card</a></p>
+
+  <p class="fine-print" style="margin-top:28px">By paying you agree to BaseLocal&rsquo;s advertising terms and confirm the business is yours to promote. Declined placements are refunded in full.</p>
+</main>
+
+<div id="footer-slot"></div>
+<script src="app.js"></script>
+</body>
+</html>

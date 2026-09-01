@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book a placement — BaseLocal for business</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@400;700&family=Lato:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="book">
+
+<div id="header-slot"></div>
+
+<div id="stepSlot"></div>
+
+<main class="page">
+  <div class="book-layout">
+
+    <div>
+      <!-- ===================== 01 · What ===================== -->
+      <section class="book-section">
+        <h1>What are you promoting?</h1>
+        <div class="pick-cards" style="margin-top:24px" role="group" aria-label="What are you promoting?">
+          <button type="button" class="pick-card" data-type="business" aria-pressed="false">
+            <div class="pc-name">Your business</div>
+            <p class="pc-desc">A spotlight in the daily email and at the top of the directory. Priced per market, per day.</p>
+          </button>
+          <button type="button" class="pick-card" data-type="event" aria-pressed="false">
+            <div class="pc-name">An event</div>
+            <p class="pc-desc">Anything with a date &mdash; a sale, a class, a fundraiser. Pinned in the events directory, with an option to run inside the email.</p>
+          </button>
+        </div>
+      </section>
+
+      <!-- ===================== 02 · Where ===================== -->
+      <section class="book-section is-dimmed" id="sec02" style="margin-top:40px">
+        <h2 class="section-header"><span class="stepNum">02</span>Where should it run?</h2>
+        <p class="helper" style="margin-bottom:16px">Your markets are checked already. Add any of the other 400.</p>
+        <p style="margin-bottom:14px"><span class="sample-stamp">Sample data</span></p>
+        <div id="bookMarkets"></div>
+      </section>
+
+      <!-- ===================== 03 · When ===================== -->
+      <section class="book-section is-dimmed" id="sec03" style="margin-top:40px">
+        <h2 class="section-header"><span class="stepNum">03</span>Which days?</h2>
+        <p class="helper" style="margin-bottom:16px">Three days&rsquo; notice, so your editor has time to write it.</p>
+
+        <div class="alert error" id="slotLost" hidden role="alert">
+          <span class="icon" aria-hidden="true">&#9888;</span>
+          <div class="body"></div>
+        </div>
+
+        <div id="bookCalendar"></div>
+        <p class="cal-partial-helper" id="calHelper" role="status"></p>
+      </section>
+
+      <!-- ===================== 04 · How big ===================== -->
+      <section class="book-section is-dimmed" id="sec04" style="margin-top:40px">
+        <h2 class="section-header"><span class="stepNum">04</span>How big?</h2>
+        <div class="tier-cards" role="group" aria-label="How big?">
+          <button type="button" class="tier-card" data-tier="directory" aria-pressed="false">
+            <div class="tc-name">Directory</div>
+            <div class="tc-price">$10 / market / day</div>
+            <p class="tc-desc">Pinned above every listing in that market&rsquo;s directory.</p>
+          </button>
+          <button type="button" class="tier-card selected" data-tier="directory_newsletter" aria-pressed="true">
+            <span class="tier-badge">Most businesses</span>
+            <div class="tc-name">Directory + newsletter</div>
+            <div class="tc-price">$25 / market / day</div>
+            <p class="tc-desc">Everything above, plus your spot inside that morning&rsquo;s email.</p>
+          </button>
+        </div>
+      </section>
+    </div>
+
+    <!-- ===================== Order summary ===================== -->
+    <aside>
+      <div class="alert error" id="ceilingAlert" hidden role="alert">
+        <span class="icon" aria-hidden="true">&#9888;</span>
+        <div class="body"></div>
+      </div>
+
+      <div class="summary" id="orderSummary">
+        <div class="summary-header">Order summary</div>
+        <div id="summaryBody"></div>
+        <button type="button" class="btn primary is-disabled" id="bookCta" disabled>Pick markets and days</button>
+      </div>
+    </aside>
+
+  </div>
+</main>
+
+<div class="summary-bar">
+  <div class="bar-total">
+    <span class="label">Total</span>
+    <span class="amount" id="barAmount">$0</span>
+    <button type="button" class="link-button" id="viewSummary" style="font-size:13px">View summary &#9652;</button>
+  </div>
+  <button type="button" class="btn primary is-disabled" id="barCta" disabled>Pick markets and days</button>
+</div>
+
+<div id="footer-slot"></div>
+<script src="app.js"></script>
+</body>
+</html>
