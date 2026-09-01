@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign in — BaseLocal for business</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@400;700&family=Lato:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="signin">
+
+<div id="header-slot"></div>
+
+<main class="page auth">
+  <span class="kicker">BaseLocal for business</span>
+  <h1>Sign in.</h1>
+  <p class="subhead">Your placements, receipts, and market numbers.</p>
+
+  <div class="alert error" id="signinError" hidden role="alert">
+    <span class="icon" aria-hidden="true">&#9888;</span>
+    <div class="body">That email and password don&rsquo;t match. Try again, or reset the password.</div>
+  </div>
+
+  <div style="margin-top:32px">
+    <div class="field" id="f-email">
+      <label class="field-label" for="email">Email <span class="req">*</span></label>
+      <input type="email" id="email" name="email" value="front-desk@riveradentalstudio.com" autocomplete="email">
+    </div>
+
+    <div class="field" id="f-password">
+      <label class="field-label" for="password">Password <span class="req">*</span></label>
+      <input type="password" id="password" name="password" autocomplete="current-password">
+    </div>
+
+    <button type="button" class="btn primary" id="signinBtn">Sign in &rarr;</button>
+
+    <p class="small" style="margin-top:18px"><a href="#" class="muted-link">Forgot your password?</a></p>
+    <p class="small" style="margin-top:8px"><a href="index.html">Need an account? Create one</a></p>
+  </div>
+</main>
+
+<div id="footer-slot"></div>
+<script src="app.js"></script>
+</body>
+</html>

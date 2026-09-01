@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create your advertiser account — BaseLocal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@400;700&family=Lato:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="index">
+
+<div id="header-slot"></div>
+
+<main class="page auth">
+
+  <section id="createState">
+    <span class="kicker">BaseLocal for business</span>
+    <h1>One account for every placement you buy.</h1>
+    <p class="subhead">Your markets, your budget, and who you&rsquo;re reaching — in one place. Opening an account is free; you only pay when you book something.</p>
+
+    <div class="alert info" id="takenAlert" hidden role="status">
+      <span class="icon" aria-hidden="true">&#9432;</span>
+      <div class="body">This email already has an account. <a href="signin.html">Sign in</a>, or reset the password.</div>
+    </div>
+
+    <div style="margin-top:32px">
+      <div class="field" id="f-email">
+        <label class="field-label" for="email">Work email <span class="req">*</span></label>
+        <input type="email" id="email" name="email" placeholder="you@yourbusiness.com" autocomplete="email">
+        <p class="helper">We&rsquo;ll only email you receipts and run notices.</p>
+      </div>
+
+      <div class="field" id="f-password">
+        <label class="field-label" for="password">Password <span class="req">*</span></label>
+        <input type="password" id="password" name="password" placeholder="At least 10 characters" autocomplete="new-password">
+      </div>
+
+      <button type="button" class="btn primary" id="createBtn">Create account &rarr;</button>
+
+      <p class="small" style="margin-top:18px"><a href="signin.html">Already have one? Sign in</a></p>
+
+      <p class="fine-print" style="margin-top:28px">By creating an account you agree to BaseLocal&rsquo;s advertising terms. We don&rsquo;t share your details with other advertisers.</p>
+    </div>
+  </section>
+
+  <section id="verifyState" hidden>
+    <span class="kicker">BaseLocal for business</span>
+    <h1>Check your email.</h1>
+    <p class="subhead">We sent a six-digit code to <strong id="verifyEmail"></strong>. It&rsquo;s good for 15 minutes.</p>
+
+    <div style="margin-top:32px">
+      <div class="field" id="f-code">
+        <label class="field-label" for="code">Six-digit code <span class="req">*</span></label>
+        <input type="text" id="code" name="code" placeholder="123456" inputmode="numeric" maxlength="6" autocomplete="one-time-code">
+      </div>
+
+      <button type="button" class="btn primary" id="verifyBtn">Verify and continue &rarr;</button>
+
+      <p class="small" style="margin-top:18px"><a href="#" id="resendLink">Send it again</a></p>
+      <p class="small" id="resentNote" hidden role="status">Sent. Give it a minute.</p>
+      <p class="small" style="margin-top:18px"><a href="#" id="startOver" class="muted-link">Wrong address? Start over</a></p>
+    </div>
+  </section>
+
+</main>
+
+<div id="footer-slot"></div>
+<script src="app.js"></script>
+</body>
+</html>
