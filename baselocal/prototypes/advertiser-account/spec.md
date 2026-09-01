@@ -69,6 +69,14 @@ always **Friday, September 4** and the calendar opens on September 2026.
 **Reachable states.** Everything in §3 is reachable through the UI or through the
 documented query params in §3. No state is dead code.
 
+**Review index.** `start-here.html` is a tenth file in this folder and is *not* part
+of the product: it is the design-review index. It carries the demo keys (verify code
+`123456` / `000000`, the two demo accounts, the fixed clock, the sessionStorage
+reset), the nine screens in flow order as relative links, and every §3 state as
+either a direct link or a one-line recipe. It is reachable from a small
+`Design review index →` link in the footer area of `home.html` only. Same-batch rule:
+when §3 gains or loses a state, `start-here.html` changes with it.
+
 ---
 
 ## 3. States
