@@ -310,10 +310,13 @@ day. `sold = seeded base + the account's own bookings`, capped at capacity. The 
 Day state across N selected markets: **open** if all have room, **partial** if some,
 **full** if none.
 
-**Demo bookings.** Rivera Dental Studio: five bookings (two August, three current)
-producing `Ran`, `Refunded`, `Live`, `Set` and `In review` chips in the Naples run
-sheet, `$300` charged in September, `$350` paid-for-not-yet-run against a `$500`
-ceiling. Zia Media Group: three bookings producing an August `Ran` block, a
+**Demo bookings.** Rivera Dental Studio: five bookings (three charged in August,
+two charged today) producing `Ran`, `Refunded`, `Live`, `Set` and `In review` chips
+in the Naples run sheet, `$300` charged in September, `$350` paid-for-not-yet-run
+against a `$500` ceiling. Because today is the 1st, the September charge total is
+smaller than the paid-for-not-yet-run total — the August-charged booking that runs
+Sep 2–3 sits in the latter and not the former, which is the honest reading of both
+tiles. Zia Media Group: three bookings producing an August `Ran` block, a
 refunded receipt, and a Santa Fe `In review` spotlight that runs tomorrow — which is
 why Zia's default home hero is the in-review variant.
 

@@ -1336,8 +1336,7 @@ function pageMarket() {
 
   html += '<div class="page-actions"><a class="btn primary" href="book.html?markets=' + slug + '">Book in '
     + esc(m.city) + ' →</a>'
-    + '<button type="button" class="muted-link" id="removeLink" style="background:none;border:none;'
-    + 'font-family:inherit;font-size:15px;cursor:pointer">Remove this market</button></div>';
+    + '<button type="button" class="link-button" id="removeLink">Remove this market</button></div>';
 
   html += '<dialog class="remove-dialog" id="removeDialog" aria-labelledby="removeTitle">'
     + '<h2 id="removeTitle">Remove ' + esc(m.city) + ' from your account?</h2>'

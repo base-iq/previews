@@ -39,6 +39,7 @@ body {
   background: var(--white);
   font-size: 17px;
   line-height: 1.7;
+  overflow-wrap: break-word;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -100,6 +101,17 @@ h3 { font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 20px; line-he
 .small { font-size: 15px; color: var(--gray); line-height: 1.5; }
 .muted-link { color: var(--gray); font-weight: 500; }
 .muted-link:hover { color: var(--terracotta); }
+
+/* A text link rendered as a <button>: keeps the link register, clears the 44px
+   touch minimum via padding with compensating negative margin. */
+.link-button {
+  background: none; border: none; cursor: pointer;
+  font-family: 'Lato', sans-serif; font-size: 15px; font-weight: 500;
+  color: var(--gray);
+  padding: 12px 4px; margin: -12px -4px;
+  text-align: left;
+}
+.link-button:hover { color: var(--terracotta); }
 
 /* Disclosure block — § Disclosure Block */
 .disclosure { font-size: 12px; color: var(--silver); margin-top: 48px; line-height: 1.6; }
@@ -575,7 +587,10 @@ select {
    market.html — breadcrumb, audience panel, run sheet
    ============================================================ */
 .breadcrumb { font-size: 13px; margin-bottom: 14px; }
-.breadcrumb a { font-weight: 700; color: var(--gray); }
+.breadcrumb a {
+  font-weight: 700; color: var(--gray);
+  display: inline-block; padding: 12px 4px; margin: -12px -4px;
+}
 .breadcrumb a:hover { color: var(--terracotta); }
 .breadcrumb .sep { color: var(--silver); margin: 0 6px; }
 .breadcrumb .current { font-weight: 700; color: var(--espresso); }
