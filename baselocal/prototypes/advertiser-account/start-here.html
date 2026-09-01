@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design review — start here — BaseLocal for business</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@400;700&family=Lato:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  /* Page-specific tweaks. Everything else comes from styles.css. */
+  .rv-keys { list-style: none; margin-top: 4px; }
+  .rv-keys li { padding: 10px 0; border-bottom: 1px solid var(--hairline-soft); font-size: 16px; line-height: 1.6; }
+  .rv-keys li:last-child { border-bottom: none; padding-bottom: 0; }
+  .rv-keys .k { display: block; font-family: 'Lato', sans-serif; font-weight: 900;
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--terracotta); margin-bottom: 2px; }
+
+  .rv-flow { list-style: none; counter-reset: rv; margin-top: 12px; }
+  .rv-flow > li { counter-increment: rv; position: relative;
+    padding: 14px 0 14px 42px; border-bottom: 1px solid var(--border); }
+  .rv-flow > li::before { content: counter(rv);
+    position: absolute; left: 0; top: 16px;
+    width: 26px; height: 26px; border-radius: 50%;
+    background: var(--cream); border: 1px solid var(--border); color: var(--espresso);
+    font-family: 'Lato', sans-serif; font-weight: 900; font-size: 12px;
+    display: flex; align-items: center; justify-content: center; }
+  .rv-flow .rv-name { font-size: 17px; }
+  .rv-flow .rv-note { display: block; font-size: 15px; color: var(--gray); line-height: 1.5; margin-top: 2px; }
+  .rv-flow .rv-file { font-size: 13px; color: var(--silver); }
+
+  .rv-states { list-style: none; margin-top: 12px; }
+  .rv-states > li { padding: 13px 0; border-bottom: 1px solid var(--border); font-size: 16px; line-height: 1.6; }
+  .rv-states > li:last-child { border-bottom: none; }
+  .rv-states .rv-how { display: block; font-size: 15px; color: var(--gray); line-height: 1.5; margin-top: 2px; }
+  .rv-sub { font-family: 'Lato', sans-serif; font-weight: 900; font-size: 12px;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--espresso);
+    border-bottom: 2px solid var(--espresso); padding: 26px 0 6px; }
+  .rv-group:first-of-type .rv-sub { padding-top: 8px; }
+
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.88em; background: var(--cream); border: 1px solid var(--border);
+    border-radius: 3px; padding: 1px 5px; color: var(--espresso); }
+
+  .rv-foot { background: var(--cream); border-left: 3px solid var(--terracotta);
+    border-radius: 0 4px 4px 0; padding: 18px 20px; margin-top: 40px;
+    font-size: 16px; line-height: 1.6; color: var(--charcoal); }
+</style>
+</head>
+<body data-page="start-here">
+
+<header class="site-header"><div class="site-header-inner">
+  <a class="logo-link" href="home.html"><img src="../../assets/logos/baselocal-full-dark.svg" alt="BaseLocal"></a>
+</div></header>
+
+<main class="page narrow">
+
+  <span class="kicker">Prototype · design review</span>
+  <h1>Advertiser Account — design review</h1>
+  <p class="subhead">Direction B, &ldquo;Your Markets&rdquo; — nine clickable screens on sample data.
+  Every screen and every special state is one tap from this page.</p>
+
+  <!-- ------------------------------------------------------- demo keys --- -->
+  <section class="panel" aria-labelledby="keysTitle" style="margin-top:32px">
+    <div class="panel-head"><h2 id="keysTitle" style="font-size:22px">Before you click</h2></div>
+    <ul class="rv-keys">
+      <li><span class="k">Verify code</span>
+        <code>123456</code> gets you through. <code>000000</code> shows the expired-code state.
+        Any other six digits shows the mismatch error.</li>
+      <li><span class="k">Two demo accounts</span>
+        Switch from the account menu, top right (your business name, with the caret).
+        <strong>Rivera Dental Studio</strong> — one market, Naples FL.
+        <strong>Zia Media Group</strong> — three markets, Albuquerque / Rio Rancho / Santa Fe.
+        The same menu has <strong>Reset demo data</strong>.</li>
+      <li><span class="k">The clock is fixed</span>
+        Today is always <strong>Tuesday, September 1, 2026</strong>. The first bookable day is
+        always Friday, September 4 — three days&rsquo; notice. Nothing here goes stale.</li>
+      <li><span class="k">Data resets</span>
+        Anything you book is kept in <code>sessionStorage</code> (<code>bl_advertiser</code>) and
+        disappears when you close the browser tab.</li>
+    </ul>
+  </section>
+
+  <!-- ------------------------------------------------------- the flow --- -->
+  <h2 style="margin-top:48px">The flow, in order</h2>
+  <p class="small" style="margin-top:8px">Nine screens. Walk it top to bottom, or jump anywhere.</p>
+  <ol class="rv-flow">
+    <li>
+      <a class="rv-name" href="index.html">Create account</a> <span class="rv-file">index.html</span>
+      <span class="rv-note">Email and password, then verify in place with a six-digit code.</span>
+    </li>
+    <li>
+      <a class="rv-name" href="signin.html">Sign in</a> <span class="rv-file">signin.html</span>
+      <span class="rv-note">The returning-advertiser door.</span>
+    </li>
+    <li>
+      <a class="rv-name" href="setup.html">Setup</a> <span class="rv-file">setup.html</span>
+      <span class="rv-note">Two steps on one page: the business, then the markets you care about.</span>
+    </li>
+    <li>
+      <a class="rv-name" href="home.html">Your markets</a> <span class="rv-file">home.html</span>
+      <span class="rv-note">The home screen — one card per market, what runs next, what you&rsquo;ve spent.</span>
+    </li>
+    <li>
+      <a class="rv-name" href="market.html?m=naples">Market detail</a> <span class="rv-file">market.html?m=naples</span>
+      <span class="rv-note">Who you reach in one town, and what you have running there.
+      Needs a market: try also <a href="market.html?m=santa-fe">Santa Fe</a> or
+      <a href="market.html?m=albuquerque">Albuquerque</a> (Zia&rsquo;s markets).</span>
+    </li>
+    <li>
+      <a class="rv-name" href="book.html">Book a placement</a> <span class="rv-file">book.html</span>
+      <span class="rv-note">What · where · when · pay, all on one page.</span>
+    </li>
+    <li>
+      <a class="rv-name" href="review.html?type=business&amp;markets=naples&amp;days=2026-09-04,2026-09-08&amp;tier=directory_newsletter&amp;total=50">Review and pay</a>
+      <span class="rv-file">review.html</span>
+      <span class="rv-note">Normally reached from Book — this link carries a sample order
+      (Naples, two days, $50) so the page has something to show.</span>
+    </li>
+    <li>
+      <a class="rv-name" href="booked.html?type=business&amp;markets=naples&amp;days=2026-09-04,2026-09-08&amp;tier=directory_newsletter&amp;total=50&amp;receipt=BL-9301">Booked</a>
+      <span class="rv-file">booked.html</span>
+      <span class="rv-note">Normally reached by paying. Opening it directly files that sample
+      booking into the demo account — <em>Reset demo data</em> clears it.</span>
+    </li>
+    <li>
+      <a class="rv-name" href="budget.html">Budget and receipts</a> <span class="rv-file">budget.html</span>
+      <span class="rv-note">The monthly ceiling, the card on file, every receipt.</span>
+    </li>
+  </ol>
+
+  <!-- --------------------------------------------------- special states --- -->
+  <h2 style="margin-top:48px">Special states</h2>
+  <p class="small" style="margin-top:8px">A link where the state has a URL. A recipe where it takes a click or two.</p>
+
+  <div class="rv-group">
+    <div class="rv-sub">Create account &amp; sign in</div>
+    <ul class="rv-states">
+      <li><a href="index.html?state=verify">Verify your email</a>
+        <span class="rv-how">Or reach it by submitting the form. <code>000000</code> = expired code.</span></li>
+      <li><a href="index.html?state=taken">Email already has an account</a>
+        <span class="rv-how">Or sign up as <code>taken@business.com</code>.</span></li>
+      <li><a href="signin.html?state=error">Wrong email or password</a>
+        <span class="rv-how">Or sign in with the password <code>wrongpass</code>.</span></li>
+      <li><a href="setup.html?step=2">Setup step 2 — pick your markets</a>
+        <span class="rv-how">Jumps past the business form with everything blank.</span></li>
+    </ul>
+  </div>
+
+  <div class="rv-group">
+    <div class="rv-sub">Your markets</div>
+    <ul class="rv-states">
+      <li><a href="home.html?firstrun=1">Never booked anything</a>
+        <span class="rv-how">The first-run hero, audience-and-scarcity line, no money strip.</span></li>
+      <li><a href="home.html?state=nomarkets">No markets on the account</a></li>
+      <li><a href="home.html?state=manymarkets">Four or more markets</a>
+        <span class="rv-how">Adds the sticky scope-pill filter bar, which doesn&rsquo;t render under four.</span></li>
+      <li><a href="home.html?state=numbers-error">Numbers unavailable</a>
+        <span class="rv-how">Analytics fail; booking state is never blocked by it.</span></li>
+      <li><a href="home.html?state=nothing">Nothing scheduled</a> ·
+        <a href="home.html?state=loading">Loading</a></li>
+      <li>Hero variants:
+        <a href="home.html?state=today">running today</a> ·
+        <a href="home.html?state=tomorrow">tomorrow</a> ·
+        <a href="home.html?state=review">with the editor</a> ·
+        <a href="home.html?state=later">later this week</a>
+        <span class="rv-how">The &ldquo;with the editor&rdquo; hero is the Zia account&rsquo;s default.</span></li>
+    </ul>
+  </div>
+
+  <div class="rv-group">
+    <div class="rv-sub">Market detail</div>
+    <ul class="rv-states">
+      <li><a href="market.html?m=rio-rancho">Market full through a date</a>
+        <span class="rv-how">Rio Rancho is sold out through Sunday Sep 6; the availability line says so.</span></li>
+      <li><a href="market.html?m=naples&amp;state=empty">Nothing running here yet</a>
+        <span class="rv-how">Empty run sheet with a day-specific CTA.</span></li>
+      <li><a href="market.html?m=nowhere">Market we don&rsquo;t have</a></li>
+      <li>Remove-market confirmation dialog — the only dialog in the product
+        <span class="rv-how">Recipe: open <a href="market.html?m=naples">any market</a>, scroll to the
+        bottom, tap <em>Remove this market</em>.</span></li>
+      <li>Clicks module, available variant
+        <span class="rv-how">Off by design: <code>CLICKS_AVAILABLE = false</code> at the top of
+        <code>app.js</code>, pending the click-feed fix. Every market page shows the dated-outage
+        sentence instead. Flip the flag to see the available copy.</span></li>
+    </ul>
+  </div>
+
+  <div class="rv-group">
+    <div class="rv-sub">Booking</div>
+    <ul class="rv-states">
+      <li>Someone took the slot while you were picking
+        <span class="rv-how">Recipe: open <a href="book.html?markets=santa-fe">Book with Santa Fe selected</a>,
+        pick a placement type, then choose <strong>Sat Sep 5</strong>. Fires once per page load;
+        the day is dropped and the rest of your selection survives.</span></li>
+      <li>Over your monthly ceiling
+        <span class="rv-how">Recipe: on the Rivera account (<a href="book.html">Book</a>), pick
+        <em>Business spotlight</em>, keep Naples, then tap <em>Next 30 days</em>. Rivera has spent
+        $300 of a $500 ceiling, so anything past eight market-days trips the block and disables the CTA.</span></li>
+      <li>Partly available days in the calendar
+        <span class="rv-how">Recipe: switch to <strong>Zia Media Group</strong>, open
+        <a href="book.html">Book</a>, pick <em>Business spotlight</em> with all three markets.
+        Sep 4, 5 and 6 come up partial (Rio Rancho is full, the others aren&rsquo;t); Sep 9 is full
+        everywhere. Selecting a partial day writes the per-market helper line under the calendar.</span></li>
+      <li><a href="book.html?markets=albuquerque,rio-rancho,santa-fe">Book pre-loaded with three markets</a>
+        <span class="rv-how">Same calendar without switching accounts.</span></li>
+      <li><a href="review.html?state=declined&amp;type=business&amp;markets=naples&amp;days=2026-09-04,2026-09-08&amp;tier=directory_newsletter&amp;total=50">Card declined</a>
+        <span class="rv-how">Tap <em>Pay</em> once to see it; a second attempt goes through.</span></li>
+    </ul>
+  </div>
+
+  <div class="rv-group">
+    <div class="rv-sub">Budget &amp; account</div>
+    <ul class="rv-states">
+      <li><a href="budget.html?state=empty">No charges yet</a> ·
+        <a href="budget.html?state=loading">Loading receipts</a></li>
+      <li><a href="budget.html#card-on-file">Card on file</a>
+        <span class="rv-how">Where the account menu&rsquo;s <em>Payment method</em> item lands.</span></li>
+      <li>Ceiling below what you&rsquo;ve already spent
+        <span class="rv-how">Recipe: <a href="budget.html">Budget</a> &rarr; <em>Change ceiling</em>
+        &rarr; enter <code>50</code> &rarr; <em>Save ceiling</em>.</span></li>
+      <li>Account switcher
+        <span class="rv-how">Recipe: on any signed-in screen, tap the business name at the top right.
+        The panel carries business details, payment method, sign out, both demo accounts and
+        <em>Reset demo data</em>.</span></li>
+    </ul>
+  </div>
+
+  <!-- ------------------------------------------------------- feedback --- -->
+  <p class="rv-foot">Reviewing? Note the screen name and what&rsquo;s wrong — feedback goes back
+  through Executive.</p>
+
+  <p class="fine-print" style="margin-top:24px">All numbers on the prototype are sample data.
+  The full screen-by-screen contract is in <code>spec.md</code> in this folder.</p>
+
+</main>
+
+<footer class="site-footer"><div class="site-footer-inner">
+  <div class="footer-top">
+    <div class="footer-brand"><img src="../../assets/logos/baselocal-full-white.svg" alt="BaseLocal">
+      <p class="footer-tagline">Local news, events, and recommendations for 400+ markets.</p></div>
+    <div class="footer-col"><h4>Legal</h4>
+      <a href="#">Advertising terms</a><a href="#">Privacy</a></div>
+    <div class="footer-col"><h4>Contact</h4>
+      <a href="mailto:partner@baselocal.com">partner@baselocal.com</a></div>
+  </div>
+  <p class="footer-bottom">© 2026 BaseLocal. Placements are reviewed by a local editor before they run.</p>
+</div></footer>
+
+</body>
+</html>
