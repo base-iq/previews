@@ -14,6 +14,12 @@ step, no dependencies. Every visual value traces to
 `brands/baselocal/design-system.md`; anything the design needed that the system
 does not define is listed under **Design-system gaps** below.
 
+**Files in this folder.** Product: `index.html`, `signin.html`, `setup.html`,
+`home.html`, `market.html`, `book.html`, `review.html`, `booked.html`,
+`budget.html`, `styles.css`, `app.js`. Review chrome, excluded from any
+production build: `start-here.html` (the review index) and `review-nav.js` (the
+persistent review-nav widget). Plus this `spec.md`.
+
 ---
 
 ## 1. Goal
@@ -76,6 +82,48 @@ reset), the nine screens in flow order as relative links, and every §3 state as
 either a direct link or a one-line recipe. It is reachable from a small
 `Design review index →` link in the footer area of `home.html` only. Same-batch rule:
 when §3 gains or loses a state, `start-here.html` changes with it.
+
+**Review nav widget.** `review-nav.js` is loaded by all ten HTML files
+(`<script src="review-nav.js" defer>`) and is likewise *not* part of the product:
+it exists so a reviewer can jump between screens without walking back to
+`start-here.html`. It injects its own CSS (`styles.css` is untouched), renders a
+fixed collapsed pill labelled `Review ▾` (~90px, dark charcoal `#1B1B1F` on a
+999px radius, system sans rather than Lato, 11px uppercase) and expands an upward
+262px panel carrying, in order: `★ Start here (full review index)`, the nine
+screens in flow order, and four high-value states (first run, four or more
+markets, verify your email, card declined). The full state catalogue stays on
+`start-here.html`; the widget is deliberately scannable, not exhaustive. The
+entry matching the current pathname is marked `aria-current="page"` with a
+terracotta rail and a `here` badge — a state entry only claims the highlight
+when its query string matches too, so `home.html?firstrun=1` highlights *First
+run* while `home.html?state=nothing` highlights *Your markets*. The pill is a
+real `<button>` with `aria-expanded`; the panel closes on a second tap, an
+outside click, or `Escape` (which returns focus to the pill), and the caret's
+only transition is dropped under `prefers-reduced-motion: reduce`. The palette
+is deliberately **not** BaseLocal — near-black chrome so it reads as
+scaffolding, never as product. It writes nothing to `sessionStorage`, adds no
+listeners to prototype elements, calls no `stopPropagation`, and mounts as the
+last child of `<body>`, so collapsed it changes nothing about how the prototype
+behaves.
+
+*Placement decision (bottom-left).* The only fixed prototype furniture is
+`book.html`'s Order Summary bar (`.summary-bar`, `position:fixed; bottom:0;
+left:0; right:0; z-index:50`, visible below 1000px), and it spans the full
+width — so no bottom corner is free on that page. Bottom-**right** is also where
+`book.html`'s bar CTA and `budget.html`'s right-aligned receipt links sit, and
+bottom-centre is under the bar's `View summary ▴` control. Bottom-left is the
+quietest corner: at 375px the pill sits over the Site Footer's copyright line
+(plain text, nothing tappable) or over left-edge body copy, never over a
+control, and every primary CTA in the flow is in normal document flow rather
+than pinned. On `book.html` the widget is lifted with
+`@media (max-width:999px){body[data-page="book"] #rnav{bottom:96px}}` — clear of
+the ~68px bar plus its shadow — and drops back to `bottom:12px` at ≥1000px where
+the bar is `display:none`. `z-index:9000` clears the sticky header (100), the
+account menu panel (120) and the summary bar (50), while staying below the
+native `<dialog>` top layer used by the remove-market confirmation. Verified by
+reading the CSS, not in a browser: no browser was available in the build
+environment, so a visual pass at 375px is the one thing a reviewer should
+eyeball.
 
 ---
 
