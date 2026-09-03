@@ -1335,6 +1335,19 @@ body {
     }
 }
 
+/* ---- WELCOME FAVORITES — SECTION PANEL (mock variant) ----
+   Candidate treatment for the welcome's reader-favorites
+   batch: the entire "Start here" section (label, heading,
+   dek, items) in one enclosing paper panel; items keep
+   their hairline dividers inside. Mock-stage — prune if
+   not adopted. */
+.favorites-panel {
+    background: #FAF6F4;
+    border: 1px solid #EDE6E1;
+    border-radius: 5px;
+    padding: 20px 22px;
+}
+
 /* ---- WELCOME FAVORITES — BOXED (mock variant) ----
    Candidate treatment for the welcome's reader-favorites
    batch: each news-item in a poll-option-style box instead
