@@ -102,6 +102,12 @@ body {
     color: #2C2421;
 }
 
+.intro a {
+    color: #C2604A;
+    text-decoration: underline;
+    font-weight: 700;
+}
+
 .intro .byline {
     font-style: italic;
     color: #797979;
