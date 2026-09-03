@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Entry — final (1c, strict columns)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',ui-sans-serif,system-ui,sans-serif;background:#fff;color:#111827;font-size:13px;padding-bottom:60px}
+.caption{background:#111827;color:#fff;padding:10px 16px;font-size:13px;margin-bottom:16px}
+.caption strong{color:#f7cfc2}
+.page{max-width:1180px;margin:0 auto;padding:0 16px}
+.toolbar{display:flex;gap:10px;align-items:center;margin-bottom:12px}
+h1{font-size:18px;font-weight:700;margin-right:6px}
+.datebtn{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;border:1px solid #E8E0DC;background:#fff;border-radius:8px;padding:7px 12px;font-size:13px;color:#444;font-weight:500;cursor:pointer}
+.search{flex:1;max-width:280px;border:1px solid #E8E0DC;border-radius:8px;padding:7px 12px;font:inherit;font-size:13px;color:#444}
+.tablewrap{border:1px solid #E8E0DC;border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse}
+thead th{font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:#797979;font-weight:600;padding:7px 12px;text-align:right;border-bottom:1px solid #E8E0DC}
+thead th:first-child{text-align:left}
+td{padding:7px 12px;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+td:first-child{text-align:left}
+.chev{display:inline-block;width:14px;font-size:10px;color:#a89e99}
+
+/* day: cream band. Numbers live ONLY in their own columns. */
+tr.day>td{background:#F5EEE9;color:#2C2421;font-weight:700;font-size:13.5px;padding:9px 12px;border-top:1px solid #E8E0DC;cursor:pointer}
+.waiting{color:#A84E3B;font-weight:600;font-size:12px;margin-left:12px}
+/* partner: barely-tinted band */
+tr.partner>td{background:#FCFAF8;color:#2C2421;font-weight:700;font-size:12.5px;padding:6px 12px;border-top:1px solid #EEE7E2;cursor:pointer}
+tr.partner>td:first-child{padding-left:24px}
+.portal{color:#A84E3B;font-weight:600;font-size:12px;text-decoration:none;margin-left:10px}
+.portal:hover{text-decoration:underline}
+/* offer: white row */
+tr.offer>td{background:#fff;border-top:1px solid #f3f4f6}
+tr.offer td.name{padding-left:44px;font-weight:500;cursor:pointer}
+tr.offer .payout{color:#9ca3af;font-weight:400;margin-left:6px;font-size:12px}
+.entry{display:inline-flex;align-items:center;gap:4px;border:1px solid #d1d5db;border-radius:6px;padding:2px 8px;color:#9ca3af;background:#fff;font-size:12.5px;min-width:58px;justify-content:flex-end;cursor:pointer}
+.entry:hover{border-color:#B8593A;background:#fdf5f2}
+.val{font-weight:700}
+.autotag{color:#9ca3af;font-size:11px;font-style:italic;margin-right:6px}
+/* placement detail: smaller, muted, pure data in matching columns */
+tr.pl>td{background:#fff;font-size:12px;color:#797979;border-top:1px dotted #E8E0DC;padding:4px 12px}
+tr.pl>td:first-child{padding-left:64px}
+.chip{display:inline-block;font-size:11px;font-weight:600;border-radius:5px;padding:1px 7px;border:1px solid #E8E0DC;background:#FAF6F4;color:#8a3f2a}
+tr.pl .rev{font-weight:600;color:#444}
+tr.pl .cv{font-weight:600;color:#444}
+.share{color:#9ca3af}
+</style>
+</head>
+<body>
+<div class="caption"><strong>Final — 1c, strict columns.</strong> Every value sits under its own header at every level: day totals in Revenue/Conv, share in its own column, "waiting" lives with the label — never in a number column. The auto tag sits inside the revenue cell, before the value.</div>
+<div class="page">
+  <div class="toolbar">
+    <h1>Data Entry</h1>
+    <button class="datebtn">📅 Last month ▾</button>
+    <input class="search" placeholder="Find an offer or partner">
+  </div>
+  <div class="tablewrap">
+  <table>
+    <thead><tr>
+      <th style="width:42%">Offer</th><th>Unique Clicks</th><th>Share</th><th>Revenue</th><th>Conv</th>
+    </tr></thead>
+    <tbody>
+      <tr class="day"><td><span class="chev">▶</span>Friday, Jun 26</td><td></td><td></td><td>$418.20</td><td>9</td></tr>
+      <tr class="day"><td><span class="chev">▶</span>Thursday, Jun 25</td><td></td><td></td><td>$964.75</td><td>21</td></tr>
+      <tr class="day"><td><span class="chev">▼</span>Wednesday, Jun 24<span class="waiting">2 waiting</span></td><td></td><td></td><td>$1,206.95</td><td>17</td></tr>
+
+      <tr class="partner"><td colspan="5"><span class="chev">▼</span>AdsByMoney<a class="portal" href="#">Open portal ↗</a></td></tr>
+      <tr class="offer"><td class="name"><span class="chev">▼</span>American Home Shield<span class="payout">CPL $60</span></td><td></td><td></td><td><span class="val">$673.00</span></td><td><span class="val">17</span></td></tr>
+      <tr class="pl"><td><span class="chip">Morning Roundup · Lead</span></td><td>412</td><td class="share">51.5%</td><td class="rev">$346.60</td><td class="cv">9</td></tr>
+      <tr class="pl"><td><span class="chip">Morning Roundup · Feature 1</span></td><td>388</td><td class="share">48.5%</td><td class="rev">$326.40</td><td class="cv">8</td></tr>
+      <tr class="offer"><td class="name"><span class="chev">▶</span>Spot<span class="payout">CPC $3</span></td><td></td><td></td><td><span class="autotag">auto</span><span class="val">$141.00</span></td><td>—</td></tr>
+
+      <tr class="partner"><td colspan="5"><span class="chev">▼</span>AtWave<a class="portal" href="#">Open portal ↗</a></td></tr>
+      <tr class="offer"><td class="name"><span class="chev">▶</span>3 Day Blinds<span class="payout">CPC $3</span></td><td></td><td></td><td><span class="autotag">auto</span><span class="val">$167.40</span></td><td>—</td></tr>
+      <tr class="offer"><td class="name"><span class="chev">▶</span>Babbel<span class="payout">CPC $2</span></td><td></td><td></td><td><span class="autotag">auto</span><span class="val">$68.40</span></td><td>—</td></tr>
+      <tr class="offer"><td class="name"><span class="chev">▶</span>Dating.com<span class="payout">CPC $2</span></td><td></td><td></td><td><span class="autotag">auto</span><span class="val">$91.80</span></td><td>—</td></tr>
+      <tr class="offer"><td class="name"><span class="chev">▶</span>Total Injury Help (Depo-Provera)<span class="payout">CPC $2.50</span></td><td></td><td></td><td><span class="autotag">auto</span><span class="val">$65.25</span></td><td>—</td></tr>
+
+      <tr class="partner"><td colspan="5"><span class="chev">▶</span>Direct Agents<a class="portal" href="#">Open portal ↗</a></td></tr>
+
+      <tr class="partner"><td colspan="5"><span class="chev">▼</span>Impact<a class="portal" href="#">Open portal ↗</a><span class="waiting">1 waiting</span></td></tr>
+      <tr class="offer"><td class="name"><span class="chev">▶</span>Home Chef<span class="payout">CPA $40</span></td><td></td><td></td><td><span class="entry">$0 ✎</span></td><td><span class="entry">0 ✎</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>News Updates — Header Variations | BaseLocal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,700;1,400;1,500&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Lato', Helvetica, Arial, sans-serif;
+    background: #EFE9E4;
+    color: #444444;
+    -webkit-font-smoothing: antialiased;
+    padding: 32px 16px 80px;
+  }
+
+  .board {
+    max-width: 1160px;
+    margin: 0 auto;
+  }
+
+  .board-title {
+    font-family: 'Bitter', Georgia, serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #2C2421;
+    margin-bottom: 6px;
+  }
+
+  .board-sub {
+    font-family: 'Bitter', Georgia, serif;
+    font-style: italic;
+    font-size: 15px;
+    color: #6B6258;
+    margin-bottom: 40px;
+    max-width: 720px;
+  }
+
+  .variation {
+    margin-bottom: 64px;
+  }
+
+  .var-label {
+    font-family: 'Lato', sans-serif;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #6B6258;
+    margin-bottom: 4px;
+  }
+  .var-label .num { color: #C2604A; }
+
+  .var-note {
+    font-family: 'Bitter', Georgia, serif;
+    font-style: italic;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #6B6258;
+    margin-bottom: 16px;
+    max-width: 640px;
+  }
+
+  /* ---- Desktop + mobile frame pair ---- */
+  .pair {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .frame.d { flex: 1 1 620px; max-width: 694px; }
+  .frame.m { flex: 0 0 375px; width: 375px; }
+  @media (max-width: 460px) {
+    .frame.m { flex: 1 1 auto; width: auto; }
+  }
+
+  .frame-tag {
+    font: 900 10px 'Lato', sans-serif;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #A99C90;
+    margin-bottom: 8px;
+  }
+
+  /* ---- Mock email frame: paper bg + white section card, per newsletter tokens ---- */
+  .email {
+    background: #FAF6F4;
+    border: 1px solid #E0D8D2;
+    border-radius: 8px;
+    padding: 16px 12px 4px;
+  }
+  .card {
+    background: #FFFFFF;
+    border-radius: 5px;
+    padding: 30px;
+    margin-bottom: 8px;
+  }
+  .m .card { padding: 24px 20px; }
+
+  /* Shared newsletter type */
+  .intro {
+    font-family: 'Bitter', Georgia, serif;
+    font-size: 16px;
+    line-height: 24px;
+    color: #2C2421;
+  }
+  .intro strong { font-weight: 700; }
+  .fade { position: relative; height: 34px; overflow: hidden; }
+  .fade::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(#ffffff00, #ffffff);
+  }
+
+  a { color: #C2604A; }
+
+  /* ============================================================
+     UTILITY LINE TREATMENTS (shared)
+     Only "Upgrade" is a link.
+     ============================================================ */
+
+  /* micro utility: one quiet line on the paper, no card of its own */
+  .util-micro {
+    font: 400 11px 'Lato', sans-serif;
+    letter-spacing: 0.04em;
+    color: #6B6258;
+    text-align: center;
+    padding: 2px 4px 10px;
+  }
+  .util-micro a { color: #C2604A; text-decoration: none; border-bottom: 1px solid #C2604A; font-weight: 900; }
+
+  /* uppercase nav-register utility (matches .top-links register) */
+  .util-nav {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
+    font: 700 11px 'Lato', sans-serif;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #6B6258;
+    border-bottom: 1px solid #EDE6E1;
+    padding-bottom: 12px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+  }
+  .util-nav a { color: #C2604A; text-decoration: none; font-weight: 900; margin-left: auto; }
+  .m .util-nav { font-size: 10px; letter-spacing: 0.08em; }
+
+  /* ============================================================
+     V1 — Folio rule, refined
+     More air around the title block, and a hairline between the
+     tagline and the lead-in so the masthead reads as its own zone.
+     ============================================================ */
+  .v1-folio {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 10px;
+    border-top: 1px solid #EDE6E1;
+    border-bottom: 1px solid #EDE6E1;
+    padding: 9px 0;
+    margin-bottom: 26px;
+    font: 700 11px 'Lato', sans-serif;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #6B6258;
+    flex-wrap: wrap;
+  }
+  .v1-folio .mid { color: #2C2421; }
+  .m .v1-folio { font-size: 9px; letter-spacing: 0.1em; gap: 6px; margin-bottom: 20px; }
+  .v1-title {
+    font: 700 34px 'Bitter', Georgia, serif;
+    color: #2C2421;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+  .m .v1-title { font-size: 28px; }
+  .v1-tag {
+    font: italic 400 15px 'Bitter', Georgia, serif;
+    color: #6B6258;
+    text-align: center;
+    border-bottom: 1px solid #EDE6E1;
+    padding-bottom: 24px;
+    margin-bottom: 24px;
+  }
+  .m .v1-tag { font-size: 14px; padding-bottom: 20px; margin-bottom: 20px; }
+
+  /* ============================================================
+     V5 — Single-row lockup, with the tagline
+     Tagline joins the lockup under the title row; the 2px ink
+     rule still closes the masthead zone.
+     ============================================================ */
+  .v5-head {
+    border-bottom: 2px solid #2C2421;
+    padding-bottom: 14px;
+    margin-bottom: 18px;
+  }
+  .v5-row {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 4px 12px;
+    flex-wrap: wrap;
+  }
+  .v5-title { font: 700 24px 'Bitter', Georgia, serif; color: #2C2421; }
+  .v5-title .city { color: #C2604A; }
+  .m .v5-title { font-size: 21px; }
+  .v5-meta { font: 700 11px 'Lato', sans-serif; letter-spacing: 0.12em; text-transform: uppercase; color: #6B6258; }
+  .m .v5-meta { font-size: 10px; }
+  .v5-tag { font: italic 400 14px 'Bitter', Georgia, serif; color: #6B6258; margin-top: 5px; }
+  .m .v5-tag { font-size: 13px; }
+
+  /* ============================================================
+     V7A — Left-anchored editorial, polished
+     The floaty italic meta becomes a stacked small-caps block,
+     right-aligned and seated on the title's baseline.
+     ============================================================ */
+  .v7a-kicker { font: 900 11px 'Lato', sans-serif; letter-spacing: 0.16em; text-transform: uppercase; color: #C2604A; margin-bottom: 8px; }
+  .m .v7a-kicker { font-size: 10px; letter-spacing: 0.12em; }
+  .v7a-row { display: flex; justify-content: space-between; align-items: flex-end; gap: 4px 16px; flex-wrap: wrap; }
+  .v7a-title { font: 700 30px/1.05 'Bitter', Georgia, serif; color: #2C2421; }
+  .m .v7a-title { font-size: 25px; }
+  .v7a-meta {
+    text-align: right;
+    font: 700 10px/1.6 'Lato', sans-serif;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: #6B6258;
+    padding-bottom: 3px;
+  }
+  .v7a-meta .no { color: #C2604A; }
+  .v7a-tag {
+    font: italic 400 15px 'Bitter', Georgia, serif; color: #6B6258;
+    margin-top: 6px;
+    border-bottom: 1px solid #EDE6E1;
+    padding-bottom: 18px; margin-bottom: 20px;
+  }
+  .m .v7a-tag { font-size: 14px; padding-bottom: 14px; margin-bottom: 16px; }
+
+  /* ============================================================
+     V7B — Left-anchored editorial × folio
+     Title + tagline form one left-anchored lockup; date and
+     update number move down into their own hairline folio row.
+     ============================================================ */
+  .v7b-kicker { font: 900 11px 'Lato', sans-serif; letter-spacing: 0.16em; text-transform: uppercase; color: #C2604A; margin-bottom: 8px; }
+  .m .v7b-kicker { font-size: 10px; letter-spacing: 0.12em; }
+  .v7b-title { font: 700 30px/1.05 'Bitter', Georgia, serif; color: #2C2421; margin-bottom: 6px; }
+  .m .v7b-title { font-size: 25px; }
+  .v7b-tag { font: italic 400 15px 'Bitter', Georgia, serif; color: #6B6258; margin-bottom: 18px; }
+  .m .v7b-tag { font-size: 14px; margin-bottom: 14px; }
+  .v7b-folio {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 10px;
+    border-top: 1px solid #EDE6E1;
+    border-bottom: 1px solid #EDE6E1;
+    padding: 8px 0;
+    margin-bottom: 20px;
+    font: 700 10px 'Lato', sans-serif;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #6B6258;
+    flex-wrap: wrap;
+  }
+  .v7b-folio .no { color: #C2604A; }
+</style>
+</head>
+<body>
+<div class="board">
+  <h1 class="board-title">News Updates — header variations, round 2</h1>
+  <p class="board-sub">The three survivors, refined. Every variation carries "All the news we can't fit in the morning roundup," only "Upgrade" is linked, and each shows desktop + mobile (375px). Traverse City edition, Update No. 12.</p>
+
+  <!-- ================= V1 refined ================= -->
+  <div class="variation">
+    <div class="var-label"><span class="num">01</span> — Folio rule · refined</div>
+    <p class="var-note">Fix for "too smushed": more air between the folio row and the title, and the tagline now closes the masthead with its own hairline + a full beat of space before "Today in four stories." The masthead reads as one zone, the lead-in as another.</p>
+    <div class="pair">
+      <div class="frame d"><div class="frame-tag">Desktop</div>
+        <div class="email">
+          <div class="util-micro">Prefer fewer emails? Choose your schedule. <a href="#">Upgrade</a>.</div>
+          <div class="card">
+            <div class="v1-folio">
+              <span>Traverse City</span>
+              <span class="mid">Wednesday, July 1</span>
+              <span>Update No. 12</span>
+            </div>
+            <div class="v1-title">News Updates</div>
+            <div class="v1-tag">All the news we can't fit in the morning roundup</div>
+            <p class="intro"><strong>Today in four stories.</strong> Water line work on Eighth, a new community hub, fireworks rules for the Fourth, and a downtown parking change worth knowing before Monday.</p>
+          </div>
+          <div class="fade"></div>
+        </div>
+      </div>
+      <div class="frame m"><div class="frame-tag">Mobile · 375px</div></div>
+    </div>
+  </div>
+
+  <!-- ================= V5 refined ================= -->
+  <div class="variation">
+    <div class="var-label"><span class="num">05</span> — Single-row lockup · with the tagline</div>
+    <p class="var-note">Same ultra-compact skeleton, tagline restored: it tucks under the title row inside the lockup, and the 2px ink rule still closes the masthead. Two lines of chrome total.</p>
+    <div class="pair">
+      <div class="frame d"><div class="frame-tag">Desktop</div>
+        <div class="email">
+          <div class="util-micro">Prefer fewer emails? Choose your schedule. <a href="#">Upgrade</a>.</div>
+          <div class="card">
+            <div class="v5-head">
+              <div class="v5-row">
+                <span class="v5-title">News Updates <span class="city">· Traverse City</span></span>
+                <span class="v5-meta">Wed, July 1 · No. 12</span>
+              </div>
+              <div class="v5-tag">All the news we can't fit in the morning roundup</div>
+            </div>
+            <p class="intro"><strong>Today in four stories.</strong> Water line work on Eighth, a new community hub, fireworks rules for the Fourth, and a downtown parking change worth knowing before Monday.</p>
+          </div>
+          <div class="fade"></div>
+        </div>
+      </div>
+      <div class="frame m"><div class="frame-tag">Mobile · 375px</div></div>
+    </div>
+  </div>
+
+  <!-- ================= V7A ================= -->
+  <div class="variation">
+    <div class="var-label"><span class="num">07A</span> — Left-anchored editorial · polished</div>
+    <p class="var-note">The italic date that floated next to the title becomes a stacked small-caps block seated on the title's baseline — date over number, number in terracotta. Tighter and more deliberate than round one.</p>
+    <div class="pair">
+      <div class="frame d"><div class="frame-tag">Desktop</div>
+        <div class="email">
+          <div class="card">
+            <div class="util-nav">
+              <span>Prefer fewer emails? Choose your schedule.</span>
+              <a href="#">Upgrade</a>
+            </div>
+            <div class="v7a-kicker">Traverse City</div>
+            <div class="v7a-row">
+              <span class="v7a-title">News Updates</span>
+              <span class="v7a-meta">Wednesday, July 1<br><span class="no">Update No. 12</span></span>
+            </div>
+            <div class="v7a-tag">All the news we can't fit in the morning roundup</div>
+            <p class="intro"><strong>Today in four stories.</strong> Water line work on Eighth, a new community hub, fireworks rules for the Fourth, and a downtown parking change worth knowing before Monday.</p>
+          </div>
+          <div class="fade"></div>
+        </div>
+      </div>
+      <div class="frame m"><div class="frame-tag">Mobile · 375px</div></div>
+    </div>
+  </div>
+
+  <!-- ================= V7B ================= -->
+  <div class="variation">
+    <div class="var-label"><span class="num">07B</span> — Left-anchored editorial · folio hybrid</div>
+    <p class="var-note">The other way to polish 07: title + tagline stay together as one left-anchored lockup, and the date + update number drop into their own hairline folio row below — V1's best idea grafted onto V7's asymmetry.</p>
+    <div class="pair">
+      <div class="frame d"><div class="frame-tag">Desktop</div>
+        <div class="email">
+          <div class="card">
+            <div class="util-nav">
+              <span>Prefer fewer emails? Choose your schedule.</span>
+              <a href="#">Upgrade</a>
+            </div>
+            <div class="v7b-kicker">Traverse City</div>
+            <div class="v7b-title">News Updates</div>
+            <div class="v7b-tag">All the news we can't fit in the morning roundup</div>
+            <div class="v7b-folio">
+              <span>Wednesday, July 1</span>
+              <span class="no">Update No. 12</span>
+            </div>
+            <p class="intro"><strong>Today in four stories.</strong> Water line work on Eighth, a new community hub, fireworks rules for the Fourth, and a downtown parking change worth knowing before Monday.</p>
+          </div>
+          <div class="fade"></div>
+        </div>
+      </div>
+      <div class="frame m"><div class="frame-tag">Mobile · 375px</div></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // Mobile frames mirror the desktop markup — clone once so the two never drift.
+  document.querySelectorAll('.pair').forEach(function (pair) {
+    var email = pair.querySelector('.frame.d .email');
+    pair.querySelector('.frame.m').appendChild(email.cloneNode(true));
+  });
+</script>
+</body>
+</html>

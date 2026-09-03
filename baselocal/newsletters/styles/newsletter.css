@@ -1335,6 +1335,27 @@ body {
     }
 }
 
+/* ---- PICKS GRID — ONE-UP VARIANT ----
+   Single full-width tile rendered as a horizontal row
+   (compact square thumb left, body right) so one pick
+   doesn't balloon to a full-width 4:3 banner. Welcome
+   uses it for the lone events-calendar tile. */
+.picks-grid.picks-grid--one {
+    grid-template-columns: 1fr;
+}
+
+.picks-grid--one .pick-tile {
+    flex-direction: row;
+    align-items: center;
+}
+
+.picks-grid--one .pick-thumb {
+    aspect-ratio: 1 / 1;
+    width: 84px;
+    flex-shrink: 0;
+    font-size: 26px;
+}
+
 /* ---- WELCOME P.P.S. ----
    Same look as .subscribe-ps, with tighter top padding so
    P.S. and P.P.S. read as a stacked pair. */

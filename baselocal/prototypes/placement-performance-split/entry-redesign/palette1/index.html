@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Palette 1 — lighter day band options</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',ui-sans-serif,system-ui,sans-serif;background:#f3f4f6;color:#111827;font-size:13px;padding-bottom:60px}
+.caption{background:#111827;color:#fff;padding:10px 16px;font-size:13px;margin-bottom:20px}
+.caption strong{color:#f7cfc2}
+.variant{max-width:1180px;margin:0 auto 34px;padding:0 16px}
+.vlabel{font-size:14px;font-weight:700;margin-bottom:8px}
+.vlabel .n{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:22px;border-radius:999px;background:#111827;color:#fff;font-size:12px;margin-right:8px;padding:0 6px}
+.vlabel .d{font-weight:400;color:#6b7280;font-size:12.5px;margin-left:8px}
+.tablewrap{border:1px solid #E8E0DC;border-radius:10px;overflow:hidden;background:#fff}
+table{width:100%;border-collapse:collapse}
+thead th{font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:#797979;font-weight:600;padding:7px 12px;text-align:right;background:#fff;border-bottom:1px solid #E8E0DC}
+thead th:first-child{text-align:left}
+td{padding:7px 12px;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+td:first-child{text-align:left}
+.chev{display:inline-block;width:14px;font-size:10px}
+
+tr.day>td{background:var(--day-bg);color:var(--day-fg);font-weight:700;font-size:13.5px;padding:9px 12px;border-top:1px solid var(--day-border)}
+tr.day .chev,tr.day .count{color:var(--day-muted);font-weight:400;font-size:12px}
+tr.day .count{margin-left:8px}
+tr.day .dcheck{color:var(--day-check)}
+tr.partner>td{background:var(--partner-bg);color:#2C2421;font-weight:700;font-size:12.5px;padding:6px 12px;border-top:1px solid var(--partner-border)}
+tr.partner>td:first-child{padding-left:24px}
+tr.partner .chev{color:#a89e99}
+tr.partner .pmeta{color:#797979;font-weight:400;font-size:12px;margin-left:6px}
+.portal{color:#A84E3B;font-weight:600;font-size:12px;text-decoration:none;margin-left:10px}
+tr.partner .pright{font-size:11.5px;font-weight:600;color:#797979}
+tr.partner .pright.waiting{color:#A84E3B}
+tr.partner .pright.clear{color:#2D7A2D}
+tr.offer>td{background:#fff;border-top:1px solid #f3f4f6}
+tr.offer td.name{padding-left:44px;font-weight:500}
+tr.offer .meta{color:#9ca3af;font-size:11.5px;margin-left:6px}
+.entry{display:inline-flex;align-items:center;gap:4px;border:1px solid #d1d5db;border-radius:6px;padding:2px 8px;color:#9ca3af;background:#fff;font-size:12.5px;min-width:58px;justify-content:flex-end}
+.val{font-weight:700}
+.autotag{color:#9ca3af;font-size:11px;font-style:italic;margin-left:5px}
+tr.pl>td{background:#fff;font-size:12px;color:#797979;border-top:1px dotted #E8E0DC;padding:4px 12px}
+tr.pl>td:first-child{padding-left:64px}
+.chip{display:inline-block;font-size:11px;font-weight:600;border-radius:5px;padding:1px 7px;border:1px solid #E8E0DC;background:#FAF6F4;color:#8a3f2a}
+tr.pl .alloc{font-weight:600;color:#444444}
+tr.pl .share{color:#9ca3af}
+tr.recon>td{background:#fff;font-size:11.5px;color:#9ca3af;font-style:italic;padding:3px 12px 8px}
+tr.recon>td:first-child{padding-left:64px}
+tr.recon .ok{color:#2D7A2D;font-weight:600;font-style:normal}
+
+/* 1a — medium roast: lightened espresso, still white text */
+.p1a{--day-bg:#57493F;--day-fg:#fff;--day-muted:#beb2aa;--day-check:#8fd19b;--day-border:#57493F;--partner-bg:#FAF6F4;--partner-border:#E8E0DC}
+/* 1b — sand: light warm band, espresso text; partner = cream */
+.p1b{--day-bg:#EDE5DF;--day-fg:#2C2421;--day-muted:#8d7f76;--day-check:#2D7A2D;--day-border:#DCD1C9;--partner-bg:#FAF6F4;--partner-border:#E8E0DC}
+/* 1c — cream: day = warm cream, partner = white with cream tint; lightest ladder */
+.p1c{--day-bg:#F5EEE9;--day-fg:#2C2421;--day-muted:#8d7f76;--day-check:#2D7A2D;--day-border:#E8E0DC;--partner-bg:#FCFAF8;--partner-border:#EEE7E2}
+</style>
+</head>
+<body>
+<div class="caption"><strong>Palette 1, lighter day band.</strong> Three lightness steps — the ladder continues down from whichever top you pick (day → partner → white offers → muted placements). Pick 1a, 1b, or 1c.</div>
+<div id="variants"></div>
+<script>
+const VARIANTS = [
+  ["1a","Medium roast","Espresso lightened to a warm brown — still white text, half the weight of the original."],
+  ["1b","Sand","Light warm band with espresso text — the whole table stays light; hierarchy comes from tone + weight."],
+  ["1c","Cream","Lightest possible ladder — cream day band, barely-tinted partner band, whisper-quiet."],
+];
+const TABLE = `
+<div class="tablewrap"><table>
+  <thead><tr><th style="width:46%">Offer</th><th>Unique Clicks</th><th>Revenue</th><th>Conv</th></tr></thead>
+  <tbody>
+    <tr class="day"><td colspan="3"><span class="chev">▶</span>Thursday, Jun 25 <span class="dcheck">✓</span><span class="count">all 4 entered</span></td><td>$964.75</td></tr>
+    <tr class="day"><td colspan="3"><span class="chev">▼</span>Wednesday, Jun 24 <span class="count">8 of 10 entered</span></td><td>$1,206.95</td></tr>
+    <tr class="partner"><td colspan="3"><span class="chev">▼</span>AdsByMoney<span class="pmeta">2 offers</span><a class="portal" href="#">Open portal ↗</a></td><td class="pright clear">all entered ✓</td></tr>
+    <tr class="offer"><td class="name"><span class="chev">▼</span>American Home Shield - AdsByMoney - CPL $60<span class="meta">2 placements</span></td><td></td><td><span class="val">$673.00</span></td><td><span class="val">17</span></td></tr>
+    <tr class="pl"><td><span class="chip">Morning Roundup · Lead</span></td><td>412</td><td class="share">51.5%</td><td class="alloc">$346.60 · 9 conv</td></tr>
+    <tr class="pl"><td><span class="chip">Morning Roundup · Feature 1</span></td><td>388</td><td class="share">48.5%</td><td class="alloc">$326.40 · 8 conv</td></tr>
+    <tr class="recon"><td colspan="3">800 unique clicks across 2 placements</td><td class="ok">Splits to the penny ✓</td></tr>
+    <tr class="offer"><td class="name"><span class="chev">▶</span>Spot - AdsByMoney - CPC $3<span class="meta">1 placement</span></td><td></td><td><span class="val">$141.00</span><span class="autotag">auto</span></td><td>—</td></tr>
+    <tr class="partner"><td colspan="3"><span class="chev">▶</span>AtWave<span class="pmeta">4 offers · $392.85</span><a class="portal" href="#">Open portal ↗</a></td><td class="pright">auto · ×0.90</td></tr>
+    <tr class="partner"><td colspan="3"><span class="chev">▼</span>Impact<span class="pmeta">1 offer</span><a class="portal" href="#">Open portal ↗</a></td><td class="pright waiting">1 waiting</td></tr>
+    <tr class="offer"><td class="name"><span class="chev">▶</span>Home Chef - Impact - CPA $40<span class="meta">2 placements</span></td><td></td><td><span class="entry">$0 ✎</span></td><td><span class="entry">0 ✎</span></td></tr>
+  </tbody>
+</table></div>`;
+document.getElementById('variants').innerHTML = VARIANTS.map(([n, name, desc]) =>
+  `<div class="variant p${n}"><div class="vlabel"><span class="n">${n}</span>${name}<span class="d">${desc}</span></div>${TABLE}</div>`
+).join('');
+</script>
+</body>
+</html>

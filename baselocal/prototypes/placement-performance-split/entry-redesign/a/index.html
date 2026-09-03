@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entry Redesign A2 — Row-level hierarchy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--brand-50:#fdf5f2;--brand-200:#f7cfc2;--brand-300:#f0ab92;--brand-500:#B8593A;--brand-700:#8a3f2a;
+--g-50:#f9fafb;--g-100:#f3f4f6;--g-200:#e5e7eb;--g-300:#d1d5db;--g-400:#9ca3af;--g-500:#6b7280;--g-600:#4b5563;--g-700:#374151;--g-800:#1f2937;--g-900:#111827;
+--green-400:#4ade80;--green-600:#059669;--green-700:#047857;--blue-50:#eff6ff;--blue-200:#bfdbfe;--blue-700:#1d4ed8}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',ui-sans-serif,system-ui,sans-serif;background:#fff;color:var(--g-900);font-size:13px}
+.caption{background:var(--g-900);color:#fff;padding:10px 16px;font-size:13px}
+.caption strong{color:var(--brand-200)}
+.page{max-width:1280px;margin:0 auto;padding:16px}
+.toolbar{display:flex;gap:10px;align-items:center;margin-bottom:12px}
+h1{font-size:18px;font-weight:700;margin-right:6px}
+.datebtn{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;border:1px solid var(--g-200);background:#fff;border-radius:8px;padding:7px 12px;font-size:13px;color:var(--g-700);font-weight:500;cursor:pointer}
+.search{flex:1;max-width:280px;border:1px solid var(--g-200);border-radius:8px;padding:7px 12px;font:inherit;font-size:13px;color:var(--g-700)}
+.tablewrap{border:1px solid var(--g-200);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse}
+thead th{font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--g-500);font-weight:600;padding:7px 12px;text-align:right;background:#fff;border-bottom:1px solid var(--g-200)}
+thead th:first-child{text-align:left}
+td{padding:7px 12px;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+td:first-child{text-align:left}
+.chev{display:inline-block;width:14px;font-size:10px;transition:transform .12s}
+.open .chev{transform:rotate(90deg)}
+
+/* LEVEL 1 — DAY: dark filled band, unmistakable */
+tr.day>td{background:var(--g-800);color:#fff;font-weight:700;font-size:13.5px;padding:9px 12px;cursor:pointer}
+tr.day .chev{color:var(--g-400)}
+tr.day .count{font-weight:400;color:var(--g-400);font-size:12px;margin-left:8px}
+tr.day .dcheck{color:var(--green-400)}
+tr.day .daytotal{color:#fff}
+
+/* LEVEL 2 — PARTNER: solid mid-gray band, bold, indented one step */
+tr.partner>td{background:var(--g-200);font-weight:700;font-size:12.5px;padding:6px 12px;cursor:pointer;border-top:1px solid var(--g-300)}
+tr.partner>td:first-child{padding-left:24px}
+tr.partner .chev{color:var(--g-500)}
+tr.partner .pmeta{color:var(--g-500);font-weight:400;font-size:12px;margin-left:6px}
+.portal{color:var(--brand-700);font-weight:600;font-size:12px;text-decoration:none;margin-left:10px}
+.portal:hover{text-decoration:underline}
+tr.partner .pright{font-size:11.5px;font-weight:600;color:var(--g-500)}
+tr.partner .pright.waiting{color:var(--brand-700)}
+tr.partner .pright.clear{color:var(--green-700)}
+
+/* LEVEL 3 — OFFER: plain white row, indented two steps */
+tr.offer>td{background:#fff;border-top:1px solid var(--g-100)}
+tr.offer td.name{padding-left:44px;font-weight:500;cursor:pointer}
+tr.offer .meta{color:var(--g-400);font-size:11.5px;margin-left:6px}
+.entry{display:inline-flex;align-items:center;gap:4px;border:1px solid var(--g-300);border-radius:6px;padding:2px 8px;color:var(--g-400);background:#fff;font-size:12.5px;min-width:58px;justify-content:flex-end;cursor:pointer}
+.entry:hover{border-color:var(--brand-500);background:var(--brand-50)}
+.val{font-weight:700}
+.autotag{color:var(--g-400);font-size:11px;font-style:italic;margin-left:5px}
+
+/* LEVEL 4 — PLACEMENT DETAIL: smaller, muted, indented three steps */
+tr.pl>td{background:#fff;font-size:12px;color:var(--g-500);border-top:1px dotted var(--g-200);padding:4px 12px}
+tr.pl>td:first-child{padding-left:64px}
+.chip{display:inline-block;font-size:11px;font-weight:600;border-radius:5px;padding:1px 7px;border:1px solid var(--blue-200);background:var(--blue-50);color:var(--blue-700)}
+tr.pl .alloc{font-weight:600;color:var(--g-700)}
+tr.pl .share{color:var(--g-400)}
+tr.recon>td{background:#fff;font-size:11.5px;color:var(--g-400);font-style:italic;padding:3px 12px 8px;border-top:none}
+tr.recon>td:first-child{padding-left:64px}
+tr.recon .ok{color:var(--green-700);font-weight:600;font-style:normal}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<div class="caption"><strong>Option A2 — row-level hierarchy.</strong> No rails, no alternating stripes: each level IS a different row. Dark day band → gray partner band → white offer rows → smaller muted placement lines, with indentation stepping down the levels.</div>
+<div class="page">
+  <div class="toolbar">
+    <h1>Data Entry</h1>
+    <button class="datebtn">📅 Last month ▾</button>
+    <input class="search" placeholder="Find an offer or partner">
+  </div>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th style="width:46%">Offer</th><th>Unique Clicks</th><th>Revenue</th><th>Conv</th></tr></thead>
+    <tbody>
+      <tr class="day"><td colspan="3"><span class="chev">▶</span>Friday, Jun 26 <span class="dcheck">✓</span><span class="count">all 2 entered</span></td><td class="daytotal">$418.20</td></tr>
+      <tr class="day"><td colspan="3"><span class="chev">▶</span>Thursday, Jun 25 <span class="dcheck">✓</span><span class="count">all 4 entered</span></td><td class="daytotal">$964.75</td></tr>
+      <tr class="day open"><td colspan="3"><span class="chev">▶</span>Wednesday, Jun 24 <span class="count">8 of 10 entered</span></td><td class="daytotal">$1,206.95</td></tr>
+
+      <tr class="partner open"><td colspan="3"><span class="chev">▶</span>AdsByMoney<span class="pmeta">2 offers</span><a class="portal" href="#">Open portal ↗</a></td><td class="pright clear">all entered ✓</td></tr>
+      <tr class="offer"><td class="name open"><span class="chev">▶</span>American Home Shield - AdsByMoney - CPL $60<span class="meta">2 placements</span></td><td></td><td><span class="val">$673.00</span></td><td><span class="val">17</span></td></tr>
+      <tr class="pl"><td><span class="chip">Morning Roundup · Lead</span></td><td>412</td><td class="share">51.5%</td><td class="alloc">$346.60 · 9 conv</td></tr>
+      <tr class="pl"><td><span class="chip">Morning Roundup · Feature 1</span></td><td>388</td><td class="share">48.5%</td><td class="alloc">$326.40 · 8 conv</td></tr>
+      <tr class="recon"><td colspan="3">800 unique clicks across 2 placements</td><td class="ok">Splits to the penny ✓</td></tr>
+      <tr class="offer"><td class="name"><span class="chev">▶</span>Spot - AdsByMoney - CPC $3<span class="meta">1 placement</span></td><td></td><td><span class="val">$141.00</span><span class="autotag">auto</span></td><td>—</td></tr>
+
+      <tr class="partner open"><td colspan="3"><span class="chev">▶</span>AtWave<span class="pmeta">4 offers</span><a class="portal" href="#">Open portal ↗</a></td><td class="pright">auto · ×0.90</td></tr>
+      <tr class="offer"><td class="name"><span class="chev">▶</span>3 Day Blinds - AtWave - CPC $3<span class="meta">1 placement</span></td><td></td><td><span class="val">$167.40</span><span class="autotag">auto</span></td><td>—</td></tr>
+      <tr class="offer"><td class="name"><span class="chev">▶</span>Babbel - AtWave - CPC $2<span class="meta">1 placement</span></td><td></td><td><span class="val">$68.40</span><span class="autotag">auto</span></td><td>—</td></tr>
+      <tr class="offer"><td class="name"><span class="chev">▶</span>Dating.com - AtWave - CPC $2<span class="meta">1 placement</span></td><td></td><td><span class="val">$91.80</span><span class="autotag">auto</span></td><td>—</td></tr>
+      <tr class="offer"><td class="name"><span class="chev">▶</span>Total Injury Help (Depo-Provera) - AtWave - CPC $2.50<span class="meta">1 placement</span></td><td></td><td><span class="val">$65.25</span><span class="autotag">auto</span></td><td>—</td></tr>
+
+      <tr class="partner"><td colspan="3"><span class="chev">▶</span>Direct Agents<span class="pmeta">1 offer · $92.00</span><a class="portal" href="#">Open portal ↗</a></td><td class="pright clear">all entered ✓</td></tr>
+
+      <tr class="partner open"><td colspan="3"><span class="chev">▶</span>Impact<span class="pmeta">1 offer</span><a class="portal" href="#">Open portal ↗</a></td><td class="pright waiting">1 waiting</td></tr>
+      <tr class="offer"><td class="name"><span class="chev">▶</span>Home Chef - Impact - CPA $40<span class="meta">2 placements</span></td><td></td><td><span class="entry">$0 ✎</span></td><td><span class="entry">0 ✎</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+</body>
+</html>

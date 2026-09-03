@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Performance Summary — BaseLocal Monetization</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="appbar">
+  <div class="appbar-inner">
+    <img src="../../assets/logos/baselocal-icon-dark.svg" alt="BaseLocal">
+    <span class="crumb">Monetization / <b>Placement Performance</b></span>
+  </div>
+</header>
+<nav class="tabwrap">
+  <div class="tabs">
+    <a class="tab" href="index.html">Revenue Entry</a>
+    <a class="tab on" href="summary.html" aria-current="page">Performance Summary</a>
+  </div>
+</nav>
+
+<main class="page wide">
+  <div class="pagehead">
+    <h1>Performance Summary</h1>
+    <span class="sub">Read-only — numbers come from Revenue Entry and postbacks</span>
+    <span class="rangepill">Tuesday, Jul 1 ▾</span>
+  </div>
+
+  <div class="statstrip" id="stats"></div>
+
+  <div class="filters">
+    <span class="filterpill">Offer: All ▾</span>
+    <span class="filterpill">Module: All ▾</span>
+    <span class="filterpill">Variation: All ▾</span>
+    <span class="filterpill">View: By date ▾</span>
+  </div>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr>
+        <th>Offer</th><th>Module · Copy</th>
+        <th>Unique Clicks</th><th>CTR (Del)</th><th>CTR (Open)</th>
+        <th>Revenue</th><th>CPM</th><th>RPC</th><th>Conv</th><th>Conv Rate</th>
+        <th class="pbdiv">PB Clicks</th><th>PB Revenue</th><th>PB Convs</th><th>PB Conv Rate</th>
+      </tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+</main>
+
+<script>
+// ---- Same day's data as Revenue Entry, post-allocation (see spec.md § Data requirements) ----
+// delivered/opened exist for email sends only; Welcome Page + Bridge Page have neither.
+const SENDS = [
+  { key:'mr', label:'Morning Roundup · Tuesday, Jul 1', delivered:48200, opened:21300,
+    rows:[
+      { offer:'GLP-1 Weight Loss Compare', partner:'HealthMatch', module:'Lead + Feature 1', copy:'v2 · plain-talk', bundle:true,
+        uniq:642, rev:227.02, conv:8, pbClicks:548, pbRev:0, pbConv:0 },
+      { offer:'Medicare Advantage Compare', partner:'HealthMatch', module:'Feature 2', copy:'v1',
+        uniq:234, rev:121.88, conv:4, pbClicks:197, pbRev:0, pbConv:0 },
+      { offer:'SmartHome Security Quiz', partner:'AtWave', module:'News', copy:'v3 · question-led',
+        uniq:240, rev:378.00, conv:null, pbClicks:205, pbRev:0, pbConv:0, auto:true },
+      { offer:'Data Removal Service', partner:'ShieldMe', module:'Highlights', copy:'v1',
+        uniq:316, rev:199.69, conv:6, pbClicks:262, pbRev:0, pbConv:0 },
+      { offer:'Local Insurance Quotes', partner:'Everline', module:'Feature 3', copy:'v2',
+        uniq:142, rev:null, conv:null, pbClicks:121, pbRev:0, pbConv:0 },
+    ]},
+  { key:'ldn', label:'Local Daily News · Tuesday, Jul 1', delivered:12400, opened:5900,
+    rows:[
+      { offer:'GLP-1 Weight Loss Compare', partner:'HealthMatch', module:'Feature 1', copy:'v2 · plain-talk',
+        uniq:287, rev:101.48, conv:4, pbClicks:243, pbRev:0, pbConv:0 },
+      { offer:'Medicare Advantage Compare', partner:'HealthMatch', module:'Feature 2', copy:'v1',
+        uniq:66, rev:34.37, conv:1, pbClicks:54, pbRev:0, pbConv:0 },
+      { offer:'Data Removal Service', partner:'ShieldMe', module:'Highlights', copy:'v1',
+        uniq:98, rev:61.93, conv:2, pbClicks:80, pbRev:0, pbConv:0 },
+      { offer:'Local Insurance Quotes', partner:'Everline', module:'Feature 3', copy:'v2',
+        uniq:66, rev:null, conv:null, pbClicks:52, pbRev:0, pbConv:0 },
+    ]},
+  { key:'wp', label:'Welcome Page · Tuesday, Jul 1', delivered:null, opened:null,
+    rows:[
+      { offer:'GLP-1 Weight Loss Compare', partner:'HealthMatch', module:'Slot 1', copy:'v2 · plain-talk', pbBasis:true,
+        uniq:118, rev:84.00, conv:3, pbClicks:118, pbRev:84.00, pbConv:3, locked:true },
+      { offer:'Data Removal Service', partner:'ShieldMe', module:'Slot 2', copy:'v1', pbBasis:true,
+        uniq:37, rev:23.38, conv:1, pbClicks:37, pbRev:0, pbConv:0 },
+    ]},
+  { key:'bp', label:'Bridge Page · Tuesday, Jul 1', delivered:null, opened:null,
+    rows:[
+      { offer:'SmartHome Security Quiz', partner:'AtWave', module:'CTA 1', copy:'v3 · question-led', verified:true,
+        uniq:84, rev:132.30, conv:null, pbClicks:84, pbRev:0, pbConv:0, auto:true },
+    ]},
+];
+
+const money = v => '$' + v.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+const pct = v => v.toLocaleString('en-US',{minimumFractionDigits:1,maximumFractionDigits:1}) + '%';
+const dash = '<span class="dim">—</span>';
+
+function cellRev(r){ return r.rev==null ? dash : money(r.rev); }
+function cellCPM(r, send){ return (r.rev==null || !send.delivered) ? dash : money(r.rev/send.delivered*1000); }
+function cellRPC(r){ return (r.rev==null || !r.uniq) ? dash : money(r.rev/r.uniq); }
+function cellConv(r){ return r.conv==null ? dash : r.conv; }
+function cellConvRate(r){ return (r.conv==null || !r.uniq) ? dash : pct(100*r.conv/r.uniq); }
+function cellCTR(r, denom){ return denom ? pct(100*r.uniq/denom) : dash; }
+function uniqLabel(r){
+  const n = r.uniq.toLocaleString();
+  return r.pbBasis ? `${n} <span class="dim">(PB)</span>` : r.verified ? `${n} <span class="dim">(verified)</span>` : n;
+}
+function pbConvRate(r){ return r.pbClicks ? (r.pbConv ? pct(100*r.pbConv/r.pbClicks) : dash) : dash; }
+
+function render(){
+  let html = '';
+  html += `<tr class="groupband"><td colspan="14">▼ Tuesday, Jul 1 — ${SENDS.length} sections</td></tr>`;
+  for (const send of SENDS){
+    const meta = send.delivered ? ` · ${send.delivered.toLocaleString()} delivered · ${send.opened.toLocaleString()} opened` : '';
+    html += `<tr class="sendband"><td colspan="14">${send.label}${meta}</td></tr>`;
+    for (const r of send.rows){
+      const tags = [];
+      if (r.bundle) tags.push('bundle');
+      if (r.locked) tags.push('🔒 PB');
+      if (r.auto) tags.push('auto');
+      html += `<tr>
+        <td class="offer-cell"><span class="nm">${r.offer}</span><span class="pt">${r.partner}${tags.length?' · '+tags.join(' · '):''}</span></td>
+        <td style="text-align:left"><span class="chip ${send.key}">${r.module}</span> <span class="dim" style="font-size:12px">${r.copy}</span></td>
+        <td>${uniqLabel(r)}</td>
+        <td>${cellCTR(r, send.delivered)}</td>
+        <td>${cellCTR(r, send.opened)}</td>
+        <td><b>${cellRev(r)}</b></td>
+        <td>${cellCPM(r, send)}</td>
+        <td>${cellRPC(r)}</td>
+        <td>${cellConv(r)}</td>
+        <td>${cellConvRate(r)}</td>
+        <td class="pbdiv pbcell">${r.pbClicks.toLocaleString()}</td>
+        <td class="pbcell">${r.pbRev ? money(r.pbRev) : dash}</td>
+        <td class="pbcell">${r.pbConv || dash}</td>
+        <td class="pbcell">${pbConvRate(r)}</td>
+      </tr>`;
+    }
+    const st = subtotal(send);
+    html += `<tr class="subtotal"><td colspan="2">Section total</td>
+      <td>${st.uniq.toLocaleString()}</td><td>${send.delivered?pct(100*st.uniq/send.delivered):'<span class="dim">—</span>'}</td><td>${send.opened?pct(100*st.uniq/send.opened):'<span class="dim">—</span>'}</td>
+      <td><b>${money(st.rev)}</b></td><td>${send.delivered?money(st.rev/send.delivered*1000):'<span class="dim">—</span>'}</td><td>${st.uniq?money(st.rev/st.uniq):'<span class="dim">—</span>'}</td>
+      <td>${send.rows.some(r=>r.conv!=null)?st.conv:'<span class="dim">—</span>'}</td><td>${st.uniq&&send.rows.some(r=>r.conv!=null)?pct(100*st.conv/st.uniq):'<span class="dim">—</span>'}</td>
+      <td class="pbdiv">${st.pbClicks.toLocaleString()}</td><td>${st.pbRev?money(st.pbRev):'<span class="dim">—</span>'}</td><td>${st.pbConv||'<span class="dim">—</span>'}</td><td>${st.pbClicks&&st.pbConv?pct(100*st.pbConv/st.pbClicks):'<span class="dim">—</span>'}</td>
+    </tr>`;
+  }
+  document.getElementById('rows').innerHTML = html;
+  renderStats();
+}
+
+function subtotal(send){
+  return send.rows.reduce((a,r)=>({
+    uniq:a.uniq+r.uniq, rev:a.rev+(r.rev||0), conv:a.conv+(r.conv||0),
+    pbClicks:a.pbClicks+r.pbClicks, pbRev:a.pbRev+r.pbRev, pbConv:a.pbConv+r.pbConv,
+  }), {uniq:0,rev:0,conv:0,pbClicks:0,pbRev:0,pbConv:0});
+}
+
+function renderStats(){
+  const all = SENDS.flatMap(s=>s.rows);
+  const rev = all.reduce((a,r)=>a+(r.rev||0),0);
+  const uniq = all.reduce((a,r)=>a+r.uniq,0);
+  const conv = all.reduce((a,r)=>a+(r.conv||0),0);
+  const delivered = SENDS.reduce((a,s)=>a+(s.delivered||0),0);
+  const opened = SENDS.reduce((a,s)=>a+(s.opened||0),0);
+  const pbRev = all.reduce((a,r)=>a+r.pbRev,0);
+  const pbConv = all.reduce((a,r)=>a+r.pbConv,0);
+  const days = 1;
+  const stats = [
+    ['Total Revenue', money(rev)],
+    ['Revenue / Day', money(rev/days)],
+    ['Avg RPC', money(rev/uniq)],
+    ['Avg CPM', money(rev/delivered*1000)],
+    ['Unique Clicks', uniq.toLocaleString()],
+    ['Conversions', String(conv)],
+    ['Avg Conv Rate', pct(100*conv/uniq)],
+    ['PB Revenue', money(pbRev)],
+    ['PB Convs', String(pbConv)],
+  ];
+  document.getElementById('stats').innerHTML = stats.map(([l,v])=>`<div class="stat"><div class="v">${v}</div><div class="l">${l}</div></div>`).join('');
+}
+
+render();
+</script>
+</body>
+</html>

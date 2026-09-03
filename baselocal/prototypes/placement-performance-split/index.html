@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Revenue Entry — BaseLocal Monetization</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="appbar">
+  <div class="appbar-inner">
+    <img src="../../assets/logos/baselocal-icon-dark.svg" alt="BaseLocal">
+    <span class="crumb">Monetization / <b>Placement Performance</b></span>
+  </div>
+</header>
+<nav class="tabwrap">
+  <div class="tabs">
+    <a class="tab on" href="index.html" aria-current="page">Revenue Entry</a>
+    <a class="tab" href="summary.html">Performance Summary</a>
+  </div>
+</nav>
+
+<main class="page">
+  <div class="pagehead">
+    <h1>Revenue Entry</h1>
+    <span class="sub" id="pagesub"></span>
+    <span class="rangepill">Jun 25 – Jul 1 ▾</span>
+  </div>
+  <div class="searchrow">
+    <input type="search" id="search" placeholder="Find an offer or partner" aria-label="Find an offer or partner" oninput="setQuery(this.value)">
+  </div>
+  <div id="days"></div>
+</main>
+
+<script>
+// ---- Mock data (mirrors placements/campaigns/partners schema; see spec.md § Data requirements) ----
+const GROUPS = {
+  mr:  { label:'Morning Roundup',  cls:'mr' },
+  ldn: { label:'Local Daily News', cls:'ldn' },
+  wp:  { label:'Welcome Page',     cls:'wp' },
+  bp:  { label:'Bridge Page',      cls:'bp' },
+};
+
+const PORTALS = {
+  ShieldMe:    'https://partners.shieldme.example/reports',
+  Everline:    'https://dash.everline.example/publisher',
+  HealthMatch: 'https://portal.healthmatch.example/stats',
+  AtWave:      'https://pub.atwave.example/daily',
+};
+
+// basis: 'unique' = unique email clicks; 'pb' = PB clicks (no unique available); 'verified' = bridge-page verified clicks
+const DATA = [
+  {
+    date:'Tuesday, Jul 1',
+    partners:[
+      { name:'ShieldMe',
+        offers:[
+          { id:'dr-0701', name:'Data Removal Service', status:'waiting', revenue:null, conv:null,
+            placements:[
+              { g:'mr',  clicks:316, basis:'unique' },
+              { g:'ldn', clicks:98,  basis:'unique' },
+              { g:'wp',  clicks:37,  basis:'pb' },
+            ]},
+        ]},
+      { name:'Everline',
+        offers:[
+          { id:'ins-0701', name:'Local Insurance Quotes', status:'waiting', revenue:null, conv:null,
+            placements:[
+              { g:'mr',  clicks:142, basis:'unique' },
+              { g:'ldn', clicks:66,  basis:'unique' },
+            ]},
+        ]},
+      { name:'HealthMatch',
+        offers:[
+          { id:'glp-0701', name:'GLP-1 Weight Loss Compare', status:'done', revenue:412.50, conv:15,
+            placements:[
+              { g:'wp',  clicks:118, basis:'pb', locked:{ rev:84.00, conv:3 } },
+              { g:'mr',  clicks:642, basis:'unique', bundle:{ label:'Lead + Feature 1', members:[ {slot:'Lead',clicks:410}, {slot:'Feature 1',clicks:232} ] } },
+              { g:'ldn', clicks:287, basis:'unique' },
+            ]},
+          { id:'med-0701', name:'Medicare Advantage Compare', status:'done', revenue:156.25, conv:5,
+            placements:[
+              { g:'mr',  clicks:234, basis:'unique' },
+              { g:'ldn', clicks:66,  basis:'unique' },
+            ]},
+        ]},
+      { name:'AtWave', adjFactor:0.90,
+        offers:[
+          { id:'sh-0701', name:'SmartHome Security Quiz', status:'auto', cpc:1.75,
+            placements:[
+              { g:'mr', clicks:240, basis:'unique' },
+              { g:'bp', clicks:84,  basis:'verified' },
+            ]},
+        ]},
+    ],
+  },
+  {
+    date:'Monday, Jun 30',
+    partners:[
+      { name:'ShieldMe',
+        offers:[
+          { id:'dr-0630', name:'Data Removal Service', status:'done', revenue:240.55, conv:8,
+            placements:[
+              { g:'mr',  clicks:289, basis:'unique' },
+              { g:'ldn', clicks:102, basis:'unique' },
+              { g:'wp',  clicks:41,  basis:'pb' },
+            ]},
+        ]},
+      { name:'Everline',
+        offers:[
+          { id:'ins-0630', name:'Local Insurance Quotes', status:'done', revenue:96.20, conv:3,
+            placements:[
+              { g:'mr',  clicks:131, basis:'unique' },
+              { g:'ldn', clicks:58,  basis:'unique' },
+            ]},
+        ]},
+      { name:'HealthMatch',
+        offers:[
+          { id:'glp-0630', name:'GLP-1 Weight Loss Compare', status:'done', revenue:379.80, conv:13,
+            placements:[
+              { g:'wp',  clicks:104, basis:'pb', locked:{ rev:71.00, conv:2 } },
+              { g:'mr',  clicks:598, basis:'unique', bundle:{ label:'Lead + Feature 1', members:[ {slot:'Lead',clicks:382}, {slot:'Feature 1',clicks:216} ] } },
+              { g:'ldn', clicks:264, basis:'unique' },
+            ]},
+          { id:'med-0630', name:'Medicare Advantage Compare', status:'done', revenue:141.00, conv:4,
+            placements:[
+              { g:'mr',  clicks:221, basis:'unique' },
+              { g:'ldn', clicks:60,  basis:'unique' },
+            ]},
+        ]},
+      { name:'AtWave', adjFactor:0.90,
+        offers:[
+          { id:'sh-0630', name:'SmartHome Security Quiz', status:'auto', cpc:1.75,
+            placements:[
+              { g:'mr', clicks:228, basis:'unique' },
+              { g:'bp', clicks:77,  basis:'verified' },
+            ]},
+        ]},
+    ],
+  },
+  {
+    date:'Sunday, Jun 29',
+    partners:[
+      { name:'ShieldMe',
+        offers:[
+          { id:'dr-0629', name:'Data Removal Service', status:'done', revenue:198.40, conv:6,
+            placements:[
+              { g:'mr',  clicks:246, basis:'unique' },
+              { g:'ldn', clicks:88,  basis:'unique' },
+              { g:'wp',  clicks:29,  basis:'pb' },
+            ]},
+        ]},
+      { name:'HealthMatch',
+        offers:[
+          { id:'glp-0629', name:'GLP-1 Weight Loss Compare', status:'done', revenue:355.20, conv:12,
+            placements:[
+              { g:'wp',  clicks:96,  basis:'pb', locked:{ rev:66.50, conv:2 } },
+              { g:'mr',  clicks:571, basis:'unique', bundle:{ label:'Lead + Feature 1', members:[ {slot:'Lead',clicks:366}, {slot:'Feature 1',clicks:205} ] } },
+              { g:'ldn', clicks:243, basis:'unique' },
+            ]},
+        ]},
+      { name:'AtWave', adjFactor:0.90,
+        offers:[
+          { id:'sh-0629', name:'SmartHome Security Quiz', status:'auto', cpc:1.75,
+            placements:[
+              { g:'mr', clicks:196, basis:'unique' },
+              { g:'bp', clicks:64,  basis:'verified' },
+            ]},
+        ]},
+    ],
+  },
+];
+
+let activeId = 'dr-0701'; // first waiting offer
+let query = '';
+
+// ---- Allocation math (spec.md § Allocation algorithm) ----
+const money = v => '$' + v.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+
+// Largest-remainder allocation: parts sum EXACTLY to total (cents for money, whole units for conversions)
+function allocate(total, weights, decimals){
+  const scale = Math.pow(10, decimals);
+  const T = Math.round(total * scale);
+  const wsum = weights.reduce((a,b)=>a+b,0);
+  if (wsum === 0 || T === 0) return weights.map(()=>0);
+  const raw = weights.map(w => T * w / wsum);
+  const parts = raw.map(Math.floor);
+  let left = T - parts.reduce((a,b)=>a+b,0);
+  raw.map((r,i)=>({i, rem:r-Math.floor(r), w:weights[i]}))
+     .sort((a,b)=> b.rem-a.rem || b.w-a.w)
+     .slice(0,left).forEach(x=> parts[x.i]++);
+  return parts.map(p=>p/scale);
+}
+
+function computeSplit(offer, revenue, conv){
+  const locked = offer.placements.filter(p=>p.locked);
+  const open   = offer.placements.filter(p=>!p.locked);
+  const lockedRev  = locked.reduce((a,p)=>a+p.locked.rev,0);
+  const lockedConv = locked.reduce((a,p)=>a+p.locked.conv,0);
+  const restRev  = Math.max(0, (revenue||0) - lockedRev);
+  const restConv = Math.max(0, (conv||0) - lockedConv);
+  const weights = open.map(p=>p.clicks);
+  const revParts  = allocate(restRev, weights, 2);
+  const convParts = allocate(restConv, weights, 0);
+  const out = new Map();
+  open.forEach((p,i)=> out.set(p, { rev:revParts[i], conv:convParts[i] }));
+  locked.forEach(p => out.set(p, { rev:p.locked.rev, conv:p.locked.conv }));
+  return { out, lockedRev, restRev };
+}
+
+function autoRevenue(offer, factor){
+  return offer.placements.map(p => Math.round(p.clicks * factor * offer.cpc * 100)/100);
+}
+
+function autoTotal(offer, partner){
+  return Math.round(autoRevenue(offer, partner.adjFactor).reduce((a,b)=>a+b,0)*100)/100;
+}
+
+function dayTotal(day){
+  let t = 0;
+  for (const p of day.partners) for (const o of p.offers){
+    if (o.status==='auto') t += autoTotal(o, p);
+    else if (o.revenue!=null) t += o.revenue;
+  }
+  return Math.round(t*100)/100;
+}
+
+// ---- Rendering ----
+function basisLabel(p){ return p.basis==='unique' ? 'unique' : p.basis==='pb' ? 'PB' : 'verified'; }
+function totalClicks(offer){ return offer.placements.reduce((a,p)=>a+p.clicks,0); }
+function mixedBasis(offer){ return new Set(offer.placements.map(p=>p.basis)).size > 1; }
+function matches(offer, partner){
+  if (!query) return true;
+  const q = query.toLowerCase();
+  return offer.name.toLowerCase().includes(q) || partner.name.toLowerCase().includes(q);
+}
+
+function splitRow(p, alloc, share, offer){
+  const g = GROUPS[p.g];
+  const chip = `<span class="chip ${g.cls}">${g.label}${p.slotLabel ? ' · ' + p.slotLabel : ''}</span>`;
+  const bundle = p.bundle ? `<span class="bundle-chip">${p.bundle.label}<button type="button" title="Split this bundle back into separate slots" onclick="uncombine('${offer.id}')" aria-label="Split bundle">×</button></span>` : '';
+  const lock = p.locked ? `<span class="lock">🔒 postback</span>` : '';
+  const basis = `<span class="basis">${p.clicks.toLocaleString()} ${basisLabel(p)}${p.locked?' · held out':''}</span>`;
+  const fill = p.locked ? 'f lockfill' : 'f';
+  const amt = alloc ? `${money(alloc.rev)} <span class="c">· ${alloc.conv} conv</span>` : '—';
+  return `<div class="split${p.locked?' locked':''}">
+    <div class="grow">${chip}${bundle}${lock}${basis}</div>
+    <div class="bar"><div class="${fill}" data-w="${share}"></div></div>
+    <span class="alloc">${amt}</span>
+  </div>`;
+}
+
+function activeCard(offer, partner){
+  const rev = offer.revenue==null ? '' : offer.revenue;
+  const cv  = offer.conv==null ? '' : offer.conv;
+  const n = offer.placements.length;
+  return `<div class="card active" id="card-${offer.id}">
+    <div class="card-head">
+      <div><div class="offer-name">${offer.name}</div><div class="offer-meta">${partner.name} · ran in ${n} placement${n>1?'s':''}</div></div>
+      <span class="status need">Needs data</span>
+    </div>
+    <div class="card-body">
+      <div class="entryrow">
+        <div class="field"><label for="rev-${offer.id}">Revenue</label><input id="rev-${offer.id}" type="number" step="0.01" min="0" inputmode="decimal" placeholder="0.00" value="${rev}" oninput="refresh('${offer.id}')"></div>
+        <div class="field"><label for="cv-${offer.id}">Conversions</label><input id="cv-${offer.id}" type="number" step="1" min="0" inputmode="numeric" placeholder="0" value="${cv}" oninput="refresh('${offer.id}')"></div>
+      </div>
+      <div class="hint">Type the ${partner.name} portal totals once — the split below settles as you type.</div>
+      <div class="splits" id="splits-${offer.id}"></div>
+      <div id="mix-${offer.id}"></div>
+      <div class="recon" id="recon-${offer.id}"></div>
+      <button class="cta" id="save-${offer.id}" onclick="save('${offer.id}')" disabled>Save split · next offer</button>
+    </div>
+  </div>`;
+}
+
+function doneCard(offer, partner){
+  const locked = offer.placements.filter(p=>p.locked);
+  const notes = [];
+  if (offer.placements.length>1) notes.push(`split ${offer.placements.length} ways`);
+  if (locked.length) notes.push(`${money(locked.reduce((a,p)=>a+p.locked.rev,0))} locked from postback`);
+  const status = locked.length ? '<span class="status partial">PB partial</span>' : '';
+  return `<div class="card done" id="card-${offer.id}">
+    <button class="card-head" onclick="reopen('${offer.id}')" title="Re-enter — new totals overwrite the old split">
+      <span class="check">✓</span>
+      <div><div class="offer-name">${offer.name}</div><div class="offer-meta">${partner.name}${notes.length?' · '+notes.join(' · '):''}</div></div>
+      ${status}
+      <span class="donesum">${money(offer.revenue)} <span class="c">· ${offer.conv} conv</span></span>
+    </button>
+  </div>`;
+}
+
+function autoCard(offer, partner){
+  const total = autoTotal(offer, partner);
+  const clicks = offer.placements.map(p=>p.clicks.toLocaleString()).join(' + ');
+  return `<div class="card done" id="card-${offer.id}">
+    <div class="card-head">
+      <span class="check">✓</span>
+      <div><div class="offer-name">${offer.name}</div>
+        <div class="offer-meta"><span class="autoformula">${clicks} clicks × ${partner.adjFactor.toFixed(2)} × ${money(offer.cpc)} CPC</span> — AtWave counts run hot; the 0.90 factor is set on the partner.</div>
+      </div>
+      <span class="status auto">Auto</span>
+      <span class="donesum">${money(total)}</span>
+    </div>
+  </div>`;
+}
+
+function upcomingCard(offer, partner){
+  const n = offer.placements.length;
+  return `<div class="card upcoming" id="card-${offer.id}">
+    <div class="card-head">
+      <div><div class="offer-name">${offer.name}</div><div class="offer-meta">${partner.name} · ran in ${n} placement${n>1?'s':''}</div></div>
+      <span class="status need">Needs data</span>
+    </div>
+  </div>`;
+}
+
+function partnerState(partner){
+  const waiting = partner.offers.filter(o=>o.status==='waiting').length;
+  if (partner.offers.every(o=>o.status==='auto')) return '<span class="pstate">auto from CPC</span>';
+  if (waiting===0) return '<span class="pstate clear">all entered ✓</span>';
+  return `<span class="pstate waiting">${waiting} waiting</span>`;
+}
+
+function partnerGroup(partner){
+  const offers = partner.offers.filter(o=>matches(o, partner));
+  if (!offers.length) return '';
+  const portal = PORTALS[partner.name] ? `<a class="portal-link" href="${PORTALS[partner.name]}" target="_blank" rel="noopener">Open portal ↗</a>` : '';
+  let html = `<div class="partner"><div class="partnerhead"><span class="pname">${partner.name}</span>
+    <span class="pmeta">· ${partner.offers.length} offer${partner.offers.length>1?'s':''}</span>${portal}${partnerState(partner)}</div>`;
+  for (const offer of offers){
+    if (offer.status==='auto') html += autoCard(offer, partner);
+    else if (offer.status==='done') html += doneCard(offer, partner);
+    else if (offer.id===activeId) html += activeCard(offer, partner);
+    else html += upcomingCard(offer, partner);
+  }
+  return html + `</div>`;
+}
+
+function render(){
+  const root = document.getElementById('days');
+  let html = '';
+  let totalWaiting = 0;
+  let anyShown = false;
+  for (const day of DATA){
+    const offers = day.partners.flatMap(p=>p.offers);
+    const entered = offers.filter(o=>o.status!=='waiting').length;
+    totalWaiting += offers.length - entered;
+    const allEntered = entered === offers.length;
+    const dayMatches = day.partners.some(p => p.offers.some(o=>matches(o,p)));
+    if (query && !dayMatches) continue;
+
+    // fully entered day, not searched, not manually expanded → one collapsed bar
+    if (allEntered && !day.expanded && !query){
+      anyShown = true;
+      html += `<div class="day"><button class="daydone-bar" onclick="toggleDay('${day.date}')" title="Expand to find and edit any entry">
+        <span class="check">✓</span><span class="d">${day.date}</span><span>all ${offers.length} entered</span>
+        <span class="amt">${money(dayTotal(day))}</span></button></div>`;
+      continue;
+    }
+
+    anyShown = true;
+    const pct = Math.round(100*entered/offers.length);
+    const collapser = allEntered ? `<button class="collapse-btn" onclick="toggleDay('${day.date}')" title="Collapse day">Collapse ▴</button>` : '';
+    html += `<section class="day"><div class="dayhead"><h2>${day.date}</h2>${collapser}<span class="progress-lbl">${entered} of ${offers.length} entered</span></div>
+      <div class="progressbar"><div class="fill" style="width:${pct}%"></div></div>`;
+    // partners with waiting offers first, auto-only last
+    const sorted = [...day.partners].sort((a,b)=>{
+      const w = p => p.offers.some(o=>o.status==='waiting') ? 0 : p.offers.some(o=>o.status==='done') ? 1 : 2;
+      return w(a)-w(b);
+    });
+    for (const partner of sorted) html += partnerGroup(partner);
+    html += `</section>`;
+  }
+  if (query && !anyShown){
+    html = `<div class="noresults">No offers match “${query}” between Jun 25 – Jul 1. Try a partner name — every offer lists under its partner.</div>`;
+  }
+  root.innerHTML = html;
+  document.getElementById('pagesub').textContent = totalWaiting
+    ? `${totalWaiting} offer${totalWaiting>1?'s':''} waiting on partner numbers`
+    : 'Nothing waiting — every offer in range is entered.';
+  if (activeId && document.getElementById('rev-'+activeId)) refresh(activeId);
+}
+
+function findOffer(id){
+  for (const day of DATA) for (const p of day.partners) for (const o of p.offers) if (o.id===id) return {offer:o, partner:p, day};
+  return null;
+}
+
+function setQuery(v){ query = v.trim(); render(); }
+
+function toggleDay(date){
+  const day = DATA.find(d=>d.date===date);
+  day.expanded = !day.expanded;
+  render();
+}
+
+function refresh(id){
+  const {offer} = findOffer(id);
+  const rev = parseFloat(document.getElementById('rev-'+id).value);
+  const cv  = parseInt(document.getElementById('cv-'+id).value, 10);
+  const hasRev = !isNaN(rev) && rev >= 0;
+  const {out, lockedRev} = computeSplit(offer, hasRev?rev:0, isNaN(cv)?0:cv);
+  const tc = totalClicks(offer);
+  document.getElementById('splits-'+id).innerHTML = offer.placements
+    .map(p => splitRow(p, hasRev?out.get(p):null, Math.round(100*p.clicks/tc), offer)).join('');
+  document.getElementById('mix-'+id).innerHTML = mixedBasis(offer)
+    ? `<div class="mixnote">Heads up: this split mixes click bases (${[...new Set(offer.placements.map(basisLabel))].join(' + ')}). Close enough by policy — flagged so you know.</div>` : '';
+  const recon = document.getElementById('recon-'+id);
+  if (!hasRev){
+    recon.innerHTML = `<span>${tc.toLocaleString()} clicks across ${offer.placements.length} placements</span><span>Waiting on the partner total</span>`;
+  } else if (lockedRev > 0 && rev < lockedRev){
+    recon.innerHTML = `<span>${money(lockedRev)} is already locked from postback</span><span class="bad">Partner total is below the locked amount — check the report</span>`;
+  } else {
+    const lockNote = lockedRev>0 ? `${money(lockedRev)} locked + ${money(Math.max(0,rev-lockedRev))} split = ${money(rev)} entered` : `${tc.toLocaleString()} clicks across ${offer.placements.length} placements`;
+    recon.innerHTML = `<span>${lockNote}</span><span class="ok">Splits to the penny ✓</span>`;
+  }
+  document.getElementById('save-'+id).disabled = !hasRev;
+  // animate bars after layout
+  requestAnimationFrame(()=>{ document.querySelectorAll(`#card-${CSS.escape(id)} .bar .f`).forEach(el=>{ el.style.width = el.dataset.w+'%'; }); });
+}
+
+function save(id){
+  const found = findOffer(id);
+  const {offer, day} = found;
+  const rev = parseFloat(document.getElementById('rev-'+id).value);
+  const cv  = parseInt(document.getElementById('cv-'+id).value, 10);
+  offer.revenue = isNaN(rev)?0:rev;
+  offer.conv = isNaN(cv)?0:cv;
+  offer.status = 'done';
+  // advance to the next waiting offer in the SAME day (partner order); if none, rest
+  activeId = null;
+  for (const p of day.partners) for (const o of p.offers){
+    if (o.status==='waiting'){ activeId = o.id; break; }
+  }
+  render();
+  if (activeId){ const el = document.getElementById('card-'+activeId); if (el) el.scrollIntoView({behavior:'smooth', block:'center'}); }
+}
+
+function reopen(id){
+  const {offer, day} = findOffer(id);
+  offer.status = 'waiting';
+  day.expanded = true;
+  activeId = id;
+  render();
+  const input = document.getElementById('rev-'+id);
+  if (input) input.focus();
+}
+
+function uncombine(offerId){
+  const {offer, day} = findOffer(offerId);
+  const p = offer.placements.find(x=>x.bundle);
+  if (!p) return;
+  if (!confirm(`Split this bundle back into ${p.bundle.members.map(m=>m.slot).join(' and ')}? Each slot becomes its own line in the split.`)) return;
+  const idx = offer.placements.indexOf(p);
+  const members = p.bundle.members.map(m=>({ g:p.g, clicks:m.clicks, basis:p.basis, slotLabel:m.slot }));
+  offer.placements.splice(idx, 1, ...members);
+  if (offer.status==='done'){ offer.status='waiting'; day.expanded = true; activeId = offerId; }
+  render();
+}
+
+render();
+</script>
+</body>
+</html>

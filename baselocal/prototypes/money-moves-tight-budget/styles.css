@@ -1,0 +1,360 @@
+/* ============================================================
+   19 costs to cut when money gets tight — BaseLocal
+   Advertorial listicle (rebuild of a paid-native lander format)
+   Tokens reference: brain/brands/baselocal/design-system.md
+   ============================================================ */
+
+:root {
+  --primary: #C2604A;
+  --primary-hover: #A84E3B;
+  --dark: #2C2421;
+  --body: #444444;
+  --gray: #797979;
+  --silver: #999999;
+  --bg-warm: #FAF6F4;
+  --border: #E8E0DC;
+  --bg-page: #FFFFFF;
+  --success: #2D7A2D;
+  --success-bg: #EEF7ED;
+  --error: #C0392B;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Lato', Helvetica, Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--body);
+  background: var(--bg-page);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a { color: inherit; }
+
+/* ===== Site header ===== */
+.site-header {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 20px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+}
+.site-header img { height: 28px; display: block; }
+.site-header .meta {
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+
+/* ===== Article shell ===== */
+.article {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+}
+
+/* ===== Hero ===== */
+.disclosure-link {
+  font-size: 12px;
+  color: var(--silver);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+  display: inline-block;
+  margin: 0 0 20px;
+}
+.disclosure-link:hover { color: var(--gray); }
+
+.kicker {
+  font-weight: 900;
+  font-size: 12px;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin: 0 0 10px;
+}
+
+.hero h1 {
+  font-family: 'Bitter', Georgia, serif;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 1.15;
+  color: var(--dark);
+  letter-spacing: -0.4px;
+  margin: 0 0 16px;
+}
+
+.article-byline {
+  font-size: 13px;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 0;
+  margin: 24px 0 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.article-byline .author {
+  font-weight: 700;
+  color: var(--dark);
+  letter-spacing: 0.2px;
+}
+.article-byline .byline-meta {
+  font-weight: 400;
+  color: var(--silver);
+}
+
+.editorial-lede {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.55;
+  color: var(--body);
+  max-width: 580px;
+  margin: 0 0 8px;
+}
+
+/* ===== Body ===== */
+.prose p { margin: 0 0 22px; }
+
+/* One numbered cut = one <section class="cut"> */
+.cut {
+  border-top: 1px solid var(--border);
+  padding-top: 36px;
+  margin-top: 36px;
+}
+.cut:first-of-type {
+  border-top: none;
+  padding-top: 8px;
+  margin-top: 24px;
+}
+
+.cut-label {
+  font-weight: 900;
+  font-size: 12px;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin: 0 0 8px;
+}
+.cut-label .cut-cat { color: var(--gray); }
+
+.cut h2 {
+  font-family: 'Bitter', Georgia, serif;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 1.25;
+  color: var(--dark);
+  letter-spacing: -0.2px;
+  margin: 0 0 16px;
+}
+
+/* Drop cap on the intro paragraph */
+.dropcap {
+  font-family: 'Bitter', Georgia, serif;
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 0.9;
+  color: var(--primary);
+  float: left;
+  margin: 4px 6px -2px 0;
+}
+
+/* Numbered steps inside a cut */
+.steps {
+  margin: 0 0 22px;
+  padding: 0 0 0 20px;
+}
+.steps li {
+  margin: 0 0 8px;
+  padding-left: 6px;
+}
+.steps li::marker {
+  font-weight: 700;
+  color: var(--primary);
+}
+
+/* Stat callout — "Worth knowing" box */
+.stat-callout {
+  background: var(--bg-warm);
+  border-left: 3px solid var(--primary);
+  border-radius: 0 4px 4px 0;
+  padding: 20px 24px;
+  margin: 28px 0;
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--body);
+}
+.stat-callout .callout-label {
+  display: block;
+  font-weight: 900;
+  font-size: 11px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin: 0 0 8px;
+}
+.stat-callout strong { color: var(--dark); font-weight: 700; }
+.stat-callout .callout-source {
+  display: block;
+  font-size: 11px;
+  font-style: italic;
+  color: var(--silver);
+  margin-top: 8px;
+}
+
+/* Offer badge (green) */
+.offer-badge {
+  display: inline-block;
+  background: var(--success-bg);
+  color: var(--success);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 4px;
+  margin: 0 0 16px;
+}
+
+/* CTA row inside a cut */
+.cut-cta { margin: 26px 0 4px; }
+.post-cta-note {
+  font-size: 13px;
+  color: var(--gray);
+  line-height: 1.5;
+  margin: 10px 0 0;
+}
+
+/* Editorial cuts (no partner, no button) get a tighter rhythm */
+.cut.editorial p:last-child { margin-bottom: 0; }
+
+/* Inline (early) CTA */
+.inline-cta {
+  background: var(--bg-warm);
+  border-radius: 4px;
+  padding: 16px 20px;
+  margin: 28px 0;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.6;
+  color: #555555;
+}
+.inline-cta a {
+  color: var(--primary);
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+.inline-cta a:hover { border-bottom-color: var(--primary); }
+
+/* ===== Buttons ===== */
+.btn {
+  font-family: 'Lato', Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  border-radius: 6px;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  border: none;
+  text-align: center;
+  transition: background-color 0.2s, box-shadow 0.2s, transform 0.15s, color 0.2s;
+}
+.btn-primary {
+  background: var(--primary);
+  color: var(--bg-page);
+  font-size: 16px;
+  padding: 14px 32px;
+}
+.btn-primary:hover {
+  background: var(--primary-hover);
+  box-shadow: 0 4px 14px rgba(194, 96, 74, 0.35);
+}
+.btn-primary:active {
+  transform: scale(0.97);
+  box-shadow: 0 2px 8px rgba(194, 96, 74, 0.25);
+}
+.btn:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* ===== Bottom CTA ===== */
+.bottom-cta {
+  text-align: center;
+  padding: 40px 24px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  margin-top: 48px;
+}
+.bottom-cta h2 {
+  font-family: 'Lato', Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  color: var(--dark);
+  margin: 0 0 8px;
+}
+.bottom-cta .subtitle {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--gray);
+  margin: 0 0 24px;
+}
+.bottom-cta .alt-link {
+  display: block;
+  margin-top: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--gray);
+}
+.bottom-cta .alt-link a {
+  color: var(--primary);
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+.bottom-cta .alt-link a:hover { border-bottom-color: var(--primary); }
+
+/* ===== Disclosure ===== */
+.disclosure {
+  font-size: 12px;
+  color: var(--silver);
+  line-height: 1.6;
+  margin-top: 48px;
+}
+.disclosure p { margin: 0 0 12px; }
+.disclosure p:last-child { margin-bottom: 0; }
+
+/* ===== Tablet / desktop (≥ 600px) ===== */
+@media (min-width: 600px) {
+  .article { padding: 56px 24px 96px; }
+  .hero h1 {
+    font-size: 35px;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+  }
+  .editorial-lede { font-size: 19px; }
+  .cut h2 { font-size: 28px; }
+  .dropcap {
+    font-size: 56px;
+    margin: 6px 8px -2px 0;
+  }
+}
+
+/* ===== Reduced motion ===== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  html { scroll-behavior: auto; }
+  .btn-primary:active { transform: none; }
+}

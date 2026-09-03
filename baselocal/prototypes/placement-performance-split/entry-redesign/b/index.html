@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entry Redesign B — Cards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--brand-50:#fdf5f2;--brand-200:#f7cfc2;--brand-500:#B8593A;--brand-600:#a54e33;--brand-700:#8a3f2a;
+--g-50:#f9fafb;--g-100:#f3f4f6;--g-200:#e5e7eb;--g-300:#d1d5db;--g-400:#9ca3af;--g-500:#6b7280;--g-600:#4b5563;--g-700:#374151;--g-900:#111827;
+--green-600:#059669;--green-700:#047857;--blue-50:#eff6ff;--blue-200:#bfdbfe;--blue-700:#1d4ed8}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',ui-sans-serif,system-ui,sans-serif;background:var(--g-100);color:var(--g-900);font-size:13px}
+.caption{background:var(--g-900);color:#fff;padding:10px 16px;font-size:13px}
+.caption strong{color:var(--brand-200)}
+.page{max-width:1280px;margin:0 auto;padding:16px}
+.toolbar{display:flex;gap:10px;align-items:center;margin-bottom:16px}
+h1{font-size:18px;font-weight:700;margin-right:6px}
+.datebtn{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;border:1px solid var(--g-200);background:#fff;border-radius:8px;padding:7px 12px;font-size:13px;color:var(--g-700);font-weight:500;cursor:pointer}
+.search{flex:1;max-width:280px;border:1px solid var(--g-200);border-radius:8px;padding:7px 12px;font:inherit;font-size:13px;color:var(--g-700);background:#fff}
+.dayhead{display:flex;align-items:baseline;gap:10px;margin:18px 2px 8px;cursor:pointer}
+.dayhead h2{font-size:15px;font-weight:700}
+.dayhead .count{font-size:12.5px;color:var(--g-500)}
+.dayhead .daytotal{margin-left:auto;font-weight:700;font-variant-numeric:tabular-nums}
+.dayhead .dcheck{color:var(--green-600);font-weight:700}
+.dayhead.folded{background:#fff;border:1px solid var(--g-200);border-radius:10px;padding:10px 14px;margin:10px 0;color:var(--g-500)}
+.dayhead.folded h2{color:var(--g-700)}
+.chev{display:inline-block;width:14px;color:var(--g-400);font-size:10px;transition:transform .12s}
+.open .chev{transform:rotate(90deg)}
+.pcard{background:#fff;border:1px solid var(--g-200);border-radius:10px;margin-bottom:8px;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.03)}
+.phead{display:flex;align-items:center;gap:8px;padding:9px 14px;cursor:pointer;background:#fff}
+.phead:hover{background:var(--g-50)}
+.phead .pname{font-weight:700}
+.phead .pmeta{color:var(--g-500);font-size:12px}
+.portal{color:var(--brand-700);font-weight:600;font-size:12px;text-decoration:none}
+.portal:hover{text-decoration:underline}
+.phead .pright{margin-left:auto;font-size:12px;font-weight:600;color:var(--g-500)}
+.phead .pright.waiting{color:var(--brand-700)}
+.phead .pright.clear{color:var(--green-700)}
+table{width:100%;border-collapse:collapse}
+thead th{font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--g-400);font-weight:600;padding:4px 14px;text-align:right;border-top:1px solid var(--g-100);border-bottom:1px solid var(--g-100)}
+thead th:first-child{text-align:left}
+td{padding:7px 14px;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;border-top:1px solid var(--g-100)}
+td:first-child{text-align:left}
+tr.offer td.name{font-weight:500}
+tr.offer .meta{color:var(--g-400);font-size:11.5px;margin-left:6px}
+.entry{display:inline-flex;align-items:center;gap:4px;border:1px solid var(--g-300);border-radius:6px;padding:2px 8px;color:var(--g-400);background:#fff;font-size:12.5px;min-width:58px;justify-content:flex-end;cursor:pointer}
+.entry:hover{border-color:var(--brand-500);background:var(--brand-50)}
+.val{font-weight:700}
+.autotag{color:var(--g-400);font-size:11px;font-style:italic;margin-left:5px}
+tr.detail>td{padding:0 14px 10px;background:var(--g-50)}
+.mini{width:100%;border-collapse:collapse;margin-top:8px}
+.mini th{font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--g-500);font-weight:600;padding:4px 10px;text-align:right;border-bottom:1px solid var(--g-200)}
+.mini th:first-child{text-align:left}
+.mini td{padding:5px 10px;border-top:none;border-bottom:1px solid var(--g-200);font-size:12.5px;color:var(--g-600);background:var(--g-50)}
+.chip{display:inline-block;font-size:11px;font-weight:600;border-radius:5px;padding:1px 7px;border:1px solid var(--blue-200);background:var(--blue-50);color:var(--blue-700)}
+.mini .alloc{font-weight:600;color:var(--g-900)}
+.mini .c{color:var(--g-500);font-weight:400}
+.recon{display:flex;justify-content:space-between;font-size:11.5px;color:var(--g-500);font-style:italic;padding:6px 10px 0}
+.recon .ok{color:var(--green-700);font-weight:600;font-style:normal}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<div class="caption"><strong>Option B — Cards.</strong> Each partner is its own card on a gray canvas; days are headers between card stacks. Collapse at both levels: a day folds to one bar, a partner card folds to its header. Same cell rules as A — no status column, auto fills itself.</div>
+<div class="page">
+  <div class="toolbar">
+    <h1>Data Entry</h1>
+    <button class="datebtn">📅 Last month ▾</button>
+    <input class="search" placeholder="Find an offer or partner">
+  </div>
+
+  <div class="dayhead folded"><span class="chev">▶</span><h2>Friday, Jun 26</h2><span class="dcheck">✓</span><span class="count">all 2 entered</span><span class="daytotal">$418.20</span></div>
+  <div class="dayhead folded"><span class="chev">▶</span><h2>Thursday, Jun 25</h2><span class="dcheck">✓</span><span class="count">all 4 entered</span><span class="daytotal">$964.75</span></div>
+
+  <div class="dayhead open" onclick="tglDay(this)"><span class="chev">▶</span><h2>Wednesday, Jun 24</h2><span class="count">8 of 10 entered</span><span class="daytotal">$1,206.95</span></div>
+  <div class="dayblock">
+
+    <div class="pcard">
+      <div class="phead open" onclick="tglP(this)"><span class="chev">▶</span><span class="pname">AdsByMoney</span><span class="pmeta">2 offers</span><a class="portal" href="#" onclick="event.stopPropagation()">Open portal ↗</a><span class="pright clear">all entered ✓</span></div>
+      <table>
+        <thead><tr><th style="width:44%">Offer</th><th>Unique Clicks</th><th>Revenue</th><th>Conv</th></tr></thead>
+        <tbody>
+          <tr class="offer"><td class="name" onclick="tglO(this)"><span class="chev" style="transform:rotate(90deg)">▶</span>American Home Shield - AdsByMoney - CPL $60<span class="meta">2 placements</span></td><td></td><td><span class="val">$673.00</span></td><td><span class="val">17</span></td></tr>
+          <tr class="detail"><td colspan="4">
+            <table class="mini">
+              <thead><tr><th style="width:44%">Placement</th><th>Unique Clicks</th><th>Share</th><th>Allocated</th></tr></thead>
+              <tbody>
+                <tr><td><span class="chip">Morning Roundup · Lead</span></td><td>412</td><td>51.5%</td><td class="alloc">$346.60 <span class="c">· 9 conv</span></td></tr>
+                <tr><td><span class="chip">Morning Roundup · Feature 1</span></td><td>388</td><td>48.5%</td><td class="alloc">$326.40 <span class="c">· 8 conv</span></td></tr>
+              </tbody>
+            </table>
+            <div class="recon"><span>800 unique clicks across 2 placements</span><span class="ok">Splits to the penny ✓</span></div>
+          </td></tr>
+          <tr class="offer"><td class="name"><span class="chev">▶</span>Spot - AdsByMoney - CPC $3<span class="meta">1 placement</span></td><td></td><td><span class="val">$141.00</span><span class="autotag">auto</span></td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pcard">
+      <div class="phead open" onclick="tglP(this)"><span class="chev">▶</span><span class="pname">AtWave</span><span class="pmeta">4 offers</span><a class="portal" href="#" onclick="event.stopPropagation()">Open portal ↗</a><span class="pright">auto · ×0.90</span></div>
+      <table>
+        <thead><tr><th style="width:44%">Offer</th><th>Unique Clicks</th><th>Revenue</th><th>Conv</th></tr></thead>
+        <tbody>
+          <tr class="offer"><td class="name"><span class="chev">▶</span>3 Day Blinds - AtWave - CPC $3<span class="meta">1 placement</span></td><td></td><td><span class="val">$167.40</span><span class="autotag">auto</span></td><td>—</td></tr>
+          <tr class="offer"><td class="name"><span class="chev">▶</span>Babbel - AtWave - CPC $2<span class="meta">1 placement</span></td><td></td><td><span class="val">$68.40</span><span class="autotag">auto</span></td><td>—</td></tr>
+          <tr class="offer"><td class="name"><span class="chev">▶</span>Dating.com - AtWave - CPC $2<span class="meta">1 placement</span></td><td></td><td><span class="val">$91.80</span><span class="autotag">auto</span></td><td>—</td></tr>
+          <tr class="offer"><td class="name"><span class="chev">▶</span>Total Injury Help (Depo-Provera) - AtWave - CPC $2.50<span class="meta">1 placement</span></td><td></td><td><span class="val">$65.25</span><span class="autotag">auto</span></td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pcard">
+      <div class="phead" onclick="tglP(this)"><span class="chev">▶</span><span class="pname">Direct Agents</span><span class="pmeta">1 offer · $92.00</span><a class="portal" href="#" onclick="event.stopPropagation()">Open portal ↗</a><span class="pright clear">all entered ✓</span></div>
+      <table class="hidden"><tbody></tbody></table>
+    </div>
+
+    <div class="pcard">
+      <div class="phead open" onclick="tglP(this)"><span class="chev">▶</span><span class="pname">Impact</span><span class="pmeta">1 offer</span><a class="portal" href="#" onclick="event.stopPropagation()">Open portal ↗</a><span class="pright waiting">1 waiting</span></div>
+      <table>
+        <thead><tr><th style="width:44%">Offer</th><th>Unique Clicks</th><th>Revenue</th><th>Conv</th></tr></thead>
+        <tbody>
+          <tr class="offer"><td class="name"><span class="chev">▶</span>Home Chef - Impact - CPA $40<span class="meta">2 placements</span></td><td></td><td><span class="entry">$0 ✎</span></td><td><span class="entry">0 ✎</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+<script>
+function tglDay(h){ h.classList.toggle('open'); const b=h.nextElementSibling; if(b&&b.classList.contains('dayblock')) b.classList.toggle('hidden'); }
+function tglP(h){ h.classList.toggle('open'); const t=h.nextElementSibling; if(t) t.classList.toggle('hidden'); }
+function tglO(cell){ const d=cell.parentElement.nextElementSibling; if(d&&d.classList.contains('detail')) d.classList.toggle('hidden'); }
+</script>
+</body>
+</html>

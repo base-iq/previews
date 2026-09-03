@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Entry — 5 palette options</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',ui-sans-serif,system-ui,sans-serif;background:#f3f4f6;color:#111827;font-size:13px;padding-bottom:60px}
+.caption{background:#111827;color:#fff;padding:10px 16px;font-size:13px;margin-bottom:20px}
+.caption strong{color:#f7cfc2}
+.variant{max-width:1180px;margin:0 auto 34px;padding:0 16px}
+.vlabel{font-size:14px;font-weight:700;margin-bottom:8px}
+.vlabel .n{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:999px;background:#111827;color:#fff;font-size:12px;margin-right:8px}
+.vlabel .d{font-weight:400;color:#6b7280;font-size:12.5px;margin-left:8px}
+.tablewrap{border:1px solid #e5e7eb;border-radius:10px;overflow:hidden;background:#fff}
+table{width:100%;border-collapse:collapse}
+thead th{font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:#6b7280;font-weight:600;padding:7px 12px;text-align:right;background:#fff;border-bottom:1px solid #e5e7eb}
+thead th:first-child{text-align:left}
+td{padding:7px 12px;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+td:first-child{text-align:left}
+.chev{display:inline-block;width:14px;font-size:10px}
+
+tr.day>td{background:var(--day-bg);color:var(--day-fg);font-weight:700;font-size:13.5px;padding:9px 12px}
+tr.day .chev,tr.day .count{color:var(--day-muted);font-weight:400;font-size:12px}
+tr.day .count{margin-left:8px}
+tr.day .dcheck{color:var(--day-check)}
+tr.partner>td{background:var(--partner-bg);color:var(--partner-fg);font-weight:700;font-size:12.5px;padding:6px 12px;border-top:1px solid var(--partner-border)}
+tr.partner>td:first-child{padding-left:24px}
+tr.partner .chev{color:var(--partner-muted)}
+tr.partner .pmeta{color:var(--partner-muted);font-weight:400;font-size:12px;margin-left:6px}
+.portal{color:var(--accent);font-weight:600;font-size:12px;text-decoration:none;margin-left:10px}
+tr.partner .pright{font-size:11.5px;font-weight:600;color:var(--partner-muted)}
+tr.partner .pright.waiting{color:var(--accent)}
+tr.partner .pright.clear{color:#047857}
+tr.offer>td{background:#fff;border-top:1px solid #f3f4f6}
+tr.offer td.name{padding-left:44px;font-weight:500}
+tr.offer .meta{color:#9ca3af;font-size:11.5px;margin-left:6px}
+.entry{display:inline-flex;align-items:center;gap:4px;border:1px solid #d1d5db;border-radius:6px;padding:2px 8px;color:#9ca3af;background:#fff;font-size:12.5px;min-width:58px;justify-content:flex-end}
+.val{font-weight:700}
+.autotag{color:#9ca3af;font-size:11px;font-style:italic;margin-left:5px}
+tr.pl>td{background:#fff;font-size:12px;color:#6b7280;border-top:1px dotted #e5e7eb;padding:4px 12px}
+tr.pl>td:first-child{padding-left:64px}
+.chip{display:inline-block;font-size:11px;font-weight:600;border-radius:5px;padding:1px 7px;border:1px solid var(--chip-border);background:var(--chip-bg);color:var(--chip-fg)}
+tr.pl .alloc{font-weight:600;color:#374151}
+tr.pl .share{color:#9ca3af}
+tr.recon>td{background:#fff;font-size:11.5px;color:#9ca3af;font-style:italic;padding:3px 12px 8px}
+tr.recon>td:first-child{padding-left:64px}
+tr.recon .ok{color:#047857;font-weight:600;font-style:normal}
+
+/* ── Palette 1: Espresso + Warm Cream (BaseLocal neutrals) ── */
+.p1{--day-bg:#2C2421;--day-fg:#fff;--day-muted:#a89e99;--day-check:#7fc98b;
+    --partner-bg:#FAF6F4;--partner-fg:#2C2421;--partner-muted:#797979;--partner-border:#E8E0DC;
+    --accent:#A84E3B;--chip-bg:#FAF6F4;--chip-border:#E8E0DC;--chip-fg:#8a3f2a}
+/* ── Palette 2: Terracotta ── */
+.p2{--day-bg:#8a3f2a;--day-fg:#fff;--day-muted:#e5b3a1;--day-check:#a7f3d0;
+    --partner-bg:#fdf5f2;--partner-fg:#8a3f2a;--partner-muted:#b8836f;--partner-border:#f7cfc2;
+    --accent:#a54e33;--chip-bg:#fdf5f2;--chip-border:#f7cfc2;--chip-fg:#8a3f2a}
+/* ── Palette 3: Slate ── */
+.p3{--day-bg:#334155;--day-fg:#fff;--day-muted:#94a3b8;--day-check:#6ee7b7;
+    --partner-bg:#f1f5f9;--partner-fg:#334155;--partner-muted:#64748b;--partner-border:#e2e8f0;
+    --accent:#B8593A;--chip-bg:#eff6ff;--chip-border:#bfdbfe;--chip-fg:#1d4ed8}
+/* ── Palette 4: Indigo ── */
+.p4{--day-bg:#3730a3;--day-fg:#fff;--day-muted:#a5b4fc;--day-check:#6ee7b7;
+    --partner-bg:#eef2ff;--partner-fg:#3730a3;--partner-muted:#6366f1;--partner-border:#e0e7ff;
+    --accent:#4f46e5;--chip-bg:#eef2ff;--chip-border:#c7d2fe;--chip-fg:#4338ca}
+/* ── Palette 5: Ledger Green ── */
+.p5{--day-bg:#064e3b;--day-fg:#fff;--day-muted:#6ee7b7;--day-check:#a7f3d0;
+    --partner-bg:#ecfdf5;--partner-fg:#065f46;--partner-muted:#059669;--partner-border:#a7f3d0;
+    --accent:#047857;--chip-bg:#ecfdf5;--chip-border:#a7f3d0;--chip-fg:#047857}
+</style>
+</head>
+<body>
+<div class="caption"><strong>Row-hierarchy palette options.</strong> Identical structure, five palettes — the day band and partner band change; offer and placement rows stay white/neutral in all of them. Pick by number.</div>
+
+<div id="variants"></div>
+
+<script>
+const VARIANTS = [
+  ["1","Espresso + Warm Cream","BaseLocal's own neutrals — espresso day band, warm cream partner band, terracotta links."],
+  ["2","Terracotta","Full brand color: deep terracotta day band, blush partner band."],
+  ["3","Slate","Cool gray-blue day band, ice-gray partner band — most 'standard admin tool'."],
+  ["4","Indigo","Dashboard indigo day band, periwinkle partner band."],
+  ["5","Ledger Green","Deep green day band, mint partner band — accounting-book feel for a money page."],
+];
+const TABLE = `
+<div class="tablewrap"><table>
+  <thead><tr><th style="width:46%">Offer</th><th>Unique Clicks</th><th>Revenue</th><th>Conv</th></tr></thead>
+  <tbody>
+    <tr class="day"><td colspan="3"><span class="chev">▶</span>Thursday, Jun 25 <span class="dcheck">✓</span><span class="count">all 4 entered</span></td><td>$964.75</td></tr>
+    <tr class="day"><td colspan="3"><span class="chev">▼</span>Wednesday, Jun 24 <span class="count">8 of 10 entered</span></td><td>$1,206.95</td></tr>
+    <tr class="partner"><td colspan="3"><span class="chev">▼</span>AdsByMoney<span class="pmeta">2 offers</span><a class="portal" href="#">Open portal ↗</a></td><td class="pright clear">all entered ✓</td></tr>
+    <tr class="offer"><td class="name"><span class="chev">▼</span>American Home Shield - AdsByMoney - CPL $60<span class="meta">2 placements</span></td><td></td><td><span class="val">$673.00</span></td><td><span class="val">17</span></td></tr>
+    <tr class="pl"><td><span class="chip">Morning Roundup · Lead</span></td><td>412</td><td class="share">51.5%</td><td class="alloc">$346.60 · 9 conv</td></tr>
+    <tr class="pl"><td><span class="chip">Morning Roundup · Feature 1</span></td><td>388</td><td class="share">48.5%</td><td class="alloc">$326.40 · 8 conv</td></tr>
+    <tr class="recon"><td colspan="3">800 unique clicks across 2 placements</td><td class="ok">Splits to the penny ✓</td></tr>
+    <tr class="offer"><td class="name"><span class="chev">▶</span>Spot - AdsByMoney - CPC $3<span class="meta">1 placement</span></td><td></td><td><span class="val">$141.00</span><span class="autotag">auto</span></td><td>—</td></tr>
+    <tr class="partner"><td colspan="3"><span class="chev">▶</span>AtWave<span class="pmeta">4 offers · $392.85</span><a class="portal" href="#">Open portal ↗</a></td><td class="pright">auto · ×0.90</td></tr>
+    <tr class="partner"><td colspan="3"><span class="chev">▼</span>Impact<span class="pmeta">1 offer</span><a class="portal" href="#">Open portal ↗</a></td><td class="pright waiting">1 waiting</td></tr>
+    <tr class="offer"><td class="name"><span class="chev">▶</span>Home Chef - Impact - CPA $40<span class="meta">2 placements</span></td><td></td><td><span class="entry">$0 ✎</span></td><td><span class="entry">0 ✎</span></td></tr>
+  </tbody>
+</table></div>`;
+document.getElementById('variants').innerHTML = VARIANTS.map(([n, name, desc]) =>
+  `<div class="variant p${n}"><div class="vlabel"><span class="n">${n}</span>${name}<span class="d">${desc}</span></div>${TABLE}</div>`
+).join('');
+</script>
+</body>
+</html>
