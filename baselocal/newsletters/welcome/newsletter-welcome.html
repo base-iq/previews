@@ -11,10 +11,11 @@
 <div class="newsletter">
 
     <!-- ============================================
-         SECTION 1: HEADER + WELCOME OPEN + VALUE-NOW
-         Top-links nav, masthead with cover image, the
-         multi-persona welcome paragraph, and a 2-tile
-         "what's already waiting for you" block.
+         SECTION 1: HEADER + WELCOME OPEN + READER
+         FAVORITES. Masthead with cover image, a single
+         multi-persona welcome paragraph, then "Start
+         here": what readers saw this week — mixed
+         organic + monetized batch.
          ============================================ -->
     <div class="section-card">
         <div class="masthead">
@@ -26,37 +27,29 @@
         </div>
 
         <div class="intro">
-            <p><strong>Welcome to BaseLocal.</strong> Starting now, you'll get curated updates throughout the week covering all the good stuff in and around Glendale &mdash; things to do, places to eat, stories to read, local spots to support, and other unexpected things worth checking out in the coming days.</p>
-            <p>Whether you're new in town, flying solo, spending time with the grandkids, or planning a night out, we'll make sure you always have something to look forward to.</p>
+            <p>Starting now, you'll get curated updates throughout the week covering all the good stuff in and around Glendale &mdash; things to do, places to eat, stories to read, and local spots to support. Whether you're new in town, flying solo, spending time with the grandkids, or planning a night out, we'll make sure you always have something to look forward to.</p>
         </div>
 
-        <div class="todays-picks">
-            <p class="todays-picks-label">Start here</p>
+        <!-- What readers saw this week — mixed batch.
+             3 organic items + 3 monetized (.affiliate)
+             items, same news-item rows as the daily
+             editions. This is the welcome's value-now
+             block AND its monetization surface. -->
+        <p class="todays-picks-label">Start here</p>
+        <div class="section-heading">What readers saw this week</div>
+        <p class="section-dek">A few reader favorites worth a look from recent editions.</p>
 
-            <div class="picks-grid picks-grid--one">
-                <a href="https://baselocal.com/az/glendale/events/" class="pick-tile">
-                    <div class="pick-thumb event">&#x1F4C5;</div>
-                    <div class="pick-body">
-                        <span class="pick-eyebrow">Browse</span>
-                        <span class="pick-title">The full Glendale events calendar</span>
-                        <span class="pick-meta">150+ events listed</span>
-                    </div>
-                </a>
-            </div>
+        <div class="news-item">
+            <strong>Murphy Park's night market is back:</strong> Friday evenings through October &mdash; 40+ local vendors, food trucks, and live music in downtown Glendale. Free to wander, easy to overspend &mdash; <a href="#">see the vendor lineup</a> &rarr;
         </div>
-    </div>
 
-    <!-- ============================================
-         SECTION 2: WELCOME OFFERS
-         Monetized batch — welcome-page treatment in
-         email form. Same .news-item.affiliate rows as
-         the daily We Got Your Back module; copy does
-         the click-driving work. Replaces the old
-         latest-edition tile.
-         ============================================ -->
-    <div class="section-card">
-        <div class="section-heading">While you're here</div>
-        <p class="section-dek">A few reader favorites worth a look &mdash; the same stuff we recommend in our daily editions.</p>
+        <div class="news-item">
+            <strong>The new spot near Catlin Court:</strong> A family-run birria joint just opened on 58th Ave, and the line out the door is already earning it a reputation. We stopped by so you know exactly what to order &mdash; <a href="#">read the first look</a> &rarr;
+        </div>
+
+        <div class="news-item">
+            <strong>Cooler mornings are almost here:</strong> Thunderbird Conservation Park's sunrise trails are about to hit their best six months of the year. Our guide covers the three routes locals swear by (and where to park) &mdash; <a href="#">plan your hike</a> &rarr;
+        </div>
 
         <div class="news-item affiliate">
             <strong>Compare rates for free:</strong> The national average for car insurance is around $175/month. Paying more than that? Same, so I did some shopping around and ended up cutting my premium in half. If you haven't checked in a while, you're probably overpaying too &mdash; <a href="#">here's the comparison tool I used</a> &rarr;
@@ -69,14 +62,10 @@
         <div class="news-item affiliate">
             <strong>Most people in their 50s are way behind:</strong> The median retirement savings at 55 is around $185K. Most planners recommend north of $1M. That gap doesn't close on its own, and it gets harder to close every year you wait. Unbiased is a free service that matches you with an SEC-regulated financial advisor based on your goals. Five minutes, no cost, and the first meeting is free. *<a href="#">Find your match</a> &rarr;
         </div>
-
-        <div class="news-item affiliate">
-            <strong>Strangers can buy your personal data for $0.50:</strong> Data brokers sell your name, home address, phone number, estimated income, and other personal info to anyone willing to pay. Scammers and identity thieves use these databases to take advantage of you. There are dozens of affordable services that can help you protect yourself. <a href="#">These three are our favorites</a> &rarr;
-        </div>
     </div>
 
     <!-- ============================================
-         SECTION 3: DELIVERABILITY CALLOUT
+         SECTION 2: DELIVERABILITY CALLOUT
          The single most valuable action a new
          subscriber can take. Distinct visual block.
          ============================================ -->
@@ -93,7 +82,7 @@
     </div>
 
     <!-- ============================================
-         SECTION 4: PREFERENCE POLL
+         SECTION 3: PREFERENCE POLL
          Single-question content-preference capture.
          Static visual mock — beehiiv renders the
          actual poll widget at send time.
@@ -111,6 +100,30 @@
             <li><a href="#" class="welcome-poll-option"><span class="icon">&#x1F4F0;</span> News &amp; local stories</a></li>
             <li><a href="#" class="welcome-poll-option"><span class="icon">&#x1F3A4;</span> Nightlife, music &amp; comedy</a></li>
         </ul>
+    </div>
+
+    <!-- ============================================
+         SECTION 4: EVENTS CALENDAR
+         Single one-up tile pointing at the full local
+         events calendar. Sits after the poll — reader
+         just told us what they're into; now hand them
+         the place to browse it.
+         ============================================ -->
+    <div class="section-card">
+        <div class="todays-picks">
+            <p class="todays-picks-label">Plan your week</p>
+
+            <div class="picks-grid picks-grid--one">
+                <a href="https://baselocal.com/az/glendale/events/" class="pick-tile">
+                    <div class="pick-thumb event">&#x1F4C5;</div>
+                    <div class="pick-body">
+                        <span class="pick-eyebrow">Browse</span>
+                        <span class="pick-title">The full Glendale events calendar</span>
+                        <span class="pick-meta">150+ events listed</span>
+                    </div>
+                </a>
+            </div>
+        </div>
     </div>
 
     <!-- ============================================
