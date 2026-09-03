@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to BaseLocal | BaseLocal</title>
+    <title>Welcome to BaseLocal — Tiles Variant | BaseLocal</title>
     <link rel="stylesheet" href="../styles/newsletter.css">
 </head>
 <body>
@@ -11,11 +11,11 @@
 <div class="newsletter">
 
     <!-- ============================================
-         SECTION 1: HEADER + WELCOME OPEN + READER
-         FAVORITES. Masthead with cover image, a single
-         multi-persona welcome paragraph, then "Start
-         here": what readers saw this week — mixed
-         organic + monetized batch.
+         MOCK VARIANT: TILES
+         Reader-favorites treatment B — keeps the
+         original two-up visual tile grid (top two
+         organic favorites as tiles), remaining items
+         as news rows under a sub-heading.
          ============================================ -->
     <div class="section-card">
         <div class="masthead">
@@ -30,22 +30,31 @@
             <p><strong>Welcome to BaseLocal.</strong> Starting now, you'll get curated updates throughout the week covering all the good stuff in and around Glendale &mdash; things to do, places to eat, stories to read, and local spots to support. Whether you're new in town, flying solo, spending time with the grandkids, or planning a night out, we'll make sure you always have something to look forward to.</p>
         </div>
 
-        <!-- What readers saw this week — mixed batch.
-             3 organic items + 3 monetized (.affiliate)
-             items, same news-item rows as the daily
-             editions. This is the welcome's value-now
-             block AND its monetization surface. -->
-        <p class="todays-picks-label">Start here</p>
-        <div class="section-heading">What readers saw this week</div>
-        <p class="section-dek">A few reader favorites worth a look from recent editions.</p>
+        <div class="todays-picks">
+            <p class="todays-picks-label">Start here &mdash; what readers saw this week</p>
 
-        <div class="news-item">
-            <strong>Murphy Park's night market is back:</strong> Friday evenings through October &mdash; 40+ local vendors, food trucks, and live music in downtown Glendale. Free to wander, easy to overspend &mdash; <a href="#">see the vendor lineup</a> &rarr;
+            <div class="picks-grid picks-grid--two">
+                <a href="#" class="pick-tile">
+                    <div class="pick-thumb event">&#x1F3AA;</div>
+                    <div class="pick-body">
+                        <span class="pick-eyebrow">This weekend</span>
+                        <span class="pick-title">Murphy Park's night market is back</span>
+                        <span class="pick-meta">Fridays through October</span>
+                    </div>
+                </a>
+
+                <a href="#" class="pick-tile">
+                    <div class="pick-thumb place">&#x1F32E;</div>
+                    <div class="pick-body">
+                        <span class="pick-eyebrow">First look</span>
+                        <span class="pick-title">The birria spot everyone's lining up for</span>
+                        <span class="pick-meta">3-min read</span>
+                    </div>
+                </a>
+            </div>
         </div>
 
-        <div class="news-item">
-            <strong>The new spot near Catlin Court:</strong> A family-run birria joint just opened on 58th Ave, and the line out the door is already earning it a reputation. We stopped by so you know exactly what to order &mdash; <a href="#">read the first look</a> &rarr;
-        </div>
+        <div class="sub-heading">More reader favorites:</div>
 
         <div class="news-item">
             <strong>Cooler mornings are almost here:</strong> Thunderbird Conservation Park's sunrise trails are about to hit their best six months of the year. Our guide covers the three routes locals swear by (and where to park) &mdash; <a href="#">plan your hike</a> &rarr;
@@ -66,8 +75,6 @@
 
     <!-- ============================================
          SECTION 2: DELIVERABILITY CALLOUT
-         The single most valuable action a new
-         subscriber can take. Distinct visual block.
          ============================================ -->
     <div class="section-card">
         <div class="deliverability-callout">
@@ -83,9 +90,6 @@
 
     <!-- ============================================
          SECTION 3: PREFERENCE POLL
-         Single-question content-preference capture.
-         Static visual mock — beehiiv renders the
-         actual poll widget at send time.
          ============================================ -->
     <div class="section-card">
         <h2 class="welcome-poll-question">What kind of stuff do you want most?</h2>
@@ -104,10 +108,6 @@
 
     <!-- ============================================
          SECTION 4: EVENTS CALENDAR
-         Single one-up tile pointing at the full local
-         events calendar. Sits after the poll — reader
-         just told us what they're into; now hand them
-         the place to browse it.
          ============================================ -->
     <div class="section-card">
         <div class="todays-picks">

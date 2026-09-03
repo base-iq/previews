@@ -1335,6 +1335,23 @@ body {
     }
 }
 
+/* ---- WELCOME FAVORITES — BOXED (mock variant) ----
+   Candidate treatment for the welcome's reader-favorites
+   batch: each news-item in a poll-option-style box instead
+   of hairline rows. Mock-stage — prune if not adopted. */
+.favorites-boxed .news-item {
+    background: #FFFFFF;
+    border: 1px solid #EDE6E1;
+    border-radius: 5px;
+    padding: 14px 16px;
+}
+
+.section-card .favorites-boxed .news-item + .news-item {
+    margin-top: 10px;
+    padding-top: 14px;
+    border-top: 1px solid #EDE6E1;
+}
+
 /* ---- PICKS GRID — ONE-UP VARIANT ----
    Single full-width tile rendered as a horizontal row
    (compact square thumb left, body right) so one pick
